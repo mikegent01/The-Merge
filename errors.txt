@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/health_status.rpy", line 53: Line is indented, but the preceding text statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
-    ^
+File "game/scripts/health_status.rpy", line 60: 'max_xp' is not a keyword argument or valid child of the text statement.
+    text "Skill is: [stats[stat]['current_value']] range stats[stat]["max_xp"]" size 15
+                                                                            ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Oct 12 01:00:11 2024
+Sat Oct 12 15:06:25 2024

@@ -728,7 +728,6 @@ init python:
         """Reduce the durability of a specified armor."""
         global body_armor_item  # Ensure we can modify the equipped armor item
 
-        # Check if the equipped armor is "No Armor"
         if body_armor_item == "No Armor":
             renpy.notify("No armor is equipped, no durability reduction applied.")
             return  # Exit the function if no armor is equipped
@@ -736,8 +735,6 @@ init python:
         for item in armor_inventory:
             if item['name'] == armor_name:
                 item['durability'] -= damage  # Reduce durability by damage amount
-
-                # Check if armor durability has reached zero
                 if item['durability'] <= 0:
                     item['durability'] = 0  # Set durability to zero
                     body_armor_item = "No Armor"  # Set equipped armor to "No Armor"
@@ -933,9 +930,9 @@ label gameover:
     "Why don't you try loading a save..."
 label start:
     hide screen character_selection
-    $ add_experience("intelligence", 809243)
     $ rng = random.randint(1,100)
     show screen HUD    
+    $ add_experience("mental_resilience", 9999)
     $ equip_item("body", "Type 07")
     jump bootcampinsideprojectorroomstart
     scene bg mayor
@@ -998,10 +995,12 @@ label bootcampinsideprojectorroomstart:
     BEN "Who the hell called me here anyway?"    
     label choicesbootcampprojectorroom:
         scene bootcampinsideprojectorroomstartm
+        hide ben idle
         menu:
             "Talk to the drill sargent":
                 if projectorquest == False:
                     show drillsarg normal at right
+                    show ben idle at left
                     $ set_npc("Sargent Briggs", "Stern", "Unkown")
                     show screen conversation_screen
                     DRI "Ah you are finally here!"
@@ -1032,6 +1031,7 @@ label bootcampinsideprojectorroomstart:
                     show drillsarg normal at right
                     $ set_npc("Sargent Briggs", "Bold", "Unkown")
                     show screen conversation_screen
+                    show ben idle at left
                     DRI "Did you get the projector?"
                     BEN "No sir"
                     DRI "Than get your ass down to the closet and get it out!"
@@ -1042,6 +1042,7 @@ label bootcampinsideprojectorroomstart:
 
             "Talk to the man in the back seat":
                 $ set_npc("Bag Man", "Neutral", "Angry")
+                show ben idle at left
                 show screen conversation_screen
                 if bagman_r < 0: #talked to
                     show bag maskamn at right
@@ -1065,12 +1066,14 @@ label bootcampinsideprojectorroomstart:
                 BEN "What the hell, no!"
                 BAG "If you don't want to help me, just go away..."
                 hide bag maskamn
+                hide ben idle
                 BEN "He was friendly..."
                 $ bagman_r = bagman_r - 1
                 hide screen conversation_screen                
                 jump choicesbootcampprojectorroom
             "Talk to the man in the front seat":
                 $ set_npc("Bag Man", "Neutral", "Neutral")
+                show ben idle at left
                 show screen conversation_screen
                 show sultan talking at right
                 if sultan_r < -2:
@@ -1112,21 +1115,39 @@ label bootcampinsideprojectorroomstart:
                 BEN "Was it you who called me here? The announcement said come to the projector room..."
                 SUL "Nope, If it was anyone here it would be the sarg bro."
                 BEN "Why are you not wearing any military uniform while on duty?"
-                SUL "Look at what your wearing. Do you really think that is the right uniform bro?"
-                BEN '...'
-                BEN "Your right, what the hell is this commie uniform!"
-                BEN "This has to be a mistake!"
-                SUL "Maybe you are just stupid bro."
-                BEN "..."
-                SUL "Yeah you are pretty stupid if you just put it on wihtout thikning bro."
-                BEN "Fuck off"
-                SUL "Fuck you too bro"
-                BEN "(I should order a new uniform at the desk.)"
-                $ sultan_r = sultan_r - 1
-                $ new_uniform_quest == True
-                hide sultan right
-                hide screen conversation_screen                
-                jump choicesbootcampprojectorroom    
+                if body_armor_item != "No Armor":
+                    SUL "Look at what your wearing. Do you really think that is the right uniform bro?"
+                    BEN '...'
+                    BEN "Your right, what the hell is this commie uniform!"
+                    BEN "This has to be a mistake!"
+                    SUL "Maybe you are just stupid bro."
+                    BEN "..."
+                    SUL "Yeah you are pretty stupid if you just put it on wihtout thikning bro."
+                    SUL "Take it off right now! Go to your inventory and click on Equip Armor and equip no armor."
+                    if body_armor_item = "No Armor":
+                        SUL "Thank god, I got really upset there..."
+                        SUL "Sorry about that"
+                        BEN "Yeah..."
+                        $ sultan_r = sultan_r + 1
+                        hide screen conversation_screen                
+                        jump choicesbootcampprojectorroom
+                    elif body_armor_item != "No Armor":
+                        BEN "No Fuck off"
+                        SUL "Fuck you too bro"
+                        BEN "(I should order a new uniform at the desk.)"
+                        $ sultan_r = sultan_r - 1
+                        $ new_uniform_quest == True
+                        hide sultan right
+                        hide screen conversation_screen                
+                        jump choicesbootcampprojectorroom          
+                SUL "..."
+                SUL "I know..."
+                SUL "My shirt kinda got ripped up..."
+                BEN "How did it get ripped up?"
+                SUL "In my barracks it got caught on the bed railings."
+                SUL "I had to cut it off when I woke up."
+                BEN "You ripped off your shirt?"
+    
             "Leave" if projectorquest == True:
                 jump outsideprojectorroom       
 label outsideprojectorroom: #outside projector room

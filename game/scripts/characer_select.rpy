@@ -24,14 +24,14 @@ screen character_selection:
 
                 text "Stats:" size 28  # Stats header
                 if current_character_index == 0:
-                    text "Intelligence: [ben_stats['intelligence']['current_value']] (Level: [ben_stats['intelligence']['level']])"
-                    text "Speech: [ben_stats['speech']['current_value']] (Level: [ben_stats['speech']['level']])"
-                    text "Strength: [ben_stats['strength']['current_value']] (Level: [ben_stats['strength']['level']])"
-                    text "Luck: [ben_stats['luck']['current_value']] (Level: [ben_stats['luck']['level']])"
-                    text "Speed: [ben_stats['speed']['current_value']] (Level: [ben_stats['speed']['level']])"
-                    text "Pain Tolerance: [ben_stats['pain_tolerance']['current_value']] (Level: [ben_stats['pain_tolerance']['level']])"
-                    text "Mental Resilience: [ben_stats['mental_resilience']['current_value']] (Level: [ben_stats['mental_resilience']['level']])"
-                    text "Medical: [ben_stats['medical']['current_value']] (Level: [ben_stats['medical']['level']])"
+                    text "Intelligence: [stats['intelligence']['current_value']] (Level: [stats['intelligence']['level']])"
+                    text "Speech: [stats['speech']['current_value']] (Level: [stats['speech']['level']])"
+                    text "Strength: [stats['strength']['current_value']] (Level: [stats['strength']['level']])"
+                    text "Luck: [stats['luck']['current_value']] (Level: [stats['luck']['level']])"
+                    text "Speed: [stats['speed']['current_value']] (Level: [stats['speed']['level']])"
+                    text "Pain Tolerance: [stats['pain_tolerance']['current_value']] (Level: [stats['pain_tolerance']['level']])"
+                    text "Mental Resilience: [stats['mental_resilience']['current_value']] (Level: [stats['mental_resilience']['level']])"
+                    text "Medical: [stats['medical']['current_value']] (Level: [stats['medical']['level']])"
 
                 #elif current_character_index == 1:
                 #    text "Intelligence: [dominic_stats['intelligence']['current_value']] (Level: [dominic_stats['intelligence']['level']])"

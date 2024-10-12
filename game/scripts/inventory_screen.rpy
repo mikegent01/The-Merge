@@ -14,7 +14,7 @@ screen inventory:
             $ current_weight = calculate_total_weight()
             $ remaining_space = get_remaining_space()
             text "Weight Of Carried Items: " + str(current_weight) + " kg"
-            text "Remaning Space In Your Bag: " + str(remaining_space) + " Volume"
+            text "Remaning Space In Your Bag: " + str(remaining_space) + " N"
             text "Max Weight You Can Hold: " + str(current_strength) + " kg"
             # Left Arm Slot
             hbox:

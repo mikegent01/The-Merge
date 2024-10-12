@@ -1,64 +1,71 @@
 
-# Main status screen with option to view detailed player stats
 screen status_screen():
-  modal True
-  frame:
-    xsize 600
-    ysize 400
-    xalign 0.5
-    yalign 0.5
-    background "#000000"
-    $ can_view_health = is_stat_higher("medical", 100, stats)
-    $ can_view_health_small = is_stat_higher("medical", 50, stats)
-    vbox:
-      text "My Health Overview" size 30 xalign 0.5
-      for part in ["head", "body", "left_arm", "right_arm", "left_leg", "right_leg"]:
-        hbox:
-          text part.replace("_", " ").capitalize() + ":" xalign 0.0
-          if can_view_health:
-            bar value default_status[part]["health"] range 100 xmaximum 200 ymaximum 25 xalign 0.5
-          textbutton "View Status" action Show("condition_details", part=part) xalign 1.0
-  
-        # Close button to hide the status screen
-      textbutton "Close" action Hide("status_screen") xalign 0.5
+    modal True
+    frame:
+        xsize 600
+        ysize 400
+        xalign 0.5
+        yalign 0.5
+        background "#000000"
+        $ can_view_health = is_stat_higher("medical", 100, stats)
+        $ can_view_health_small = is_stat_higher("medical", 50, stats)
+        vbox:
+            text "My Health Overview" size 30 xalign 0.5
+            for part in ["head", "body", "left_arm", "right_arm", "left_leg", "right_leg"]:
+                hbox:
+                    text part.replace("_", " ").capitalize() + ":" xalign 0.0
+                    if not can_view_health:
+                        textbutton "View Status" action Show("condition_details", part=part) xalign 1.0
+                    if can_view_health:
+                        bar value default_status[part]["health"] range 100 xmaximum 200 ymaximum 25 xalign 0.5
+                        textbutton "View Status" action Show("condition_details", part=part) xalign 1.0
+            vbox:  # To stack the sanity text and bar vertically
+                if can_view_health_small:
+                    text "Current Sanity: [stats['sanity']['current_sanity']]" size 20 xalign 0.5
+                elif can_view_health:
+                    bar value stats["sanity"]["current_sanity"] range 100 xmaximum 300 xalign 0.5
+                textbutton "Close" action Hide("status_screen") xalign 0.5
+
+
+
 screen player_stats_screen():
-  modal True
-  frame:
-    xsize 900 # Adjusted size to fit stats and bars
-    ysize 900 # Increased height for better display of all content
-    xalign 0.5
-    yalign 0.5
-    background "#000000"
+    modal True
+    frame:
+        xsize 900
+        ysize 900
+        xalign 0.5
+        yalign 0.5
+        background "#000000"
 
-    vbox:
-
-      text "\n"
-      text "\n"
-      text "My Stats" size 30 xalign 0.5 yalign 0.4 
-
-      vpgrid:
-
-        cols 2 # Two columns for stats
-        spacing 30
-        ysize 600 
-
-        for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical","pain_tolerance","mental_resilience"]:
-          hbox:
-            vbox:
-              text "My [stat.replace('_', ' ').capitalize()] is level: [stats[stat]['level']] My skill is [stats[stat]['current_value']]" size 20 
-              bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
-              text "I Currently have [stats[stat]['current_xp']] out of [stats[stat]['max_xp']] EXP" size 14
-              bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-              if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
-                textbutton "Level Up" action Function(level_up, stat)
-
-
-      text "Current Sanity" size 14
-      hbox:
-        bar value stats["sanity"]["current_sanity"] range 100 xmaximum 300
-        text "[stats['sanity']['current_sanity']]" size 20
-        textbutton "Close" action Hide("player_stats_screen") xalign 0.5
-
+        vbox:
+            text "\n"
+            text "\n"
+            text "My Stats" size 30 xalign 0.5 yalign 0.4
+            textbutton "Close" action Hide("player_stats_screen") xalign 0.5
+            # Entire content wrapped inside a viewport for unified scrolling
+            hbox:
+                viewport:
+                    id "stats_viewport"
+                    xsize 850
+                    ysize 750  # Adjusted to fit in most screens while leaving space for the close button
+                    draggable True
+                    mousewheel True
+                    
+                    vbox:
+                        # Stats section
+                        for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
+                            vbox:
+                                text "[stat.replace('_', ' ').capitalize()] is level: [stats[stat]['level']]" size 15
+                                bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
+                                text "Skill is: [stats[stat]['current_value']]" size 15
+                                bar value stats[stat]["current_value"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+                                text "[stats[stat]['current_xp']] out of [stats[stat]['max_xp']] experience till next level" size 15
+                                bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+                                if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
+                                    textbutton "Level Up" action Function(level_up, stat)
+                                text "\n" 
+                                text "\n"
+                vbar value YScrollValue("stats_viewport") xsize 25
 screen heal_menu():
     modal True
     frame:
