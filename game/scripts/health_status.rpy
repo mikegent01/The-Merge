@@ -153,8 +153,8 @@ screen condition_details(part):
                 text "My " + part.replace("_", " ") + " is too fucking hot!" size 18 xalign 0.5 color "#ff0000"
             else:
                 text "IT IS TOO FUCKING HOT!" size 18 xalign 0.5 color "#FF0000"
-
-            textbutton "Use Medkit" action [Show("medkit_item_menu", part=part)] xalign 0.5
+            if has_item('medkit'):
+                textbutton "Use Medkit" action [Show("medkit_item_menu", part=part)] xalign 0.5
 
             textbutton "Close" action Hide("condition_details") xalign 0.5
 

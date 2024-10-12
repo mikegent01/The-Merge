@@ -77,8 +77,7 @@ init python:
     full_weight = 0
     current_strength = 0
     current_selected_character = "Ben"
-    if current_selected_character == "Ben":
-        current_strength = random.randint(36,45)  
+    current_strength = random.randint(36,45)  
     ben_strength = current_strength
     max_space = 10 + current_strength     
     current_sanity = 100
@@ -872,7 +871,9 @@ init python:
                 right_arm_item = None
         renpy.restart_interaction()
     def characters():
+        initialize_stats()
         if(current_character_index == 0): 
+            current_strength = random.randint(36,45),  
             update_status(stats, ben_stats),  
         if(current_character_index == 1): 
             update_status(stats, dominic_stats),

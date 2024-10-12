@@ -297,7 +297,7 @@ screen navigation():
 
         if main_menu:
             textbutton _("Start") action Show("character_selection")
-            #textbutton _("Start") action Start()
+            textbutton _("Quick Start") action Start()
 
         else:
 
