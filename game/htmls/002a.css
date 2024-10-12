@@ -1,0 +1,52 @@
+body {
+	font-weight: bolder;
+}
+.effect main h1, .effect main p {
+	filter: url("#glitch");
+}
+main {
+	max-width: 1200px;
+	margin: 4rem auto;
+}
+main h1, main p {
+	margin: 1rem 0;
+}
+main p {
+	text-align: justify;
+}
+main .c {
+	font-size: 5rem;
+	letter-spacing: 0.5rem;
+	color: rgba(0, 0, 0, 0.25);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	filter: none !important;
+	transform: translatex(-50%) rotatez(330deg);
+}
+.error {
+	position: fixed;
+	top: 0;
+	height: 100vh;
+	width: 100vw;
+	background: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: none;
+}
+.error .container {
+	width: 40%;
+}
+.error .container img {
+	margin: 0 auto;
+	display: block;
+	width: 80%;
+}
+.error .container .footer {
+	text-align: center;
+	font-size: 0.8rem;
+}
+.showError .error {
+	display: flex;
+}

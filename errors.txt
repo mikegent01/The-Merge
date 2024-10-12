@@ -1,0 +1,9 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/scripts/characer_select.rpy", line 99: is not terminated with a newline. (Check strings and parenthesis.)
+                textbutton "Choose [current_character_index]" action [
+
+Ren'Py Version: Ren'Py 8.2.1.24030407
+Fri Oct 11 22:57:49 2024

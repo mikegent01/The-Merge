@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Terminal</title>
+  <link rel="stylesheet" href="002.css">
+</head>
+<body>
+  <div class="terminal" id="normal-screen">
+    <h1>Terminal</h1>
+    <p class="output" id="normal-output">> Connection Status: Offline.</p>
+    <div id="console">
+      <div class="output" id="command-output"></div>
+      <div class="input-box">
+        <span class="input-prefix">></span>
+        <input type="text" id="command-input" class="input" autofocus />
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden SCP Screen -->
+  <div class="terminal" id="scp-screen" style="display: none;">
+    <h1>CONNECTED TO <span class="errorcode">███</span></h1>
+    <p class="output">> File received from ███</p>
+    <p class="output">> Classification: Euclid</p>
+    <p class="output">> Location: ██████████</p>
+    <p class="output">> File lifetime: 4 days</p>
+    <p class="output">> RELATIONS: #3312 #233 #█████</p>
+    <p class="output">> STATUS: ACTIVE</p>
+    <p class="output">> FILE LOADED: <a href="002a.html">█████</a>. DO NOT ENGAGE.</p>
+    <div id="console">
+      <div class="output" id="scp-command-output"></div>
+      <div class="input-box">
+        <span class="input-prefix">></span>
+        <input type="text" id="scp-command-input" class="input" autofocus />
+      </div>
+    </div>
+  </div>
+
+  <script src="002.js"></script>
+</body>
+</html>
