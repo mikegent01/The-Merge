@@ -11,7 +11,7 @@ screen status_screen():
     $ can_view_health = is_stat_higher("medical", 100, stats)
     $ can_view_health_small = is_stat_higher("medical", 50, stats)
     vbox:
-      text "Health Overview" size 30 xalign 0.5
+      text "My Health Overview" size 30 xalign 0.5
       for part in ["head", "body", "left_arm", "right_arm", "left_leg", "right_leg"]:
         hbox:
           text part.replace("_", " ").capitalize() + ":" xalign 0.0
@@ -34,7 +34,7 @@ screen player_stats_screen():
 
       text "\n"
       text "\n"
-      text "Player Skills" size 30 xalign 0.5 
+      text "My Stats" size 30 xalign 0.5 yalign 0.4 
 
       vpgrid:
 
@@ -45,19 +45,13 @@ screen player_stats_screen():
         for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical","pain_tolerance","mental_resilience"]:
           hbox:
             vbox:
-              text stat.replace("_", " ").capitalize() size 20
-              text "Level" size 14
-              bar value stats[stat]["level"] range 100 xmaximum 300 ymaximum 25
-              text "Skill Progress" size 14
+              text "My [stat.replace('_', ' ').capitalize()] is level: [stats[stat]['level']] My skill is [stats[stat]['current_value']]" size 20 
+              bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
+              text "I Currently have [stats[stat]['current_xp']] out of [stats[stat]['max_xp']] EXP" size 14
               bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-
               if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
                 textbutton "Level Up" action Function(level_up, stat)
 
-            vbox:
-              text "XP: [stats[stat]['current_xp']] / [stats[stat]['max_xp']]" size 13
-              text "Level: [stats[stat]['level']]" size 13
-              text "Current skill: [stats[stat]['current_value']]" size 13
 
       text "Current Sanity" size 14
       hbox:
@@ -65,9 +59,6 @@ screen player_stats_screen():
         text "[stats['sanity']['current_sanity']]" size 20
         textbutton "Close" action Hide("player_stats_screen") xalign 0.5
 
-
-# Heal Menu as in the original request
-# Updated Heal Menu with medkit item selection for healing health and conditions
 screen heal_menu():
     modal True
     frame:

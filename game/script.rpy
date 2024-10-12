@@ -102,7 +102,7 @@ init python:
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
         "speech": {"level": 3, "current_xp": 0, "max_xp": 131, "current_value": 14},
-        "strength": {"level": 5, "current_xp": 0, "max_xp": 230, "current_value": 0},
+        "strength": {"level": 5, "current_xp": 0, "max_xp": 230, "current_value": current_strength},
         "luck": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
         "speed": {"level": 2, "current_xp": 0, "max_xp": 87, "current_value": 14},
         "pain_tolerance": {"level": 2, "current_xp": 0, "max_xp": 90, "current_value": 10},
@@ -269,11 +269,12 @@ init python:
     def initialize_stats():
         for stat in stats:
             if stat != "sanity":
-                stats[stat]["current_strength"] = calculate_stat_value(stats[stat]["level"])
-        stats["strength"]["current_strength"] = current_strength
+                stats[stat]["current_value"] = calculate_stat_value(stats[stat]["level"])
+                stats[stat]["current_xp"] = calculate_stat_value(stats[stat]["level"])
 
     def calculate_stat_value(level):
-            return level * random.randint(1, 4) + random.randint(10, 30)
+        for stat in stats:
+            return level * random.randint(1, 4) + random.randint(1, 4) + stats[stat]["current_value"] 
 
     initialize_stats()
 
@@ -465,17 +466,13 @@ init python:
             default_status[body_part]['temperature'] = new_temperature
 
 
-    def update_strength():
-            global current_strength
-            current_strength += 2
     def level_up(stat_name):
-        update_strength()
         if stat_name in stats:
             stats[stat_name]["level"] += 1
 
             stats[stat_name]["current_xp"] = 0
-            stats[stat_name]["max_xp"] = round(stats[stat_name]["max_xp"] + random.randint(20, 50) ) 
-            stats[stat_name]["current_value"] += random.randint(1, 5)
+            stats[stat_name]["max_xp"] = round(stats[stat_name]["max_xp"] + random.randint(10, 35) ) 
+            stats[stat_name]["current_value"] += random.randint(1, 8)
     def set_random_title_screen():
         global title_screen_set  
 
@@ -936,6 +933,7 @@ label gameover:
     "Why don't you try loading a save..."
 label start:
     hide screen character_selection
+    $ add_experience("intelligence", 809243)
     $ rng = random.randint(1,100)
     show screen HUD    
     $ equip_item("body", "Type 07")
@@ -1017,7 +1015,7 @@ label bootcampinsideprojectorroomstart:
                     hide projector
                     BEN "SIR! YES SIR!"
                     DRI "You will get a replacement projector from the supply closet and you will return to me!"
-                    $ add_experience("speech", .5)
+                    $ add_experience("speech", 1)
                     menu:
                         "SIR YES SIR":
                             $projectorquest = True
@@ -1087,7 +1085,7 @@ label bootcampinsideprojectorroomstart:
                     jump choicesbootcampprojectorroom                    
                 if sultan_r < 0: 
                     SUL "Hey sorry bro about the comment from earlier..."
-                    $ add_experience("speech", .5)
+                    $ add_experience("speech", 1)
                     menu:
                         "It is alright":
                             $sultan_r = sultan_r + 5
@@ -1332,7 +1330,7 @@ label outsideprojectorroom: #outside projector room
                 Q3 "Yeah I can't find anything..."
                 BEN "Nothing?"
                 Q3 "Yes. I will go but them back now."
-                $ add_experience("speech", .5)
+                $ add_experience("speech", 1)
                 menu:
                     "Ask to check them":
                         BEN "Can I see the papers anyway?"

@@ -8,7 +8,7 @@ screen inventory:
         background "#00ff00"
 
         vbox:
-            text "Inventory" size 30 xalign 0.5
+            text "My Inventory" size 30 xalign 0.5
 
             # Show current weight and remaining space
             $ current_weight = calculate_total_weight()
@@ -92,10 +92,10 @@ screen equip_armor():
             text "Equip Armor" size 30 xalign 0.5
 
             # Display currently equipped armor
-            text "Currently Equipped: " + (body_armor_item if body_armor_item else "None") xalign 0.5
+            text "Current Armor I have Equipped: " + (body_armor_item if body_armor_item else "None") xalign 0.5
 
             # Scrollable item list for armor
-            text "Equipable Armor" size 20 xalign 0.5
+            text "Armor I can Equip" size 20 xalign 0.5
             
             viewport:
                 mousewheel True
@@ -228,7 +228,7 @@ screen crafting_screen():
         xalign 0.5
         yalign 0.5
         has vbox:
-            label "Workbench"
+            label "Workshop"
 
             # Scrollable area for items
             viewport:
