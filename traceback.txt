@@ -3,9 +3,11 @@
 While running game code:
   File "game/script.rpy", line 71, in script
     init python:
-  File "game/script.rpy", line 79, in <module>
-    if current_character_index == 0:
-NameError: name 'current_character_index' is not defined
+  File "game/script.rpy", line 278, in <module>
+    initialize_stats()
+  File "game/script.rpy", line 274, in initialize_stats
+    stats[stat]["current_strength"] = calculate_stat_value(stats[stat]["level"])
+NameError: name 'calculate_stat_value' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
@@ -16,11 +18,13 @@ Full traceback:
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 79, in <module>
-    if current_character_index == 0:
-NameError: name 'current_character_index' is not defined
+  File "game/script.rpy", line 278, in <module>
+    initialize_stats()
+  File "game/script.rpy", line 274, in initialize_stats
+    stats[stat]["current_strength"] = calculate_stat_value(stats[stat]["level"])
+NameError: name 'calculate_stat_value' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Fri Oct 11 23:38:02 2024
+Sat Oct 12 00:14:40 2024

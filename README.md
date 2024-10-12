@@ -61,4 +61,38 @@ pixiv.net/en/users/12597768
 arcsine-technologies.itch.io/veggie-pack-volume-i
 
 ## License
-This project is licensed under the MIT License.
+This project is NOT licensed under the MIT License. It is Licensed under the   Attribution-ShareAlike 4.0 International License 
+# stats for later
+   dominic_stats = {
+        "intelligence": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
+        "speech": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
+        "strength": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 3},
+        "luck": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 20},
+        "speed": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 24},
+        "pain_tolerance": {"level": 3, "current_xp": 0, "max_xp": 140, "current_value": 30},
+        "mental_resilience": {"level": 3, "current_xp": 0, "max_xp": 145, "current_value": 39},
+        "medical": {"level": 3, "current_xp": 0, "max_xp": 50, "current_value": 35},
+        "sanity": {"current_sanity": current_sanity}
+        }  
+    ben_stats = {
+        "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
+        "speech": {"level": 3, "current_xp": 0, "max_xp": 131, "current_value": 14},
+        "strength": {"level": 5, "current_xp": 0, "max_xp": 230, "current_value": current_strength},
+        "luck": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
+        "speed": {"level": 2, "current_xp": 0, "max_xp": 87, "current_value": 14},
+        "pain_tolerance": {"level": 2, "current_xp": 0, "max_xp": 90, "current_value": 10},
+        "mental_resilience": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
+        "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
+        "sanity": {"current_sanity": current_sanity}
+        }            
+    david_stats = {
+        "intelligence": {"level": 4, "current_xp": 0, "max_xp": 50, "current_value": 30},
+        "speech": {"level": 4, "current_xp": 0, "max_xp": 211, "current_value": 31},
+        "strength": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 1},
+        "luck": {"level": 2, "current_xp": 0, "max_xp": 56, "current_value": 15},
+        "speed": {"level": 2, "current_xp": 0, "max_xp": 56, "current_value": 14},
+        "pain_tolerance": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
+        "mental_resilience": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 11},
+        "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
+        "sanity": {"current_sanity": current_sanity}
+        }        

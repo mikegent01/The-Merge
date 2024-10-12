@@ -33,25 +33,25 @@ screen character_selection:
                     text "Mental Resilience: [ben_stats['mental_resilience']['current_value']] (Level: [ben_stats['mental_resilience']['level']])"
                     text "Medical: [ben_stats['medical']['current_value']] (Level: [ben_stats['medical']['level']])"
 
-                elif current_character_index == 1:
-                    text "Intelligence: [dominic_stats['intelligence']['current_value']] (Level: [dominic_stats['intelligence']['level']])"
-                    text "Speech: [dominic_stats['speech']['current_value']] (Level: [dominic_stats['speech']['level']])"
-                    text "Strength: [dominic_stats['strength']['current_value']] (Level: [dominic_stats['strength']['level']])"
-                    text "Luck: [dominic_stats['luck']['current_value']] (Level: [dominic_stats['luck']['level']])"
-                    text "Speed: [dominic_stats['speed']['current_value']] (Level: [dominic_stats['speed']['level']])"
-                    text "Pain Tolerance: [dominic_stats['pain_tolerance']['current_value']] (Level: [dominic_stats['pain_tolerance']['level']])"
-                    text "Mental Resilience: [dominic_stats['mental_resilience']['current_value']] (Level: [dominic_stats['mental_resilience']['level']])"
-                    text "Medical: [dominic_stats['medical']['current_value']] (Level: [dominic_stats['medical']['level']])"
-
-                elif current_character_index == 2:
-                    text "Intelligence: [david_stats['intelligence']['current_value']] (Level: [david_stats['intelligence']['level']])"
-                    text "Speech: [david_stats['speech']['current_value']] (Level: [david_stats['speech']['level']])"
-                    text "Strength: [david_stats['strength']['current_value']] (Level: [david_stats['strength']['level']])"
-                    text "Luck: [david_stats['luck']['current_value']] (Level: [david_stats['luck']['level']])"
-                    text "Speed: [david_stats['speed']['current_value']] (Level: [david_stats['speed']['level']])"
-                    text "Pain Tolerance: [david_stats['pain_tolerance']['current_value']] (Level: [david_stats['pain_tolerance']['level']])"
-                    text "Mental Resilience: [david_stats['mental_resilience']['current_value']] (Level: [david_stats['mental_resilience']['level']])"
-                    text "Medical: [david_stats['medical']['current_value']] (Level: [david_stats['medical']['level']])"
+                #elif current_character_index == 1:
+                #    text "Intelligence: [dominic_stats['intelligence']['current_value']] (Level: [dominic_stats['intelligence']['level']])"
+                #    text "Speech: [dominic_stats['speech']['current_value']] (Level: [dominic_stats['speech']['level']])"
+                #    text "Strength: [dominic_stats['strength']['current_value']] (Level: [dominic_stats['strength']['level']])"
+                #    text "Luck: [dominic_stats['luck']['current_value']] (Level: [dominic_stats['luck']['level']])"
+                #    text "Speed: [dominic_stats['speed']['current_value']] (Level: [dominic_stats['speed']['level']])"
+                #    text "Pain Tolerance: [dominic_stats['pain_tolerance']['current_value']] (Level: [dominic_stats['pain_tolerance']['level']])"
+                #    text "Mental Resilience: [dominic_stats['mental_resilience']['current_value']] (Level: [dominic_stats['mental_resilience']['level']])"
+                #    text "Medical: [dominic_stats['medical']['current_value']] (Level: [dominic_stats['medical']['level']])"
+#
+                #elif current_character_index == 2:
+                #    text "Intelligence: [david_stats['intelligence']['current_value']] (Level: [david_stats['intelligence']['level']])"
+                #    text "Speech: [david_stats['speech']['current_value']] (Level: [david_stats['speech']['level']])"
+                #    text "Strength: [david_stats['strength']['current_value']] (Level: [david_stats['strength']['level']])"
+                #    text "Luck: [david_stats['luck']['current_value']] (Level: [david_stats['luck']['level']])"
+                #    text "Speed: [david_stats['speed']['current_value']] (Level: [david_stats['speed']['level']])"
+                #    text "Pain Tolerance: [david_stats['pain_tolerance']['current_value']] (Level: [david_stats['pain_tolerance']['level']])"
+                #    text "Mental Resilience: [david_stats['mental_resilience']['current_value']] (Level: [david_stats['mental_resilience']['level']])"
+                #    text "Medical: [david_stats['medical']['current_value']] (Level: [david_stats['medical']['level']])"
 
             # Right side for the character description and image
             vbox:

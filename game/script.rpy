@@ -75,10 +75,8 @@ init python:
     minhealth = 0
     maxhealth = 100
     full_weight = 0
-    current_strength = 0
     current_selected_character = "Ben"
     current_strength = random.randint(36,45)  
-    ben_strength = current_strength
     max_space = 10 + current_strength     
     current_sanity = 100
     crafting_items = []
@@ -100,17 +98,7 @@ init python:
         "left_leg": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70},
         "right_leg": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70}
     }
-    ben_stats = {
-        "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
-        "speech": {"level": 3, "current_xp": 0, "max_xp": 131, "current_value": 14},
-        "strength": {"level": 5, "current_xp": 0, "max_xp": 230, "current_value": current_strength},
-        "luck": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
-        "speed": {"level": 2, "current_xp": 0, "max_xp": 87, "current_value": 14},
-        "pain_tolerance": {"level": 2, "current_xp": 0, "max_xp": 90, "current_value": 10},
-        "mental_resilience": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
-        "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
-        "sanity": {"current_sanity": current_sanity}
-        }    
+
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
         "speech": {"level": 3, "current_xp": 0, "max_xp": 131, "current_value": 14},
@@ -122,28 +110,7 @@ init python:
         "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "sanity": {"current_sanity": current_sanity}
         }    
-    dominic_stats = {
-        "intelligence": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
-        "speech": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
-        "strength": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 3},
-        "luck": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 20},
-        "speed": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 24},
-        "pain_tolerance": {"level": 3, "current_xp": 0, "max_xp": 140, "current_value": 30},
-        "mental_resilience": {"level": 3, "current_xp": 0, "max_xp": 145, "current_value": 39},
-        "medical": {"level": 3, "current_xp": 0, "max_xp": 50, "current_value": 35},
-        "sanity": {"current_sanity": current_sanity}
-        }  
-    david_stats = {
-        "intelligence": {"level": 4, "current_xp": 0, "max_xp": 50, "current_value": 30},
-        "speech": {"level": 4, "current_xp": 0, "max_xp": 211, "current_value": 31},
-        "strength": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 1},
-        "luck": {"level": 2, "current_xp": 0, "max_xp": 56, "current_value": 15},
-        "speed": {"level": 2, "current_xp": 0, "max_xp": 56, "current_value": 14},
-        "pain_tolerance": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
-        "mental_resilience": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 11},
-        "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
-        "sanity": {"current_sanity": current_sanity}
-        }            
+     
     container_inventory = [
     #    {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
@@ -299,6 +266,16 @@ init python:
             
         # If no match is found, return None
         return None
+    def initialize_stats():
+        for stat in stats:
+            if stat != "sanity":
+                stats[stat]["current_strength"] = calculate_stat_value(stats[stat]["level"])
+        stats["strength"]["current_strength"] = current_strength
+
+    def calculate_stat_value(level):
+            return level * random.randint(1, 4) + random.randint(10, 30)
+
+    initialize_stats()
 
     def add_liquid_to_selected(liquid):
         """
@@ -486,19 +463,8 @@ init python:
     def change_temperature(body_part, new_temperature):
         if body_part in default_status:
             default_status[body_part]['temperature'] = new_temperature
-    def initialize_stats():
-        for stat in stats:
-            if stat != "sanity":
-                stats[stat]["current_strength"] = calculate_stat_value(stats[stat]["level"])
-        stats["strength"]["current_strength"] = current_strength
 
 
-    def calculate_stat_value(level):
-            return level * random.randint(1, 4) + random.randint(10, 30)
-
-    initialize_stats()
-    def calculate_stat_value(level):
-        return level * random.randint(1, 4) + random.randint(1, 3)
     def update_strength():
             global current_strength
             current_strength += 2
@@ -851,9 +817,6 @@ init python:
                 body_armor_item = item
 
         renpy.hide_screen("item_select")
-
-
-
     def unequip_item(arm):
         """Unequip an item from the specified arm."""
         global left_arm_item, right_arm_item
@@ -870,15 +833,6 @@ init python:
             else:
                 right_arm_item = None
         renpy.restart_interaction()
-    def characters():
-        initialize_stats()
-        if(current_character_index == 0): 
-            current_strength = random.randint(36,45),  
-            update_status(stats, ben_stats),  
-        if(current_character_index == 1): 
-            update_status(stats, dominic_stats),
-        if(current_character_index == 2): 
-            update_status(stats, david_stats)
     def discard_item(arm):
         global left_arm_item, right_arm_item, inventory, container_inventory
         item_to_discard = None
@@ -982,7 +936,6 @@ label gameover:
     "Why don't you try loading a save..."
 label start:
     hide screen character_selection
-    $ characters()
     $ rng = random.randint(1,100)
     show screen HUD    
     $ equip_item("body", "Type 07")
