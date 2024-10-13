@@ -63,8 +63,11 @@ screen player_stats_screen():
                                 bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
                                 if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
                                     textbutton "Level Up" action Function(level_up, stat)
-                                text "\n" 
                                 text "\n"
+                                text "\n"
+                                text "\n"
+                                text "\n"
+
                 vbar value YScrollValue("stats_viewport") xsize 25
 screen heal_menu():
     modal True

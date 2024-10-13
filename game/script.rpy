@@ -85,8 +85,8 @@ init python:
     selected_liquids = []   
     holding_items = ["Tape", "Glue", "Screwdriver"]
     liquid_inventory = [
-    #   {"name": "Water", "amount": 100},    # 100 units of water
-    #   {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
+        {"name": "Water", "amount": 100},    # 100 units of water
+        {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
     #   {"name": "Oil", "amount": 30},       # 30 units of oil
     # {"name": "Glue", "amount": 30}
     ]   
@@ -112,7 +112,7 @@ init python:
         }    
      
     container_inventory = [
-    #    {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
+        {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
     selected_holding_item = None
     selected_container = None       
@@ -934,7 +934,6 @@ label start:
     hide screen character_selection
     $ rng = random.randint(1,100)
     show screen HUD    
-    $ add_experience("mental_resilience", 9999)
     $ equip_item("body", "Type 07")
     jump bootcampinsideprojectorroomstart
     scene bg mayor

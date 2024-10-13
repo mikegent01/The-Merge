@@ -1,28 +1,70 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1126, in script
-    if body_armor_item = "No Armor":
-SyntaxError: invalid syntax (game/script.rpy, line 1126)
+  File "game/script.rpy", line 994, in script
+    BEN "..."
+  File "game/scripts/inventory_screen.rpy", line 312, in execute
+    screen combine_liquids_screen:
+  File "game/scripts/inventory_screen.rpy", line 312, in execute
+    screen combine_liquids_screen:
+  File "game/scripts/inventory_screen.rpy", line 345, in execute
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+  File "game/scripts/inventory_screen.rpy", line 345, in keywords
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+  File "game/scripts/inventory_screen.rpy", line 345, in <module>
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+NameError: name 'selected_liquid' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1126, in script
-    if body_armor_item = "No Armor":
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1842, in execute
-    if renpy.python.py_eval(condition):
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1207, in py_eval
-    code = py_compile(code, 'eval')
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1144, in py_compile
-    raise e
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1081, in py_compile
-    raise orig_e
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1073, in py_compile
-    tree = compile(source, filename, py_mode, ast.PyCF_ONLY_AST | flags, 1)
-SyntaxError: invalid syntax (game/script.rpy, line 1126)
+  File "game/script.rpy", line 994, in script
+    BEN "..."
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
+    Say.execute(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
+    who(what, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
+    display_say(who,
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
+    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/inventory_screen.rpy", line 312, in execute
+    screen combine_liquids_screen:
+  File "game/scripts/inventory_screen.rpy", line 312, in execute
+    screen combine_liquids_screen:
+  File "game/scripts/inventory_screen.rpy", line 345, in execute
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+  File "game/scripts/inventory_screen.rpy", line 345, in keywords
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+  File "game/scripts/inventory_screen.rpy", line 345, in <module>
+    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
+NameError: name 'selected_liquid' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sat Oct 12 15:19:27 2024
+Sun Oct 13 14:21:53 2024
