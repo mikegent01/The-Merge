@@ -763,6 +763,7 @@ init python:
             "First aid kit": 1,
             "Tactical flashlight": 1,
             "Water Bottle": 1,
+            "sissor": 1,
             "Report 001": 300
         }
         return item_weights.get(item, 1)  # Default weight if not specified
@@ -780,6 +781,7 @@ init python:
             "radio": "A military grade radio used for communication. Is only able to communicate with military units and HQ.",
             "First aid kit": "Used to heal minor injuries.",
             "Tactical flashlight": "This light can survive explosions and runs on solar battery.",
+            "sissor": "Used to cut things.",
             "Water Bottle": "Used to hold water. Can hold up to 500ml of water...or any other liquid for that matter."
         }
         return item_descriptions.get(item, "No description available.")
@@ -1131,7 +1133,7 @@ label bootcampinsideprojectorroomstart:
                         $ sultan_r = sultan_r + 1
                         hide screen conversation_screen                
                         jump choicesbootcampprojectorroom
-                    elif body_armor_item != "No Armor":
+                    if body_armor_item not "No Armor":
                         BEN "No Fuck off"
                         SUL "Fuck you too bro"
                         BEN "(I should order a new uniform at the desk.)"
@@ -1139,15 +1141,27 @@ label bootcampinsideprojectorroomstart:
                         $ new_uniform_quest == True
                         hide sultan right
                         hide screen conversation_screen                
-                        jump choicesbootcampprojectorroom          
-                SUL "..."
-                SUL "I know..."
-                SUL "My shirt kinda got ripped up..."
-                BEN "How did it get ripped up?"
-                SUL "In my barracks it got caught on the bed railings."
-                SUL "I had to cut it off when I woke up."
-                BEN "You ripped off your shirt?"
-    
+                        jump choicesbootcampprojectorroom 
+                else:               
+                    SUL "..."
+                    SUL "I know bro..."
+                    SUL "My shirt kinda got ripped up bro..."
+                    BEN "How did it get ripped up?"
+                    SUL "In my barracks it got caught on the bed railings bro."
+                    SUL "I had to cut it off when I woke up bro."
+                    BEN "You ripped off your shirt?"
+                    SUL "No, I just cut it off. It is not fully ripped off bro"
+                    SUL "I snuck some sissor into the barracks last night. I don't need them anymore bro"
+                    BEN "You snuck in some sissor?"
+                    SUL "Yeah I was going to get back at eric for messing up yesterday bro"
+                    BEN "I can imagine..."
+                    SUL "Here you go bro"
+                    BEN "Huh- I don't need these"
+                    SUL "Nah it is fine you can keep them bro"
+                    $ inventory.append("sissor")
+                    hide sultan right
+                    hide screen conversation_screen                
+                    jump choicesbootcampprojectorroom          
             "Leave" if projectorquest == True:
                 jump outsideprojectorroom       
 label outsideprojectorroom: #outside projector room
