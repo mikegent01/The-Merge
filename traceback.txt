@@ -1,25 +1,27 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 994, in script
-    BEN "..."
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    screen combine_liquids_screen:
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    screen combine_liquids_screen:
-  File "game/scripts/inventory_screen.rpy", line 345, in execute
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-  File "game/scripts/inventory_screen.rpy", line 345, in keywords
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-  File "game/scripts/inventory_screen.rpy", line 345, in <module>
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-NameError: name 'selected_liquid' is not defined
+  File "game/script.rpy", line 1018, in script
+    BEN "Reporting in sir!"
+  File "game/scripts/health_status.rpy", line 88, in execute
+    screen condition_details(part):
+  File "game/scripts/health_status.rpy", line 88, in execute
+    screen condition_details(part):
+  File "game/scripts/health_status.rpy", line 90, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 97, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 101, in execute
+    if not can_view_health_small:
+  File "game/scripts/health_status.rpy", line 101, in <module>
+    if not can_view_health_small:
+NameError: name 'can_view_health_small' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 994, in script
-    BEN "..."
+  File "game/script.rpy", line 1018, in script
+    BEN "Reporting in sir!"
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
     Say.execute(self)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
@@ -52,19 +54,21 @@ Full traceback:
     self.update()
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    screen combine_liquids_screen:
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    screen combine_liquids_screen:
-  File "game/scripts/inventory_screen.rpy", line 345, in execute
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-  File "game/scripts/inventory_screen.rpy", line 345, in keywords
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-  File "game/scripts/inventory_screen.rpy", line 345, in <module>
-    textbutton "Add 10 ml of Selected Liquid" action [Function(add_liquid, selected_liquid), Function(adjust_liquid_amount, selected_liquid, -10)]
-NameError: name 'selected_liquid' is not defined
+  File "game/scripts/health_status.rpy", line 88, in execute
+    screen condition_details(part):
+  File "game/scripts/health_status.rpy", line 88, in execute
+    screen condition_details(part):
+  File "game/scripts/health_status.rpy", line 90, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 97, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 101, in execute
+    if not can_view_health_small:
+  File "game/scripts/health_status.rpy", line 101, in <module>
+    if not can_view_health_small:
+NameError: name 'can_view_health_small' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sun Oct 13 14:21:53 2024
+Sat Oct 19 00:10:54 2024

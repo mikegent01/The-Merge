@@ -39,8 +39,8 @@ If you want to use all the features of the simple inventory I highly recommend y
 To modify the slot counts in the inventory, change the variable default slot_count. For example, if you want to give more slots to the player, you can add seven more slots to the game 
 while maintaining the grid structure. After increasing the slot count and adding seven more slots to the inventory, the default slot_count will be equal to 28.
 
-To add an item to the inventory, for example, you can define it like this: $ inventory.append("Apple") as long as you have the Apple icon inside your designated folder able to create a new item in your game.
-To remove an item from the inventory, $ inventory.remove("Log")
+To add an item to the inventory, for example, you can define it like this: $Apple as long as you have the Apple icon inside your designated folder able to create a new item in your game.
+To remove an item from the inventory, $ inventory.remove("Log
  
 
 ## Bugs
@@ -62,7 +62,8 @@ arcsine-technologies.itch.io/veggie-pack-volume-i
 
 ## License
 This project is NOT licensed under the MIT License. It is Licensed under the   Attribution-ShareAlike 4.0 International License 
-# stats for later
+# More Information
+these are the stats for every characer if you were wondering
    dominic_stats = {
         "intelligence": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "speech": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
@@ -96,3 +97,10 @@ This project is NOT licensed under the MIT License. It is Licensed under the   A
         "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 15},
         "sanity": {"current_sanity": current_sanity}
         }        
+Here is a list of every item inside the game (so far):
+MG41    
+compass
+Laser range finder
+First aid kit
+radio
+Tactical flashlight

@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/inventory_screen.rpy", line 345: 'textinput' is not a keyword argument or valid child of the screen statement.
-    textinput "Amount:" variable selected_amount  
-             ^
+File "game/scripts/health_status.rpy", line 67: 'max_xp' is not a keyword argument or valid child of the text statement.
+    text "You need [[stats[stat]["max_xp"]] more experience to level up."
+                                        ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun Oct 13 14:20:08 2024
+Mon Oct 14 19:42:21 2024

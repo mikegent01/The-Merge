@@ -91,12 +91,12 @@ init python:
     # {"name": "Glue", "amount": 30}
     ]   
     default_status = {
-        "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70},
-        "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70},
-        "left_arm": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70},
-        "right_arm": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70},
-        "left_leg": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70},
-        "right_leg": {"status": "fine", "health": 100,  "conditions": [], "temperature": 70}
+    "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
+    "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
+    "left_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
+    "right_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
+    "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
+    "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100}
     }
 
     stats = {
@@ -282,6 +282,8 @@ init python:
         """
         Add liquid to the selected_liquids list for combining.
         """
+        modify_cleanliness(left_arm, -5)
+        modify_cleanliness(right_arm, -5)        
         if liquid["amount"] > 0:
             selected_liquids.append({"name": liquid["name"], "amount": liquid["amount"]})
             renpy.notify(f"Added {liquid['name']} to mix.")
@@ -291,6 +293,8 @@ init python:
         """
         Combine selected liquids into a container and check if any mix recipes are satisfied.
         """
+        modify_cleanliness(left_arm, -5)
+        modify_cleanliness(right_arm, -5)        
         # Check if a container is selected
         if not container:
             renpy.notify("Please select a container.")
@@ -526,6 +530,24 @@ init python:
                 default_status[part]['conditions'].remove("overheating")
             if "hypothermia" in default_status[part]['conditions']:
                 default_status[part]['conditions'].remove("hypothermia")
+    def check_cleanliness_and_adjust_temp(part):
+        cleanliness = default_status[part]['cleanliness']
+
+        if cleanliness > 90:
+            default_status[part]['temperature'] -= 2  # Clean parts may be cooler
+        elif cleanliness > 75:
+            default_status[part]['temperature'] -= 1
+        elif cleanliness < 50:
+            default_status[part]['temperature'] += 1  # Dirty parts may be warmer
+        elif cleanliness < 25:
+            default_status[part]['temperature'] += 2
+
+    def modify_cleanliness(part, amount):
+        default_status[part]['cleanliness'] += amount
+
+        default_status[part]['cleanliness'] = max(0, min(100, default_status[part]['cleanliness']))
+
+        check_cleanliness_and_adjust_temp(part)
 
     title_screens = [
         {
@@ -563,6 +585,7 @@ init python:
     def add_condition(part, new_condition):
         global default_status
         global maxhealth
+        modify_cleanliness(part, -1)
         maxhealth = maxhealth - 10
         remove_health(part, 10)
         if part in default_status:
@@ -613,6 +636,7 @@ init python:
             default_status[part]["conditions"] = [c for c in default_status[part]["conditions"] if c != condition]
     def remove_health(part, amount):
         global default_status
+        modify_cleanliness(part, -1)
         if part in default_status:
             default_status[part]["health"] = max(default_status[part]["health"] - amount, minhealth)
     def has_condition(part, condition):
@@ -725,9 +749,8 @@ init python:
         store.last_label = name
     config.label_callback = label_callback
     def reduce_durability(armor_name, damage):
-        """Reduce the durability of a specified armor."""
         global body_armor_item  # Ensure we can modify the equipped armor item
-
+        modify_cleanliness(part, -1)
         if body_armor_item == "No Armor":
             renpy.notify("No armor is equipped, no durability reduction applied.")
             return  # Exit the function if no armor is equipped
@@ -786,9 +809,8 @@ init python:
         }
         return item_descriptions.get(item, "No description available.")
     def equip_item(arm, item):
-        """Equip an item to the specified arm, with checks for inventory space and weight."""
         global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space
-
+        modify_cleanliness(arm, -1)
         if get_remaining_space() < 0:
             renpy.notify("Your inventory space is negative.. How did you even do this?")
             return
@@ -930,8 +952,11 @@ init python:
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
-label start:
+label start:    
     hide screen character_selection
+    $ add_condition("head", "concussion")
+    $ add_condition("head", "minor brain damage")    
+    $ inventory.append("thermometer")
     $ rng = random.randint(1,100)
     show screen HUD    
     $ equip_item("body", "Type 07")

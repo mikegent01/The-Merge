@@ -4,6 +4,8 @@ screen HUD():
         ypos 0
         xminimum 0
         yminimum 1
+        background "#3a6b3a80"
+
         has hbox
 
         # Backpack Icon
@@ -39,6 +41,7 @@ screen quest_log():
         ypadding 20
         xalign 0.5
         yalign 0.5
+        background "#1a431a"
 
         # Title
         text "Quest Log" style "title"

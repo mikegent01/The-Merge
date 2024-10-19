@@ -85,7 +85,6 @@ screen heal_menu():
                 textbutton part.replace("_", " ").capitalize() action [Show("medkit_item_menu", part=part)] xalign 0.5
 
             textbutton "Cancel" action Hide("heal_menu") xalign 0.5
-# Updated Condition Details screen with medkit healing for conditions and health
 screen condition_details(part):
     modal True
     frame:
@@ -99,6 +98,7 @@ screen condition_details(part):
             # Use replace to display part name with spaces
             text part.replace("_", " ").capitalize() + " Status" size 30 xalign 0.5
 
+            # Health Status
             $ health = default_status[part]['health']
             if health > 90:
                 text "My " + part.replace("_", " ") + " feels Great!" size 18 xalign 0.5 color "#00ff008e"
@@ -113,18 +113,17 @@ screen condition_details(part):
             else:
                 text "I am at Death's Door..." size 18 xalign 0.5 color "#FF0000"
 
+            # Medical Skill Check
             $ medical_level = stats["medical"]["level"]
             $ can_view_health = is_stat_higher("medical", 100, stats)
             $ can_view_health_small = is_stat_higher("medical", 59, stats)
+            $ can_view_hygiene = is_stat_higher("intelligence", 50, stats)
 
-            # Health bar visibility based on medical skill
             if can_view_health:
                 text "Health: [default_status[part]['health']]%" size 20 xalign 0.5
                 bar value default_status[part]["health"] range 100 xmaximum 500 ymaximum 25 xalign 0.5
-            # else:
-            #    text "I don't have enough medical skill to know why I feel this way..." size 20 xalign 0.5 color "#FFA500"
 
-            # Conditions display if medical level is sufficient
+            # Conditions Display if Medical Level is Sufficient
             if can_view_health_small:
                 text "Conditions:" size 20 xalign 0.0
                 if default_status[part]["conditions"]:
@@ -133,31 +132,51 @@ screen condition_details(part):
                             text condition.capitalize() xalign 0.0
                 else:
                     text "No Current conditions." size 20 xalign 0.5
-            # else:
-            #    if not has_item("thermometer"):
-            #        text "Thermometer not available." size 20 xalign 0.5 color "#FFA500"
+            $ temp = default_status[part]['temperature']
+            $ cleanliness = default_status[part]['cleanliness']
+            if not can_view_health_small:
+                if cleanliness > 90:
+                    text "My " + part.replace("_", " ") + " is spotless!" size 18 xalign 0.5 color "#00ff008e"
+                elif cleanliness > 75:
+                    text "My " + part.replace("_", " ") + " is clean!" size 18 xalign 0.5 color "#32CD32"
+                elif cleanliness > 50:
+                    text "My " + part.replace("_", " ") + " is somewhat clean." size 18 xalign 0.5 color "#FFD700"
+                elif cleanliness > 25:
+                    text "My " + part.replace("_", " ") + " is kinda dirty!" size 18 xalign 0.5 color "#FFA500"
+                elif cleanliness > 10:
+                    text "My " + part.replace("_", " ") + " is filthy!" size 18 xalign 0.5 color "#ff0000"
+                else:
+                    text "My " + part.replace("_", " ") + " is fucking disgusting!" size 18 xalign 0.5 color "#FF0000"
+            if can_view_health_small:
+                if can_view_hygiene:
+                    text "Hygiene: [default_status[part]['cleanliness']]%" size 20 xalign 0.5
 
+            # Temperature Display
             if has_item("thermometer"):
                 text "Temperature: [default_status[part]['temperature']]°F" size 20 xalign 0.5
-            $ temp = default_status[part]['temperature']
-            if temp < 30:
-                text "My " + part.replace("_", " ") + " is Freezing Cold!" size 18 xalign 0.5 color "#00FFFF"
-            elif temp < 45:
-                text "My " + part.replace("_", " ") + " is Very Cold!" size 18 xalign 0.5 color "#00BFFF"
-            elif temp < 65:
-                text "My " + part.replace("_", " ") + " is Cold!" size 18 xalign 0.5 color "#1E90FF"
-            elif temp < 75:
-                text "My " + part.replace("_", " ") + "'s temperature is fine." size 18 xalign 0.5 color "#32CD32"
-            elif temp < 80:
-                text "My " + part.replace("_", " ") + " feels Warm." size 18 xalign 0.5 color "#FFD700"
-            elif temp < 90:
-                text "My " + part.replace("_", " ") + " is too fucking hot!" size 18 xalign 0.5 color "#ff0000"
             else:
-                text "IT IS TOO FUCKING HOT!" size 18 xalign 0.5 color "#FF0000"
+                if temp < 30:
+                    text "My " + part.replace("_", " ") + " is Freezing Cold!" size 18 xalign 0.5 color "#00FFFF"
+                elif temp < 45:
+                    text "My " + part.replace("_", " ") + " is Very Cold!" size 18 xalign 0.5 color "#00BFFF"
+                elif temp < 65:
+                    text "My " + part.replace("_", " ") + " is Cold!" size 18 xalign 0.5 color "#1E90FF"
+                elif temp < 75:
+                    text "My " + part.replace("_", " ") + "'s temperature is fine." size 18 xalign 0.5 color "#32CD32"
+                elif temp < 80:
+                    text "My " + part.replace("_", " ") + " feels Warm." size 18 xalign 0.5 color "#FFD700"
+                elif temp < 90:
+                    text "My " + part.replace("_", " ") + " is too fucking hot!" size 18 xalign 0.5 color "#ff0000"
+                else:
+                    text "IT IS TOO FUCKING HOT!" size 18 xalign 0.5 color "#FF0000"
+            
+            # Medkit Button
             if has_item('medkit'):
                 textbutton "Use Medkit" action [Show("medkit_item_menu", part=part)] xalign 0.5
 
+            # Close Button
             textbutton "Close" action Hide("condition_details") xalign 0.5
+
 
 screen medkit_item_menu(part):
     modal True
