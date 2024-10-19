@@ -1,4 +1,3 @@
-
 screen status_screen():
     modal True
     frame:
@@ -7,10 +6,17 @@ screen status_screen():
         xalign 0.5
         yalign 0.5
         background "#000000"
+
+        # Calculate averages
+        $ average_health, average_cleanliness, average_temperature = calculate_averages()
+
+        $ medical_level = stats["medical"]["level"]
         $ can_view_health = is_stat_higher("medical", 100, stats)
-        $ can_view_health_small = is_stat_higher("medical", 50, stats)
+        $ can_view_health_small = is_stat_higher("medical", 59, stats)
+        $ can_view_hygiene = is_stat_higher("intelligence", 50, stats)
         vbox:
             text "My Health Overview" size 30 xalign 0.5
+
             for part in ["head", "body", "left_arm", "right_arm", "left_leg", "right_leg"]:
                 hbox:
                     text part.replace("_", " ").capitalize() + ":" xalign 0.0
@@ -19,12 +25,26 @@ screen status_screen():
                     if can_view_health:
                         bar value default_status[part]["health"] range 100 xmaximum 200 ymaximum 25 xalign 0.5
                         textbutton "View Status" action Show("condition_details", part=part) xalign 1.0
+
             vbox:  # To stack the sanity text and bar vertically
                 if can_view_health_small:
                     text "Current Sanity: [stats['sanity']['current_sanity']]" size 20 xalign 0.5
                 elif can_view_health:
                     bar value stats["sanity"]["current_sanity"] range 100 xmaximum 300 xalign 0.5
-                textbutton "Close" action Hide("status_screen") xalign 0.5
+
+            # Display averages
+            if can_view_health_small:
+                text "My Estimated Average Health: [average_health]%" size 20 xalign 0.5
+                bar value average_health range 100 xmaximum 200 ymaximum 25 xalign 0.5
+                text "Average Cleanliness: [average_cleanliness]%" size 20 xalign 0.5
+                bar value average_cleanliness range 100 xmaximum 200 ymaximum 25 xalign 0.5
+            if has_item("thermometer"):
+                text "Average Temperature: [average_temperature]°F" size 20 xalign 0.5
+                bar value average_temperature range 100 xmaximum 200 ymaximum 25 xalign 0.5
+
+            textbutton "Close" action Hide("status_screen") xalign 0.5
+
+
 
 
 

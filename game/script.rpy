@@ -75,6 +75,9 @@ init python:
     minhealth = 0
     maxhealth = 100
     full_weight = 0
+    total_health = 0
+    total_cleanliness = 0
+    total_temperature = 0
     current_selected_character = "Ben"
     current_strength = random.randint(36,45)  
     max_space = 10 + current_strength     
@@ -110,7 +113,25 @@ init python:
         "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "sanity": {"current_sanity": current_sanity}
         }    
-     
+    # Function to calculate averages
+    def calculate_averages():
+        total_health = 0
+        total_cleanliness = 0
+        total_temperature = 0
+        body_part_count = len(default_status)
+
+        for part, status in default_status.items():
+            total_health += status['health']
+            total_cleanliness += status['cleanliness']
+            total_temperature += status['temperature']
+
+        average_health = round(total_health / body_part_count)
+        average_cleanliness = round(total_cleanliness / body_part_count)
+        average_temperature = round(total_temperature / body_part_count)
+
+        return average_health, average_cleanliness, average_temperature
+
+    
     container_inventory = [
         {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
@@ -282,8 +303,6 @@ init python:
         """
         Add liquid to the selected_liquids list for combining.
         """
-        modify_cleanliness(left_arm, -5)
-        modify_cleanliness(right_arm, -5)        
         if liquid["amount"] > 0:
             selected_liquids.append({"name": liquid["name"], "amount": liquid["amount"]})
             renpy.notify(f"Added {liquid['name']} to mix.")
@@ -293,8 +312,9 @@ init python:
         """
         Combine selected liquids into a container and check if any mix recipes are satisfied.
         """
-        modify_cleanliness(left_arm, -5)
-        modify_cleanliness(right_arm, -5)        
+        global default_status
+        modify_cleanliness("left_arm", -3)
+        modify_cleanliness("right_arm", -3)        
         # Check if a container is selected
         if not container:
             renpy.notify("Please select a container.")
@@ -543,6 +563,7 @@ init python:
             default_status[part]['temperature'] += 2
 
     def modify_cleanliness(part, amount):
+        global default_status
         default_status[part]['cleanliness'] += amount
 
         default_status[part]['cleanliness'] = max(0, min(100, default_status[part]['cleanliness']))
@@ -750,7 +771,7 @@ init python:
     config.label_callback = label_callback
     def reduce_durability(armor_name, damage):
         global body_armor_item  # Ensure we can modify the equipped armor item
-        modify_cleanliness(part, -1)
+        modify_cleanliness("body", -1)
         if body_armor_item == "No Armor":
             renpy.notify("No armor is equipped, no durability reduction applied.")
             return  # Exit the function if no armor is equipped
@@ -809,8 +830,9 @@ init python:
         }
         return item_descriptions.get(item, "No description available.")
     def equip_item(arm, item):
-        global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space
-        modify_cleanliness(arm, -1)
+        global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space , default_status
+        modify_cleanliness("left_arm", -1)
+        modify_cleanliness("right_arm", -1)
         if get_remaining_space() < 0:
             renpy.notify("Your inventory space is negative.. How did you even do this?")
             return
@@ -954,9 +976,6 @@ label gameover:
     "Why don't you try loading a save..."
 label start:    
     hide screen character_selection
-    $ add_condition("head", "concussion")
-    $ add_condition("head", "minor brain damage")    
-    $ inventory.append("thermometer")
     $ rng = random.randint(1,100)
     show screen HUD    
     $ equip_item("body", "Type 07")
