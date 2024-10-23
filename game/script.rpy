@@ -57,7 +57,8 @@ default visited_elevator = False
 
 default visited_stairwell = False
 default skiped_samuel = True
-
+#
+default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
 default npc_name = "???"         # The default NPC name
 default npc_mood = "Normal"      # The default NPC mood
@@ -94,12 +95,12 @@ init python:
     # {"name": "Glue", "amount": 30}
     ]   
     default_status = {
-    "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
-    "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
-    "left_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
-    "right_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
-    "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100},
-    "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 100}
+    "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
+    "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
+    "left_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
+    "right_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
+    "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
+    "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
 
     stats = {
@@ -606,7 +607,6 @@ init python:
     def add_condition(part, new_condition):
         global default_status
         global maxhealth
-        modify_cleanliness(part, -1)
         maxhealth = maxhealth - 10
         remove_health(part, 10)
         if part in default_status:
@@ -771,7 +771,6 @@ init python:
     config.label_callback = label_callback
     def reduce_durability(armor_name, damage):
         global body_armor_item  # Ensure we can modify the equipped armor item
-        modify_cleanliness("body", -1)
         if body_armor_item == "No Armor":
             renpy.notify("No armor is equipped, no durability reduction applied.")
             return  # Exit the function if no armor is equipped
@@ -831,8 +830,6 @@ init python:
         return item_descriptions.get(item, "No description available.")
     def equip_item(arm, item):
         global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space , default_status
-        modify_cleanliness("left_arm", -1)
-        modify_cleanliness("right_arm", -1)
         if get_remaining_space() < 0:
             renpy.notify("Your inventory space is negative.. How did you even do this?")
             return
@@ -971,6 +968,48 @@ init python:
 #    $ inventory.append("Tactical flashlight")
 #    $ inventory.append("MG41")
 #    $ inventory.append("Medical Dictionary")
+    def get_left_area_text():
+        if location == "room1":
+            return "I found nothing on the left in room 1."
+        elif location == "room2":
+            return "I found a key on the left in room 2."
+        return "There's nothing interesting here."
+
+    def get_right_area_text():
+        if location == "room1":
+            return "You discovered a clue on the right side in room 1."
+        elif location == "room2":
+            return "There is a broken mirror on the right in room 2."
+        return "The right side is empty."
+
+    def get_look_up_text():
+        if location == "room1":
+            return "Looking up, you see a dusty old lamp in room 1."
+        elif location == "room2":
+            return "You see a ceiling fan spinning slowly in room 2."
+        return "Nothing but the ceiling."
+
+    def get_look_down_text():
+        if location == "room1":
+            return "Down below, there's a stack of books in room 1."
+        elif location == "room2":
+            return "You notice a strange mark on the floor in room 2."
+        return "The floor is empty."
+
+    def get_far_left_area_text():
+        if location == "room1":
+            return "There’s a hidden compartment on the far left in room 1."
+        elif location == "room2":
+            return "The far left contains a broken chair in room 2."
+        return "Nothing of interest on the far left."
+
+    def get_far_right_area_text():
+        if location == "room1":
+            return "You notice a shiny object on the far right in room 1."
+        elif location == "room2":
+            return "A painting is hung on the far right wall in room 2."
+        return "Nothing special on the far right."
+
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
@@ -1027,7 +1066,6 @@ label start:
             jump bootcampinsideprojectorroomstart 
 label bootcampinsideprojectorroomstart:
     scene bootcampinsideprojectorroomstartm
-
     if rng < 50:
         play music marchingon volume 0.1
     if rng > 50:
@@ -1037,6 +1075,7 @@ label bootcampinsideprojectorroomstart:
     BEN "Reporting in sir!"
     BEN "..."
     BEN "..."
+    show screen room_view  
     BEN "Who the hell called me here anyway?"    
     label choicesbootcampprojectorroom:
         scene bootcampinsideprojectorroomstartm
@@ -1062,12 +1101,12 @@ label bootcampinsideprojectorroomstart:
                     $ add_experience("speech", 1)
                     menu:
                         "SIR YES SIR":
-                            $projectorquest = True
+                            $ projectorquest = True
                             hide drillsarg normal
                             hide screen conversation_screen
                             jump choicesbootcampprojectorroom
                         "I am on it!":
-                            $projectorquest = True
+                            $ projectorquest = True
                             DRI "What the fuck did I just say to you private! Your lucky I don't beat your ass!"
                             hide drillsarg normal
                             hide screen conversation_screen
@@ -1359,20 +1398,6 @@ label outsideprojectorroom: #outside projector room
             scene apple
             show ben idle at left    
                     
-            if new_uniform_quest == True:
-                BEN "The people at this desk probably can order me a replacement uniform too."
-                BEN "Hello, I would like to order a new uniform, this one is not up to code."
-                Q4 "Not up to code?"
-                BEN "..."
-                Q4 "Looks fine to me"
-                BEN "..."
-                Q4 "..."
-                BEN "Just put in the order for a new one."
-                Q4 "Alright, I will phone up... It's going on your tab though. (Your usually sposed to ask the main desk this not us)"
-                BEN "Fine."
-                Q4 "Go upstairs to pick up your new uniform. It should be their by the time you get upstairs."
-                pause 1
-                $ uniform_ordered = True
             if talked_to_labatory == False:
                 $ samuel_r = samuel_r + 1
                 BEN "Finally, the research and devlopment desk, they might have a projector like the sargent asked for."
@@ -1385,18 +1410,22 @@ label outsideprojectorroom: #outside projector room
                 show ben back at center   
                 Q4 "Can you come closer to us while you talk?" 
                 BEN "Alright."
-                Q3 "No no its fine, the farther you stand from here the less of your stupid face I have to see. Out with it."
+                Q3 "No no its fine, the farther you stand from here the less of your stupid face I have to see. Out with it we are particularly busy today."
                 BEN "Do you have the password for the supply closet, it is locked."
                 Q4 "Which Supply Closet? There a dozens on this site alone. You don't expect me to know which one you are talking about, do you?"
                 BEN "The one to the hall on the left"
-                Q3 "I might have some papers relating to the new password, I don't know it off the top of my head. Let me go find it."
+                Q3 "I might have some papers relating to the new password, I don't know it off the top of my head. We are very busy today but I will see what I can do."
                 scene laboneman
                 show ben back at center            
                 Q4 "While my friend is gone do you have anything else to ask?"
                 if rng < 50:
                     BEN "(I feel like I am missing something...)"
                     BEN "(Maybe I should talk to someone..)"
-                BEN "Nothing else to do here"   
+                if rng > 50:
+                    BEN "What are you busy with?"
+                    Q4 "You didn't hear? The cats out of the bag. We have to clean all this shit up now."
+                    BEN "Huh?"
+                BEN "I don't have any more questions"   
                 pause 1
                 scene apple
                 show ben back at center            
@@ -1424,6 +1453,20 @@ label outsideprojectorroom: #outside projector room
             $ talked_to_labatory = True
             if talked_to_labatory == True:
                 BEN "I got everything done that I had to do here..."
+            if new_uniform_quest == True:
+                BEN "The people at this desk probably can order me a replacement uniform."
+                BEN "Hello, I would like to order a new uniform, this one is not up to code."
+                Q4 "Not up to code?"
+                BEN "..."
+                Q4 "Looks fine to me"
+                BEN "..."
+                Q4 "..."
+                BEN "Just put in the order for a new one."
+                Q4 "Alright, I will phone up... It's going on your tab though. (Your usually sposed to ask the main desk this not us)"
+                BEN "Fine."
+                Q4 "Go upstairs to pick up your new uniform. It should be their by the time you get upstairs."
+                pause 1
+                $ uniform_ordered = True                
                 menu:
                     "Move To The Left":
                         jump outsidecaferoom

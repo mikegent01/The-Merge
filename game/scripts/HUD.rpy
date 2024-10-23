@@ -4,7 +4,7 @@ screen HUD():
         ypos 0
         xminimum 0
         yminimum 1
-        background "#3a6b3a80"
+        background None  # Set the background to None for transparency
 
         has hbox
 
@@ -28,6 +28,7 @@ screen HUD():
             hover "Quest_Log_Hover"
             action Show("quest_log")
             padding (10, 10, 10, 10)
+
         # Head Log Icon
         imagebutton:
             idle "head"

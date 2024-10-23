@@ -156,17 +156,17 @@ screen condition_details(part):
             $ cleanliness = default_status[part]['cleanliness']
             if not can_view_health_small:
                 if cleanliness > 90:
-                    text "My " + part.replace("_", " ") + " is spotless!" size 18 xalign 0.5 color "#00ff008e"
+                    text "My " + part.replace("_", " ") + " is very clean" size 18 xalign 0.5 color "#00ff008e"
                 elif cleanliness > 75:
-                    text "My " + part.replace("_", " ") + " is clean!" size 18 xalign 0.5 color "#32CD32"
+                    text "My " + part.replace("_", " ") + " is clean" size 18 xalign 0.5 color "#32CD32"
                 elif cleanliness > 50:
                     text "My " + part.replace("_", " ") + " is somewhat clean." size 18 xalign 0.5 color "#FFD700"
                 elif cleanliness > 25:
-                    text "My " + part.replace("_", " ") + " is kinda dirty!" size 18 xalign 0.5 color "#FFA500"
+                    text "My " + part.replace("_", " ") + " is kind of dirty" size 18 xalign 0.5 color "#FFA500"
                 elif cleanliness > 10:
-                    text "My " + part.replace("_", " ") + " is filthy!" size 18 xalign 0.5 color "#ff0000"
+                    text "My " + part.replace("_", " ") + " is filthy" size 18 xalign 0.5 color "#ff0000"
                 else:
-                    text "My " + part.replace("_", " ") + " is fucking disgusting!" size 18 xalign 0.5 color "#FF0000"
+                    text "My " + part.replace("_", " ") + " is fucking disgusting" size 18 xalign 0.5 color "#FF0000"
             if can_view_health_small:
                 if can_view_hygiene:
                     text "Hygiene: [default_status[part]['cleanliness']]%" size 20 xalign 0.5
