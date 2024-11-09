@@ -36,52 +36,55 @@ screen HUD():
             hover "head_hover"
             action Show("player_stats_screen")
             padding (10, 10, 10, 10)
-
 screen quest_log():
+    # Main Frame for the Quest Log
     frame:
-        xpadding 20
-        ypadding 20
+        xpadding 30
+        ypadding 30
         xalign 0.5
         yalign 0.5
         background "#1a431a"
 
-        # Title
-        text "Quest Log" style "title"
-
         vbox:
-            spacing 15
-            align (0.5, 0.5)  # Center the vbox
+            spacing 20
+            align (0.5, 0.5)
 
-            # Quest: New Uniform Quest
-            if new_uniform_quest:  # Show this quest only if new_uniform_quest is True
-                hbox:
-                    spacing 10
+            # Title
+            text "Quest Log" style "title" xalign 0.5
 
-                    # Show check or cross emoji based on condition
-                    if uniform_ordered:
-                        text "✓" style "checkbox_emoji"  # Checked state (Completed)
-                    else:
-                        text "✗" style "checkbox_emoji"  # Unchecked state (Not completed)
+            # Quest List
+            vbox:
+                spacing 15
+                xalign 0.5
 
-                    # Quest Description
-                    text "Go to the front desk to order a new uniform." style "quest_text"
+                # New Uniform Quest
+                if new_uniform_quest:
+                    hbox:
+                        spacing 10
 
-            # Quest: Projector Quest
-            if projectorquest:  # Show this quest only if projectorquest is True
-                hbox:
-                    spacing 10
+                        # Check or Cross Icon
+                        text ("✓" if uniform_ordered else "✗") style "checkbox_emoji"
 
-                    # Show check or cross emoji based on condition
-                    if projector_obtained:
-                        text "✓" style "checkbox_emoji"  # Checked state (Completed)
-                    else:
-                        text "✗" style "checkbox_emoji"  # Unchecked state (Not completed)
+                        # Quest Description
+                        text "Go to the front desk to order a new uniform." style "quest_text"
 
-                    # Quest Description
-                    text "Get a new projector and bring it to the projector room." style "quest_text"
+                # Projector Quest
+                if projectorquest:
+                    hbox:
+                        spacing 10
 
-        # Close Button
-        textbutton "Close" action Hide("quest_log") align (0.5, 0.95)  # Align the button to the bottom center
+                        # Check or Cross Icon
+                        text ("✓" if projector_obtained else "✗") style "checkbox_emoji"
+
+                        # Quest Description
+                        text "Get a new projector and bring it to the projector room." style "quest_text"
+
+            # Close Button at the bottom
+            textbutton "Close":
+                action Hide("quest_log")
+                xalign 0.5
+                yalign 1.0
+                style "close_button"
 
 # Style for the title
 style title:

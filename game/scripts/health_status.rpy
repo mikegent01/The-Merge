@@ -55,40 +55,67 @@ screen player_stats_screen():
         ysize 900
         xalign 0.5
         yalign 0.5
-        background "#000000"
+        background "#111111"  # Dark background for the modal
 
         vbox:
-            text "\n"
-            text "\n"
-            text "My Stats" size 30 xalign 0.5 yalign 0.4
-            textbutton "Close" action Hide("player_stats_screen") xalign 0.5
-            # Entire content wrapped inside a viewport for unified scrolling
+            spacing 15
+            text "Player Stats" size 40 xalign 0.5 yalign 0.5 color "#FFFFFF" bold True
+            textbutton "Close" action Hide("player_stats_screen") xalign 0.5 background "#333333" padding (10, 5)
+
+            # Wrapping stats section in a viewport
             hbox:
                 viewport:
                     id "stats_viewport"
                     xsize 850
-                    ysize 750  # Adjusted to fit in most screens while leaving space for the close button
+                    ysize 750  # Make sure this is enough space for content, including image
                     draggable True
                     mousewheel True
-                    
-                    vbox:
-                        # Stats section
-                        for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
-                            vbox:
-                                text "[stat.replace('_', ' ').capitalize()] is level: [stats[stat]['level']]" size 15
-                                bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
-                                text "Skill is: [stats[stat]['current_value']]" size 15
-                                bar value stats[stat]["current_value"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-                                text "[stats[stat]['current_xp']] out of [stats[stat]['max_xp']] experience till next level" size 15
-                                bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-                                if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
-                                    textbutton "Level Up" action Function(level_up, stat)
-                                text "\n"
-                                text "\n"
-                                text "\n"
-                                text "\n"
 
+                    vbox:
+                        spacing 20
+                        for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
+                            # Stat container frame
+                            frame:
+                                background "#222222"
+                                padding (15, 10)
+                                hbox:
+                                    spacing 20  # Space between stat info and icon
+
+                                    # Stat info section on the left side
+                                    vbox:
+                                        spacing 12
+                                        text "[stat.replace('_', ' ').capitalize()]" size 30 color "#00CCFF" bold True
+                                        hbox:
+                                            text "Level: [stats[stat]['level']]" size 18 color "#CCCCCC"
+                                        bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
+                                        hbox:
+                                            text "Skill: [stats[stat]['current_value']]" size 18 color "#CCCCCC"
+                                        bar value stats[stat]["current_value"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+                                        hbox:
+                                            text "XP: [stats[stat]['current_xp']] / [stats[stat]['max_xp']]" size 18 color "#CCCCCC"
+                                        bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+
+                                        if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
+                                            textbutton "Level Up!" action Function(level_up, stat) background "#FFD700" foreground "#222222" padding (10, 5)
+
+                                    # Full-size icon section to the right of the stat box
+                                    frame:
+                                        background None  # Transparent background
+                                        xsize 210  # Adjusted to new size
+                                        ysize 607  # Adjusted to new size
+                                        vbox:
+                                            xalign 0.5
+                                            yalign 0.5
+                                            # Check if the icon exists and display it
+                                            $ icon_path = "images/stats_icons/{}.png".format(stat)
+                                            if renpy.exists(icon_path):
+                                                add icon_path xsize 210 ysize 607  # Full-size icon with adjusted size
+                                            else:
+                                                text "[stat.capitalize()] Icon" size 15 color "#CCCCCC"
+
+                # Vertical scroll bar for scrolling content
                 vbar value YScrollValue("stats_viewport") xsize 25
+
 screen heal_menu():
     modal True
     frame:

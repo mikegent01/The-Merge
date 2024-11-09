@@ -1,31 +1,39 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1057, in script
-    BEN "Reporting in sir!"
-  File "game/scripts/inventory_screen.rpy", line 228, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 228, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 229, in execute
+  File "game/script.rpy", line 1061, in script
+    BEN "..."
+  File "game/scripts/health_status.rpy", line 51, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 51, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 53, in execute
     frame:
-  File "game/scripts/inventory_screen.rpy", line 233, in execute
-    has vbox:
-  File "game/scripts/inventory_screen.rpy", line 242, in execute
-    viewport:
-  File "game/scripts/inventory_screen.rpy", line 250, in execute
+  File "game/scripts/health_status.rpy", line 60, in execute
     vbox:
-  File "game/scripts/inventory_screen.rpy", line 251, in execute
-    if current_mode == "construction":
-  File "game/scripts/inventory_screen.rpy", line 251, in <module>
-    if current_mode == "construction":
-NameError: name 'current_mode' is not defined
+  File "game/scripts/health_status.rpy", line 66, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 67, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 74, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 76, in execute
+    for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
+  File "game/scripts/health_status.rpy", line 77, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 80, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 85, in execute
+    if File(icon_path).exists():
+  File "game/scripts/health_status.rpy", line 85, in <module>
+    if File(icon_path).exists():
+NameError: name 'File' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1057, in script
-    BEN "Reporting in sir!"
+  File "game/script.rpy", line 1061, in script
+    BEN "..."
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
     Say.execute(self)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
@@ -58,25 +66,33 @@ Full traceback:
     self.update()
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/scripts/inventory_screen.rpy", line 228, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 228, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 229, in execute
+  File "game/scripts/health_status.rpy", line 51, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 51, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 53, in execute
     frame:
-  File "game/scripts/inventory_screen.rpy", line 233, in execute
-    has vbox:
-  File "game/scripts/inventory_screen.rpy", line 242, in execute
-    viewport:
-  File "game/scripts/inventory_screen.rpy", line 250, in execute
+  File "game/scripts/health_status.rpy", line 60, in execute
     vbox:
-  File "game/scripts/inventory_screen.rpy", line 251, in execute
-    if current_mode == "construction":
-  File "game/scripts/inventory_screen.rpy", line 251, in <module>
-    if current_mode == "construction":
-NameError: name 'current_mode' is not defined
+  File "game/scripts/health_status.rpy", line 66, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 67, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 74, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 76, in execute
+    for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
+  File "game/scripts/health_status.rpy", line 77, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 80, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 85, in execute
+    if File(icon_path).exists():
+  File "game/scripts/health_status.rpy", line 85, in <module>
+    if File(icon_path).exists():
+NameError: name 'File' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Fri Nov  8 22:17:45 2024
+Fri Nov  8 22:48:23 2024

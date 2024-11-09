@@ -1,10 +1,10 @@
-2024-11-09 03:21:31 UTC
+2024-11-09 21:46:14 UTC
 Windows-10-10.0.22631
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
 Loading error handling took 0.02s
-Loading script took 0.26s
+Loading script took 0.07s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
 Running init code took 0.03s
@@ -12,11 +12,10 @@ Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.02s
+Initial gc took 0.03s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
@@ -24,12 +23,12 @@ Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.01s
-Prepare screens took 0.05s
-Save pyanalysis. took 0.01s
-Save bytecode. took 0.02s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
 Running _start took 0.00s
 Interface start took 0.03s
 
@@ -46,9 +45,9 @@ Maximum texture size: 4096x4096
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 Resetting cache.
-Early init took 294.66s
+Early init took 834.67s
 Loading error handling took 0.02s
-Loading script took 0.07s
+Loading script took 0.06s
 Loading save slot metadata took 0.01s
 Loading persistent took 0.00s
 Running init code took 0.02s
@@ -56,24 +55,23 @@ Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.03s
+Dump and make backups took 0.02s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
 Initial gc took 0.03s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.15s
+Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.01s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
 Prepare screens took 0.04s
-Save pyanalysis. took 0.01s
-Save bytecode. took 0.01s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
 Running _start took 0.00s
 Interface start took 0.02s
 
