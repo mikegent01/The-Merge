@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/HUD.rpy", line 18: the hovered keyword argument was not given a value.
-    hovered:
-           ^
+File "game/script.rpy", line 57: invalid syntax
+    = construction
+     ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon Oct 21 16:11:59 2024
+Fri Nov  8 22:18:30 2024

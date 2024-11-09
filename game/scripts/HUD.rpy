@@ -9,11 +9,12 @@ screen HUD():
         has hbox
 
         # Backpack Icon
-        imagebutton:
-            idle "Backpack"
-            hover "Backpack_Hover"
-            action Show("inventory")
-            padding (10, 10, 10, 10)
+        if inventory:
+            imagebutton:
+                idle "Backpack"
+                hover "Backpack_Hover"
+                action Show("inventory")
+                padding (10, 10, 10, 10)
 
         # Health Icon
         imagebutton:

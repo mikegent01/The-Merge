@@ -54,7 +54,7 @@ default samuel_r = 0
 default visted_outside_projector_room = False
 default visted_outside_closet_room = False
 default visited_elevator = False
-
+default current_mode = "construction"
 default visited_stairwell = False
 default skiped_samuel = True
 #
@@ -89,8 +89,8 @@ init python:
     selected_liquids = []   
     holding_items = ["Tape", "Glue", "Screwdriver"]
     liquid_inventory = [
-        {"name": "Water", "amount": 100},    # 100 units of water
-        {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
+    #    {"name": "Water", "amount": 100},    # 100 units of water
+    #    {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
     #   {"name": "Oil", "amount": 30},       # 30 units of oil
     # {"name": "Glue", "amount": 30}
     ]   
@@ -134,7 +134,7 @@ init python:
 
     
     container_inventory = [
-        {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
+    #    {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
     selected_holding_item = None
     selected_container = None       
@@ -153,6 +153,16 @@ init python:
         ("Laser range finder", "Tactical flashlight"): {"result": "Laser Tactical Kit", "holding_item": "Glue"},
         ("Compass", "radio"): {"result": "Navigation Radio", "holding_item": "Screwdriver"}
     }
+#
+    def is_container_empty():
+           for item in container_inventory:
+               if item["current_amount"] == 0 and not item["contents"]:
+                   return True
+           return False
+#
+
+
+#
     def add_crafting_item(item):
         if len(crafting_items) < 2:
             crafting_items.append(item)
@@ -486,10 +496,6 @@ init python:
         "Naproxen": {"conditions": ["headache"], "healing": 10}
 
     }
-    def change_temperature(body_part, new_temperature):
-        if body_part in default_status:
-            default_status[body_part]['temperature'] = new_temperature
-
 
     def level_up(stat_name):
         if stat_name in stats:
@@ -520,24 +526,7 @@ init python:
             renpy.pause(2)  
             renpy.hide(selected_screen["image"], transition=dissolve)
 
-    def add_temperature(part, amount):
-        """Increase the temperature of a specified body part."""
-        if part in default_status:
-            default_status[part]['temperature'] += amount
-            check_temperature(part)
-        else:
-            print(f"'{part}' is not a valid body part.")
-
-    def remove_temperature(part, amount):
-        """Decrease the temperature of a specified body part."""
-        if part in default_status:
-            default_status[part]['temperature'] -= amount
-            check_temperature(part)
-        else:
-            print(f"'{part}' is not a valid body part.")
-
     def check_temperature(part):
-        """Check the temperature of a specified body part and update status if needed."""
         temp = default_status[part]['temperature']
         if temp > 90:
             default_status[part]['status'] = "overheated"
@@ -830,6 +819,7 @@ init python:
         return item_descriptions.get(item, "No description available.")
     def equip_item(arm, item):
         global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space , default_status
+        checkarmorupdatetemp()
         if get_remaining_space() < 0:
             renpy.notify("Your inventory space is negative.. How did you even do this?")
             return
@@ -895,7 +885,29 @@ init python:
 
         renpy.restart_interaction()  # Restart the interaction after discarding the item
 
-    # Function to add liquid to the inventory
+    def checkarmorupdatetemp():
+        global body_armor_item , default_status
+        current_temp = default_status["body"]['temperature']
+        if body_armor_item == "No Armor":
+            default_status["body"]['temperature'] = current_temp + 25
+        elif body_armor_item == "Type 07":
+            default_status["body"]['temperature'] = current_temp - 25
+        for part in default_status:
+            check_temperature(part)
+
+    def set_room_temperature(room_temp):
+        for part, attributes in default_status.items():
+            if part == "body":
+                temperature_variation = random.uniform(0, 2)  
+                default_status[part]['temperature'] = round(room_temp + 10 + temperature_variation)  
+            elif part == "head":
+                temperature_variation = random.uniform(-2, 2) 
+                default_status[part]['temperature'] = round(room_temp + 5 + temperature_variation)
+            else:
+                temperature_variation = random.uniform(-3, 3)  
+                default_status[part]['temperature'] = round(room_temp + temperature_variation)
+        checkarmorupdatetemp()
+
     def add_liquid(liquid_name, amount):
         for liquid in liquid_inventory:
             if liquid["name"] == liquid_name:
@@ -968,48 +980,21 @@ init python:
 #    $ inventory.append("Tactical flashlight")
 #    $ inventory.append("MG41")
 #    $ inventory.append("Medical Dictionary")
-    def get_left_area_text():
-        if location == "room1":
-            return "I found nothing on the left in room 1."
-        elif location == "room2":
-            return "I found a key on the left in room 2."
-        return "There's nothing interesting here."
-
-    def get_right_area_text():
-        if location == "room1":
-            return "You discovered a clue on the right side in room 1."
-        elif location == "room2":
-            return "There is a broken mirror on the right in room 2."
-        return "The right side is empty."
-
-    def get_look_up_text():
-        if location == "room1":
-            return "Looking up, you see a dusty old lamp in room 1."
-        elif location == "room2":
-            return "You see a ceiling fan spinning slowly in room 2."
-        return "Nothing but the ceiling."
-
-    def get_look_down_text():
-        if location == "room1":
-            return "Down below, there's a stack of books in room 1."
-        elif location == "room2":
-            return "You notice a strange mark on the floor in room 2."
-        return "The floor is empty."
-
-    def get_far_left_area_text():
-        if location == "room1":
-            return "There’s a hidden compartment on the far left in room 1."
-        elif location == "room2":
-            return "The far left contains a broken chair in room 2."
-        return "Nothing of interest on the far left."
-
-    def get_far_right_area_text():
-        if location == "room1":
-            return "You notice a shiny object on the far right in room 1."
-        elif location == "room2":
-            return "A painting is hung on the far right wall in room 2."
-        return "Nothing special on the far right."
-
+#    $ equip_item("body", "Type 07")
+#    $ inventory.append("compass")
+#    $ inventory.append("Laser range finder")
+#    $ inventory.append("First aid kit")
+#    $ inventory.append("radio")
+#    $ inventory.append("Tactical flashlight")
+#    $ inventory.append("MG41")    
+#    $ inventory.append("thermometer")
+   # $ inventory.append("compass")
+   # $ inventory.append("Laser range finder")
+   # $ inventory.append("First aid kit")
+   # $ inventory.append("radio")
+   # $ inventory.append("Tactical flashlight")
+   # $ inventory.append("MG41")    
+   # $ inventory.append("thermometer")
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
@@ -1017,7 +1002,7 @@ label start:
     hide screen character_selection
     $ rng = random.randint(1,100)
     show screen HUD    
-    $ equip_item("body", "Type 07")
+    $ set_room_temperature (72)
     jump bootcampinsideprojectorroomstart
     scene bg mayor
     play sound buzzer
@@ -1075,7 +1060,6 @@ label bootcampinsideprojectorroomstart:
     BEN "Reporting in sir!"
     BEN "..."
     BEN "..."
-    show screen room_view  
     BEN "Who the hell called me here anyway?"    
     label choicesbootcampprojectorroom:
         scene bootcampinsideprojectorroomstartm
@@ -1538,10 +1522,15 @@ label outsideprojectorroom: #outside projector room
                     jump upstairsmilitaryentrance
         label upstairsmilitaryentrance:
                 scene bg militaryentrance
+                $ set_room_temperature (65)
                 BEN "Finally some fresh air."
                 BEN "Once I fix the projector we can finally get breifed on this mission."
                 if uniform_ordered == True:
-                    BEN "I should go to the left firsr."
+                    BEN "I should go to the left first to pick up my uniform."
+                menu:
+                    "Go Down":
+                        $ set_room_temperature (72)
+                        jump insidestairwell                    
                     
     return
 

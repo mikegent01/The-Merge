@@ -73,11 +73,11 @@ screen inventory:
 
             # Button to show the equipable armor screen
             textbutton "Equip Armor" action Show("equip_armor")
-            textbutton "Create Items" action Show("crafting_screen")
-            textbutton "Create Liquids" action Show("combine_liquids_screen")
-            textbutton "View Containers" action Show("liquid_management_screen")
-
-            # Close button in bottom-right corner
+            if inventory:
+                textbutton "Create Items" action Show("crafting_screen")
+            if is_container_empty():              
+                textbutton "Create Liquids" action Show("combine_liquids_screen")
+                textbutton "View Containers" action Show("liquid_management_screen")
             textbutton "Close" action Hide("inventory"):
                 xalign 1.0
                 yalign 1.0

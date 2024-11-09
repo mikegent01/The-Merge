@@ -1,33 +1,43 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1222, in script
-    menu:
-  File "game/scripts/search screen.rpy", line 9, in execute
-    screen info_left():
-  File "game/scripts/search screen.rpy", line 9, in execute
-    screen info_left():
-  File "game/scripts/search screen.rpy", line 10, in execute
+  File "game/script.rpy", line 1057, in script
+    BEN "Reporting in sir!"
+  File "game/scripts/inventory_screen.rpy", line 228, in execute
+    screen crafting_screen():
+  File "game/scripts/inventory_screen.rpy", line 228, in execute
+    screen crafting_screen():
+  File "game/scripts/inventory_screen.rpy", line 229, in execute
     frame:
-  File "game/scripts/search screen.rpy", line 11, in execute
-    has vbox
-  File "game/scripts/search screen.rpy", line 13, in execute
-    if renpy.get_previous_label() == "outsideprojectorroom":
-  File "game/scripts/search screen.rpy", line 13, in <module>
-    if renpy.get_previous_label() == "outsideprojectorroom":
-AttributeError: module 'renpy.exports' has no attribute 'get_previous_label'
+  File "game/scripts/inventory_screen.rpy", line 233, in execute
+    has vbox:
+  File "game/scripts/inventory_screen.rpy", line 242, in execute
+    viewport:
+  File "game/scripts/inventory_screen.rpy", line 250, in execute
+    vbox:
+  File "game/scripts/inventory_screen.rpy", line 251, in execute
+    if current_mode == "construction":
+  File "game/scripts/inventory_screen.rpy", line 251, in <module>
+    if current_mode == "construction":
+NameError: name 'current_mode' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1222, in script
-    menu:
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1618, in execute
-    choice = renpy.exports.menu(choices, self.set, args, kwargs, item_arguments)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1109, in menu
-    rv = renpy.store.menu(new_items)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1364, in display_menu
-    rv = renpy.ui.interact(mouse='menu', type=type, roll_forward=roll_forward)
+  File "game/script.rpy", line 1057, in script
+    BEN "Reporting in sir!"
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
+    Say.execute(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
+    who(what, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
+    display_say(who,
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
+    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
@@ -48,21 +58,25 @@ Full traceback:
     self.update()
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/scripts/search screen.rpy", line 9, in execute
-    screen info_left():
-  File "game/scripts/search screen.rpy", line 9, in execute
-    screen info_left():
-  File "game/scripts/search screen.rpy", line 10, in execute
+  File "game/scripts/inventory_screen.rpy", line 228, in execute
+    screen crafting_screen():
+  File "game/scripts/inventory_screen.rpy", line 228, in execute
+    screen crafting_screen():
+  File "game/scripts/inventory_screen.rpy", line 229, in execute
     frame:
-  File "game/scripts/search screen.rpy", line 11, in execute
-    has vbox
-  File "game/scripts/search screen.rpy", line 13, in execute
-    if renpy.get_previous_label() == "outsideprojectorroom":
-  File "game/scripts/search screen.rpy", line 13, in <module>
-    if renpy.get_previous_label() == "outsideprojectorroom":
-AttributeError: module 'renpy.exports' has no attribute 'get_previous_label'
+  File "game/scripts/inventory_screen.rpy", line 233, in execute
+    has vbox:
+  File "game/scripts/inventory_screen.rpy", line 242, in execute
+    viewport:
+  File "game/scripts/inventory_screen.rpy", line 250, in execute
+    vbox:
+  File "game/scripts/inventory_screen.rpy", line 251, in execute
+    if current_mode == "construction":
+  File "game/scripts/inventory_screen.rpy", line 251, in <module>
+    if current_mode == "construction":
+NameError: name 'current_mode' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Tue Oct 22 12:13:08 2024
+Fri Nov  8 22:17:45 2024
