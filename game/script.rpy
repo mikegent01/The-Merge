@@ -64,9 +64,6 @@ default npc_name = "???"         # The default NPC name
 default npc_mood = "Normal"      # The default NPC mood
 default npc_attitude = "Neutral" # The default NPC attitude
 
-#jump bootcampinsideprojectorroomstart
-#radio
-# Variables to track stats and experience (to be defined in init or elsewhere)
 
 #pytrhon
 init python:
@@ -86,6 +83,9 @@ init python:
     crafting_items = []
     selected_items = []
     mixed_liquids = []    
+    inventory = []
+    left_arm_item = None
+    right_arm_item = None    
     selected_liquids = []   
     holding_items = ["Tape", "Glue", "Screwdriver"]
     liquid_inventory = [
@@ -94,6 +94,8 @@ init python:
     #   {"name": "Oil", "amount": 30},       # 30 units of oil
     # {"name": "Glue", "amount": 30}
     ]   
+
+
     default_status = {
     "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
     "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
@@ -114,7 +116,35 @@ init python:
         "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "sanity": {"current_sanity": current_sanity}
         }    
-    # Function to calculate averages
+    deconstruction_recipes = {
+        "Laser Tactical Kit": ["Laser range finder", "Tactical flashlight", "Glue"],
+        "Navigation Radio": ["Compass", "Radio", "Screwdriver"],
+        "First Aid Kit": ["Bandage", "Antibiotics", "Acetaminophen", "SOFT-T"],
+        "Flashlight": ["Bulb", "Battery", "Reflector"],
+        "radio": ["Antenna", "Battery", "Circuit Board"]
+        # Add more items as needed
+    }
+    def deconstruct_item(item):
+        global inventory  # Only need inventory for this function
+
+        # Check if the item can be deconstructed
+        if item in deconstruction_recipes:
+            # Get the list of components required for this item
+            components = deconstruction_recipes[item]
+
+            # Add the components back to the inventory
+            for component in components:
+                inventory.append(component)
+
+            # Remove the deconstructed item from the inventory
+            inventory.remove(item)
+
+            # Notify the player of successful deconstruction
+            renpy.notify(f"You deconstructed {item} into: {', '.join(components)}.")
+        else:
+            # Notify the player if the item cannot be deconstructed
+            renpy.notify(f"{item} cannot be deconstructed.")
+
     def calculate_averages():
         total_health = 0
         total_cleanliness = 0
@@ -209,7 +239,7 @@ init python:
             selected_items.remove(item)
 #
     def select_item(item):
-        if item not in selected_items and len(selected_items) < 2:  # Allow only two selections
+        if item not in selected_items and len(selected_items) < 10:  # Allow only two selections
             selected_items.append(item)
 #
     def add_liquid(liquid_name):
@@ -711,9 +741,7 @@ init python:
 
 
     current_space_taken = 0  # Tracks the total weight of items in the inventory
-    inventory = []
-    left_arm_item = None
-    right_arm_item = None
+
     def calculate_total_weight():
         """Calculate the total weight of items in the inventory."""
         total_weight = sum(get_item_weight(item) for item in inventory)
@@ -1002,6 +1030,9 @@ label start:
     hide screen character_selection
     $ rng = random.randint(1,100)
     show screen HUD    
+    $ inventory.append("Laser range finder")
+    $ inventory.append("First aid kit")
+    $ inventory.append("radio")    
     $ set_room_temperature (72)
     jump bootcampinsideprojectorroomstart
     scene bg mayor

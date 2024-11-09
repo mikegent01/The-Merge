@@ -225,7 +225,6 @@ screen item_select(arm):
                             
             # Cancel button
             textbutton "Cancel" action Hide("item_select")
-
 screen crafting_screen():
     frame:
         xalign 0.5
@@ -259,6 +258,7 @@ screen crafting_screen():
                                     textbutton "Select" action [SetVariable("selected_item", item), Function(select_item, item)]
                                 else:
                                     text item
+                                    textbutton "Select" action [SetVariable("selected_item", item), Function(select_item, item)]
 
                         # Divider
                         text " "
@@ -271,6 +271,7 @@ screen crafting_screen():
                                 textbutton "Remove" action [SetVariable("selected_item", selected_item), Function(remove_item, selected_item)]
                             else:
                                 text selected_item
+                                textbutton "Remove" action [SetVariable("selected_item", selected_item), Function(remove_item, selected_item)]
 
                         # Divider
                         text " "
@@ -310,6 +311,7 @@ screen crafting_screen():
                                 textbutton "Deconstruct " + item action [SetVariable("selected_item", item), Function(deconstruct_item, item)]
                             else:
                                 text item
+                                textbutton "Deconstruct " + item action [SetVariable("selected_item", item), Function(deconstruct_item, item)]
 
                         # Divider
                         text " "

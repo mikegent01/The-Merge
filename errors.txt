@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/HUD.rpy", line 47: keyword argument 'area' is incompatible with 'xalign'.
-    area (0, 0, 600, 400)  
-        ^
+File "game/script.rpy", line 94: expected statement.
+    def deconstruct_item(item):
+                        ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Nov  9 11:23:27 2024
+Sat Nov  9 17:53:28 2024
