@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 94: expected statement.
-    def deconstruct_item(item):
-                        ^
+File "game/scripts/inventory_screen.rpy", line 390: expected a keyword argument, colon, or end of line.
+    grid len(selected_container["contents"]), 1 spacing 5: 
+                                            ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Nov  9 17:53:28 2024
+Wed Nov 13 22:39:40 2024

@@ -1030,11 +1030,11 @@ label start:
     hide screen character_selection
     $ rng = random.randint(1,100)
     show screen HUD    
-    $ inventory.append("Laser range finder")
-    $ inventory.append("First aid kit")
-    $ inventory.append("radio")    
+  #  $ inventory.append("Laser range finder")
+  #  $ inventory.append("First aid kit")
+  #  $ inventory.append("radio")    
     $ set_room_temperature (72)
-    jump bootcampinsideprojectorroomstart
+    jump upstairsmilitaryentrance
     scene bg mayor
     play sound buzzer
     Q "Come in."
@@ -1088,10 +1088,8 @@ label bootcampinsideprojectorroomstart:
         play music boot_camp volume 0.5
     show ben idle at left with dissolve 
     $ slot_count = 1 
-    BEN "Reporting in sir!"
-    BEN "..."
-    BEN "..."
-    BEN "Who the hell called me here anyway?"    
+    BEN "This is the place."
+    $ inventory.append("radio")    
     label choicesbootcampprojectorroom:
         scene bootcampinsideprojectorroomstartm
         hide ben idle
@@ -1242,20 +1240,22 @@ label bootcampinsideprojectorroomstart:
                 else:               
                     SUL "..."
                     SUL "I know bro..."
-                    SUL "My shirt kinda got ripped up bro..."
-                    BEN "How did it get ripped up?"
-                    SUL "In my barracks it got caught on the bed railings bro."
-                    SUL "I had to cut it off when I woke up bro."
-                    BEN "You ripped off your shirt?"
-                    SUL "No, I just cut it off. It is not fully ripped off bro"
-                    SUL "I snuck some sissor into the barracks last night. I don't need them anymore bro"
-                    BEN "You snuck in some sissor?"
-                    SUL "Yeah I was going to get back at eric for messing up yesterday bro"
-                    BEN "I can imagine..."
-                    SUL "Here you go bro"
-                    BEN "Huh- I don't need these"
-                    SUL "Nah it is fine you can keep them bro"
+                    SUL "Can you do me a favor"
+                    BEN "What?"
+                    SUL "Can you fill up my watter bottle bro?"
+                    BEN "I am not your errand boy"
+                    SUL "How about this I will throw in something nice for you bro."
+                    BEN "What?"
+                    SUL "Check it out bro!"
                     $ inventory.append("sissor")
+                    BEN "Sizzors?"
+                    SUL "Yup what do you say bro?"
+                    BEN "Is this a joke?"
+                    SUL "You are a hard sell bro."
+                    $ container_inventory.append({"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []})
+                    $ inventory.append("Water Bottle")
+                    SUL "Can you at least throw this out for me bro."
+                    BEN "Fine just don't ask for anything else."
                     hide sultan right
                     hide screen conversation_screen                
                     jump choicesbootcampprojectorroom          
@@ -1555,56 +1555,18 @@ label outsideprojectorroom: #outside projector room
                 scene bg militaryentrance
                 $ set_room_temperature (65)
                 BEN "Finally some fresh air."
-                BEN "Once I fix the projector we can finally get breifed on this mission."
+                $ inventory.append("Water Bottle")
+                $ container_inventory.append({"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []})
+                $ liquid_inventory.append(  {"name": "Water", "amount": 100} )
+                BEN "What the hell is that ugly water fountain..."
+                BEN "Once I fix the projector I can finally get breifed on this mission."
                 if uniform_ordered == True:
                     BEN "I should go to the left first to pick up my uniform."
+                else:
+                    BEN "I should get this thing fixed I think the workshop is to the right."
                 menu:
                     "Go Down":
                         $ set_room_temperature (72)
                         jump insidestairwell                    
                     
     return
-
-#    $ inventory.append("MG41")
-#    $ inventory.append("Broccoli")
-#    $ inventory.append("Cabbage")
-#    $ inventory.append("Pear")
-#    $ inventory.append("Pepper")
-#    $ inventory.append("Potato")
-#    $ inventory.append("Pumpkin")
-#    $ inventory.append("Lemon")
-#    $ inventory.remove("Lemon")
-#    "$ inventory.remove('Lemon')"
-
-#    return
-#label Forest:
-#    show Forest
-#    "Alright, let's put our newfound inventory wisdom to the test in this lush forest setting."
-#    "Imagine you're designing a game, and your player is wandering through a forest when, out of the blue, they stumble upon a valuable item – an 'Apple'! That's a score!"
-#    $ inventory.append("Apple")
-#
-#    "Now we have added this mystery apple to our inventory"
-#    "This is where your game design skills shine. You've given your player a life-changing reward that's sure to make their gaming experience better."
-#    "Not only did they receive it from the benevolent forest goddess, but they've also earned some extra love points. It's like hitting three birds with one stone!"
-#
-#    "Now, let's get back to the tutorial. In simple terms, here's what we're doing: we're checking if your inventory contains a specific item. If it does, something special will happen in your game."
-#
-#    if "Apple" in inventory:
-#        "You're nailing this game design thing! The apple is safely tucked in their inventory, and your player is in for a treat."
-#        "Now let's add 1000 gold and a mystical compass. Trust me; it'll come in handy!"
-#        $ gold += 1000
-#        $ inventory.append("Compass")
-#        "Take a quick look at the inventory in the HUD screen."
-#    else:
-#        "Oops, it seems the apple slipped away this time. No worries, we've got a backup plan."
-#        "Behold, a fish! Think of it as a consolation prize. But next time, don't forget to stock up on those apples."
-#        $ inventory.append('Fish')
-#
-#    hide Forest
-#
-#    jump End
-#
-#return
-#
-#return
-# 

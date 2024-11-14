@@ -1,18 +1,17 @@
-2024-11-09 23:43:45 UTC
+2024-11-14 03:29:39 UTC
 Windows-10-10.0.22631
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
 Loading error handling took 0.02s
-Loading script took 0.17s
+Loading script took 0.14s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.03s
+Running init code took 0.04s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
 Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -24,12 +23,1082 @@ Creating interface object took 0.15s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 189.03s
+Loading error handling took 0.02s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 379: keyword argument 'spacing' appears more than once in a hbox statement.
+    spacing 10
+           ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.20s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 208.65s
+Loading error handling took 0.02s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.01s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 378.98s
+Loading error handling took 0.01s
+Loading script took 0.10s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 340: screen expects a non-empty block.
+    screen combine_liquids_screen():
+                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 341: expected statement.
+        frame:
+             ^
+
+File "game/scripts/inventory_screen.rpy", line 344: expected statement.
+            vbox:
+                ^
+
+File "game/scripts/inventory_screen.rpy", line 346: end of line expected.
+                text "Combine Liquids" style "heading_text" align (0.5, 0.5)
+                                       ^
+
+File "game/scripts/inventory_screen.rpy", line 347: end of line expected.
+                text "Select a container and add liquids to create your desired mix." style "subheading_text" align (0.5, 0.5)
+                                                                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 348: expected statement.
+                spacing 20
+                          ^
+
+File "game/scripts/inventory_screen.rpy", line 351: expected statement.
+                vbox:
+                    ^
+
+File "game/scripts/inventory_screen.rpy", line 352: expected statement.
+                    spacing 10
+                              ^
+
+File "game/scripts/inventory_screen.rpy", line 353: end of line expected.
+                    text "1. Choose a Container" style "category_title" align (0.0, 0.5)
+                                                 ^
+
+File "game/scripts/inventory_screen.rpy", line 354: expected statement.
+                    grid len(container_inventory), 1 spacing 10:
+                            ^
+
+File "game/scripts/inventory_screen.rpy", line 355: expected statement.
+                        for container in container_inventory:
+                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 356: expected statement.
+                            frame:
+                                 ^
+
+File "game/scripts/inventory_screen.rpy", line 358: expected statement.
+                                padding (10, 10)
+                                                ^
+
+File "game/scripts/inventory_screen.rpy", line 359: expected statement.
+                                vbox:
+                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 360: end of line expected.
+                                    text f"{container['name']} - {container['current_amount']}/{container['capacity']} ml" style "container_text"
+                                                                                                                           ^
+
+File "game/scripts/inventory_screen.rpy", line 361: if statement expects a non-empty block.
+                                    if selected_container != container:
+                                                                       ^
+
+File "game/scripts/inventory_screen.rpy", line 362: end of line expected.
+                                        textbutton "Select" action SetVariable("selected_container", container) style "container_button"
+                                                            ^
+
+File "game/scripts/inventory_screen.rpy", line 363: expected statement.
+                                    else:
+                                        ^
+
+File "game/scripts/inventory_screen.rpy", line 364: end of line expected.
+                                        text "✔ Selected" style "selected_text"
+                                                          ^
+
+File "game/scripts/inventory_screen.rpy", line 367: expected statement.
+                vbox:
+                    ^
+
+File "game/scripts/inventory_screen.rpy", line 368: expected statement.
+                    spacing 10
+                              ^
+
+File "game/scripts/inventory_screen.rpy", line 369: end of line expected.
+                    text "2. Select Liquids to Add" style "category_title" align (0.0, 0.5)
+                                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 370: expected statement.
+                    grid len(liquid_inventory), 1 spacing 10:
+                            ^
+
+File "game/scripts/inventory_screen.rpy", line 371: expected statement.
+                        for liquid in liquid_inventory:
+                                   ^
+
+File "game/scripts/inventory_screen.rpy", line 372: if statement expects a non-empty block.
+                            if liquid["amount"] > 0:
+                                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 373: expected statement.
+                                frame:
+                                     ^
+
+File "game/scripts/inventory_screen.rpy", line 375: expected statement.
+                                    padding (10, 10)
+                                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 376: expected statement.
+                                    vbox:
+                                        ^
+
+File "game/scripts/inventory_screen.rpy", line 377: end of line expected.
+                                        text f"{liquid['name']} - {liquid['amount']} ml available" style "liquid_text"
+                                                                                                   ^
+
+File "game/scripts/inventory_screen.rpy", line 378: if statement expects a non-empty block.
+                                        if liquid in selected_liquids:
+                                                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 379: end of line expected.
+                                            text "✔ Selected for Addition" style "added_text"
+                                                                           ^
+
+File "game/scripts/inventory_screen.rpy", line 380: expected statement.
+                                        else:
+                                            ^
+
+File "game/scripts/inventory_screen.rpy", line 381: end of line expected.
+                                            textbutton "Add to container" action Function(add_liquid_to_selected, liquid) style "add_button"
+                                                                          ^
+
+File "game/scripts/inventory_screen.rpy", line 384: if statement expects a non-empty block.
+                if selected_container:
+                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 385: expected statement.
+                    vbox:
+                        ^
+
+File "game/scripts/inventory_screen.rpy", line 386: expected statement.
+                        spacing 10
+                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 387: end of line expected.
+                        text "Selected Container Details" style "category_title" align (0.0, 0.5)
+                                                          ^
+
+File "game/scripts/inventory_screen.rpy", line 388: end of line expected.
+                        text f"{selected_container['name']} - {selected_container['current_amount']}/{selected_container['capacity']} ml" style "selected_container_text" align (0.0, 0.5)
+                                                                                                                                          ^
+
+File "game/scripts/inventory_screen.rpy", line 389: end of line expected.
+                        text "Contents:" style "subheading_text" align (0.0, 0.5)
+                                         ^
+
+File "game/scripts/inventory_screen.rpy", line 390: expected statement.
+                        grid len(selected_container["contents"]), 1 spacing 5:
+                                ^
+
+File "game/scripts/inventory_screen.rpy", line 391: expected statement.
+                            for content in selected_container["contents"]:
+                                        ^
+
+File "game/scripts/inventory_screen.rpy", line 392: expected statement.
+                                frame:
+                                     ^
+
+File "game/scripts/inventory_screen.rpy", line 394: expected statement.
+                                    padding (5, 5)
+                                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 395: expected statement.
+                                    hbox:
+                                        ^
+
+File "game/scripts/inventory_screen.rpy", line 396: end of line expected.
+                                        text f"{content['name']} - {content['amount']} ml" style "content_text"
+                                                                                           ^
+
+File "game/scripts/inventory_screen.rpy", line 397: end of line expected.
+                                        textbutton "Drain 10 ml" action Function(drain_liquid, selected_container, content["name"]) style "drain_button"
+                                                                 ^
+
+File "game/scripts/inventory_screen.rpy", line 400: if statement expects a non-empty block.
+                if selected_liquids:
+                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 401: expected statement.
+                    vbox:
+                        ^
+
+File "game/scripts/inventory_screen.rpy", line 402: expected statement.
+                        spacing 10
+                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 403: end of line expected.
+                        text "Liquids to be Added:" style "subheading_text" align (0.0, 0.5)
+                                                    ^
+
+File "game/scripts/inventory_screen.rpy", line 404: expected statement.
+                        grid len(selected_liquids), 1 spacing 5:
+                                ^
+
+File "game/scripts/inventory_screen.rpy", line 405: expected statement.
+                            for liquid in selected_liquids:
+                                       ^
+
+File "game/scripts/inventory_screen.rpy", line 406: expected statement.
+                                frame:
+                                     ^
+
+File "game/scripts/inventory_screen.rpy", line 408: expected statement.
+                                    padding (5, 5)
+                                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 409: end of line expected.
+                                    text f"{liquid['name']} - {liquid['amount']} ml" style "selected_liquid_text"
+                                                                                     ^
+
+File "game/scripts/inventory_screen.rpy", line 412: if statement expects a non-empty block.
+                if selected_container:
+                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 413: expected statement.
+                    hbox:
+                        ^
+
+File "game/scripts/inventory_screen.rpy", line 414: expected statement.
+                        spacing 20
+                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 415: if statement expects a non-empty block.
+                        if selected_liquids:
+                                            ^
+
+File "game/scripts/inventory_screen.rpy", line 416: end of line expected.
+                            textbutton "Add Liquids to Container" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
+                                                                  ^
+
+File "game/scripts/inventory_screen.rpy", line 417: expected statement.
+                        elif check_mix_recipe(selected_container):
+                                             ^
+
+File "game/scripts/inventory_screen.rpy", line 418: end of line expected.
+                            textbutton "Mix Contents" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
+                                                      ^
+
+File "game/scripts/inventory_screen.rpy", line 419: expected statement.
+                        else:
+                            ^
+
+File "game/scripts/inventory_screen.rpy", line 420: end of line expected.
+                            text "No valid mix recipe for the selected container." style "error_text" align (0.5, 0.5)
+                                                                                   ^
+
+File "game/scripts/inventory_screen.rpy", line 423: expected statement.
+                hbox:
+                    ^
+
+File "game/scripts/inventory_screen.rpy", line 424: end of line expected.
+                    textbutton "Cancel" action Hide("combine_liquids_screen") style "cancel_button" align (0.5, 0.5)
+                                        ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.21s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 385.11s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10:
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 386.51s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10:
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 412.14s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: grid statement expects 2 positional arguments, got 1.
+    grid len(container_inventory):
+                                  ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 517.39s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10: 
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.21s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 519.66s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10: 
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 520.63s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10: 
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 521.25s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10: 
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 521.79s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 354: expected a keyword argument, colon, or end of line.
+    grid len(container_inventory), 1 spacing 10: 
+                                 ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.20s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 544.39s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: expected a keyword argument, colon, or end of line.
+    grid len(liquid_inventory), 1 spacing 10: 
+                              ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 549.04s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: expected a keyword argument, colon, or end of line.
+    grid len(liquid_inventory), 1 spacing 10: 
+                              ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.20s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 555.17s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: expected a keyword argument, colon, or end of line.
+    grid len(liquid_inventory), 1 spacing 10: 
+                              ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.21s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 556.75s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: expected a keyword argument, colon, or end of line.
+    grid len(liquid_inventory), 1 spacing 10: 
+                              ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.20s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 557.37s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: expected a keyword argument, colon, or end of line.
+    grid len(liquid_inventory), 1 spacing 10: 
+                              ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 575.49s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 370: Line is indented, but the preceding text statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    grid len(liquid_inventory) 1 spacing 10: 
+    ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.21s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 601.10s
+Loading error handling took 0.01s
+Loading script took 0.08s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+
+File "game/scripts/inventory_screen.rpy", line 390: expected a keyword argument, colon, or end of line.
+    grid len(selected_container["contents"]), 1 spacing 5: 
+                                            ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.19s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 617.73s
+Loading error handling took 0.01s
+Loading script took 0.09s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.01s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.02s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 664.52s
+Loading error handling took 0.01s
+Loading script took 0.09s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.01s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 735.40s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 753.62s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 775.08s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
 Save screen analysis took 0.01s
 Prepare screens took 0.04s
-Save pyanalysis. took 0.01s
-Save bytecode. took 0.02s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 831.36s
+Loading error handling took 0.01s
+Loading script took 0.06s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 859.19s
+Loading error handling took 0.01s
+Loading script took 0.09s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.02s
+Save bytecode. took 0.01s
 Running _start took 0.00s
 Interface start took 0.03s
 

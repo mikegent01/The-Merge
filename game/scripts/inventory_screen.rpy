@@ -75,9 +75,8 @@ screen inventory:
             textbutton "Equip Armor" action Show("equip_armor")
             if inventory:
                 textbutton "Create Items" action Show("crafting_screen")
-            if is_container_empty():              
-                textbutton "Create Liquids" action Show("combine_liquids_screen")
-                textbutton "View Containers" action Show("liquid_management_screen")
+            textbutton "Create Liquids" action Show("combine_liquids_screen")
+            textbutton "View Containers" action Show("liquid_management_screen")
             textbutton "Close" action Hide("inventory"):
                 xalign 1.0
                 yalign 1.0
@@ -337,83 +336,92 @@ screen liquid_management_screen():
                         bar value liquid['amount'] range 118  # Horizontal bar representation
 
             textbutton "Close" action Hide("liquid_management_screen")  # Button to close the screen
-
 screen combine_liquids_screen():
     frame:
-        # Main container for the entire screen
-        background "#113111"
+        background "#1B3D1B" # Darker shade for elegance
 
         vbox:
-            # Subheading for the screen
-            text "Select a container and liquids to combine." style "subheading_text" align (0.5, 0.5)
+            # Header and Instructions
+            text "Combine Liquids" style "heading_text" align (0.5, 0.5)
+            text "Select a container and add liquids to create your desired mix." style "subheading_text" align (0.5, 0.5)
+            spacing 20
 
             # ------------------- Containers Section -------------------
-            label "Containers" style "category_title" align (0.5, 0.5)
-            hbox:
-                for container in container_inventory:
-                    vbox:
-                        text f"{container['name']} - {container['current_amount']}/{container['capacity']} ml  " style "container_text" 
-                        # Conditional buttons for selecting containers
-                        if selected_container != container:
-                            textbutton "Select" action SetVariable("selected_container", container) style "container_button"
-                        else:
-                            text " ✔ Selected" style "selected_text"  # Indicate selection
-                    # Add space between containers
-
+            vbox:
+                spacing 10
+                text "1. Choose a Container" style "category_title" align (0.0, 0.5)
+                grid len(container_inventory) 1 spacing 10: # Corrected grid syntax
+                    for container in container_inventory:
+                        frame:
+                            background "#2A4A2A"
+                            padding (10, 10)
+                            vbox:
+                                text f"{container['name']} - {container['current_amount']}/{container['capacity']} ml" style "container_text"
+                                if selected_container != container:
+                                    textbutton "Select" action SetVariable("selected_container", container) style "container_button"
+                                else:
+                                    text "✔ Selected" style "selected_text"
+            
             # ------------------- Available Liquids Section -------------------
-            label "Available Liquids" style "subheading_text" align (0.5, 0.5)
-            hbox:
-                for liquid in liquid_inventory:
-                    if liquid["amount"] > 0:
-                        vbox:
-                            text f"{liquid['name']} - {liquid['amount']} ml available  " style "liquid_text"
-                            if liquid in selected_liquids:
-                                text " ✔ Selected to be added to container" style "added_text"  # Indicate already added
-                            else:
-                                textbutton "Add to container" action [Function(add_liquid_to_selected, liquid)] style "add_button"
-                        # Add space between liquids
-                    #    spacing 10
-
-            # ------------------- Selected Container and Liquids Section -------------------
+            vbox:
+                spacing 10
+                text "2. Select Liquids to Add" style "category_title" align (0.0, 0.5)
+                grid len(liquid_inventory) 1 spacing 10: # Corrected grid syntax
+                    for liquid in liquid_inventory:
+                        if liquid["amount"] > 0:
+                            frame:
+                                background "#2F523F"
+                                padding (10, 10)
+                                vbox:
+                                    text f"{liquid['name']} - {liquid['amount']} ml available" style "liquid_text"
+                                    if liquid in selected_liquids:
+                                        text "✔ Selected for Addition" style "added_text"
+                                    else:
+                                        textbutton "Add to container" action Function(add_liquid_to_selected, liquid) style "add_button"
+            
+            # ------------------- Selected Container and Contents Section -------------------
             if selected_container:
-                label "Selected Container" style "subheading_text" align (0.5, 0.5)
-                hbox:
-                    text f"{selected_container['name']} - {selected_container['current_amount']}/{selected_container['capacity']} ml  " style "selected_container_text" align (0.5, 0.5)
+                vbox:
+                    spacing 10
+                    text "---------------------------"
+                    text "Selected Container Details" style "category_title" align (0.0, 0.5)
+                    text f"{selected_container['name']} - {selected_container['current_amount']}/{selected_container['capacity']} ml" style "selected_container_text" align (0.0, 0.5)
+                    text "Contents:" style "subheading_text" align (0.0, 0.5)
+                    grid len(selected_container["contents"]) 1 spacing 5: # Corrected grid syntax
+                        for content in selected_container["contents"]:
+                            frame:
+                                background "#3A5C4A"
+                                padding (5, 5)
+                                hbox:
+                                    text f"{content['name']} - {content['amount']} ml" style "content_text"
+                                    textbutton "Drain 10 ml" action Function(drain_liquid, selected_container, content["name"]) style "drain_button"
 
-                label "Contents Inside Container:" style "subheading_text" align (0.5, 0.5)
-                hbox:
-                    for content in selected_container["contents"]:
-                        vbox:
-                            text f"{content['name']} - {content['amount']} ml  " style "content_text"
-                            textbutton "Drain 10 ml" action [Function(drain_liquid, selected_container, content["name"])] style "drain_button"
-                        # Add space between contents
-
-
-                # ------------------- Selected Liquids to Add Section -------------------
-                label "Selected Liquids to Add:" style "subheading_text" align (0.5, 0.5)
-                hbox:
-                    for liquid in selected_liquids:
-                        text f"{liquid['name']} - {liquid['amount']} ml " style "selected_liquid_text"
-                        # Add space between selected liquids
+            # ------------------- Selected Liquids to Add Section -------------------
+            if selected_liquids:
+                vbox:
+                    spacing 10
+                    text "Liquids to be Added:" style "subheading_text" align (0.0, 0.5)
+                    grid len(selected_liquids) 1 spacing 5: # Corrected grid syntax
+                        for liquid in selected_liquids:
+                            frame:
+                                background "#3A5C4A"
+                                padding (5, 5)
+                                text f"{liquid['name']} - {liquid['amount']} ml" style "selected_liquid_text"
 
             # ------------------- Combine and Mix Buttons -------------------
             if selected_container:
                 hbox:
+                    spacing 20
                     if selected_liquids:
-                        textbutton "Add to container." action [Function(combine_liquids, selected_container, selected_liquids)] style "combine_button"
+                        textbutton "Add Liquids to Container" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
+                    elif check_mix_recipe(selected_container):
+                        textbutton "Mix Contents" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
                     else:
-                        text "\n"
-                        if check_mix_recipe(selected_container):
-                            textbutton "Mix" action [Function(combine_liquids, selected_container, selected_liquids)] style "combine_button"
-                        else:
-                            text "This mixture would not make anything of note..." style "error_text" align (0.5, 0.5)
-                        
-            else:
-                text "\n"
-                text "Please select a container and some liquids." style "error_text" align (0.5, 0.5)
+                        text "No valid mix recipe for the selected container." style "error_text" align (0.5, 0.5)
 
             # ------------------- Cancel Button -------------------
-            textbutton "Cancel" action Hide("combine_liquids_screen") style "cancel_button"
+            hbox:
+                textbutton "Cancel" action Hide("combine_liquids_screen") style "cancel_button" align (0.5, 0.5)
 
 
 screen use_liquid_screen():
