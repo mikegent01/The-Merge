@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/inventory_screen.rpy", line 390: expected a keyword argument, colon, or end of line.
-    grid len(selected_container["contents"]), 1 spacing 5: 
-                                            ^
+File "game/script.rpy", line 1629: choice menuitem expects a non-empty block.
+    "Use Computer":
+                   ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Wed Nov 13 22:39:40 2024
+Sat Nov 23 14:12:09 2024

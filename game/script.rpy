@@ -18,7 +18,8 @@ define JES = Character("Jesus")
 define MAR = Character("Marc")
 define MEO = Character("Meowbahh")
 define MIK = Character("Mike")
-define MAR = ("Marc")
+define MAR = Character("Marc")
+define EMA = Character("Emma")
 define MYS = Character("Mystery Man")
 define PLA = Character("Placeholder")
 define PRE = Character("President")
@@ -57,6 +58,9 @@ default visited_elevator = False
 default current_mode = "construction"
 default visited_stairwell = False
 default skiped_samuel = True
+define locked_computer_room = False
+default used_computer_in_computer_room = False
+default knowswifipasswordchapterone = False
 #
 default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
@@ -1034,7 +1038,7 @@ label start:
   #  $ inventory.append("First aid kit")
   #  $ inventory.append("radio")    
     $ set_room_temperature (72)
-    jump upstairsmilitaryentrance
+    jump insidecomputerroom
     scene bg mayor
     play sound buzzer
     Q "Come in."
@@ -1120,7 +1124,10 @@ label bootcampinsideprojectorroomstart:
                             jump choicesbootcampprojectorroom
                         "I am on it!":
                             $ projectorquest = True
+                            "What the fuck did I just say..."
+                            "I-I wasn't thinking..."
                             DRI "What the fuck did I just say to you private! Your lucky I don't beat your ass!"
+                            BEN "SIR YES SIR! I WILL GET YOUR PROJECTOR!"
                             hide drillsarg normal
                             hide screen conversation_screen
                             jump choicesbootcampprojectorroom
@@ -1151,20 +1158,21 @@ label bootcampinsideprojectorroomstart:
                 show bag maskamn at right
                 BAG "What!"
                 BEN "Calm down I did not even say anything yet."
-                BAG "I lost my watch, do you have it?"
                 BEN "Did you call me here?"
                 BAG 'No!'
+                "I should end this conversation here."
                 BEN "Why would I have your watch?"
                 BAG "Can you look for it, in your backpack?"
                 BEN "My backpack?"
+                $ inventory.append("Pocket Watch")
                 BAG "Just go in it, click the backpack icon in the top left corner!"
                 BEN "What the hell are you talking about?"
                 BAG "Just give me your backpack!"
                 BEN "What the hell, no!"
+                "This guy is insane.."
                 BAG "If you don't want to help me, just go away..."
                 hide bag maskamn
                 hide ben idle
-                BEN "He was friendly..."
                 $ bagman_r = bagman_r - 1
                 hide screen conversation_screen                
                 jump choicesbootcampprojectorroom
@@ -1188,12 +1196,17 @@ label bootcampinsideprojectorroomstart:
                     $ add_experience("speech", 1)
                     menu:
                         "It is alright":
+                            "I lied to him..."
+                            "..."
                             $sultan_r = sultan_r + 5
                             $ set_npc("Bag Man", "Neutral", "Normal")
                             hide sultan right
                             hide screen conversation_screen                
                             jump choicesbootcampprojectorroom     
                         "I am sorry too":
+                            "I don't want to apologize..."
+                            "I bite my tongue.."
+                            SUL "..."
                             $sultan_r = sultan_r + 10
                             $ set_npc("Bag Man", "Neutral", "Calming Down")
                             SUL 'It is alright we all get pissed off sometimes bro.'
@@ -1201,7 +1214,7 @@ label bootcampinsideprojectorroomstart:
                             hide screen conversation_screen                
                             jump choicesbootcampprojectorroom 
                         "Nah fuck off":
-                            SUL 'Alright fuck you too bro.'
+                            SUL 'Alright fuck you too bro.' 
                             $sultan_r = sultan_r - 5
                             $ set_npc("Bag Man", "Neutral", "Very Angry")
                             hide sultan right         
@@ -1220,7 +1233,9 @@ label bootcampinsideprojectorroomstart:
                     SUL "Maybe you are just stupid bro."
                     BEN "..."
                     SUL "Yeah you are pretty stupid if you just put it on wihtout thikning bro."
-                    SUL "Take it off right now! Go to your inventory and click on Equip Armor and equip no armor."
+                    SUL "Take it off right now, I'll wait."
+                    "..."
+                    "(You can choose to take off your armor if you wish too)"
                     if body_armor_item = "No Armor":
                         SUL "Thank god, I got really upset there..."
                         SUL "Sorry about that"
@@ -1242,7 +1257,7 @@ label bootcampinsideprojectorroomstart:
                     SUL "I know bro..."
                     SUL "Can you do me a favor"
                     BEN "What?"
-                    SUL "Can you fill up my watter bottle bro?"
+                    SUL "Can you throw out my trash for me?"
                     BEN "I am not your errand boy"
                     SUL "How about this I will throw in something nice for you bro."
                     BEN "What?"
@@ -1287,17 +1302,22 @@ label outsideprojectorroom: #outside projector room
                 show ben idle at left
                 show samuel redbook at right
                 $ set_npc("Samuel", "Neutral", "Tiered")
-                show screen conversation_screen                
+                show screen conversation_screen   
+                "What the hell is he doing here?"
+                "Talking to him will be a mistake..."             
                 BEN "What are you doing?"
                 SAM "Huh?"
                 BEN "Aren't you supposed to on mess duty?"
-                SAM "Oh that, right. I was searching through that supply closet over there and this book fell on me. Figured id ask the sarg about it."
+                SAM "Oh that, right. I was searching through that supply closet over there and this book fell on me. Figured id ask barns about it."
                 BEN "Why the hell where you going through the supply closet?"
-                SAM "Than I realized I was on mess duty so if I told him I would get scolled for it."
+                SAM "Than I realized I was on mess duty so if I told him I would get scolded for it."
+                "He is ignoring me..."
                 SAM "I should probably go return it and than sneak back before anyone notices."
+                "I should report him for this..."
                 BEN "..."
-                SAM "Yeah so ill go do that, see ya!"
+                SAM "Yeah so i'll go do that, see ya!"
                 BEN "..."
+                "Finally alone again.."
                 $ samuel_r = samuel_r - 1
                 $ set_npc("Samuel", "Angry", "Annoyed")
                 hide samuel redbook
@@ -1321,21 +1341,24 @@ label outsideprojectorroom: #outside projector room
                 jump passcodemenuc1
                             
             BEN "I think this is were the projector film is located."
-            BEN "I guess I should try opening the door."
+            BEN "I should try opening the door."
             $ visted_outside_closet_room = True
             
             if samuel_r != 0:
                 $ set_npc("Samuel", "Bored", "Annoyed")                
                 show screen conversation_screen                
+                "Oh great, someone got to the door before me."
                 SAM "What the hell is this?!"
                 SAM "The door has a passcode, is this some kind of prank?"
                 if skiped_samuel == True:
                     BEN "What are you doing here shouldn't you be on mess duty?"
                     SAM "Huh? Oh right, I was on mess duty. Anyway I need help opening this door"
-                    BEN "(I need to get a projector inside of this room, I might as well help him.)"
+                    "I need to get a projector inside of this room."
+                    "I can kill two birds with one stone if, he will leave me alone and I will get the projector."
                     BEN "Alright, I will see what I can do."
                     SAM "Thanks."
                 if skiped_samuel == False:
+                    "I wish I could be left alone."
                     BEN "You had to enter the password to open the door before didn't you?"
                     SAM "Nah it was left open..."
                 hide screen conversation_screen
@@ -1377,10 +1400,13 @@ label outsideprojectorroom: #outside projector room
                                 SAM "I got good news."
                                 BEN "Huh?"
                                 SAM "I got wifi access!"
-                                BEN "Wifi Password? Don't they change that every week"
+                                BEN "Wifi Password?"
+                                "I really don't care..."
                                 SAM "Yeah, check it out!"
                                 show sam phonejack
                                 "The number 136.228.116.222 is the IP address shown on screen"
+                                $ knowswifipasswordchapterone = True
+                                "I just need to act nice and he will leave me alone..."
                                 BEN "Didn't you show me this before? Thanks..."
 
                             BEN "Looks like the password was wrong..."
@@ -1415,7 +1441,9 @@ label outsideprojectorroom: #outside projector room
                     
             if talked_to_labatory == False:
                 $ samuel_r = samuel_r + 1
-                BEN "Finally, the research and devlopment desk, they might have a projector like the sargent asked for."
+                BEN "Finally, the research and devlopment desk, they might have a projector like the sarg asked for."
+                BEN "Once this is all done I can be left alone."
+                Q3 "..."
                 BEN "I better go closer to them so they can hear me better."
                 hide ben idle
                 show ben idle at center
@@ -1455,6 +1483,7 @@ label outsideprojectorroom: #outside projector room
                 $ add_experience("speech", 1)
                 menu:
                     "Ask to check them":
+                        "Anything to get this over with"
                         BEN "Can I see the papers anyway?"
                         Q3 "Sure let me lay them out for you."
                         $ htmlopen("003")                    
@@ -1518,33 +1547,28 @@ label outsideprojectorroom: #outside projector room
                 BEN "The elevator is mainly for disabled people."
                 BEN "Not that I ever saw someone use it for themselves..."
                 if rng >= 75:
-                    BEN "Lazy bastards."
+                    "Lazy bastards."
             if talked_to_labatory == False:
                 BEN "I should really work on getting the projector before going up stairs.."
-                BEN "Although id be nice to get some sunlight here."
-                $ liquid_inventory.append({"name": "Water", "amount": 300})
+                BEN "Although It would be nice to get some sunlight here."
             menu:
                 "Go Up Elevator" if talked_to_labatory == True:
                     "*Click*"
                     if visited_elevator == False:
                         BEN "Nothing happened"
                         BEN "I guess I should take the stairs."
-                        $ remove_item_by_name(liquid_inventory, "Water")
                         $ visited_elevator = True
                     jump elevator
                 "Move To The Right":
                     $ visited_elevator = True
-                    $ remove_item_by_name(liquid_inventory, "Water")
                     jump outsideprojectorroom
                 "Move To The Left":
                     $ visited_elevator = True
-                    $ remove_item_by_name(liquid_inventory, "Water")
                     jump stairwell
                    
         label insidestairwell:
             scene bg storewaystairwellfixed
             BEN "Did I forget anything?"
-        #  $ check_all_containers_for_liquid("Oil")
             BEN "Did I ask everyone I coud?" 
             menu:
                 "Go back":
@@ -1557,9 +1581,10 @@ label outsideprojectorroom: #outside projector room
                 BEN "Finally some fresh air."
                 $ inventory.append("Water Bottle")
                 $ container_inventory.append({"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []})
-                $ liquid_inventory.append(  {"name": "Water", "amount": 100} )
                 BEN "What the hell is that ugly water fountain..."
+                $ liquid_inventory.clear()                
                 BEN "Once I fix the projector I can finally get breifed on this mission."
+                BEN "Once I get breifed I can finally have alone time."
                 if uniform_ordered == True:
                     BEN "I should go to the left first to pick up my uniform."
                 else:
@@ -1567,6 +1592,89 @@ label outsideprojectorroom: #outside projector room
                 menu:
                     "Go Down":
                         $ set_room_temperature (72)
-                        jump insidestairwell                    
-                    
+                        jump insidestairwell
+                    "Go Right":
+                        jump waterfountaintutorial
+                    "Go Left":
+                        jump workshop
+        label waterfountaintutorial: # aka mainchance hall
+            scene bg waterfountain
+            menu:
+                "View water fountain":
+                    BEN "I wonder if this water fountain works?" 
+                    if has_item("Water Bottle"):
+                        BEN "I can fill up my water bottle with this fountain."
+                        $ liquid_inventory.append(  {"name": "Water", "amount": 100} )
+                        "I should check my inventory, click on Create Liquids."
+                        "Once I do that I should select the water and my water bottle."       
+                        "Once my water bottle is full of water I can drain the liquid or mix it with another liquid."
+                        "I don't have a reason to use it now but I may later."
+                    else:
+                        BEN "It turned on..."
+                        "I drank the water"
+                        BEN "*Cough Cough"
+                        "It tasted like shit..."
+                        "Maybe I should stick to drinking soda..."                  
+                "Go Left":
+                    jump upstairsmilitaryentrance
+                "Go Right":
+                    jump outsidecomputerroom
+        label outsidecomputerroom:
+            scene bg outsidecomputerroom
+            menu:
+                "Enter Computer Room" if locked_computer == False:
+                    jump insidecomputerroom
+                "Move To The Left":
+                    jump waterfountaintutorial
+                "Move To The Right":
+                    jump shop_center
+        label insidecomputerroom:
+            scene bg insidecomputerroom
+            menu:
+                "Go Back":
+                    jump outsidecomputerroom
+                "Use Computer":
+                    $ used_computer_in_computer_room = True
+                    jump computer
+                "Talk to woman in front":
+                    $ set_npc("???", "???", "Unkown")
+                    show screen conversation_screen
+                    "Another person that is not doing there job..."
+                    "Might as well get this over with.."
+                    BEN "Excuse me but can I-"
+                    BEN "*Cough* *Cough*"
+                    "What the hell is that smell"
+                    window hide
+                    $ renpy.pause(0.5)
+                    "She raised her eyebrows and narrowed her eyes at the site of me."
+                    EMA "Huh? I haven't seen you before have I?"
+                    window show
+                    BEN "No. I wanted to ask you a question."
+                    "She looks annoyed"
+                    EMA "Yes what is it?"
+                    if used_computer_in_computer_room == True:
+                        if = knowswifipasswordchapterone == False:
+                            BEN "I need the password for the internet."
+                            EMA "The password? It changes every week. It should have changed today.."
+                            BEN "So what's the password?"
+                            "She puts out her cigarette."
+                            "Its a good thing no fire alarm went off."
+                            EMA "I don't know."
+                            BEN "What do you mean you don't know?"
+                            EMA "I am not in charge of this place."
+                            BEN "Your not?"
+                            EMA "Yeah sorry if it looked like that."
+                            EMA "Either way, my break is ending, lets get out of here"
+                            BEN "I still have some things I need to do.."
+                            EMA "Yeah i'll lock up this place."
+                            BEN "I am still using this computer though."
+                            EMA "I know. its policy thuogh, I can't leave rooms empty."
+                            EMA "I don't trust you enough to give you my key either sorry"                        
+                            $ locked_computer = true
+                            hide screen conversation_screen
+                            jump outsidecomputerroom
+                        if knowswifipasswordchapterone == True:
+                            BEN "You know any computer commands?"
+        label shop_center:
+            scene bg shop_center            
     return
