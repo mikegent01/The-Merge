@@ -32,7 +32,7 @@ define Q2 = Character ("?????",color="#8fe406ff")
 define Q3 = Character ("??????",color="#14a122")
 define Q4 = Character ("???????",color="#97239e")
 define k =Character("Keemstar",color="#0000FF")
-
+define co = Character("Commanding Officer Miller",color="#0000FF")
 # Default inventory with some items as string names
 default left_arm_item = None
 default right_arm_item = None
@@ -61,6 +61,7 @@ default skiped_samuel = True
 define locked_computer_room = False
 default used_computer_in_computer_room = False
 default knowswifipasswordchapterone = False
+default scpnotifiedending = True
 #
 default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
@@ -1609,12 +1610,16 @@ label outsideprojectorroom: #outside projector room
                         "Once I do that I should select the water and my water bottle."       
                         "Once my water bottle is full of water I can drain the liquid or mix it with another liquid."
                         "I don't have a reason to use it now but I may later."
+                        "Anyway I'll dump the rest I am done ehre"
+                        $ liquid_inventory.clear()
+                        jump waterfountaintutorial
                     else:
                         BEN "It turned on..."
                         "I drank the water"
                         BEN "*Cough Cough"
                         "It tasted like shit..."
-                        "Maybe I should stick to drinking soda..."                  
+                        "Maybe I should stick to drinking soda..."  
+                        jump waterfountaintutorial                
                 "Go Left":
                     jump upstairsmilitaryentrance
                 "Go Right":
@@ -1622,7 +1627,7 @@ label outsideprojectorroom: #outside projector room
         label outsidecomputerroom:
             scene bg outsidecomputerroom
             menu:
-                "Enter Computer Room" if locked_computer == False:
+                "Enter Computer Room" if "locked_computer" == False:
                     jump insidecomputerroom
                 "Move To The Left":
                     jump waterfountaintutorial
@@ -1634,8 +1639,39 @@ label outsideprojectorroom: #outside projector room
                 "Go Back":
                     jump outsidecomputerroom
                 "Use Computer":
+                    $ htmlopen("002")
+                    BEN "Seems like the computer turned on"
+                    if  knowswifipasswordchapterone == False:
+                        BEN "It says status offline, maybe I can turn it online somehow."
+                    if  knowswifipasswordchapterone == True:
+                        BEN "I have the supposed wifi password."
+                        if  used_computer_in_computer_room == False:
+                            BEN "Maybe I should type in help, and find out what command I need to use to connect to something."
+                        if  used_computer_in_computer_room == True:
+                            BEN 'I just need to type connect and the address.'
+                    else:
+                        BEN "I should try typing help and maybe I can connect to something from there."
+                    if used_computer_in_computer_room == True:
+                        BEN "..."
+                        BEN "Its asking for something..."
+                        $ psswrd = renpy.input("PROCESS CODE:")
+                        $ psswrd = psswrd.strip()       
+                        if psswrd == "78391":        
+                            $ scpnotifiedending = True
+                            BEN "Is this some kind of prank?"
+                            BEN "How the hell would they know that I was the one to do this."
+                            BEN "I am leaving n-"
+                            play sound cofcall
+                            BEN "Shit"
+                            scene black
+                            with fade
+                            "*Some time later*"
+                            while renpy.sound.is_playing(channel="sound"):
+                                pause(0.1)                  
+                            jump ch1end3
                     $ used_computer_in_computer_room = True
-                    jump computer
+
+                    jump insidecomputerroom
                 "Talk to woman in front":
                     $ set_npc("???", "???", "Unkown")
                     show screen conversation_screen
@@ -1653,28 +1689,66 @@ label outsideprojectorroom: #outside projector room
                     "She looks annoyed"
                     EMA "Yes what is it?"
                     if used_computer_in_computer_room == True:
-                        if = knowswifipasswordchapterone == False:
+                        if  knowswifipasswordchapterone == False:
+                            show ena at left
                             BEN "I need the password for the internet."
                             EMA "The password? It changes every week. It should have changed today.."
                             BEN "So what's the password?"
                             "She puts out her cigarette."
-                            "Its a good thing no fire alarm went off."
-                            EMA "I don't know."
-                            BEN "What do you mean you don't know?"
-                            EMA "I am not in charge of this place."
+                            "Its a good thing no fire alarm went off from her smoking inside."
+                            EMA "These computers don't even have capabilities to connect to the internet."
+                            BEN "What do you mean it says it is not connected?"
+                            EMA "I am not in charge of this place. It is not my problem"
                             BEN "Your not?"
-                            EMA "Yeah sorry if it looked like that."
-                            EMA "Either way, my break is ending, lets get out of here"
+                            EMA "Either way, my break is ending, I am leaving."
                             BEN "I still have some things I need to do.."
-                            EMA "Yeah i'll lock up this place."
-                            BEN "I am still using this computer though."
-                            EMA "I know. its policy thuogh, I can't leave rooms empty."
-                            EMA "I don't trust you enough to give you my key either sorry"                        
+                            EMA "Not my problem. Come on we are leaving."
+                            BEN "Look i NEED to use that computer."
+                            EMA "I can't leave this room empty."
+                            EMA "I don't trust you enough to levae you alone anyway."                        
                             $ locked_computer = true
                             hide screen conversation_screen
                             jump outsidecomputerroom
                         if knowswifipasswordchapterone == True:
-                            BEN "You know any computer commands?"
+                            BEN "Something weird is going on with the computer?"
+                            EMA "Something weird?"
         label shop_center:
-            scene bg shop_center            
+            scene bg shop_center
+        label ch1end3:
+            scene bg ch1end3
+            with fade
+            co "I don't have to tell you why I called you here do I?"
+            BEN "no sir!"
+            co "Thoose doccuments you viewed are on a NEED TO KNOW basis do you understand that."            
+            BEN "yes sir!"
+            co "Your actions are an insult not only to this branch,but to the entire army as a whole."
+            co "You must now pay for your actions. Do you understand."
+            BEN "yes sir"
+            co "I will allow you to leave. once you drop down and give me 500."
+            BEN "yes sir!"
+            co "SOUND OFF LIKE YOU GOT A PAIR"
+            BEN "SIR YES SIR! I WILL DO 500 PUSHUPS."
+            co "GOOD"
+            "*Some hours later*"
+            BEN "Am I done yet.."
+            co "Absolutely not, you will be finished when I tell you, I want to see your hands bleed, do you understand,"
+            BEN "SIR YES SIR"
+            "*Some hours later*"
+            play sound ctat
+            $ add_condition ("body", "Muscle sores")
+            $ add_condition ("body", "Aches")
+            $ add_condition ("right_arm", "Muscle sores")
+            $ add_condition ("left_arm", "Muscle sores")
+            $ remove_health ("left_arm", 50)
+            $ remove_health ("right_arm", 50)
+            $ remove_health ("body", 10)
+            BEN "My fucking body hurts, ugg."
+            BEN "I am going to rest for a bit."
+            scene black
+            with fade
+            $ add_health ("left_arm", 50)
+            $ add_health ("right_arm", 50)
+            $ add_health ("body", 10)
+
+
     return
