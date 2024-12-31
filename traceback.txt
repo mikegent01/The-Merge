@@ -1,26 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1742, in script
-    $ remove_health (left_arm, 50)
-  File "game/script.rpy", line 1742, in <module>
-    $ remove_health (left_arm, 50)
-NameError: name 'left_arm' is not defined
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1742, in script
-    $ remove_health (left_arm, 50)
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1742, in <module>
-    $ remove_health (left_arm, 50)
-NameError: name 'left_arm' is not defined
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Thu Dec  5 17:11:50 2024
+Tue Dec 31 17:15:39 2024

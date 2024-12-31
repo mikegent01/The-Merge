@@ -1,17 +1,49 @@
-2024-12-26 20:38:50 UTC
+2024-12-31 21:32:41 UTC
 Windows-10-10.0.22631
 Ren'Py 8.2.1.24030407
 
 Early init took 0.04s
-Loading error handling took 0.03s
-Loading script took 0.13s
-Loading save slot metadata took 0.08s
+Loading error handling took 0.02s
+Loading script took 0.23s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.06s
+
+File "game/script.rpy", line 1308: expected statement.
+    ??? "There should be a screwdriver in the storage closet, but you need a password to enter it."
+    ^
+
+File "game/script.rpy", line 1314: expected statement.
+    ??? "'No... I do not. This may be the main desk of this building, but our building is not equipped with the modern amenities the other buildings have. This building is the oldest in the camp.'"
+    ^
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.22s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 55.39s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.03s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.04s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -23,14 +55,1996 @@ Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.02s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1116, in script
+    show samuel Chill  at right
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1113, in execute
+    show_imspec(self.imspec, atl=getattr(self, "atl", None))
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1076, in show_imspec
+    renpy.config.show(name,
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 739, in show
+    if not base.find_target() and renpy.config.missing_show:
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\image.py", line 421, in find_target
+    self.target = target._duplicate(a)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 246, in _duplicate
+    args.extraneous()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 109, in extraneous
+    raise Exception("Image '{}' does not accept attributes '{}'.".format(
+Exception: Image 'samuel' does not accept attributes 'Chill'.
+
+While running game code:
+  File "game/script.rpy", line 1116, in script
+    show samuel Chill  at right
+Exception: Image 'samuel' does not accept attributes 'Chill'.
+Resetting cache.
+Early init took 109.17s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 167.72s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.18s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 199.91s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.18s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 209.09s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 249.92s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 301.34s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.02s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.18s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 326.02s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 596.70s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1257, in script
+    jump abandonsamuel
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1698, in execute
+    rv = renpy.game.script.lookup(target)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'abandonsamuel'.
+
+While running game code:
+  File "game/script.rpy", line 1257, in script
+    jump abandonsamuel
+ScriptError: could not find label 'abandonsamuel'.
+
+Full traceback:
+  File "game/script.rpy", line 1257, in script
+    jump abandonsamuel
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1698, in execute
+    rv = renpy.game.script.lookup(target)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\script.py", line 1103, in lookup
+    raise ScriptError("could not find label '%s'." % str(original))
+ScriptError: could not find label 'abandonsamuel'.
+
+While running game code:
+  File "game/script.rpy", line 1257, in script
+    jump abandonsamuel
+ScriptError: could not find label 'abandonsamuel'.
+Resetting cache.
+Early init took 719.05s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.18s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 910.58s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 928.85s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.21s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 936.56s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.04s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 987.88s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1323.60s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1434.83s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1477.26s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.04s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1501.57s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1524.67s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.02s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1743.28s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1784.13s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.19s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
 Load screen analysis took 0.02s
 Analyze screens took 0.00s
 Save screen analysis took 0.00s
-Prepare screens took 0.04s
+Prepare screens took 0.05s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.00s
 Running _start took 0.00s
-Interface start took 0.04s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1808.65s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1878.16s
+Loading error handling took 0.02s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.03s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.18s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1904.08s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.04s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 1961.47s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2050.44s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2052.54s
+Loading error handling took 0.01s
+Loading script took 0.07s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Dump and make backups took 0.02s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 0.05s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2289.02s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.05s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2301.26s
+Loading error handling took 0.01s
+Loading script took 0.06s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Dump and make backups took 0.02s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2324.05s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2355.81s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2363.50s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.02s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2417.81s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2440.66s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2455.98s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2490.74s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2557.11s
+Loading error handling took 0.01s
+Loading script took 0.15s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.04s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(958, 484) drawable=(958, 484)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
+
+While running game code:
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
+Resetting cache.
+Early init took 2577.59s
+Loading error handling took 0.01s
+Loading script took 0.06s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Dump and make backups took 0.02s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.02s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.00s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
+
+While running game code:
+  File "game/script.rpy", line 1442, in script
+    $ sequence.append("spin")
+  File "game/script.rpy", line 1442, in <module>
+    $ sequence.append("spin")
+NameError: name 'sequence' is not defined
+Resetting cache.
+Early init took 2780.00s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.05s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2851.03s
+Loading error handling took 0.01s
+Loading script took 0.17s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 2857.20s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 3089.56s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.14s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 3175.65s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.05s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 3201.46s
+Loading error handling took 0.01s
+Loading script took 0.12s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.03s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
