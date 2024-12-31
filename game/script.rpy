@@ -1076,6 +1076,8 @@ label start:
             jump bootcampinsideprojectorroomstart 
 label bootcampinsideprojectorroomstart:
     scene bootcampinsideprojectorroomstartm
+    $ set_room_temperature (72)
+    $ rng = random.randint(1,100)
 
     if rng < 50:
         play music marchingon volume 0.1
@@ -1091,24 +1093,28 @@ label bootcampinsideprojectorroomstart:
     "The silence is broken when drill sergeant Jones begins speaking."
 
     show sadbigsarg at right
-
-    DRI "Men, these are the facts as I understand them: approximately 0300 hours ago, an unknown event occurred near Ruckersville, Virginia, causing major power outages throughout the state."
-    DRI "An Incident Relief Division was promptly sent to investigate the problem. Their team reported a rift and several sightings of unknown creatures before we lost contact."
-    DRI "Your job will be to find out what happened to the team and to terminate every threat."
+    DRI "These are the stakes"
+    DRI "We either make a world in which all of God's children can live, or to go into the dark"
+    DRI "Approximately 0300 hours ago, an unknown event occurred near Ruckersville, Virginia, causing major power outages throughout the state."
+    DRI "An Incident Relief Division was promptly sent to investigate the problem. Their team reported a several sightings of unknown creatures before we lost contact with them."
+    DRI "We have a estimate of around 200 MIA and 100 dead. We must act swiftly and efficiently."
+    DRI "Your job will be to find out what happened to the IRD team and to terminate all enemy threats."
 
     hide sadbigsarg
 
-    "The room remains silent. I feel a slight tap on my shoulder; it is Private Samuel."
-    "Samuel whispers to me."
+    "The room remains silent. I feel a slight tap on my shoulder, I sigh suspecting who it is already. My brow lowers as I prepare to deal with him. it is Private Samuel. He is sitting in the seat next to me"
+    "My mind must have tried to forget this fact. He was sitting in his seat with a red book in his lap. The room being too dark to know what was on the cover."
+    "I hear Samuel whisper to me."
 
     show samuel chill  at right
 
     SAM "Psst, hey Benjamin."
-    SAM "I was told you would like this. It is a report on what happened; there is some stuff in there that sounds like it’s straight out of a Lovecraft book."
-
+    SAM "I was told you would like this. It is a report on what happened today, I stole it from the supply main desk."
     hide samuel chill 
-    "I take the sheet from him and look up as the drill sergeant continues."
-
+    "I take the sheet from him and look up as the drill sergeant continues. The room is too dark to read what is on the sheet of paper so I put it in my pocket for later."
+    "I look back at samuel, he looks like he is waiting for something"
+    BEN "Thanks, I will look through the report later."
+    "He smiles and looks back at the drill instructor. It seems like that was enough to satisfy him. I look back at the drill instructor and begin listening to him once more."
     show sadbigsarg at right
 
     DRI "In approximately two days, we will begin our operation. You will be airlifted and tasked with the extermination of any and all anomalous entities."
@@ -1135,11 +1141,12 @@ label bootcampinsideprojectorroomstart:
 
     menu:
         "Yes, sir!":
-            BEN "Yes, sir!"
+            DRI "Good you have [rng] hours to fix this! My next lecture will start than."
         "SIR YES SIR!":
-            "SIR YES SIR!"
+            DRI "Good you have [rng] hours to fix this! My next lecture will start than."
 
-    DRI "Good. You are dismissed."
+
+    DRI "You are dismissed."
 
     hide sadsargtalk
 
@@ -1315,10 +1322,12 @@ label keepsamuel:
 
     "I quickly search around the hallway, only finding empty storage containers."
     "I see a stairway behind an opened door, and as I approach it, I hear someone running toward me at fast speed."
-    "I quickly spin around to see Samuel, book in hand."
+    "I quickly spin around to see Samuel, book in hand. Standing there with that stupid smile he always puts on."
+    "The red book in his hands looking at it. It really is a picture book something a child would read. It is fitting for him."
+    
     show samuel redbook at right
 
-    "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants."
+    "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants it can only be bad news."
 
     SAM "What do you want? Didn’t I tell you to wait there?"
     "He looks at me with a sad face."
@@ -1471,7 +1480,7 @@ label sequence6:
     "As I pry out the broken wire with my hands, I realize that i might need pliers.."
     "That other guy said something about that locked room having plires didn't he?"
     "Maybe I should check it out..."
-
+    jump unabletofix
 
 label unabletofix:
     "Unfortunately, you couldn’t fix the projector."

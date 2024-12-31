@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1308: expected statement.
-    ??? "There should be a screwdriver in the storage closet, but you need a password to enter it."
-    ^
-
-File "game/script.rpy", line 1314: expected statement.
-    ??? "'No... I do not. This may be the main desk of this building, but our building is not equipped with the modern amenities the other buildings have. This building is the oldest in the camp.'"
-    ^
+File "game/script.rpy", line 1139: choice menuitem expects a non-empty block.
+    "Yes, sir!":
+                ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Tue Dec 31 16:32:42 2024
+Tue Dec 31 17:42:33 2024
