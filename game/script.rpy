@@ -2,6 +2,7 @@
 #extra
 default rng = random.randint(1,100)
 default menu_initialized = False
+default is_3d = False  
 transform half_size: 
     zoom 0.5 
 image bootcampinsideprojectorroomstartm = Movie(size=(1280, 755),zoom = 1,play="images/movie_background.webm")
@@ -1039,7 +1040,7 @@ label start:
   #  $ inventory.append("First aid kit")
   #  $ inventory.append("radio")    
     $ set_room_temperature (72)
-    jump insidecomputerroom
+    jump outsideprojectorroom
     scene bg mayor
     play sound buzzer
     Q "Come in."
@@ -1531,16 +1532,17 @@ label outsideprojectorroom: #outside projector room
                 if talked_to_labatory == True:
                     BEN "They said to go upstairs, that someone else might have the password..."
                     BEN "Who the hell am I going to ask for a password?"
-                    jump insidestairwell
+                    jump menuforstairwell
                 $ visited_stairwell = True
             if visited_stairwell == True:
-                menu:
-                    "Go Upstairs" if talked_to_labatory == True:
-                        jump insidestairwell
-                    "Move To The Left":
-                        jump laboratory
-                    "Move To The Right":
-                        jump elevator
+                label menuforstairwell:
+                    menu:
+                        "Go Upstairs" if talked_to_labatory == True:
+                            jump insidestairwell
+                        "Move To The Left":
+                            jump laboratory
+                        "Move To The Right":
+                            jump elevator
         label elevator:
             scene bg elevator
             if visited_elevator == False:
@@ -1668,7 +1670,7 @@ label outsideprojectorroom: #outside projector room
                             "*Some time later*"
                             while renpy.sound.is_playing(channel="sound"):
                                 pause(0.1)                  
-                            jump ch1end3
+                            jump ch1dayend3
                     $ used_computer_in_computer_room = True
 
                     jump insidecomputerroom
@@ -1714,7 +1716,7 @@ label outsideprojectorroom: #outside projector room
                             EMA "Something weird?"
         label shop_center:
             scene bg shop_center
-        label ch1end3:
+        label ch1dayend3:
             scene bg ch1end3
             with fade
             co "I don't have to tell you why I called you here do I?"
@@ -1724,31 +1726,55 @@ label outsideprojectorroom: #outside projector room
             co "Your actions are an insult not only to this branch,but to the entire army as a whole."
             co "You must now pay for your actions. Do you understand."
             BEN "yes sir"
-            co "I will allow you to leave. once you drop down and give me 500."
+            co "Get on the ground."
             BEN "yes sir!"
-            co "SOUND OFF LIKE YOU GOT A PAIR"
-            BEN "SIR YES SIR! I WILL DO 500 PUSHUPS."
-            co "GOOD"
+            co "WHAT WAS THAT SOLDIER SOUND OFF LIKE YOU GOT A PAIR"
+            BEN "SIR YES SIR!"
+            co "GOOD, now put your hands behind your back"
+            "(He has a smirk on his face he is enjoying this..)"
+            scene black
+            with fade
+            "(I am blinded...)"
             "*Some hours later*"
-            BEN "Am I done yet.."
-            co "Absolutely not, you will be finished when I tell you, I want to see your hands bleed, do you understand,"
-            BEN "SIR YES SIR"
-            "*Some hours later*"
-            play sound ctat
-            $ add_condition ("body", "Muscle sores")
-            $ add_condition ("body", "Aches")
-            $ add_condition ("right_arm", "Muscle sores")
-            $ add_condition ("left_arm", "Muscle sores")
-            $ remove_health ("left_arm", 50)
+            "(I can't see anything).."
+            "What's going on?"
+            "I feel something cutting my arm."
             $ remove_health ("right_arm", 50)
-            $ remove_health ("body", 10)
+            $ add_condition ("right_arm", "Bleeding")
+            if is_stat_higher("pain_tolerance", 30, stats):
+                "I hold in my pain."
+                "(I bite down from the pain)"
+                "The paper bag rips..."
+                BEN "WHAT THE FUCK IS THIS!"
+                co "It is what we call a amnestic"
+                co "I figure I can tell this to you since you won't remember this anyway..."
+                co "This is a Class A "
+            else:
+                "I scream in pain.."
+                $ remove_health ("right_arm", 20)
+                "I can't move my arm."
+                "It is bleeding.."
+                "What did he do to me..."
+                "it all goes dark"
+            play sound ctat
             BEN "My fucking body hurts, ugg."
+            co "That should be enough for today. Don't ever do this again."
+            co "I will have to make some phone calls because of this."
             BEN "I am going to rest for a bit."
             scene black
             with fade
+            "Maybe I will feel better tommorrow."
+            "(My eyes close as the day ends I await for tomorrow..)"
             $ add_health ("left_arm", 50)
             $ add_health ("right_arm", 50)
             $ add_health ("body", 10)
-
+            pause (0.5)
+            play sound casbug     
+            scene bedroom
+            "What time is it..."   
+            "I never got to see that presentation."
+            "I wonder if the projector was ever fixed.."
+            "(It feels like I slept on a brick)"
+            "I should wash up and head out"
 
     return

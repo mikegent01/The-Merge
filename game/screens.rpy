@@ -735,7 +735,9 @@ screen preferences():
                         label _("Display")
                         textbutton _("Window") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
-
+                        textbutton _("  Switch to 3D" if not is_3d else _("  Switch to 2D")):
+                            action SetVariable("is_3d", not is_3d)  # Toggle the is_3d variable.
+                            style "mode_switch_button"
                 vbox:
                     style_prefix "check"
                     label _("Skip")

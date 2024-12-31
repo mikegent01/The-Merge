@@ -6,11 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const normalScreen = document.getElementById('normal-screen');
     let connectedToInternet = false;
     let specialCommandEntered = false;
-    let currentDirectory = '/'; // Initial directory
+    let currentDirectory = '/'; 
     let hasEnteredPassword = false;
-    const maxLines = 15; // Maximum number of lines before clearing output
+    const maxLines = 14; 
 
-    // Fake file structure with fake and real files
     const fileSystem = {
         '/': {
             type: 'directory',
@@ -76,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Helper function to resolve paths (e.g., '/home/guestpc008/documents')
     function resolvePath(path) {
         let parts = path.split('/').filter(Boolean);
         if (!parts.length) return fileSystem['/'];
@@ -86,13 +84,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (node.contents && node.contents[part]) {
                 node = node.contents[part];
             } else {
-                return null; // Path doesn't exist
+                return null; 
             }
         }
         return node;
     }
 
-    // Function to list directory contents
     function listDirectoryContents(path) {
         const dir = resolvePath(path);
         if (dir && dir.type === 'directory') {
@@ -102,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Normalize path for handling relative paths and '..'
     function normalizePath(currentDir, newDir) {
         if (newDir === '/') return '/';
         const stack = currentDir.split('/').filter(Boolean);
@@ -118,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return '/' + stack.join('/');
     }
 
-    // Function to handle normal commands
     function processNormalCommand(command) {
         const [cmd, ...args] = command.trim().split(/\s+/);
         const address = args.join(' ');
@@ -142,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
               const ipAddress = '136.228.116.222';
               if (args[0] === ipAddress) {
                 connectedToInternet = true;
-                normalScreen.style.display = 'none'; // Hide the normal screen
-                scpScreen.style.display = 'block';  // Show the SCP screen
+                normalScreen.style.display = 'none'; 
+                scpScreen.style.display = 'block';  
                 return `Internet connected to ${ipAddress}. SCP screen activated.`;
               } else {
                 return 'Invalid or Unknown IP address.';
@@ -174,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     return 'File not found.';
                 }
             case 'clear':
-                commandOutput.textContent = '';  // Clear the output
-                return '';  // No need to display anything after clearing
+                commandOutput.textContent = ''; 
+                return '';  
             case 'password':
                 if (args[0] === '51856') {
                     hasEnteredPassword = true;
@@ -188,24 +183,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to handle normal commands and limit the number of displayed lines
     function handleNormalCommand(event) {
         if (event.key === 'Enter') {
             const command = commandInput.value.trim();
             if (command) {
-                const result = processNormalCommand(command);  // Get the result of the command
+                const result = processNormalCommand(command); 
                 if (result) {
                     const lines = commandOutput.textContent.split('\n').length;
                     if (lines >= maxLines) {
-                        commandOutput.textContent = '';  // Clear the output if too many lines
+                        commandOutput.textContent = '';  
                     }
-                    commandOutput.textContent += `\n> ${command}\n${result}`;  // Show the command and the result
+                    commandOutput.textContent += `\n> ${command}\n${result}`;
                 }
-                commandInput.value = '';  // Clear the input
+                commandInput.value = ''; 
             }
         }
     }
 
-    // Handle the Enter key press for the normal terminal
     commandInput.addEventListener('keypress', handleNormalCommand);
 });

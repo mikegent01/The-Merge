@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1670: expected statement.
-    renpy.pause(0.1)                  
-                                      ^
+File "game/script.rpy", line 1538: expected ':' not found.
+    label menuforstairwell
+                          ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Thu Dec  5 16:55:50 2024
+Thu Dec 12 17:09:06 2024
