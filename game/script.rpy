@@ -1141,9 +1141,15 @@ label bootcampinsideprojectorroomstart:
 
     menu:
         "Yes, sir!":
-            DRI "Good you have [rng] hours to fix this! My next lecture will start than."
+            if rng < 50:
+                DRI "Good you have [rng] hours to fix this! My next lecture will start than."
+            else:
+                DRI "Good we leave at sundown, so get it done!"
         "SIR YES SIR!":
-            DRI "Good you have [rng] hours to fix this! My next lecture will start than."
+            if rng < 50:
+                DRI "Good you have [rng] hours to fix this! My next lecture will start than."
+            else:
+                DRI "Good we leave at dawn, so get it done!"
 
 
     DRI "You are dismissed."
@@ -1323,7 +1329,7 @@ label keepsamuel:
     "I quickly search around the hallway, only finding empty storage containers."
     "I see a stairway behind an opened door, and as I approach it, I hear someone running toward me at fast speed."
     "I quickly spin around to see Samuel, book in hand. Standing there with that stupid smile he always puts on."
-    "The red book in his hands looking at it. It really is a picture book something a child would read. It is fitting for him."
+    "The red book in his hands looking at it.  I see the bright and cheery image in front of a sun shining, it's image contrasted with the bleak reality I am watching on the projector. It is fitting for him."
     
     show samuel redbook at right
 
@@ -1355,40 +1361,40 @@ label keepsamuel:
     
     SAM "Hey, what made you join the force?"
     
-    "I drop the box I’m working on, and it almost crushes my leg."
+    "I drop the box I’m working on, and it almost crushes my leg. before I am able to stablize it"
     "I look over and back up a bit. Samuel is standing there with that big, stupid smile of his."
-    BEN "What made you ask that?"
+    BEN "What made you ask that? Can you help me out here?"
 
     SAM "I was just curious, that’s all."
-
-    "A moment of silence fills the room. I try to think of something to say, but I can’t think of a comeback."
-    "I feel my face heating up and finally say..."
+    "A moment of silence fills the room. As he rushes over to grab the other side of the box and help me place it down, I try to think of something to say, but I can’t think of anything."
+    "I feel my face heating up as the box finally rests on the floor and finally say..."
     
     BEN "I joined for myself, that’s all."
 
-    "He stops digging through the trash and looks over at me."
     SAM "Really? That’s boring!"
-    "He crawls over to me as I continue trying to open the box."
-    
+    "He sticks out his tounge as I try to open the locked box."
     SAM "Let me help you out."
-    "He starts grabbing at the sides of the container."
+    "He starts clawing at the sides of the container. He grabs a pen out of his pocket and starts nudging it in between the boxs opening."
     BEN "H-hey, let go of that, you’re going to bre-"
-    
-    "The container pops open, dust flying out all over the room."
-    "As the dust clears, I frown, looking down at the container. It looks like an old computer is inside it, along with a makeup kit and a female soldier uniform."
+    "I rush to grab his hand before it is too late.The container pops open, dust flying out all over the room."
+    "As the dust clears, I frown, looking down at the container.It looks like a makeup kit and a female soldier uniform.It seems they are storing uniforms of soldiers here not screwdrivers."
 
     scene mirrorstorage
     $ inventory.append("Broken Hand Mirror")   
 
-    "I pick up the makeup kit and inspect it. I see a broken hand mirror inside. I pick it up and stare back at myself, rethinking my life choices."
-    BEN "It wasn’t supposed to turn out like this."
-    scene bg storewaystairwellfixed
+    "I stare into the mirror seeing a blank face stare back at me. I have worked my way up to this position, I should be proud. I should be happy but my face says otherwise."
+    "As I put down the mirror. I look back at samuel he is staring at the container he has a somber experession, he looked like he was reminiscing on something from the past that has long been forgotten. At least that is what I thought." 
     show ben idle at left
     show samuel redbook at right    
-    "I sigh and put the mirror in my pocket."
-    "I begin walking upstairs, and a few seconds later, I hear the same footsteps as before running up behind me."
-    "I don’t bother looking back; I can’t change anything anyway."
+    "A moment of silence fills the room. I try to think of something to say, but I can’t think of anything."
+    "I put the mirror back in the box and close the container."
     
+    BEN "Can you help me put this back?"
+    SAM "S-Sure.."
+    "He grabs the other end of the box. He helps me place it down where it was before."
+    BEN "Come on, there might be something upstairs."
+    "He regains his smile and runs to catch up behind me as I walk up the stairs."
+
     scene bg militaryentrance
     show ben idle at left
 
