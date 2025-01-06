@@ -1321,7 +1321,7 @@ label keepsamuel:
     "He stares at me blankly, like I just asked something shocking."
     Q2 "No... I do not. This may be the main desk of this building, but our building is not equipped with the modern amenities the other buildings have. This building is the oldest in the camp."
     hide ben
-    " As I walk past him, I head to the right, noticing the maintenance hallway. Maybe there’s a screwdriver in here."
+    "As I walk past him, I head to the right, noticing the maintenance hallway. Maybe there’s a screwdriver in here."
 
     scene bg staircase
     show ben idle at left
@@ -1329,31 +1329,27 @@ label keepsamuel:
     "I quickly search around the hallway, only finding empty storage containers."
     "I see a stairway behind an opened door, and as I approach it, I hear someone running toward me at fast speed."
     "I quickly spin around to see Samuel, book in hand. Standing there with that stupid smile he always puts on."
-    "The red book in his hands looking at it.  I see the bright and cheery image in front of a sun shining, it's image contrasted with the bleak reality I am watching on the projector. It is fitting for him."
+    "The red book in his hands looking at it.  I see the bright and cheery image in front of a sun shining, it's image contrasted with the bleak reality I am living in."
     
     show samuel redbook at right
 
-    "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants it can only be bad news."
-
+    "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants. I think to myself the sooner I talk to him the faster he will leave"
     SAM "What do you want? Didn’t I tell you to wait there?"
     "He looks at me with a sad face."
     SAM "I wanted to show you this."
-
-    "He pulls out the book and opens it, and something falls out."
+            "He pulls out the book and opens it, and something falls out."
     "I bend down and pick up the slip of paper."
     $ htmlopen("003")                    
     "I rip up the note."
-    BEN "H-hey, why did you do that?"
+    SAM "H-hey, why did you do that?"
     "He tries to grab the scraps of paper."
-
     BEN "It said to discard it after we read it, so..."
     "I shrug."
-
     SAM "That note looked new! Like it was put in the notebook not too long ago."
-    
+
     "He picks up the scraps of paper and looks like he’s about to cry again."
     BEN "You sure are sensitive."
-    
+
     "I sigh and ask him to look for a screwdriver in this room, since he’s here."
     scene bg storewaystairwellfixed
 
@@ -1401,7 +1397,7 @@ label keepsamuel:
     "As I step upstairs, I feel the temperature drop, but I don’t mind it."
     
     "I glance at the sign on the wall and walk to the left. I feel him yank my arm."
-    scene bg mainentrance
+    scene bg maindeskentrance
     show ben idle at left
 
     show samuel redbook at right    
@@ -1409,17 +1405,34 @@ label keepsamuel:
     SAM "H-hey, where do you think you’re going? You can’t just walk away without telling me!"
 
     "As I walked up to the main desk, I saw a note on the table."
-    "It read: 'Out to lunch, be back at noon. Take anything you need."
-
-    "I see the door open behind the desk and some tools visible on the shelf. I smile and look for a way to get behind the desk."
-    "Seeing no obvious entrances, I hop over the table."
-
-    SAM "H-hey, what are you doing? You can’t jump over tables!"
-    
-    "I look back at Samuel’s shocked expression and smile."
-    BEN "I only need to get something from back here. It’ll only take a minute."
-    
-    "I enter the backroom and grab the box of tools. As I grab the box, I hop back over the desk."
+    "It read: 'Out to lunch. If nessary, use key."
+    SAM "Come on we can just buy a screwdriver at the store, there is not a toolbox back their. It will just waste time."
+    "Use key:"
+        if rng > 35:   
+            "I look down at my watch 10:41 AM. They must be out for an early lunch. I look down at the table and notice a guest list."
+            "The list is populated with names none of which I recognize. Except for one. J.J R Jones, the drill instructor, looking at the sheet he is placed an order for item #65912 (A blue toolbox)."
+        "I open the gate and pick up the key on the table, I slot the key into the keyhole quickly. Looking back I see samuel looking back at me disapprovingly. I enter the room."
+        BEN "There might be a toolbox back here, you never know. I am just checking"
+        "I enter the backroom and look around, there are file cabinets, each labled with people’s names. I shrug there dosen't seem to be a screwdriver here. As I am leaving I notice a folder on the ground labled Erika."
+        "I pick it up and a coin falls out, picking it up I check the folder for more. As I flip through the pages in the foldera statsfing sound is made as I pull a page out"
+        if rng < 20:   
+            "MEDICAL RECORDS:"
+            "NAME: {s}Erika{/s} Emma"
+            "AGE: 28"
+            "HEIGHT: 5'5"
+            "WEIGHT: 98"
+            "SEX: Female"
+            "Eye: Blue"
+            "Prescriptions: Gabapentin,Amlodipine,Omeprazole,(F)Amnestic,Prednisone"
+        else:
+            "DEBRIEF:"
+            "DATE 2XXX/XX/XX"
+            "NAME: Emma Smith"
+            "AGE: 28"
+            "CAUSE OF DEATH: Suicide"
+            "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel. No further investigation will be required."
+        "I stare at the page realizing what I am doing. I quickly put the folder back into the shelf. I shouldn't be looking at dead people's stuff I should be focusing on the screwdriver.My thoughts are intrupted by a voice."
+    SAM "We can just go to the military store area to get one, you shouldn't be going into random rooms looking for tools."
     "I feel a hand touch my back as I walk past him, but I make it downstairs."
     
     scene bootcampinsideprojectorroomstartm
@@ -1428,45 +1441,41 @@ label keepsamuel:
     "As I walk toward the projector room, it seems like he stopped following me."
     "I frown as I arrive in the room. I am alone once more."
 
-    $ inventory.append("Box of Tools")
 
     "I look at the projector and realize I don’t know the first thing about fixing it."
 
-    "I attempt to unscrew the film from the projector and cut my hand."
-
-
-    "I unplug the projector and unscrew the film, taking it out and placing it on the table."
+    "I unplug the projector and unscrew the film with the screwdriver I have, taking it out and placing it on the table. It seems like the other person here before left a spare projector part on the table."
 
     menu:
-        "Unscrew the projector":
+        "Unscrew the projector, power it off, remove broken part, screw on new part, spin the film, and power on the projector":
             jump sequence1
-        "Spin the film":
+        "Spin the film, and power on the projector":
             jump sequence2
-        "Remove broken part":
+        "Remove broken part, screw on new part, spin the film":
             jump sequence3
-        "Screw on broken part":
+        "Screw on new part, spin the film, and power on the projector":
             jump sequence4
-        "Reconnect wire":
+        "Reconnect wire, unscrew, remove broken part, screw on broken part, spin the film":
             jump sequence5
-        "Remove projector from outlit":
+        "Unscrew , remove broken part, reconnect the wire, spin the film , and power on the projector":
             jump sequence6        
 
 label sequence1:
     "I carefully removed the screws on the back of the projector."
-    "The back falls down on the table and a large spark makes me fall back..."
-    "The projector stops sparking. It seems like I did not fix it right"
+    "The back falls down on the table and a large thunk makes me fall back..."
+    "All of the projector parts fall to the table. It seems like I did not fix it right."
     jump unabletofix
 
 label sequence2:
     "I reach for the film and start to spin it"
-    "My hand gets caught on a wire and it gets shocked. I pull it back and I am now bleeding..."
+    "My hand gets caught on a wire and it gets cut. I pull it back and I am now bleeding..."
     "It seems like I am unable to do this on my own..."
     $ add_condition ("right_arm", "Bleeding")
     jump unabletofix
 
 label sequence3:
     "I pull on the wire to remove it....."
-    "It sparks me and I jolt back..."
+    "I notice its jagged edges and realize that I need pliers..."
     "It seems like I am unable to do this on my own..."
     jump unabletofix
 
