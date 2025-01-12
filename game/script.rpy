@@ -1125,31 +1125,31 @@ label bootcampinsideprojectorroomstart:
     scene bootcampinsideprojectorroomstartm
 
     "As the lights turn on and the room is no longer in darkness, military personnel start leaving the room."
-    "Suddenly, a spark occurs. The projector starts heating up and smoking."
+    "Suddenly, a spark occurs. The projector starts heating up and smoking. The Drill Sargent looks nervous and rushes over to it."
+    DRI "Shit,shit,shit!"
+    "He rushes to unplug the projector. As he unplugs it, the projector stops spinning the whriling sound coming to an end."
+    "He takes out the film from the projector he looks terrified. He looks up at the only standing person left in the room, me."
 
     show sadsargtalk at right
 
     DRI "You, meatbag, come over here!"
 
-    "As I walk towards him, he looks down at me with a scowl."
+    "As I walk towards him, he looks down at me with a frown. He is trying to hide his fear, he looks at me with a scowl"
 
     DRI "This projector is broken. I am not sure how it broke, but it looks like you’re not doing anything of importance. Therefore, you’re in charge of fixing it."
 
-    "I look at him, semi-annoyed."
+    "I look at him, semi-annoyed. It seems like he is trying to get me to do his dirty work."
 
     DRI "Do you understand what you need to do?"
 
     menu:
         "Yes, sir!":
-            if rng < 50:
-                DRI "Good you have [rng] hours to fix this! My next lecture will start than."
-            else:
-                DRI "Good we leave at sundown, so get it done!"
-        "SIR YES SIR!":
-            if rng < 50:
-                DRI "Good you have [rng] hours to fix this! My next lecture will start than."
-            else:
-                DRI "Good we leave at dawn, so get it done!"
+            DRI "Good"
+            "His frown turns into a slight smile. It seems he approves of me not acknowledging what just happened and just going along with what he says." 
+            DRI "You have [rng] hours to fix this! That is when we leave for virginia."
+        "Why do you need to fix this projector?":
+            DRI "This film holds data on the mission you were just briefed on. It was the online onsite version of it."
+            DRI "Another data request can take weeks to process. We are leaving for the mission in [rng] hours"
 
 
     DRI "You are dismissed."
@@ -1337,7 +1337,7 @@ label keepsamuel:
     SAM "What do you want? Didn’t I tell you to wait there?"
     "He looks at me with a sad face."
     SAM "I wanted to show you this."
-            "He pulls out the book and opens it, and something falls out."
+    "He pulls out the book he was holding and opens it, and something falls out."
     "I bend down and pick up the slip of paper."
     $ htmlopen("003")                    
     "I rip up the note."
@@ -1407,31 +1407,32 @@ label keepsamuel:
     "As I walked up to the main desk, I saw a note on the table."
     "It read: 'Out to lunch. If nessary, use key."
     SAM "Come on we can just buy a screwdriver at the store, there is not a toolbox back their. It will just waste time."
-    "Use key:"
-        if rng > 35:   
-            "I look down at my watch 10:41 AM. They must be out for an early lunch. I look down at the table and notice a guest list."
-            "The list is populated with names none of which I recognize. Except for one. J.J R Jones, the drill instructor, looking at the sheet he is placed an order for item #65912 (A blue toolbox)."
-        "I open the gate and pick up the key on the table, I slot the key into the keyhole quickly. Looking back I see samuel looking back at me disapprovingly. I enter the room."
-        BEN "There might be a toolbox back here, you never know. I am just checking"
-        "I enter the backroom and look around, there are file cabinets, each labled with people’s names. I shrug there dosen't seem to be a screwdriver here. As I am leaving I notice a folder on the ground labled Erika."
-        "I pick it up and a coin falls out, picking it up I check the folder for more. As I flip through the pages in the foldera statsfing sound is made as I pull a page out"
-        if rng < 20:   
-            "MEDICAL RECORDS:"
-            "NAME: {s}Erika{/s} Emma"
-            "AGE: 28"
-            "HEIGHT: 5'5"
-            "WEIGHT: 98"
-            "SEX: Female"
-            "Eye: Blue"
-            "Prescriptions: Gabapentin,Amlodipine,Omeprazole,(F)Amnestic,Prednisone"
-        else:
-            "DEBRIEF:"
-            "DATE 2XXX/XX/XX"
-            "NAME: Emma Smith"
-            "AGE: 28"
-            "CAUSE OF DEATH: Suicide"
-            "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel. No further investigation will be required."
-        "I stare at the page realizing what I am doing. I quickly put the folder back into the shelf. I shouldn't be looking at dead people's stuff I should be focusing on the screwdriver.My thoughts are intrupted by a voice."
+    menu:
+        "Use key":
+            if rng > 35:   
+                "I look down at my watch 10:41 AM. They must be out for an early lunch. I look down at the table and notice a guest list."
+                "The list is populated with names none of which I recognize. Except for one. J.J R Jones, the drill instructor, looking at the sheet he is placed an order for item #65912 (A blue toolbox)."
+            "I open the gate and pick up the key on the table, I slot the key into the keyhole quickly. Looking back I see samuel looking back at me disapprovingly. I enter the room."
+            BEN "There might be a toolbox back here, you never know. I am just checking"
+            "I enter the backroom and look around, there are file cabinets, each labled with people’s names. I shrug there dosen't seem to be a screwdriver here. As I am leaving I notice a folder on the ground labled Erika."
+            "I pick it up and a coin falls out, picking it up I check the folder for more. As I flip through the pages in the foldera statsfing sound is made as I pull a page out"
+            if rng < 20:   
+                "MEDICAL RECORDS:"
+                "NAME: {s}Erika{/s} Emma"
+                "AGE: 28"
+                "HEIGHT: 5'5"
+                "WEIGHT: 98"
+                "SEX: Female"
+                "Eye: Blue"
+                "Prescriptions: Gabapentin,Amlodipine,Omeprazole,(F)Amnestic,Prednisone"
+            else:
+                "DEBRIEF:"
+                "DATE 2XXX/XX/XX"
+                "NAME: Emma Smith"
+                "AGE: 28"
+                "CAUSE OF DEATH: Suicide"
+                "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel. No further investigation will be required."
+            "I stare at the page realizing what I am doing. I quickly put the folder back into the shelf. I shouldn't be looking at dead people's stuff I should be focusing on the screwdriver.My thoughts are intrupted by a voice."
     SAM "We can just go to the military store area to get one, you shouldn't be going into random rooms looking for tools."
     "I feel a hand touch my back as I walk past him, but I make it downstairs."
     
