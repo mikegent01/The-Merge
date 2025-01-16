@@ -1437,67 +1437,53 @@ label keepsamuel:
     "I feel a hand touch my back as I walk past him, but I make it downstairs."
     
     scene bootcampinsideprojectorroomstartm
-    show ben idle at left
 
-    "As I walk toward the projector room, it seems like he stopped following me."
-    "I frown as I arrive in the room. I am alone once more."
-
-
-    "I look at the projector and realize I don’t know the first thing about fixing it."
-
-    "I unplug the projector and unscrew the film with the screwdriver I have, taking it out and placing it on the table. It seems like the other person here before left a spare projector part on the table."
+    "I reach the projector room with Samuel following close behind after a few minutes of walking."
+    "The automatic door opens, revealing that the person I told to wait there is no longer there."
+    "Thinking back, I never even asked his name, not that it was important anyway."
+    "I look at the unplugged projector on the table. I unscrew the film from the projector and put it on the table."
+    "Looking to Samuel, I think to myself maybe he isn’t the best person to help me fix this. I press on either way."
 
     menu:
-        "Unscrew the projector, power it off, remove broken part, screw on new part, spin the film, and power on the projector":
-            jump sequence1
-        "Spin the film, and power on the projector":
-            jump sequence2
-        "Remove broken part, screw on new part, spin the film":
-            jump sequence3
-        "Screw on new part, spin the film, and power on the projector":
-            jump sequence4
-        "Reconnect wire, unscrew, remove broken part, screw on broken part, spin the film":
-            jump sequence5
-        "Unscrew , remove broken part, reconnect the wire, spin the film , and power on the projector":
-            jump sequence6        
+        "Ask Samuel for help":
+            "Samuel looks at me and smiles."
+            SAM "Sure, I’ll help. I’ve done this before."
+            "He runs over next to me and grabs the screwdriver from my hand."
+            "Samuel unscrews the film, takes it out, and puts it on the table. He then unscrews the back of the projector, letting it fall onto the table."
+            "I sit back in the chair and watch him as he works. Before I realize it, I doze off."
+            "When I wake up, I see the projector is fixed, and Samuel is sitting on a chair reading his book."
+            "I honestly didn’t expect him to know how to fix a projector, but I won’t question it."
+            "I look at my watch and realize that I need to get ready to move out."
+            "I wake Samuel up. He looks visibly shaken."
+            SAM "H-huh?"
+            "He talks in a groggy voice and looks up at me."
+            BEN "We’re going."
+            "I say as I start walking out of the room. Samuel follows me as we leave the building."
+            return
 
-label sequence1:
-    "I carefully removed the screws on the back of the projector."
-    "The back falls down on the table and a large thunk makes me fall back..."
-    "All of the projector parts fall to the table. It seems like I did not fix it right."
-    jump unabletofix
+        "Start removing the projector film":
+            "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
+            
+            menu:
+                "Look at the front of the projector":
+                    "I look at the front of the projector. The film is slotted into the projector and being held by a screw."
+                    "The film seems like it is still intact and can still be used."
+                    "I carefully unscrew the film and place it on the table next to the projector."
+                    $ add_experience("intelligence", 20)
+                    "With the film removed, I move onto the back of the projector."
 
-label sequence2:
-    "I reach for the film and start to spin it"
-    "My hand gets caught on a wire and it gets cut. I pull it back and I am now bleeding..."
-    "It seems like I am unable to do this on my own..."
-    $ add_condition ("right_arm", "Bleeding")
-    jump unabletofix
-
-label sequence3:
-    "I pull on the wire to remove it....."
-    "I notice its jagged edges and realize that I need pliers..."
-    "It seems like I am unable to do this on my own..."
-    jump unabletofix
-
-label sequence4:
-    "I look for a place to screw on the broken part..."
-    "It seems like I have no idea what I am doing..."
-    jump unabletofix
-
-label sequence5:
-    "I go to the wire to reconnect it."
-    "It is sparking..."
-    "I do not touch the wire and give up..."
-    jump unabletofix
-label sequence6:
-    "I unplug the projector from the outlit."
-    "It stops sparking..."
-    "As I pry out the broken wire with my hands, I realize that i might need pliers.."
-    "That other guy said something about that locked room having plires didn't he?"
-    "Maybe I should check it out..."
-    jump unabletofix
-
+                "Look at the back of the projector":
+                    "I look at the back of the projector. There are four screws holding it in place."
+                    "I sit the projector on its side and begin to unscrew the screws."
+                    "As I start unscrewing the second screw, Samuel runs over and grabs the projector, sitting it upright."
+                    "There’s concern on his face as he says—"
+                    SAM "You almost damaged the film. You have to be careful with this."
+                    "He begins to help me take the film out of the projector, and we both work on fixing it together."
+                    "After two hours, we manage to fix the projector. Samuel seems happy with it."
+                    "He then begins to clean everything up and, with a smile, says—"
+                    SAM "Let’s go show the Sergeant this!"
+                    "After he cleans up the table, I follow him upstairs and out of the building."
+                    return
 label unabletofix:
     "Unfortunately, you couldn’t fix the projector."
     scene projector_broken
