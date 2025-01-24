@@ -1,52 +1,199 @@
-2025-01-16 16:05:21 UTC
+2025-01-24 23:27:11 UTC
 Windows-10-10.0.22631
-Ren'Py 8.3.4.24120703
+Ren'Py 8.2.1.24030407
 
-Early init took 0.12s
-Loading error handling took 0.13s
-Loading script took 1.60s
-Loading save slot metadata took 0.06s
+Early init took 0.05s
+Loading error handling took 0.02s
+Loading script took 0.23s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.11s
-Loading analysis data took 0.00s
+Running init code took 0.03s
+Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The-Merge':
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.00s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.03s
-DPI scale factor: 1.500000
+Initial gc took 0.02s
+DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.90s
+Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
 Load screen analysis took 0.00s
-Analyze screens took 0.04s
-Save screen analysis took 0.02s
-Prepare screens took 0.13s
-Save pyanalysis. took 0.03s
-Save bytecode. took 0.03s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.02s
 Running _start took 0.00s
-Interface start took 0.70s
+Interface start took 0.03s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 2560, 1600)
+primary display bounds: (0, 0, 1920, 1080)
 swap interval: 1 frames
 Windowed mode.
-Vendor: "b'Intel'"
-Renderer: b'Intel(R) RaptorLake-S Mobile Graphics Controller'
-Version: b'4.6.0 - Build 31.0.101.5187'
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
 Display Info: None
-Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
-Could not open 'cache/shaders.txt':
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
-Could not open 'cache/shaders.txt':
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+Screen sizes: virtual=(1280, 755) physical=(1711, 1000) drawable=(1711, 1000)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1089, in script
+    "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
+    Say.execute(self)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
+    renpy.exports.say(who, what, *args, **kwargs)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
+    who(what, *args, **kwargs)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
+    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
+    display_say(who,
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
+    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/health_status.rpy", line 46, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 46, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 48, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 55, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 70, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 71, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 78, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 122, in execute
+    if selected_category == "emotions":
+  File "game/scripts/health_status.rpy", line 123, in execute
+    for emotion in emotions:
+  File "game/scripts/health_status.rpy", line 124, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 127, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 130, in execute
+    bar value emotions[emotion] range 100 xmaximum 600 ymaximum 25
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\sl2\sldisplayables.py", line 262, in sl2bar
+    return renpy.display.behavior.Bar(range, value, width, height, vertical=False, **properties)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 2199, in __init__
+    adjustment = Adjustment(range, value, step=step, page=page, changed=changed)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 1942, in __init__
+    self._value = type(range)(value) # type: ignore
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'RevertableSet'
+
+While running game code:
+  File "game/script.rpy", line 1089, in script
+    "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
+  File "game/scripts/health_status.rpy", line 46, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 46, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 48, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 55, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 70, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 71, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 78, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 122, in execute
+    if selected_category == "emotions":
+  File "game/scripts/health_status.rpy", line 123, in execute
+    for emotion in emotions:
+  File "game/scripts/health_status.rpy", line 124, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 127, in execute
+    hbox:
+  File "game/scripts/health_status.rpy", line 130, in execute
+    bar value emotions[emotion] range 100 xmaximum 600 ymaximum 25
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'RevertableSet'
+INFO:renpy_warp_service:closing websocket connection :40111
+INFO:renpy_warp_service:connection replaced, service exiting
+INFO:renpy_warp_service:service closed
+Resetting cache.
+Early init took 37.93s
+Loading error handling took 0.02s
+Loading script took 0.12s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.02s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.00s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.03s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.02s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.01s
+Prepare screens took 0.04s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.04s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:connected to renpy warp socket server on :40111
 INFO:renpy_warp_service:closing websocket connection :40111

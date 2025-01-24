@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1410: expected statement.
-    "Use key:":
-              ^
+File "game/scripts/health_status.rpy", line 87: reached end of line when expecting ':'.
+    if (selected_category == "soft" and stat in soft_skills)
+                                                            ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun Jan 12 00:58:52 2025
+Fri Jan 24 18:18:06 2025

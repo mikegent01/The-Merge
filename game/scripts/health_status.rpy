@@ -43,11 +43,6 @@ screen status_screen():
                 bar value average_temperature range 100 xmaximum 200 ymaximum 25 xalign 0.5
 
             textbutton "Close" action Hide("status_screen") xalign 0.5
-
-
-
-
-
 screen player_stats_screen():
     modal True
     frame:
@@ -62,59 +57,126 @@ screen player_stats_screen():
             text "Player Stats" size 40 xalign 0.5 yalign 0.5 color "#FFFFFF" bold True
             textbutton "Close" action Hide("player_stats_screen") xalign 0.5 background "#333333" padding (10, 5)
 
+            # Toggle buttons for categories
+            hbox:
+                spacing 20
+                xalign 0.5
+                textbutton "Mental" action [SetVariable("selected_category", "soft")] background "#444444" padding (10, 5)
+                textbutton "Physical" action [SetVariable("selected_category", "hard")] background "#444444" padding (10, 5)
+                textbutton "Emotions" action [SetVariable("selected_category", "emotions")] background "#444444" padding (10, 5)
+                textbutton "Relationships" action [SetVariable("selected_category", "relationships")] background "#444444" padding (10, 5)
+
             # Wrapping stats section in a viewport
             hbox:
                 viewport:
                     id "stats_viewport"
                     xsize 850
-                    ysize 750  # Make sure this is enough space for content, including image
-                    draggable True
+                    ysize 600 
+                    draggable False
                     mousewheel True
 
                     vbox:
                         spacing 20
-                        for stat in ["intelligence", "speech", "strength", "luck", "speed", "medical", "pain_tolerance", "mental_resilience"]:
-                            # Stat container frame
-                            frame:
-                                background "#222222"
-                                padding (15, 10)
-                                hbox:
-                                    spacing 20  # Space between stat info and icon
+                        for stat in stats:
+                            # Filter by category
+                            if (selected_category == "soft" and stat in soft_skills) or (selected_category == "hard" and stat in hard_skills):
+                                # Stat container frame
+                                frame:
+                                    background "#222222"
+                                    padding (15, 10)
+                                    hbox:
+                                        spacing 20  # Space between stat info and icon
 
-                                    # Stat info section on the left side
-                                    vbox:
-                                        spacing 12
-                                        text "[stat.replace('_', ' ').capitalize()]" size 30 color "#00CCFF" bold True
-                                        hbox:
-                                            text "Level: [stats[stat]['level']]" size 18 color "#CCCCCC"
-                                        bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
-                                        hbox:
-                                            text "Skill: [stats[stat]['current_value']]" size 18 color "#CCCCCC"
-                                        bar value stats[stat]["current_value"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-                                        hbox:
-                                            text "XP: [stats[stat]['current_xp']] / [stats[stat]['max_xp']]" size 18 color "#CCCCCC"
-                                        bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
-
-                                        if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
-                                            textbutton "Level Up!" action Function(level_up, stat) background "#FFD700" foreground "#222222" padding (10, 5)
-
-                                    # Full-size icon section to the right of the stat box
-                                    frame:
-                                        background None  # Transparent background
-                                        xsize 210  # Adjusted to new size
-                                        ysize 607  # Adjusted to new size
+                                        # Stat info section on the left side
                                         vbox:
-                                            xalign 0.5
-                                            yalign 0.5
-                                            # Check if the icon exists and display it
-                                            $ icon_path = "images/stats_icons/{}.png".format(stat)
-                                            if renpy.exists(icon_path):
-                                                add icon_path xsize 210 ysize 607  # Full-size icon with adjusted size
-                                            else:
-                                                text "[stat.capitalize()] Icon" size 15 color "#CCCCCC"
+                                            spacing 12
+                                            text "[stat.replace('_', ' ').capitalize()]" size 30 color "#00CCFF" bold True
+                                            hbox:
+                                                text "Level: [stats[stat]['level']]" size 18 color "#CCCCCC"
+                                            bar value stats[stat]["level"] range stats[stat]['max_xp'] xmaximum 300 ymaximum 25
+                                            hbox:
+                                                text "Skill: [stats[stat]['current_value']]" size 18 color "#CCCCCC"
+                                            bar value stats[stat]["current_value"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+                                            hbox:
+                                                text "XP: [stats[stat]['current_xp']] / [stats[stat]['max_xp']]" size 18 color "#CCCCCC"
+                                            bar value stats[stat]["current_xp"] range stats[stat]["max_xp"] xmaximum 300 ymaximum 25
+
+                                            if stats[stat]["current_xp"] >= stats[stat]["max_xp"]:
+                                                textbutton "Level Up!" action Function(level_up, stat) background "#FFD700" foreground "#222222" padding (10, 5)
+
+                                        # Full-size icon section to the right of the stat box
+                                        frame:
+                                            background None  # Transparent background
+                                            xsize 210  # Adjusted to new size
+                                            ysize 607  # Adjusted to new size
+                                            vbox:
+                                                xalign 0.5
+                                                yalign 0.5
+                                                # Check if the icon exists and display it
+                                                $ icon_path = "images/stats_icons/{}.png".format(stat)
+                                                if renpy.exists(icon_path):
+                                                    add icon_path xsize 210 ysize 607  # Full-size icon with adjusted size
+                                                else:
+                                                    text "[stat.capitalize()] Icon" size 15 color "#CCCCCC"
+                        
+                        if selected_category == "emotions":
+                            for emotion in emotions:
+                                frame:
+                                    background "#222222"
+                                    padding (15, 10)
+                                    hbox:
+                                        spacing 20
+                                        text "[emotion]" size 30 color "#FF66CC" bold True
+                                        bar value emotions[emotion] range 100 xmaximum 600 ymaximum 25
+                        # Display for relationships
+                        if selected_category == "relationships":
+                            for person in relationships:
+                                if relationships[person]["met"]:
+                                    frame:
+                                        background "#222222"
+                                        padding (15, 10)
+                                        vbox:
+                                            spacing 12
+                                            text "[person]" size 30 color "#66FF66" bold True
+
+                                            # Description based on trust and friendship values
+                                            $ trust = relationships[person]["trust"]
+                                            $ friendship = relationships[person]["friendship"]
+                                            $ hostility = relationships[person]["hostility"]
+
+                                            $ relationship_description = "Neutral Acquaintance"  # Default
+                                            if trust > 50 and friendship > 50:
+                                                $ relationship_description = "Trusted Friend"
+                                            elif friendship > 50 and trust > 30:
+                                                $ relationship_description = "Friend"
+                                            elif friendship > 50 and trust <= 30:
+                                                $ relationship_description = "Associate"
+                                            elif trust > 50 and friendship <= 30:
+                                                $ relationship_description = "Trusted Associate"
+                                            elif hostility > 50:
+                                                $ relationship_description = "Adversary"
+                                            elif hostility > 30 and trust <= 30 and friendship <= 30:
+                                                $ relationship_description = "Rival"
+
+                                            # Display description
+                                            text relationship_description size 24 color "#CCCCCC"
+
+                                            # Relationship bars
+                                            hbox:
+                                                text "Trust:" size 18 color "#CCCCCC"
+                                                bar value trust range 100 xmaximum 600 ymaximum 25
+                                            hbox:
+                                                text "Friendship:" size 18 color "#CCCCCC"
+                                                bar value friendship range 100 xmaximum 600 ymaximum 25
+                                            hbox:
+                                                text "Hostility:" size 18 color "#CCCCCC"
+                                                bar value hostility range 100 xmaximum 600 ymaximum 25
 
                 # Vertical scroll bar for scrolling content
                 vbar value YScrollValue("stats_viewport") xsize 25
+
+
+
 
 screen heal_menu():
     modal True

@@ -2,7 +2,6 @@
 #extra
 default rng = random.randint(1,100)
 default menu_initialized = False
-default is_3d = False  
 transform half_size: 
     zoom 0.5 
 image bootcampinsideprojectorroomstartm = Movie(size=(1280, 755),zoom = 1,play="images/movie_background.webm")
@@ -37,28 +36,27 @@ define co = Character("Commanding Officer Miller",color="#0000FF")
 # Default inventory with some items as string names
 default left_arm_item = None
 default right_arm_item = None
-default title_screen_set = False
-default body_armor_item = None  
 default hud_visible = True  # Start with the HUD visible
-default talked_to_labatory = False
 default slot_count = 1
-default current_character_index = 0 
 #Quests
 default new_uniform_quest = False #quest to get new uniform
 default projectorquest = False
 default uniform_ordered = False
 default projector_obtained = False
-
-
-
+default nice = 0
+default mean = 0
+default soft_skills = ["speech","intelligence","luck","pain_tolerance","mental_resilience" ]
+default hard_skills = [ "strength","medical" , "speed"]
+default selected_category = "soft"  # Initial selection
+default title_screen_set = ""
 #
 default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
 default npc_name = "???"         # The default NPC name
 default npc_mood = "Normal"      # The default NPC mood
 default npc_attitude = "Neutral" # The default NPC attitude
-
-
+default selected_tab = "Boobs"
+default current_mode = "destruction"
 #pytrhon
 init python:
     import webbrowser
@@ -88,8 +86,6 @@ init python:
     #   {"name": "Oil", "amount": 30},       # 30 units of oil
     # {"name": "Glue", "amount": 30}
     ]   
-
-
     default_status = {
     "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
     "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
@@ -98,6 +94,16 @@ init python:
     "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
     "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
+    emotions = {
+        "Authenticity": 30,
+        "Authority": 60,
+        "Composure": 60,
+        "Confidence": 75,
+        "Dignity": 60,
+        "Pride": 10,
+    }
+    def get_emotion_value(emotions_dict, emotion):
+        return emotions_dict.get(emotion, 0)
 
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
@@ -155,8 +161,32 @@ init python:
         average_temperature = round(total_temperature / body_part_count)
 
         return average_health, average_cleanliness, average_temperature
+    def is_highest_emotion(emotions_dict, emotion):
 
-    
+        if emotion not in emotions_dict:
+            return False  
+        highest_emotion = max(emotions_dict, key=emotions_dict.get)
+        return highest_emotion == emotion
+    def update_emotion_value(emotions_dict, emotion, new_value):
+        if emotion in emotions_dict:
+            emotions_dict[emotion] = new_value
+            return True
+        return False
+    relationships = {
+        "Samuel": {
+            "met": False,
+            "trust": 70,
+            "friendship": 40,
+            "hostility": 1,
+        },
+        "Dan": {
+            "met": False,
+            "trust": 60,
+            "friendship": 50,
+            "hostility": 10,
+        }
+    }
+
     container_inventory = [
     #    {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
@@ -179,10 +209,10 @@ init python:
     }
 #
     def is_container_empty():
-           for item in container_inventory:
-               if item["current_amount"] == 0 and not item["contents"]:
-                   return True
-           return False
+        for item in container_inventory:
+            if item["current_amount"] == 0 and not item["contents"]:
+                return True
+            return False
 #
 
 
@@ -739,7 +769,6 @@ init python:
     def calculate_total_weight():
         """Calculate the total weight of items in the inventory."""
         total_weight = sum(get_item_weight(item) for item in inventory)
-        total_weight += sum(item['weight'] for item in armor_inventory if item['name'] == body_armor_item)
         return total_weight
 
     def get_remaining_space():
@@ -780,26 +809,6 @@ init python:
     def label_callback(name, abnormal):
         store.last_label = name
     config.label_callback = label_callback
-    def reduce_durability(armor_name, damage):
-        global body_armor_item  # Ensure we can modify the equipped armor item
-        if body_armor_item == "No Armor":
-            renpy.notify("No armor is equipped, no durability reduction applied.")
-            return  # Exit the function if no armor is equipped
-
-        for item in armor_inventory:
-            if item['name'] == armor_name:
-                item['durability'] -= damage  # Reduce durability by damage amount
-                if item['durability'] <= 0:
-                    item['durability'] = 0  # Set durability to zero
-                    body_armor_item = "No Armor"  # Set equipped armor to "No Armor"
-                    renpy.notify(f"{armor_name} is damaged and can no longer be equipped.")
-                else:
-                    # Notify about the remaining durability
-                    renpy.notify(f"{armor_name} durability reduced to {item['durability']}.")
-                return  # Exit the function after processing
-
-        # If armor name is not found, you can add a notification if desired
-        renpy.notify(f"{armor_name} not found in inventory.")
 
 # Example of gaining experience (you can adjust this function based on game events)
     def add_experience(stat_name, amount):
@@ -840,8 +849,7 @@ init python:
         }
         return item_descriptions.get(item, "No description available.")
     def equip_item(arm, item):
-        global left_arm_item, right_arm_item, body_armor_item, current_strength, current_space_taken, max_space , default_status
-        checkarmorupdatetemp()
+        global left_arm_item, right_arm_item,  current_strength, current_space_taken, max_space , default_status
         if get_remaining_space() < 0:
             renpy.notify("Your inventory space is negative.. How did you even do this?")
             return
@@ -862,8 +870,6 @@ init python:
                 left_arm_item = item
             elif arm == "right":
                 right_arm_item = item
-            elif arm == "body":  
-                body_armor_item = item
 
         renpy.hide_screen("item_select")
     def unequip_item(arm):
@@ -907,15 +913,7 @@ init python:
 
         renpy.restart_interaction()  # Restart the interaction after discarding the item
 
-    def checkarmorupdatetemp():
-        global body_armor_item , default_status
-        current_temp = default_status["body"]['temperature']
-        if body_armor_item == "No Armor":
-            default_status["body"]['temperature'] = current_temp + 25
-        elif body_armor_item == "Type 07":
-            default_status["body"]['temperature'] = current_temp - 25
-        for part in default_status:
-            check_temperature(part)
+
 
     def set_room_temperature(room_temp):
         for part, attributes in default_status.items():
@@ -928,7 +926,6 @@ init python:
             else:
                 temperature_variation = random.uniform(-3, 3)  
                 default_status[part]['temperature'] = round(room_temp + temperature_variation)
-        checkarmorupdatetemp()
 
     def add_liquid(liquid_name, amount):
         for liquid in liquid_inventory:
@@ -943,7 +940,7 @@ init python:
                     liquid["amount"] -= amount
                 else:
                     renpy.notify("Not enough liquid available.")
-                break
+                break         
     def use_item(item):
         """Handle the use of an item from the inventory."""
         global inventory, last_label
@@ -1078,7 +1075,8 @@ label bootcampinsideprojectorroomstart:
     scene bootcampinsideprojectorroomstartm
     $ set_room_temperature (72)
     $ rng = random.randint(1,100)
-
+    $ relationships["Samuel"]["met"] = True
+    $ inventory.append("Broken Hand Mirror")   
     if rng < 50:
         play music marchingon volume 0.1
     else:

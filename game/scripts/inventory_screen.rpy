@@ -64,15 +64,6 @@ screen inventory:
                         textbutton "Discard" action Function(discard_item, "right")
                         textbutton "Use" action Function(use_item, right_arm_item)
 
-            # Add a section for body armor
-            text "Body Armor" size 20 xalign 0.5
-            if body_armor_item:  # Assuming you have a variable for body armor
-                text "Equipped: " + body_armor_item xalign 0.5  # Indicate equipped body armor
-            else:
-                text "Equipped: None" xalign 0.5
-
-            # Button to show the equipable armor screen
-            textbutton "Equip Armor" action Show("equip_armor")
             if inventory:
                 textbutton "Create Items" action Show("crafting_screen")
             textbutton "Create Liquids" action Show("combine_liquids_screen")
