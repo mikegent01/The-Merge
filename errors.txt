@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/health_status.rpy", line 87: reached end of line when expecting ':'.
-    if (selected_category == "soft" and stat in soft_skills)
-                                                            ^
+File "game/scripts/inventory_screen.rpy", line 436: vbox expects a non-empty block.
+    vbox:
+         ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Fri Jan 24 18:18:06 2025
+Sat Jan 25 15:13:17 2025

@@ -57,6 +57,12 @@ default npc_mood = "Normal"      # The default NPC mood
 default npc_attitude = "Neutral" # The default NPC attitude
 default selected_tab = "Boobs"
 default current_mode = "destruction"
+default mixing_progress = 0
+default amount_input = 0
+default mix_start_time = 0
+default mixing_steps = ["top", "right", "bottom", "left"]
+default current_mixing_step = 0
+default mixing_attempts = 0
 #pytrhon
 init python:
     import webbrowser
@@ -81,10 +87,10 @@ init python:
     selected_liquids = []   
     holding_items = ["Tape", "Glue", "Screwdriver"]
     liquid_inventory = [
-    #    {"name": "Water", "amount": 100},    # 100 units of water
-    #    {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
-    #   {"name": "Oil", "amount": 30},       # 30 units of oil
-    # {"name": "Glue", "amount": 30}
+        {"name": "Water", "amount": 100},    # 100 units of water
+        {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
+        {"name": "Oil", "amount": 30},       # 30 units of oil
+        {"name": "Glue", "amount": 30}
     ]   
     default_status = {
     "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
@@ -124,6 +130,29 @@ init python:
         "radio": ["Antenna", "Battery", "Circuit Board"]
         # Add more items as needed
     }
+    def handle_mixing_click(direction):
+        global current_mixing_step, mixing_attempts
+
+        if direction == mixing_steps[current_mixing_step]:
+            current_mixing_step += 1
+            if current_mixing_step >= len(mixing_steps):
+                current_mixing_step = 0
+                mixing_attempts += 1
+                if mixing_attempts >= 2:
+                    renpy.notify("Mixing complete!")
+                    mix_liquids(selected_container, selected_liquids)
+                    reset_mixing()
+                else:
+                    renpy.notify(f"Step {mixing_attempts + 1}: Continue mixing!")
+        else:
+            renpy.notify("Wrong direction! Start over.")
+            reset_mixing()
+
+    # Function to reset mixing progress
+    def reset_mixing():
+        global current_mixing_step, mixing_attempts
+        current_mixing_step = 0
+        mixing_attempts = 0    
     def deconstruct_item(item):
         global inventory  # Only need inventory for this function
 
@@ -188,7 +217,8 @@ init python:
     }
 
     container_inventory = [
-    #    {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
+        {"name": "Regular Bottle", "capacity": 100, "current_amount": 0, "contents": []},  # Empty bottle
+        {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
     ]      
     selected_holding_item = None
     selected_container = None       
@@ -274,23 +304,39 @@ init python:
                 return
         renpy.notify(f"{liquid_name} not found.")
 #
+# Function to pour liquid from one container to another or the ground
+    def pour_liquid(source_container, target_container):
+        if source_container["contents"]:
+            content = source_container["contents"][0]  # Assuming only one type of liquid per bottle
+            if target_container:
+                if target_container["current_amount"] + content["amount"] <= target_container["capacity"]:
+                    target_container["contents"].append({"name": content["name"], "amount": content["amount"]})
+                    target_container["current_amount"] += content["amount"]
+                    source_container["contents"].remove(content)
+                    source_container["current_amount"] -= content["amount"]
+                    renpy.notify(f"Poured {content['name']} from {source_container['name']} to {target_container['name']}.")
+                else:
+                    renpy.notify("Not enough space in the target container!")
+            else:
+                # Pour to ground
+                source_container["contents"].remove(content)
+                source_container["current_amount"] -= content["amount"]
+                renpy.notify(f"Poured {content['name']} from {source_container['name']} to the ground.")
     def drain_liquid(container, liquid_name):
-        """
-        Drain 10 ml of the specified liquid from the container.
-        """
         for content in container["contents"]:
             if content["name"] == liquid_name:
-                if content["amount"] >= 10:
-                    content["amount"] -= 10
-                    container["current_amount"] -= 10
-                    if container["current_amount"] < 0:
-                        container["current_amount"] = 0
-                    renpy.notify(f"Drained 10 ml of {liquid_name}.")
-                else:
-                    renpy.notify(f"Not enough {liquid_name} to drain. Current amount: {content['amount']} ml.")
-                return
-        renpy.notify(f"{liquid_name} is not in the container.")
+                # Reduce the liquid amount by 10 ml
+                content["amount"] = max(0, content["amount"] - 10)
+                container["current_amount"] = max(0, container["current_amount"] - 10)
 
+                # Check if the liquid amount has reached 0
+                if content["amount"] <= 0:
+                    # Remove the liquid from the container's contents
+                    container["contents"].remove(content)
+                    renpy.notify(f"Removed {liquid_name} from {container['name']}.")
+                else:
+                    renpy.notify(f"Drained 10 ml of {liquid_name} from {container['name']}.")
+                break
 #
     def remove_holding_item(holding_item):
         global holding_items, selected_holding_item  # Ensure global access to holding_items
@@ -331,27 +377,25 @@ init python:
                 break
     
     def check_mix_recipe(container):
-        """
-        Check if the container's contents match any mix recipe.
-        Returns the name of the created item if a match is found, otherwise returns None.
-        """
-        # Create a dictionary to store the container's current liquid composition
-        container_composition = {liquid["name"]: liquid["amount"] for liquid in container["contents"]}
+        # Get the contents of the container
+        contents = container["contents"]
 
-        # Iterate through the mix recipes to find a match
-        for result_item, recipe in liquid_mix_recipes.items():
+        # Create a dictionary to store the amounts of each liquid in the container
+        container_liquids = {}
+        for content in contents:
+            container_liquids[content["name"]] = content["amount"]
+
+        # Compare the container's contents with each recipe
+        for recipe_name, recipe_ingredients in liquid_mix_recipes.items():
             match = True
-            for liquid_name, required_amount in recipe.items():
-                if liquid_name not in container_composition or container_composition[liquid_name] != required_amount:
+            for ingredient, amount in recipe_ingredients.items():
+                if ingredient not in container_liquids or container_liquids[ingredient] < amount:
                     match = False
                     break
-
-            # If all conditions of the recipe are met, return the result
             if match:
-                return result_item
+                return recipe_name  # Return the name of the matching recipe
             
-        # If no match is found, return None
-        return None
+        return None  # No matching recipe found
     def initialize_stats():
         for stat in stats:
             if stat != "sanity":
@@ -363,77 +407,53 @@ init python:
             return level * random.randint(1, 4) + random.randint(1, 4) + stats[stat]["current_value"] 
 
     initialize_stats()
+    def handle_mixing_motion():
+        global mixing_progress, is_mixing, mix_start_time
+        if is_mixing:
+            # Increase mixing progress based on time
+            mixing_progress += renpy.random.randint(1, 3)
+            if mixing_progress >= 100:
+                mixing_progress = 100
+                is_mixing = False
+                renpy.notify("Mixing complete!")
+                # Perform the actual mixing logic here
+                mix_liquids(selected_container, selected_liquids)
+        return    
+    def mix_liquids(container, liquids):
+        # Check if the container's contents match a recipe
+        recipe_name = check_mix_recipe(container)
+        if recipe_name:
+            # Perform the mixing logic
+            renpy.notify(f"Successfully created {recipe_name}!")
 
+            # Clear the container's contents and add the new mixture
+            container["contents"] = [{"name": recipe_name, "amount": sum(content["amount"] for content in container["contents"])}]
+            container["current_amount"] = sum(content["amount"] for content in container["contents"])
+        else:
+            renpy.notify("No valid recipe found for the current mixture.")
+# Function to add liquid to the selected bottle
     def add_liquid_to_selected(liquid):
-        """
-        Add liquid to the selected_liquids list for combining.
-        """
-        if liquid["amount"] > 0:
-            selected_liquids.append({"name": liquid["name"], "amount": liquid["amount"]})
-            renpy.notify(f"Added {liquid['name']} to mix.")
-        else:
-            renpy.notify(f"No {liquid['name']} available.")
-    def combine_liquids(container, selected_liquids):
-        """
-        Combine selected liquids into a container and check if any mix recipes are satisfied.
-        """
-        global default_status
-        modify_cleanliness("left_arm", -3)
-        modify_cleanliness("right_arm", -3)        
-        # Check if a container is selected
-        if not container:
-            renpy.notify("Please select a container.")
-            return
+        if selected_container:
+            amount = 10  # Fixed amount to add
+            if selected_container["current_amount"] + amount <= selected_container["capacity"]:
+                if amount <= liquid["amount"]:
+                    # Check if the liquid already exists in the container
+                    found = False
+                    for content in selected_container["contents"]:
+                        if content["name"] == liquid["name"]:
+                            content["amount"] += amount
+                            found = True
+                            break
+                    if not found:
+                        selected_container["contents"].append({"name": liquid["name"], "amount": amount})
 
-        # Calculate the total amount of liquid being added
-        total_liquid = sum(liquid["amount"] for liquid in selected_liquids)
-        available_space = container["capacity"] - container["current_amount"]
-
-        # Check if the container has enough space for all selected liquids
-        if total_liquid > available_space:
-            renpy.notify(f"Not enough space in {container['name']}. Only {available_space} units left.")
-            return
-
-        # Add each liquid to the container
-        for liquid in selected_liquids:
-            if liquid["amount"] > 0:
-                # Check if the liquid is already present in the container
-                liquid_exists = False
-                for content in container["contents"]:
-                    if content["name"] == liquid["name"]:
-                        content["amount"] += liquid["amount"]
-                        liquid_exists = True
-                        break
-
-                # If the liquid is not in the container, add it
-                if not liquid_exists:
-                    container["contents"].append({"name": liquid["name"], "amount": liquid["amount"]})
-
-                # Reduce the liquid amount in the inventory
-                for inv_liquid in liquid_inventory:
-                    if inv_liquid["name"] == liquid["name"]:
-                        inv_liquid["amount"] -= liquid["amount"]
-                        if inv_liquid["amount"] < 0:
-                            inv_liquid["amount"] = 0
-
-                # Update the current amount in the container
-                container["current_amount"] += liquid["amount"]
-
-        # Check if the contents match a recipe
-        result_item = check_mix_recipe(container)
-        if result_item:
-            # Clear the contents and replace it with the new item
-            container["contents"].clear()
-            container["current_amount"] = 0
-            container["contents"].append({"name": result_item, "amount": container["capacity"]})
-            add_experience("intelligence", 1)
-            renpy.notify(f"Success! You created {result_item} in the {container['name']}.")
-        else:
-            renpy.notify(f"You can not mix these together.")
-
-        # Clear the selected items after combination
-        selected_liquids.clear()
-
+                    selected_container["current_amount"] += amount
+                    liquid["amount"] -= amount
+                    renpy.notify(f"Added {amount} ml of {liquid['name']} to {selected_container['name']}.")
+                else:
+                    renpy.notify("Not enough liquid available!")
+            else:
+                renpy.notify("Not enough space in the container!")
     def add_liquid_to_mixture(liquid_name, amount):
         amount = int(amount)
         if amount <= 0:

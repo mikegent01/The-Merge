@@ -1,146 +1,141 @@
-screen inventory:
+style transparent_button:
+    background None  # No background
+    hover_background None  # No background on hover
+    padding (10, 5)  # Padding for better clickability
+    xalign 0.5  # Center align
+    color "#FFFFFF"  # White text color
+    hover_color "#4CAF50"  # Green text color on hover
+    outlines []  # Remove any text outlines
+
+# Apply the transparent_button style to all buttons
+style inventory_button is transparent_button
+
+screen inventory():
     modal True
     frame:
-        xsize 400
+        xsize 800
         ysize 600
         xalign 0.5
         yalign 0.5
         background "#276127"
+        padding (20, 20)
 
         vbox:
-            text "My Inventory" size 30 xalign 0.5
+            spacing 10
+            text "My Inventory" size 40 xalign 0.5 color "#FFFFFF"
 
             # Show current weight and remaining space
             $ current_weight = calculate_total_weight()
             $ remaining_space = get_remaining_space()
-            text "Weight Of Carried Items: " + str(current_weight) + " kg"
-            text "Remaning Space In Your Bag: " + str(remaining_space) + " N"
-            text "Max Weight You Can Hold: " + str(current_strength) + " kg"
-            # Left Arm Slot
+            text "Weight Of Carried Items: [current_weight] kg" size 20 color "#FFFFFF"
+            text "Remaining Space In Your Bag: [remaining_space] N" size 20 color "#FFFFFF"
+            text "Max Weight You Can Hold: [current_strength] kg" size 20 color "#FFFFFF"
+
+            # Left and Right Arm Slots
             hbox:
+                spacing 50
+                # Left Arm Slot
                 vbox:
-                    text "Left Hand" size 18
+                    text "Left Hand" size 24 color "#FFFFFF"
                     frame:
                         background "#728477"
-                        xsize 100
-                        ysize 100
-                        if left_arm_item:   
+                        xsize 150
+                        ysize 150
+                        if left_arm_item:
                             if renpy.loadable("images/inventory/" + left_arm_item + ".png"):
                                 add "images/inventory/" + left_arm_item + ".png" xalign 0.5 yalign 0.5
                             else:
-                                text left_arm_item xalign 0.5 yalign 0.5
+                                text left_arm_item xalign 0.5 yalign 0.5 color "#FFFFFF"
                         else:
-                            text "Empty" xalign 0.5 yalign 0.5
-
+                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
 
                     if not left_arm_item:
-                        textbutton "Equip" action Show("item_select", arm="left")
+                        textbutton "Equip" action Show("item_select", arm="left") style "inventory_button"
                     else:
-                        textbutton "Unequip" action Function(unequip_item, "left")
-                        textbutton "Discard" action Function(discard_item, "left")
-                        textbutton "Use" action Function(use_item, left_arm_item)
+                        textbutton "Unequip" action Function(unequip_item, "left") style "inventory_button"
+                        textbutton "Discard" action Function(discard_item, "left") style "inventory_button"
+                        textbutton "Use" action Function(use_item, left_arm_item) style "inventory_button"
 
                 # Right Arm Slot
                 vbox:
-                    text "Right Hand" size 18
+                    text "Right Hand" size 24 color "#FFFFFF"
                     frame:
                         background "#728477"
-                        xsize 100
-                        ysize 100
-                        if right_arm_item:   
+                        xsize 150
+                        ysize 150
+                        if right_arm_item:
                             if renpy.loadable("images/inventory/" + right_arm_item + ".png"):
                                 add "images/inventory/" + right_arm_item + ".png" xalign 0.5 yalign 0.5
                             else:
-                                text right_arm_item xalign 0.5 yalign 0.5
+                                text right_arm_item xalign 0.5 yalign 0.5 color "#FFFFFF"
                         else:
-                            text "Empty" xalign 0.5 yalign 0.5
-
-
+                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
 
                     if not right_arm_item:
-                        textbutton "Equip" action Show("item_select", arm="right")
+                        textbutton "Equip" action Show("item_select", arm="right") style "inventory_button"
                     else:
-                        textbutton "Unequip" action Function(unequip_item, "right")
-                        textbutton "Discard" action Function(discard_item, "right")
-                        textbutton "Use" action Function(use_item, right_arm_item)
+                        textbutton "Unequip" action Function(unequip_item, "right") style "inventory_button"
+                        textbutton "Discard" action Function(discard_item, "right") style "inventory_button"
+                        textbutton "Use" action Function(use_item, right_arm_item) style "inventory_button"
 
-            if inventory:
-                textbutton "Create Items" action Show("crafting_screen")
-            textbutton "Create Liquids" action Show("combine_liquids_screen")
-            textbutton "View Containers" action Show("liquid_management_screen")
-            textbutton "Close" action Hide("inventory"):
-                xalign 1.0
-                yalign 1.0
+            # Additional Actions
+            hbox:
+                spacing 20
+                if inventory:
+                    textbutton "Create Items" action Show("crafting_screen") style "inventory_button"
+                textbutton "Create Liquids" action Show("combine_liquids_screen") style "inventory_button"
+                textbutton "View Containers" action Show("liquid_management_screen") style "inventory_button"
+                textbutton "Close" action Hide("inventory") style "inventory_button"
+
 screen equip_armor():
     modal True
     frame:
-        xsize 400
-        ysize 400
+        xsize 600
+        ysize 500
         xalign 0.5
         yalign 0.5
         background "#113111"
+        padding (20, 20)
 
         vbox:
-            text "Equip Armor" size 30 xalign 0.5
+            spacing 10
+            text "Equip Armor" size 30 xalign 0.5 color "#FFFFFF"
 
             # Display currently equipped armor
-            text "Current Armor I have Equipped: " + (body_armor_item if body_armor_item else "None") xalign 0.5
+            text "Current Armor: [body_armor_item if body_armor_item else 'None']" size 20 color "#FFFFFF"
 
             # Scrollable item list for armor
-            text "Armor I can Equip" size 20 xalign 0.5
-            
+            text "Available Armor" size 24 color "#FFFFFF"
             viewport:
                 mousewheel True
+                scrollbars "vertical"
                 vbox:
-                    for armor_item in armor_inventory:  # Iterate over each item in armor_inventory
-                        if isinstance(armor_item, dict):  # Check if armor_item is a dictionary
-                            # Start a frame for each armor item for better separation
-                            frame:
-                                xalign 0.5
-                                background "#113111"        
-                                vbox:
-                                    $ armor_name = armor_item['name']  # Get the armor name
-                                    $ armor_description = armor_item['description']  # Get the armor description
-                                    $ armor_weight = armor_item['weight']  # Get the armor weight
-                                    $ armor_durability = armor_item['durability']  # Get the armor durability
+                    spacing 10
+                    for armor_item in armor_inventory:
+                        frame:
+                            background "#1E4A1E"
+                            padding (10, 10)
+                            vbox:
+                                $ armor_name = armor_item['name']
+                                $ armor_description = armor_item['description']
+                                $ armor_weight = armor_item['weight']
+                                $ armor_durability = armor_item['durability']
 
-                                    # Prepare the image path, replacing spaces with underscores
-                                    $ image_path = "images/inventory/" + armor_name.replace(" ", "_") + ".png"
+                                text "Name: [armor_name]" size 18 color "#FFFFFF"
+                                text "Weight: [armor_weight] kg" size 16 color "#FFFFFF"
+                                text "Durability: [armor_durability]" size 16 color "#FFFFFF"
+                                text "Description: [armor_description]" size 16 color "#FFFFFF"
 
-                                    # Display armor image if it exists
-                                    if renpy.loadable(image_path):
-                                        add image_path xalign 0.5 yalign 0.5  # Add the image for the armor item
-                                    else:
-                                        text armor_name xalign 0.5 yalign 0.5  # Fallback to text if image not found
+                                if armor_name == body_armor_item:
+                                    text "Equipped" size 18 color "#4CAF50" xalign 0.5
+                                elif armor_durability <= 0:
+                                    text "Damaged" size 18 color "#FF0000" xalign 0.5
+                                else:
+                                    textbutton "Equip" action Function(equip_item, "body", armor_name) style "inventory_button"
 
-                                    # Display armor name and details
-                                    text "Name: " + armor_name xalign 0.5  # Display armor name
-                                    text "Weight: " + str(armor_weight) + " kg" xalign 0.5  # Display weight
-                                    text "Durability: " + str(armor_durability) xalign 0.5  # Display durability
-                                    text armor_description xalign 0.5  # Display description
+            # Close button
+            textbutton "Close" action Hide("equip_armor") style "inventory_button" xalign 0.5
 
-                                    # Check if the armor is the currently equipped one
-                                    if armor_name == body_armor_item:
-                                        text "Equipped" xalign 0.5  # Display 'Equipped' if the armor is already equipped
-                                    else:
-                                        # If armor is broken (durability <= 0), show "Remove" button
-                                        if armor_durability <= 0:
-                                            text f"{armor_name} is damaged and cannot be equipped" xalign 0.5
-                                        else:
-                                            # Show the Equip button only if durability > 0
-                                            textbutton "Equip" action Function(equip_item, "body", armor_name) xalign 0.5
-
-                                    text ""  
-                                    frame:  
-                                        xsize 380  
-                                        ysize 2  
-                                        background "#174517"        
-
-        # Close button in bottom-right corner
-        textbutton "Close" action Hide("equip_armor"):
-            xalign 1.0
-            yalign 1.0
-# Item info screen
 screen item_info(item):
     modal True
     frame:
@@ -149,283 +144,377 @@ screen item_info(item):
         xalign 0.5
         yalign 0.5
         background "#000000"
-        
+        padding (20, 20)
+
         vbox:
-            text "Item Information" size 25 xalign 0.5
-            
+            spacing 10
+            text "Item Information" size 25 xalign 0.5 color "#FFFFFF"
+
             if renpy.loadable("images/inventory/" + item + ".png"):
-                # Display the item image centered
-                add "images/inventory/" + item + ".png":
-                    xalign 0.5
-                    yalign 0.5
-                    xsize 200
-                    ysize 200
+                add "images/inventory/" + item + ".png" xalign 0.5 yalign 0.5 xsize 200 ysize 200
             else:
-                text "No image available" xalign 0.5 yalign 0.5
+                text "No image available" xalign 0.5 yalign 0.5 color "#FFFFFF"
 
-            # Display item weight and description
-            text "Weight: " + str(get_item_weight(item)) + " kg" xalign 0.5  # Assumes get_item_weight is defined
-            text "Description: " + get_item_description(item) xalign 0.5  # Assumes get_item_description is defined
-            
-            # Add the buttons in a horizontal box (hbox)
+            text "Weight: [get_item_weight(item)] kg" size 18 color "#FFFFFF"
+            text "Description: [get_item_description(item)]" size 18 color "#FFFFFF"
+
             hbox:
-                spacing 20  # Adjust the space between buttons
-                
-                # "Use" button
-                textbutton "Use" action Function(use_item, item)
+                spacing 20
+                textbutton "Use" action Function(use_item, item) style "inventory_button"
+                textbutton "Close" action Hide("item_info") style "inventory_button"
 
-                # "Close" button
-                textbutton "Close" action Hide("item_info")
-
-# Item selection screen
 screen item_select(arm):
+    modal True
+    frame:
+        xsize 600
+        ysize 500
+        xalign 0.5
+        yalign 0.5
+        background "#07391a"
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            text "Select an Item" size 25 xalign 0.5 color "#FFFFFF"
+
+            viewport:
+                mousewheel True
+                scrollbars "vertical"
+                vbox:
+                    spacing 10
+                    for item in inventory:
+                        frame:
+                            background "#1E4A1E"
+                            padding (10, 10)
+                            hbox:
+                                if renpy.loadable("images/inventory/" + item + ".png"):
+                                    add "images/inventory/" + item + ".png" size (50, 50)
+                                else:
+                                    text item size 18 color "#FFFFFF"
+
+                                textbutton "Equip" action Function(equip_item, arm, item) style "inventory_button"
+                                textbutton "Use" action Function(use_item, item) style "inventory_button"
+                                textbutton "Info" action Show("item_info", item=item) style "inventory_button"
+
+            textbutton "Cancel" action Hide("item_select") style "inventory_button" xalign 0.5
+
+screen crafting_screen():
+    modal True
+    frame:
+        xsize 800
+        ysize 600
+        xalign 0.5
+        yalign 0.5
+        background "#113111"
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            label "Item Inspection" text_size 30 text_color "#FFFFFF"
+
+            hbox:
+                spacing 20
+                textbutton "Construction" action SetVariable("current_mode", "construction") style "inventory_button"
+                textbutton "Destruction" action SetVariable("current_mode", "destruction") style "inventory_button"
+
+            viewport:
+                draggable True
+                mousewheel True
+                scrollbars "vertical"
+                xsize 760
+                ysize 400
+
+                vbox:
+                    spacing 10
+                    if current_mode == "construction":
+                        label "Available Items" text_size 24 text_color "#FFFFFF"
+                        for item in inventory:
+                            if item not in selected_items:
+                                frame:
+                                    background "#1E4A1E"
+                                    padding (10, 10)
+                                    hbox:
+                                        if renpy.loadable("images/inventory/" + item + ".png"):
+                                            add "images/inventory/" + item + ".png" size (50, 50)
+                                        else:
+                                            text item size 18 color "#FFFFFF"
+
+                                        textbutton "Select" action [SetVariable("selected_item", item), Function(select_item, item)] style "inventory_button"
+
+                        label "Selected Items" text_size 24 text_color "#FFFFFF"
+                        for selected_item in selected_items:
+                            frame:
+                                background "#1E4A1E"
+                                padding (10, 10)
+                                hbox:
+                                    if renpy.loadable("images/inventory/" + selected_item + ".png"):
+                                        add "images/inventory/" + selected_item + ".png" size (50, 50)
+                                    else:
+                                        text selected_item size 18 color "#FFFFFF"
+
+                                    textbutton "Remove" action [SetVariable("selected_item", selected_item), Function(remove_item, selected_item)] style "inventory_button"
+
+                        if len(selected_items) == 2:
+                            textbutton "Combine" action [Function(combine_items), Show("crafting_screen")] style "inventory_button"
+                        else:
+                            text "Select 2 items to combine." size 18 color "#FFFFFF"
+
+                    elif current_mode == "destruction":
+                        label "Available Items" text_size 24 text_color "#FFFFFF"
+                        for item in inventory:
+                            frame:
+                                background "#1E4A1E"
+                                padding (10, 10)
+                                hbox:
+                                    if renpy.loadable("images/inventory/" + item + ".png"):
+                                        add "images/inventory/" + item + ".png" size (50, 50)
+                                    else:
+                                        text item size 18 color "#FFFFFF"
+
+                                    textbutton "Deconstruct" action [SetVariable("selected_item", item), Function(deconstruct_item, item)] style "inventory_button"
+
+            textbutton "Cancel" action Hide("crafting_screen") style "inventory_button" xalign 0.5
+
+screen liquid_management_screen():
+    modal True
+    frame:
+        xsize 800
+        ysize 600
+        xalign 0.5
+        yalign 0.5
+        background "#113111"
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            label "Liquid Management" text_size 30 text_color "#FFFFFF"
+
+            for liquid in liquid_inventory:
+                if liquid["amount"] > 0:
+                    frame:
+                        background "#1E4A1E"
+                        padding (10, 10)
+                        hbox:
+                            text f"{liquid['name']}: {liquid['amount']} ml" size 18 color "#FFFFFF"
+                            bar value liquid['amount'] range 118 xsize 400
+
+            textbutton "Close" action Hide("liquid_management_screen") style "inventory_button" xalign 0.5
+
+screen combine_liquids_screen():
+    modal True
+    frame:
+        xsize 1000
+        ysize 600
+        xalign 0.5
+        yalign 0.5
+        background "#1B3D1B"
+        padding (20, 20)
+
+        hbox:
+            spacing 20
+
+            # Left Side: Bottles List
+            vbox:
+                spacing 10
+                text "Bottles" size 24 color "#FFFFFF"
+                for container in container_inventory:
+                    frame:
+                        background "#2A4A2A"
+                        padding (10, 10)
+                        vbox:
+                            text f"{container['name']}" size 18 color "#FFFFFF"
+                            text f"{container['current_amount']}/{container['capacity']} ml" size 16 color "#FFFFFF"
+                            if selected_container != container:
+                                textbutton "Select" action SetVariable("selected_container", container) style "inventory_button"
+                            else:
+                                text "✔ Selected" size 18 color "#4CAF50"
+
+            # Middle: Selected Bottle Details
+            if selected_container:
+                vbox:
+                    spacing 10
+                    text "Selected Bottle" size 24 color "#FFFFFF"
+                    text f"{selected_container['name']}" size 18 color "#FFFFFF"
+                    text f"Capacity: {selected_container['capacity']} ml" size 16 color "#FFFFFF"
+                    bar:
+                        value selected_container["current_amount"]
+                        range selected_container["capacity"]
+                        xsize 400
+                        left_bar "#4CAF50"
+                        right_bar "#2A4A2A"
+
+                    # Contents of the Selected Bottle
+                    text "Contents:" size 18 color "#FFFFFF"
+                    for content in selected_container["contents"]:
+                        text f"{content['name']}: {content['amount']} ml" size 16 color "#FFFFFF"
+
+                    # Drain Button
+                    textbutton "Drain 10 ml" action Function(drain_liquid, selected_container) style "inventory_button"
+
+            # Right Side: Liquids and Pour Options (Scrollable)
+            if selected_container:
+                viewport:
+                    mousewheel True
+                    scrollbars "vertical"
+                    xsize 300
+                    ysize 500
+                    vbox:
+                        spacing 10
+                        text "Liquids" size 24 color "#FFFFFF"
+                        for liquid in liquid_inventory:
+                            if liquid["amount"] > 0:
+                                frame:
+                                    background "#2F523F"
+                                    padding (10, 10)
+                                    vbox:
+                                        text f"{liquid['name']} - {liquid['amount']} ml available" size 18 color "#FFFFFF"
+                                        textbutton "Add to Bottle" action Function(add_liquid_to_selected, liquid) style "inventory_button"
+
+                        # Pour Options
+                        text "Pour Into:" size 24 color "#FFFFFF"
+                        for container in container_inventory:
+                            if container != selected_container:
+                                frame:
+                                    background "#2A4A2A"
+                                    padding (10, 10)
+                                    vbox:
+                                        text f"{container['name']}" size 18 color "#FFFFFF"
+                                        textbutton "Pour Here" action Function(pour_liquid, selected_container, container) style "inventory_button"
+
+                        # Pour to Ground Option
+                        frame:
+                            background "#2A4A2A"
+                            padding (10, 10)
+                            vbox:
+                                text "Ground" size 18 color "#FFFFFF"
+                                textbutton "Pour Here" action Function(pour_liquid, selected_container, None) style "inventory_button"
+
+        # Mix Button
+        if selected_container and len(selected_container["contents"]) >= 2:
+            textbutton "Mix" action Show("mixing_minigame") style "inventory_button" xalign 0.5
+
+        # Cancel Button
+        textbutton "Cancel" action Hide("combine_liquids_screen") style "inventory_button" xalign 0.9
+screen mixing_minigame():
     modal True
     frame:
         xsize 400
         ysize 400
         xalign 0.5
         yalign 0.5
-        background "#07391a"
-        
-        vbox:
-            text "Select an Item" size 25 xalign 0.5
-            
-            viewport:
-                mousewheel True
-                vbox:
-                    for item in inventory:  # Assuming inventory is a list of items
-                        hbox:
-                            # Display item image if it exists
-                            if renpy.loadable("images/inventory/" + item + ".png"):
-                                add "images/inventory/" + item + ".png" size (50, 50)
-                            else:
-                                text item
-                            
-                            # Equip button
-                            textbutton "Equip":
-                                action Function(equip_item, arm, item)
-                            
-                            # Use button
-                            textbutton "Use":
-                                action Function(use_item, item)
+        background "#1B3D1B"
+        padding (20, 20)
 
-                            # Info button to show item info
-                            textbutton "Info":
-                                action Show("item_info", item=item)
-                            
-            # Cancel button
-            textbutton "Cancel" action Hide("item_select")
-screen crafting_screen():
+        vbox:
+            spacing 10
+            text "Mix the Liquids" size 24 color "#FFFFFF" xalign 0.5
+            text "Click the buttons in the correct order (top → right → bottom → left) twice to mix." size 16 color "#FFFFFF" xalign 0.5
+
+            # Mixing Buttons
+            hbox:
+                spacing 20
+                xalign 0.5
+                textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+            hbox:
+                spacing 20
+                xalign 0.5
+                textbutton "Left" action Function(handle_mixing_click, "left") style "inventory_button"
+                textbutton "Right" action Function(handle_mixing_click, "right") style "inventory_button"
+            hbox:
+                spacing 20
+                xalign 0.5
+                textbutton "Bottom" action Function(handle_mixing_click, "bottom") style "inventory_button"
+
+            # Mixing Progress
+            text f"Mixing Progress: {mixing_attempts * 4 + current_mixing_step}/8" size 18 color "#FFFFFF" xalign 0.5
+
+            # Cancel Button
+            textbutton "Cancel" action [Hide("mixing_minigame"), Function(reset_mixing)] style "inventory_button" xalign 0.5        
+screen input_amount_screen(liquid):
+    modal True
     frame:
+        xsize 400
+        ysize 200
+        xalign 0.5
+        yalign 0.5
+        background "#1B3D1B"
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            text "Enter Amount to Add (ml):" size 20 color "#FFFFFF"
+
+            # Input field for the amount
+            input:
+                id "amount_input"
+                default ""
+                length 5
+                allow "0123456789"
+                color "#FFFFFF"
+                size 20
+
+            hbox:
+                spacing 20
+                textbutton "Add":
+                    action [
+                        Function(add_liquid_to_selected, liquid, int(amount_input.value or 0)),
+                        Hide("input_amount_screen")
+                    ]
+                textbutton "Cancel":
+                    action Hide("input_amount_screen")
+screen input_amount_screen(liquid):
+    modal True
+    frame:
+        xsize 400
+        ysize 200
+        xalign 0.5
+        yalign 0.5
+        background "#1B3D1B"
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            text "Enter Amount to Add (ml):" size 20 color "#FFFFFF"
+            # Input field for the amount
+            input:
+                id "amount_input"
+                default ""
+                length 5
+                allow "0123456789"
+                color "#FFFFFF"
+                size 20
+
+            hbox:
+                spacing 20
+                textbutton "Add":
+                    action [
+                        Function(add_liquid_to_selected, liquid, int(amount_input.value or 0)),
+                        Hide("input_amount_screen")
+                    ]
+                textbutton "Cancel":
+                    action Hide("input_amount_screen")
+screen use_liquid_screen():
+    modal True
+    frame:
+        xsize 400
+        ysize 400
         xalign 0.5
         yalign 0.5
         background "#113111"
-        has vbox:
-            label "Item Inspection" 
-
-            # Mode Selection
-            hbox:
-                textbutton "Construction" action SetVariable("current_mode", "construction")
-                textbutton "Destruction" action SetVariable("current_mode", "destruction")
-
-            # Scrollable area for items
-            viewport:
-                draggable True
-                mousewheel True
-                # Set a size for the viewport to allow scrolling
-                xsize 600
-                ysize 400
-
-                # Vertical box that contains the items
-                vbox:
-                    if current_mode == "construction":
-                        # Available Items
-                        label "Available Items"
-                        for item in inventory:
-                            if item not in selected_items:
-                                if renpy.loadable("images/inventory/" + item + ".png"):
-                                    add "images/inventory/" + item + ".png" size (50, 50)
-                                    textbutton "Select" action [SetVariable("selected_item", item), Function(select_item, item)]
-                                else:
-                                    text item
-                                    textbutton "Select" action [SetVariable("selected_item", item), Function(select_item, item)]
-
-                        # Divider
-                        text " "
-
-                        # Selected Items
-                        label "Selected Items"
-                        for selected_item in selected_items:
-                            if renpy.loadable("images/inventory/" + selected_item + ".png"):
-                                add "images/inventory/" + selected_item + ".png" size (50, 50)
-                                textbutton "Remove" action [SetVariable("selected_item", selected_item), Function(remove_item, selected_item)]
-                            else:
-                                text selected_item
-                                textbutton "Remove" action [SetVariable("selected_item", selected_item), Function(remove_item, selected_item)]
-
-                        # Divider
-                        text " "
-
-                        # Holding Items
-                        label "Cohesive Items"
-                        if holding_items:
-                            for holding_item in holding_items:
-                                if holding_item in inventory:
-                                    if renpy.loadable("images/inventory/" + holding_item + ".png"):
-                                        add "images/inventory/" + holding_item + ".png" size (50, 50)
-                                        # Show "Selected" if the holding item is already selected
-                                        if holding_item == selected_holding_item:
-                                            textbutton "Selected" action None  # No action when selected
-                                        else:
-                                            textbutton "Select " + holding_item action [SetVariable("selected_holding_item", holding_item)]
-
-                                        # Only show "Remove" if the holding item is selected
-                                        if holding_item == selected_holding_item:
-                                            textbutton "Remove" action [Function(remove_holding_item, holding_item)]
-
-                                    else:
-                                        text holding_item 
-
-                        # Combine Button
-                        if len(selected_items) == 2:  # Require 2 items and a holding item
-                            textbutton "Combine" action [Function(combine_items), Show("crafting_screen")]
-                        else:
-                            text ""
-                            text "Select items to combine."
-
-                    elif current_mode == "destruction":
-                        label "Available Items"
-                        for item in inventory:
-                            if renpy.loadable("images/inventory/" + item + ".png"):
-                                add "images/inventory/" + item + ".png" size (50, 50)
-                                textbutton "Deconstruct " + item action [SetVariable("selected_item", item), Function(deconstruct_item, item)]
-                            else:
-                                text item
-                                textbutton "Deconstruct " + item action [SetVariable("selected_item", item), Function(deconstruct_item, item)]
-
-                        # Divider
-                        text " "
-                        text "Select an item to deconstruct."
-
-            # Cancel Button
-            textbutton "Cancel" action Hide("crafting_screen")
-
-screen liquid_management_screen():
-    frame:
-        xalign 0.5  # Center the frame horizontally
-        yalign 1.0  # Align the frame to the bottom of the screen
-        background "#113111"
-        has vbox:
-            label "Liquid Management"
-
-            # Loop through each liquid in the liquid_inventory
-            for liquid in liquid_inventory:
-                if liquid["amount"] > 0:  # Only show liquids that are available
-                    hbox:
-                        label f"{liquid['name']}:"  # Display the name of the liquid
-                        text f"{liquid['amount']} ml"  # Display current amount
-                        bar value liquid['amount'] range 118  # Horizontal bar representation
-
-            textbutton "Close" action Hide("liquid_management_screen")  # Button to close the screen
-screen combine_liquids_screen():
-    frame:
-        background "#1B3D1B" # Darker shade for elegance
+        padding (20, 20)
 
         vbox:
-            # Header and Instructions
-            text "Combine Liquids" style "heading_text" align (0.5, 0.5)
-            text "Select a container and add liquids to create your desired mix." style "subheading_text" align (0.5, 0.5)
-            spacing 20
+            spacing 10
+            label "Use Liquid" text_size 30 text_color "#FFFFFF"
+            text "Select a liquid to use:" size 18 color "#FFFFFF"
 
-            # ------------------- Containers Section -------------------
-            vbox:
-                spacing 10
-                text "1. Choose a Container" style "category_title" align (0.0, 0.5)
-                grid len(container_inventory) 1 spacing 10: # Corrected grid syntax
-                    for container in container_inventory:
-                        frame:
-                            background "#2A4A2A"
-                            padding (10, 10)
-                            vbox:
-                                text f"{container['name']} - {container['current_amount']}/{container['capacity']} ml" style "container_text"
-                                if selected_container != container:
-                                    textbutton "Select" action SetVariable("selected_container", container) style "container_button"
-                                else:
-                                    text "✔ Selected" style "selected_text"
-            
-            # ------------------- Available Liquids Section -------------------
-            vbox:
-                spacing 10
-                text "2. Select Liquids to Add" style "category_title" align (0.0, 0.5)
-                grid len(liquid_inventory) 1 spacing 10: # Corrected grid syntax
-                    for liquid in liquid_inventory:
-                        if liquid["amount"] > 0:
-                            frame:
-                                background "#2F523F"
-                                padding (10, 10)
-                                vbox:
-                                    text f"{liquid['name']} - {liquid['amount']} ml available" style "liquid_text"
-                                    if liquid in selected_liquids:
-                                        text "✔ Selected for Addition" style "added_text"
-                                    else:
-                                        textbutton "Add to container" action Function(add_liquid_to_selected, liquid) style "add_button"
-            
-            # ------------------- Selected Container and Contents Section -------------------
-            if selected_container:
-                vbox:
-                    spacing 10
-                    text "---------------------------"
-                    text "Selected Container Details" style "category_title" align (0.0, 0.5)
-                    text f"{selected_container['name']} - {selected_container['current_amount']}/{selected_container['capacity']} ml" style "selected_container_text" align (0.0, 0.5)
-                    text "Contents:" style "subheading_text" align (0.0, 0.5)
-                    grid len(selected_container["contents"]) 1 spacing 5: # Corrected grid syntax
-                        for content in selected_container["contents"]:
-                            frame:
-                                background "#3A5C4A"
-                                padding (5, 5)
-                                hbox:
-                                    text f"{content['name']} - {content['amount']} ml" style "content_text"
-                                    textbutton "Drain 10 ml" action Function(drain_liquid, selected_container, content["name"]) style "drain_button"
-
-            # ------------------- Selected Liquids to Add Section -------------------
-            if selected_liquids:
-                vbox:
-                    spacing 10
-                    text "Liquids to be Added:" style "subheading_text" align (0.0, 0.5)
-                    grid len(selected_liquids) 1 spacing 5: # Corrected grid syntax
-                        for liquid in selected_liquids:
-                            frame:
-                                background "#3A5C4A"
-                                padding (5, 5)
-                                text f"{liquid['name']} - {liquid['amount']} ml" style "selected_liquid_text"
-
-            # ------------------- Combine and Mix Buttons -------------------
-            if selected_container:
-                hbox:
-                    spacing 20
-                    if selected_liquids:
-                        textbutton "Add Liquids to Container" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
-                    elif check_mix_recipe(selected_container):
-                        textbutton "Mix Contents" action Function(combine_liquids, selected_container, selected_liquids) style "combine_button"
-                    else:
-                        text "No valid mix recipe for the selected container." style "error_text" align (0.5, 0.5)
-
-            # ------------------- Cancel Button -------------------
-            hbox:
-                textbutton "Cancel" action Hide("combine_liquids_screen") style "cancel_button" align (0.5, 0.5)
-
-
-screen use_liquid_screen():
-    frame:
-        vbox:
-            label "Use Liquid"
-            text "Select a liquid to use:"
-            
-            # Iterate through the inventory to display only liquids
             for liquid in inventory:
-                if liquid["type"] == "liquid":  # Ensure we are only displaying liquids
-                    text f"{liquid['name']} - {liquid['amount']}ml available"
-                    textbutton "Use" action [Function(use_liquid, liquid), Hide("use_liquid_screen")]
+                if liquid["type"] == "liquid":
+                    frame:
+                        background "#1E4A1E"
+                        padding (10, 10)
+                        hbox:
+                            text f"{liquid['name']} - {liquid['amount']}ml available" size 18 color "#FFFFFF"
+                            textbutton "Use" action [Function(use_liquid, liquid), Hide("use_liquid_screen")] style "inventory_button"
 
-            # Cancel button
-        #    textbutton "Cancel" action Hide("use_liquid_screen")
+            textbutton "Cancel" action Hide("use_liquid_screen") style "inventory_button" xalign 0.5

@@ -1,39 +1,31 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1089, in script
-    "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
-  File "game/scripts/health_status.rpy", line 46, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 46, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 48, in execute
+  File "game/script.rpy", line 1081, in script
+    "I sit in a crowded room. There are chairs laid out in rows."
+  File "game/scripts/inventory_screen.rpy", line 398, in execute
+    screen mixing_minigame():
+  File "game/scripts/inventory_screen.rpy", line 398, in execute
+    screen mixing_minigame():
+  File "game/scripts/inventory_screen.rpy", line 400, in execute
     frame:
-  File "game/scripts/health_status.rpy", line 55, in execute
+  File "game/scripts/inventory_screen.rpy", line 408, in execute
     vbox:
-  File "game/scripts/health_status.rpy", line 70, in execute
+  File "game/scripts/inventory_screen.rpy", line 414, in execute
     hbox:
-  File "game/scripts/health_status.rpy", line 71, in execute
-    viewport:
-  File "game/scripts/health_status.rpy", line 78, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 122, in execute
-    if selected_category == "emotions":
-  File "game/scripts/health_status.rpy", line 123, in execute
-    for emotion in emotions:
-  File "game/scripts/health_status.rpy", line 124, in execute
-    frame:
-  File "game/scripts/health_status.rpy", line 127, in execute
-    hbox:
-  File "game/scripts/health_status.rpy", line 130, in execute
-    bar value emotions[emotion] range 100 xmaximum 600 ymaximum 25
-TypeError: int() argument must be a string, a bytes-like object or a number, not 'RevertableSet'
+  File "game/scripts/inventory_screen.rpy", line 417, in execute
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+  File "game/scripts/inventory_screen.rpy", line 417, in keywords
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+  File "game/scripts/inventory_screen.rpy", line 417, in <module>
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+NameError: name 'handle_mixing_click' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1089, in script
-    "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
+  File "game/script.rpy", line 1081, in script
+    "I sit in a crowded room. There are chairs laid out in rows."
   File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
     Say.execute(self)
   File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
@@ -66,39 +58,25 @@ Full traceback:
     self.update()
   File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/scripts/health_status.rpy", line 46, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 46, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 48, in execute
+  File "game/scripts/inventory_screen.rpy", line 398, in execute
+    screen mixing_minigame():
+  File "game/scripts/inventory_screen.rpy", line 398, in execute
+    screen mixing_minigame():
+  File "game/scripts/inventory_screen.rpy", line 400, in execute
     frame:
-  File "game/scripts/health_status.rpy", line 55, in execute
+  File "game/scripts/inventory_screen.rpy", line 408, in execute
     vbox:
-  File "game/scripts/health_status.rpy", line 70, in execute
+  File "game/scripts/inventory_screen.rpy", line 414, in execute
     hbox:
-  File "game/scripts/health_status.rpy", line 71, in execute
-    viewport:
-  File "game/scripts/health_status.rpy", line 78, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 122, in execute
-    if selected_category == "emotions":
-  File "game/scripts/health_status.rpy", line 123, in execute
-    for emotion in emotions:
-  File "game/scripts/health_status.rpy", line 124, in execute
-    frame:
-  File "game/scripts/health_status.rpy", line 127, in execute
-    hbox:
-  File "game/scripts/health_status.rpy", line 130, in execute
-    bar value emotions[emotion] range 100 xmaximum 600 ymaximum 25
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\sl2\sldisplayables.py", line 262, in sl2bar
-    return renpy.display.behavior.Bar(range, value, width, height, vertical=False, **properties)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 2199, in __init__
-    adjustment = Adjustment(range, value, step=step, page=page, changed=changed)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 1942, in __init__
-    self._value = type(range)(value) # type: ignore
-TypeError: int() argument must be a string, a bytes-like object or a number, not 'RevertableSet'
+  File "game/scripts/inventory_screen.rpy", line 417, in execute
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+  File "game/scripts/inventory_screen.rpy", line 417, in keywords
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+  File "game/scripts/inventory_screen.rpy", line 417, in <module>
+    textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
+NameError: name 'handle_mixing_click' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Fri Jan 24 18:27:25 2025
+Sat Jan 25 15:22:51 2025
