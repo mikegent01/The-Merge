@@ -61,9 +61,12 @@ default mixing_progress = 0
 default amount_input = 0
 default mix_start_time = 0
 default mixing_steps = ["top", "right", "bottom", "left"]
-default current_mixing_step = 0
-default mixing_attempts = 0
-#pytrhon
+default stirring_tool = None
+default stirring_progress = 0
+default stirring_complete = False
+default last_mouse_pos = (0, 0)
+default stirring_direction = None
+default stirring_count = 0#pytrhon
 init python:
     import webbrowser
     import random   
@@ -108,6 +111,59 @@ init python:
         "Dignity": 60,
         "Pride": 10,
     }
+    def update_stirring_progress():
+        global stirring_progress, last_mouse_pos, stirring_direction, stirring_count, stirring_complete
+
+        # Get current mouse position
+        current_mouse_pos = renpy.get_mouse_pos()
+
+        # Calculate the direction of movement
+        if last_mouse_pos != (0, 0):
+            dx = current_mouse_pos[0] - last_mouse_pos[0]
+            dy = current_mouse_pos[1] - last_mouse_pos[1]
+
+            # Determine the direction of movement
+            if abs(dx) > abs(dy):
+                if dx > 0:
+                    new_direction = "right"
+                else:
+                    new_direction = "left"
+            else:
+                if dy > 0:
+                    new_direction = "down"
+                else:
+                    new_direction = "up"
+
+            # Check if the direction has changed in a circular pattern
+            if stirring_direction:
+                if (stirring_direction == "right" and new_direction == "down") or \
+                   (stirring_direction == "down" and new_direction == "left") or \
+                   (stirring_direction == "left" and new_direction == "up") or \
+                   (stirring_direction == "up" and new_direction == "right"):
+                    stirring_count += 1
+                    if stirring_count >= 4:  # One full circle
+                        stirring_progress += 10
+                        stirring_count = 0
+                        if stirring_progress >= 100:
+                            stirring_progress = 100
+                            stirring_complete = True
+                            renpy.notify("Stirring complete!")
+                            mix_liquids(selected_container, selected_liquids)
+
+            stirring_direction = new_direction
+
+        # Update the last mouse position
+        last_mouse_pos = current_mouse_pos
+
+# Function to reset stirring progress
+    def reset_stirring():
+        global stirring_tool, stirring_progress, stirring_complete, last_mouse_pos, stirring_direction, stirring_count
+        stirring_tool = None
+        stirring_progress = 0
+        stirring_complete = False
+        last_mouse_pos = (0, 0)
+        stirring_direction = None
+        stirring_count = 0
     def get_emotion_value(emotions_dict, emotion):
         return emotions_dict.get(emotion, 0)
 
@@ -322,21 +378,16 @@ init python:
                 source_container["contents"].remove(content)
                 source_container["current_amount"] -= content["amount"]
                 renpy.notify(f"Poured {content['name']} from {source_container['name']} to the ground.")
-    def drain_liquid(container, liquid_name):
-        for content in container["contents"]:
-            if content["name"] == liquid_name:
-                # Reduce the liquid amount by 10 ml
+
+    def drain_liquid(container):
+        if container["contents"]:
+            for content in container["contents"][:]:  # Iterate over a copy of the list
                 content["amount"] = max(0, content["amount"] - 10)
                 container["current_amount"] = max(0, container["current_amount"] - 10)
-
-                # Check if the liquid amount has reached 0
                 if content["amount"] <= 0:
-                    # Remove the liquid from the container's contents
                     container["contents"].remove(content)
-                    renpy.notify(f"Removed {liquid_name} from {container['name']}.")
-                else:
-                    renpy.notify(f"Drained 10 ml of {liquid_name} from {container['name']}.")
-                break
+                    renpy.notify(f"Removed {content['name']} from {container['name']}.")
+            renpy.notify("Drained 10 ml of each liquid from the bottle.")
 #
     def remove_holding_item(holding_item):
         global holding_items, selected_holding_item  # Ensure global access to holding_items
@@ -431,6 +482,9 @@ init python:
             container["current_amount"] = sum(content["amount"] for content in container["contents"])
         else:
             renpy.notify("No valid recipe found for the current mixture.")
+            drain_liquid(selected_container)
+            selected_container["contents"] = [{"name": "Sludge", "amount": selected_container["current_amount"]}]
+
 # Function to add liquid to the selected bottle
     def add_liquid_to_selected(liquid):
         if selected_container:
@@ -744,6 +798,8 @@ init python:
         webbrowser.open(f"file:///{html_file_path}")
     def has_item(item):
         return item in inventory
+    def has_stirring_tool(tool):
+        return tool in inventory    
     def get_armor_details(armor_item):
         return armor_item["description"]    
     def add_item_to_medkit(item_name, healing_info):
@@ -1097,6 +1153,7 @@ label bootcampinsideprojectorroomstart:
     $ rng = random.randint(1,100)
     $ relationships["Samuel"]["met"] = True
     $ inventory.append("Broken Hand Mirror")   
+    $ inventory.append("Spoon")    
     if rng < 50:
         play music marchingon volume 0.1
     else:

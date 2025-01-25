@@ -391,15 +391,15 @@ screen combine_liquids_screen():
 
         # Mix Button
         if selected_container and len(selected_container["contents"]) >= 2:
-            textbutton "Mix" action Show("mixing_minigame") style "inventory_button" xalign 0.5
+            textbutton "Mix" action Show("stirring_minigame") style "inventory_button" xalign 0.5
 
         # Cancel Button
         textbutton "Cancel" action Hide("combine_liquids_screen") style "inventory_button" xalign 0.9
-screen mixing_minigame():
+screen stirring_minigame():
     modal True
     frame:
-        xsize 400
-        ysize 400
+        xsize 600
+        ysize 600
         xalign 0.5
         yalign 0.5
         background "#1B3D1B"
@@ -407,29 +407,47 @@ screen mixing_minigame():
 
         vbox:
             spacing 10
-            text "Mix the Liquids" size 24 color "#FFFFFF" xalign 0.5
-            text "Click the buttons in the correct order (top → right → bottom → left) twice to mix." size 16 color "#FFFFFF" xalign 0.5
+            text "Stir the Liquids" size 24 color "#FFFFFF" xalign 0.5
 
-            # Mixing Buttons
+            # Stirring Tool Selection
+            text "Select a Stirring Tool:" size 18 color "#FFFFFF" xalign 0.5
             hbox:
                 spacing 20
                 xalign 0.5
-                textbutton "Top" action Function(handle_mixing_click, "top") style "inventory_button"
-            hbox:
-                spacing 20
-                xalign 0.5
-                textbutton "Left" action Function(handle_mixing_click, "left") style "inventory_button"
-                textbutton "Right" action Function(handle_mixing_click, "right") style "inventory_button"
-            hbox:
-                spacing 20
-                xalign 0.5
-                textbutton "Bottom" action Function(handle_mixing_click, "bottom") style "inventory_button"
+                for tool in ["Spoon", "Stick", "Whisk"]:
+                    if has_stirring_tool(tool):
+                        textbutton tool:
+                            action SetVariable("stirring_tool", tool)
+                            style "inventory_button"
+                    else:
+                        textbutton tool:
+                            action None
+                            style "inventory_button"
+                            sensitive False  # Disable if the tool is not in inventory
 
-            # Mixing Progress
-            text f"Mixing Progress: {mixing_attempts * 4 + current_mixing_step}/8" size 18 color "#FFFFFF" xalign 0.5
+            # Stirring Area
+            if stirring_tool:
+                text f"Using: {stirring_tool}" size 18 color "#FFFFFF" xalign 0.5
+                text "Stir in a circular motion with your mouse." size 16 color "#FFFFFF" xalign 0.5
+
+                # Stirring Progress Bar
+                bar:
+                    value stirring_progress
+                    range 100
+                    xsize 400
+                    left_bar "#4CAF50"
+                    right_bar "#2A4A2A"
+                    xalign 0.5
+
+                # Stirring Interaction
+                if not stirring_complete:
+                    timer 0.1 repeat True action Function(update_stirring_progress)
+                    text "Stirring Progress: [stirring_progress]%" size 18 color "#FFFFFF" xalign 0.5
+                else:
+                    text "Stirring Complete!" size 18 color "#4CAF50" xalign 0.5
 
             # Cancel Button
-            textbutton "Cancel" action [Hide("mixing_minigame"), Function(reset_mixing)] style "inventory_button" xalign 0.5        
+            textbutton "Cancel" action [Hide("stirring_minigame"), Function(reset_stirring)] style "inventory_button" xalign 0.5
 screen input_amount_screen(liquid):
     modal True
     frame:
