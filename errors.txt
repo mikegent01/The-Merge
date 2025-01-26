@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/inventory_screen.rpy", line 436: vbox expects a non-empty block.
-    vbox:
-         ^
+File "game/script.rpy", line 120: invalid syntax
+    default emotions = {
+             ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Jan 25 15:13:17 2025
+Sat Jan 25 20:20:18 2025

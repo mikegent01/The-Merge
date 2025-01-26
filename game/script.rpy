@@ -38,11 +38,25 @@ default left_arm_item = None
 default right_arm_item = None
 default hud_visible = True  # Start with the HUD visible
 default slot_count = 1
+default roll = 0
+default rolltf = 0
 #Quests
-default new_uniform_quest = False #quest to get new uniform
-default projectorquest = False
-default uniform_ordered = False
-default projector_obtained = False
+default quests = [ #this was retarded so i made it an array
+ #  {
+ #      "name": "New Uniform Quest",
+ #      "description": "Go to the front desk to order a new uniform.",
+ #      "completed": False,
+ #      "condition": "uniform_ordered"
+ #  },
+ #  {
+ #      "name": "Projector Quest",
+ #      "description": "Get a new projector and bring it to the projector room.",
+ #      "completed": False,
+ #      "condition": "projector_obtained"
+ #  }
+]
+default base_chance = 30  
+default modifiers = 0  
 default nice = 0
 default mean = 0
 default soft_skills = ["speech","intelligence","luck","pain_tolerance","mental_resilience" ]
@@ -50,6 +64,13 @@ default hard_skills = [ "strength","medical" , "speed"]
 default selected_category = "soft"  # Initial selection
 default title_screen_set = ""
 #
+default emotions = {
+    "happiness": {"value": 10, "bonus": {"intelligence": 5, "charisma": 10}},
+    "anger": {"value": 30, "bonus": {"strength": 10, "intelligence": -5}},
+    "sadness": {"value": 20, "bonus": {"intelligence": -10, "endurance": 5}},
+    "fear": {"value": 15, "bonus": {"agility": 10, "charisma": -5}},
+    "excitement": {"value": 10, "bonus": {"charisma": 5, "strength": 5}},
+}
 default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
 default npc_name = "???"         # The default NPC name
@@ -103,14 +124,32 @@ init python:
     "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
     "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
-    emotions = {
-        "Authenticity": 30,
-        "Authority": 60,
-        "Composure": 60,
-        "Confidence": 75,
-        "Dignity": 60,
-        "Pride": 10,
-    }
+
+    def get_top_emotions(emotions):
+        # Sort emotions by value in descending order
+        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
+
+        # Get the top 3 emotions
+        top_emotions = sorted_emotions[:3]
+
+        # Get the remaining emotions
+        other_emotions = sorted_emotions[3:]
+
+        return top_emotions, other_emotions    
+    def apply_emotion_bonuses(base_chance, skill_level, modifiers=0):
+        # Get the top emotion
+        top_emotions, _ = get_top_emotions(emotions)
+        top_emotion = top_emotions[0][0] if top_emotions else None
+
+        # Apply the bonus from the top emotion
+        if top_emotion and top_emotion in emotions:
+            bonus = emotions[top_emotion]["bonus"].get("intelligence", 0)  # Example: Apply intelligence bonus
+            modifiers += bonus
+
+        # Calculate the total success chance
+        total_chance = base_chance + skill_level + modifiers
+
+        return total_chance    
     def update_stirring_progress():
         global stirring_progress, last_mouse_pos, stirring_direction, stirring_count, stirring_complete
 
@@ -166,6 +205,14 @@ init python:
         stirring_count = 0
     def get_emotion_value(emotions_dict, emotion):
         return emotions_dict.get(emotion, 0)
+# Function to perform a roll with a base chance and modifiers
+    def roll_action(base_chance, skill_level, modifiers=0):
+        total_chance = base_chance + skill_level + modifiers
+        roll = renpy.random.randint(1, 100)
+        renpy.sound.play("audio/dicesaound.wav")        
+        rolltf = roll <= total_chance
+
+        return rolltf, roll
 
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
@@ -260,18 +307,43 @@ init python:
     relationships = {
         "Samuel": {
             "met": False,
-            "trust": 70,
-            "friendship": 40,
+            "trust": 80,
+            "friendship": 54,
             "hostility": 1,
         },
         "Dan": {
             "met": False,
             "trust": 60,
-            "friendship": 50,
+            "friendship": 60,
             "hostility": 10,
         }
     }
-
+# Function to determine relationship description
+    def get_relationship_description(trust, friendship, hostility):
+        if trust > 80 and friendship > 80:
+            return "Best Friend"
+        elif trust > 70 and friendship > 70:
+            return "Close Friend"
+        elif trust > 60 and friendship > 60:
+            return "Good Friend"
+        elif trust > 50 and friendship > 50:
+            return "Trusted Friend"
+        elif friendship > 50 and trust > 30:
+            return "Friend"
+        elif friendship > 50 and trust <= 30:
+            return "Associate"
+        elif trust > 50 and friendship <= 30:
+            return "Trusted Associate"
+        elif hostility > 70:
+            return "Enemy"
+        elif hostility > 50:
+            return "Adversary"
+        elif hostility > 30 and trust <= 30 and friendship <= 30:
+            return "Rival"
+        elif trust > 30 and friendship > 30:
+            return "Neutral Acquaintance"
+        else:
+            return "Stranger"
     container_inventory = [
         {"name": "Regular Bottle", "capacity": 100, "current_amount": 0, "contents": []},  # Empty bottle
         {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
@@ -1152,7 +1224,7 @@ label bootcampinsideprojectorroomstart:
     $ set_room_temperature (72)
     $ rng = random.randint(1,100)
     $ relationships["Samuel"]["met"] = True
-    $ inventory.append("Broken Hand Mirror")   
+    $ inventory.append("radio")   
     $ inventory.append("Spoon")    
     if rng < 50:
         play music marchingon volume 0.1
@@ -1160,6 +1232,11 @@ label bootcampinsideprojectorroomstart:
         play music boot_camp volume 0.5
 
     show ben idle at left with dissolve
+    $ quests.append({
+        "name": "Go to the projector room and listen to the drill sargent.",
+        "description": "I need to report to the drill sargent for a urgent meeting. ",
+        "completed": True,     
+    })
 
     "I sit in a crowded room. There are chairs laid out in rows."
     "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
@@ -1228,7 +1305,11 @@ label bootcampinsideprojectorroomstart:
 
 
     DRI "You are dismissed."
-
+    $ quests.append({
+        "name": "Fix the projector",
+        "description": "The projector has important information that the drill sargent needs, it is broken and I need to fix it. ",
+        "completed": False,     
+    })
     hide sadsargtalk
 
     "As I turn around, I notice two people sitting in their seats. Perhaps I should talk to one of them and ask them for help."
@@ -1506,13 +1587,13 @@ label keepsamuel:
                 "NAME: Emma Smith"
                 "AGE: 28"
                 "CAUSE OF DEATH: Suicide"
-                "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel. No further investigation will be required."
+                "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel."
+                "No further investigation will be required."
             "I stare at the page realizing what I am doing. I quickly put the folder back into the shelf. I shouldn't be looking at dead people's stuff I should be focusing on the screwdriver.My thoughts are intrupted by a voice."
     SAM "We can just go to the military store area to get one, you shouldn't be going into random rooms looking for tools."
     "I feel a hand touch my back as I walk past him, but I make it downstairs."
     
     scene bootcampinsideprojectorroomstartm
-
     "I reach the projector room with Samuel following close behind after a few minutes of walking."
     "The automatic door opens, revealing that the person I told to wait there is no longer there."
     "Thinking back, I never even asked his name, not that it was important anyway."
@@ -1535,25 +1616,27 @@ label keepsamuel:
             BEN "We’re going."
             "I say as I start walking out of the room. Samuel follows me as we leave the building."
             return
-
-        "Start removing the projector film":
+        "Start removing the projector film (40 chance)":
+            $ base_chance = 1
+            $ rolltf,roll = roll_action(base_chance, stats["intelligence"]["level"] , 0)
+            "You rolled a [roll] and needed [base_chance] "
             "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
             
             menu:
-                "Look at the front of the projector":
+                "Look at the front of the projector" if not rolltf:
                     "I look at the front of the projector. The film is slotted into the projector and being held by a screw."
                     "The film seems like it is still intact and can still be used."
                     "I carefully unscrew the film and place it on the table next to the projector."
-                    $ add_experience("intelligence", 20)
                     "With the film removed, I move onto the back of the projector."
 
-                "Look at the back of the projector":
+                "Look at the back of the projector" if rolltf:
                     "I look at the back of the projector. There are four screws holding it in place."
                     "I sit the projector on its side and begin to unscrew the screws."
                     "As I start unscrewing the second screw, Samuel runs over and grabs the projector, sitting it upright."
                     "There’s concern on his face as he says—"
                     SAM "You almost damaged the film. You have to be careful with this."
                     "He begins to help me take the film out of the projector, and we both work on fixing it together."
+                    $ add_experience("intelligence", 20)
                     "After two hours, we manage to fix the projector. Samuel seems happy with it."
                     "He then begins to clean everything up and, with a smile, says—"
                     SAM "Let’s go show the Sergeant this!"

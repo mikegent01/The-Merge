@@ -1,64 +1,102 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1171, in script
+  File "game/script.rpy", line 1191, in script
     "I sit in a crowded room. There are chairs laid out in rows."
-  File "renpy/common/00action_other.rpy", line 586, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/script.rpy", line 162, in update_stirring_progress
-    if current_amount > 0:
-NameError: name 'current_amount' is not defined
+  File "game/scripts/health_status.rpy", line 58, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 58, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 60, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 67, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 81, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 87, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 89, in execute
+    if selected_category == "soft" or selected_category == "hard":
+  File "game/scripts/health_status.rpy", line 135, in execute
+    for person in relationships:
+  File "game/scripts/health_status.rpy", line 136, in execute
+    if relationships[person]["met"]:
+  File "game/scripts/health_status.rpy", line 137, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 140, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 148, in execute
+    $ relationship_description = get_relationship_description(trust, friendship, hostility)
+  File "game/scripts/health_status.rpy", line 148, in <module>
+    $ relationship_description = get_relationship_description(trust, friendship, hostility)
+NameError: name 'get_relationship_description' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1171, in script
+  File "game/script.rpy", line 1191, in script
     "I sit in a crowded room. There are chairs laid out in rows."
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
     Say.execute(self)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
     renpy.exports.say(who, what, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
     who(what, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
     self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
     display_say(who,
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
     rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 3201, in interact_core
-    rv = root_widget.event(ev, x, y, 0)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 793, in event
-    rv = self.child.event(ev, x, y, st)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1426, in event
-    rv = super(Window, self).event(ev, x, y, st)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 288, in event
-    rv = d.event(ev, x - xo, y - yo, st)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 2657, in event
-    return run(self.function, *self.args, **self.kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 395, in run
-    return action(*args, **kwargs)
-  File "renpy/common/00action_other.rpy", line 586, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/script.rpy", line 162, in update_stirring_progress
-    if current_amount > 0:
-NameError: name 'current_amount' is not defined
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/health_status.rpy", line 58, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 58, in execute
+    screen player_stats_screen():
+  File "game/scripts/health_status.rpy", line 60, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 67, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 81, in execute
+    viewport:
+  File "game/scripts/health_status.rpy", line 87, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 89, in execute
+    if selected_category == "soft" or selected_category == "hard":
+  File "game/scripts/health_status.rpy", line 135, in execute
+    for person in relationships:
+  File "game/scripts/health_status.rpy", line 136, in execute
+    if relationships[person]["met"]:
+  File "game/scripts/health_status.rpy", line 137, in execute
+    frame:
+  File "game/scripts/health_status.rpy", line 140, in execute
+    vbox:
+  File "game/scripts/health_status.rpy", line 148, in execute
+    $ relationship_description = get_relationship_description(trust, friendship, hostility)
+  File "game/scripts/health_status.rpy", line 148, in <module>
+    $ relationship_description = get_relationship_description(trust, friendship, hostility)
+NameError: name 'get_relationship_description' is not defined
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sat Jan 25 16:09:41 2025
+Sat Jan 25 20:09:10 2025

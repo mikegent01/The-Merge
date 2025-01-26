@@ -13,6 +13,13 @@ style inventory_button is transparent_button
 screen inventory():
     modal True
     frame:
+        $ average_health, average_cleanliness, average_temperature = calculate_averages()
+
+        $ medical_level = stats["medical"]["level"]
+        $ can_view_health = is_stat_higher("medical", 100, stats)
+        $ can_view_health_small = is_stat_higher("medical", 59, stats)
+        $ can_view_hygiene = is_stat_higher("intelligence", 50, stats)
+
         xsize 800
         ysize 600
         xalign 0.5
@@ -28,8 +35,8 @@ screen inventory():
             $ current_weight = calculate_total_weight()
             $ remaining_space = get_remaining_space()
             text "Weight Of Carried Items: [current_weight] kg" size 20 color "#FFFFFF"
-            text "Remaining Space In Your Bag: [remaining_space] N" size 20 color "#FFFFFF"
-            text "Max Weight You Can Hold: [current_strength] kg" size 20 color "#FFFFFF"
+            text "Remaining Space In My Bag: [remaining_space] N" size 20 color "#FFFFFF"
+            text "Max Weight I Can Hold: [current_strength] kg" size 20 color "#FFFFFF"
 
             # Left and Right Arm Slots
             hbox:

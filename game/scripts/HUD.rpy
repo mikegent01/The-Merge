@@ -44,6 +44,8 @@ screen quest_log():
         xalign 0.5
         yalign 0.5
         background "#1a431a"
+        xsize 800
+        ysize 600
 
         vbox:
             spacing 20
@@ -53,56 +55,84 @@ screen quest_log():
             text "Quest Log" style "title" xalign 0.5
 
             # Quest List
-            vbox:
-                spacing 15
-                xalign 0.5
+            viewport:
+                draggable True
+                mousewheel True
+                xsize 750
+                ysize 450
 
-                # New Uniform Quest
-                if new_uniform_quest:
-                    hbox:
-                        spacing 10
+                vbox:
+                    spacing 15
+                    xalign 0.5
 
-                        # Check or Cross Icon
-                        text ("✓" if uniform_ordered else "✗") style "checkbox_emoji"
+                    # Iterate over the quests array
+                    for quest in quests:
+                        # Ensure the 'expanded' key exists
+                        if "expanded" not in quest:
+                            $ quest["expanded"] = False
 
-                        # Quest Description
-                        text "Go to the front desk to order a new uniform." style "quest_text"
+                        frame:
+                            background "#2a4a2a"
+                            padding (10, 10)
+                            xsize 700
 
-                # Projector Quest
-                if projectorquest:
-                    hbox:
-                        spacing 10
+                            # Quest Name (Clickable)
+                            if not quest["expanded"]:
+                                textbutton quest["name"]:
+                                    action ToggleDict(quest, "expanded")
+                                    style "quest_button"
+                                    xalign 0.0
 
-                        # Check or Cross Icon
-                        text ("✓" if projector_obtained else "✗") style "checkbox_emoji"
+                            # Quest Details (Visible if expanded)
+                            if quest["expanded"]:
+                                vbox:
+                                    spacing 10
+                                    xalign 0.0
 
-                        # Quest Description
-                        text "Get a new projector and bring it to the projector room." style "quest_text"
+                                    # Quest Description
+                                    text quest["description"] style "quest_text"
+
+                                    # Quest Status
+                                    hbox:
+                                        spacing 10
+                                        text "Status:" style "quest_text"
+                                        text ("Completed" if quest["completed"] else "In Progress") style "quest_text" color ("#00FF00" if quest["completed"] else "#FF0000")
+                                        text "\n"
+                                        textbutton "Close":
+                                            action ToggleDict(quest, "expanded")
+                                            style "quest_button"
+                                            xalign 0.0                                        
 
             # Close Button at the bottom
-            textbutton "Close":
-                action Hide("quest_log")
-                xalign 0.5
-                yalign 1.0
-                style "close_button"
+            if not quest["expanded"]: 
+                textbutton "Close":
+                    action Hide("quest_log")
+                    xalign 0.5
+                    yalign 1.0
+                    style "close_button"
 
-# Style for the title
 style title:
-    size 30
-    color "#FFFFFF"  # White color for the title
-    xalign 0.5       # Center the title
+    size 40
+    color "#FFFFFF"
+    bold True
+    xalign 0.5
 
-# Style for the quest description text
+style quest_button:
+    background None
+    padding (5, 5)
+    hover_background "#3a5c4a"
+    xalign 0.0
+
 style quest_text:
-    size 22
-    color "#FFFFFF"  # White color for the quest text
+    size 20
+    color "#CCCCCC"
+    xalign 0.0
 
-# Style for the check and cross emojis
-style checkbox_emoji:
-    size 30
-    color "#ffffff"  # White color for the check/cross emoji
-
-
+style close_button:
+    background "#333333"
+    padding (10, 5)
+    hover_background "#444444"
+    xalign 0.5
 # Images for icons
 image Backpack:
     "images/inventory/inventory_hud/backpack.png"
