@@ -76,6 +76,7 @@ screen player_stats_screen():
                 textbutton "Emotions" action [SetVariable("selected_category", "emotions")] style "category_button"
                 textbutton "Relationships" action [SetVariable("selected_category", "relationships")] style "category_button"
                 textbutton "Close" action Hide("player_stats_screen") style "inventory_button"
+
             # Stats Section
             viewport:
                 draggable True
@@ -124,17 +125,55 @@ screen player_stats_screen():
                         # Get the top 3 emotions and the rest
                         $ top_emotions, other_emotions = get_top_emotions(emotions)
 
-                        # Display the top 3 emotions
-                        text "Top Emotions" size 30 xalign 0.5 color "#FFFFFF" bold True
-                        for emotion, data in top_emotions:
-                            frame:
-                                background "#222222"
-                                padding (15, 10)
-                                hbox:
-                                    spacing 20
-                                    text emotion.capitalize() size 24 color "#FF66CC" bold True
-                                    bar value data["value"] range 100 xmaximum 600 ymaximum 25
+                        # Get the top emotion and its bonuses
+                        $ top_emotion, top_bonuses = get_top_emotion_bonuses(emotions)
 
+                        # Display the top emotion and its bonuses
+                        text "Main Emotion" size 30 xalign 0.5 color "#FFFFFF" bold True
+                        if top_emotion:
+                            frame:
+                                background "#2f612f"
+                                padding (15, 10)
+                                vbox:
+                                    spacing 10
+                                    text top_emotion.capitalize() size 24 color "#ffeb34" bold True
+                                    bar value emotions[top_emotion]["value"] range 100 xmaximum 600 ymaximum 25
+
+                                    # Display bonuses
+                                    text "Bonuses:" size 20 color "#FFFFFF" bold True
+                                    for stat, bonus in top_bonuses.items():
+                                        hbox:
+                                            spacing 10
+                                            text stat.replace("_", " ").capitalize() size 18 color "#CCCCCC"
+                                            if bonus > 0:
+                                                text f"+{bonus}" size 18 color "#00FF00" 
+                                            else:
+                                                text f"{bonus}" size 18 color "#FF0000"
+                        # Display the remaining top emotions
+                        text "Minor Emotions" size 30 xalign 0.5 color "#FFFFFF" bold True
+                        for emotion, data in top_emotions[1:]:
+                            frame:
+                                background "#132a16"
+                                padding (15, 10)
+                                vbox:
+                                    spacing 10
+                                    text emotion.capitalize() size 24  bold True 
+                                    bar value data["value"] range 100 xmaximum 600 ymaximum 25
+                        
+                                    # Get reduced bonuses for the emotion
+                                    $ reduced_bonuses = get_reduced_bonuses(data["bonus"])
+                        
+                                    # Display reduced bonuses
+                                    text "Bonuses:" size 20 color "#FFFFFF" bold True
+                                    for stat, bonus in reduced_bonuses.items():
+                                        hbox:
+                                            spacing 10
+                                            text stat.replace("_", " ").capitalize() size 18 color "#CCCCCC"
+                                            if bonus > 0:
+                                                text f"+{bonus}" size 18 color "#2aba2a"
+                                            else:
+                                                text f"{bonus}" size 18 color "#FF0000"
+                        
                         # Display the remaining emotions
                         text "Other Emotions" size 30 xalign 0.5 color "#FFFFFF" bold True
                         for emotion, data in other_emotions:
@@ -218,11 +257,11 @@ screen condition_details(part):
             # Health Status
             $ health = default_status[part]['health']
             if health > 90:
-                text "Feels Great!" size 24 xalign 0.5 color "#00FF00"
+                text "My "  + part.replace("_", " ") +  " Feels Great!" size 24 xalign 0.5 color "#00FF00"
             elif health > 75:
-                text "Feels Good!" size 24 xalign 0.5 color "#32CD32"
+                text "My " + part.replace("_", " ") + " Feels Good!" size 24 xalign 0.5 color "#32CD32"
             elif health > 50:
-                text "Feels Fine." size 24 xalign 0.5 color "#FFD700"
+                text "My "  + part.replace("_", " ") + " Feels Fine." size 24 xalign 0.5 color "#FFD700"
             elif health > 25:
                 text "It Hurts!" size 24 xalign 0.5 color "#FFA500"
             elif health > 10:
@@ -242,15 +281,45 @@ screen condition_details(part):
                         text condition.capitalize() size 24 xalign 0.5 color "#CCCCCC"
                 else:
                     text "No Current Conditions." size 24 xalign 0.5 color "#CCCCCC"
+            $ cleanliness = default_status[part]['cleanliness']
 
-            # Hygiene and Temperature
+            $ temp = default_status[part]['temperature']
             if can_view_health_small:
                 text "Hygiene: [default_status[part]['cleanliness']]%" size 24 xalign 0.5 color "#FFFFFF"
                 bar value default_status[part]["cleanliness"] range 100 xmaximum 600 ymaximum 25 xalign 0.5
+            if not can_view_health_small:
+                if cleanliness > 90:
+                    text "My " + part.replace("_", " ") + " is very clean" size 18 xalign 0.5 color "#00ff008e"
+                elif cleanliness > 75:
+                    text "My " + part.replace("_", " ") + " is clean" size 18 xalign 0.5 color "#32CD32"
+                elif cleanliness > 50:
+                    text "My " + part.replace("_", " ") + " is somewhat clean." size 18 xalign 0.5 color "#FFD700"
+                elif cleanliness > 25:
+                    text "My " + part.replace("_", " ") + " is kind of dirty" size 18 xalign 0.5 color "#FFA500"
+                elif cleanliness > 10:
+                    text "My " + part.replace("_", " ") + " is filthy" size 18 xalign 0.5 color "#ff0000"
+                else:
+                    text "My " + part.replace("_", " ") + " is fucking disgusting" size 18 xalign 0.5 color "#FF0000"
+
 
             if has_item("thermometer"):
                 text "Temperature: [default_status[part]['temperature']]°F" size 24 xalign 0.5 color "#FFFFFF"
                 bar value default_status[part]["temperature"] range 100 xmaximum 600 ymaximum 25 xalign 0.5
+            else:
+                if temp < 30:
+                    text "My " + part.replace("_", " ") + " is Freezing Cold!" size 18 xalign 0.5 color "#00FFFF"
+                elif temp < 45:
+                    text "My " + part.replace("_", " ") + " is Very Cold!" size 18 xalign 0.5 color "#00BFFF"
+                elif temp < 65:
+                    text "My " + part.replace("_", " ") + " is Cold!" size 18 xalign 0.5 color "#1E90FF"
+                elif temp < 75:
+                    text "My " + part.replace("_", " ") + "'s temperature is fine." size 18 xalign 0.5 color "#32CD32"
+                elif temp < 80:
+                    text "My " + part.replace("_", " ") + " feels Warm." size 18 xalign 0.5 color "#FFD700"
+                elif temp < 90:
+                    text "My " + part.replace("_", " ") + " is too fucking hot!" size 18 xalign 0.5 color "#ff0000"
+                else:
+                    text "IT IS TOO FUCKING HOT!" size 18 xalign 0.5 color "#FF0000"
 
             # Medkit Button
             if has_item('medkit'):

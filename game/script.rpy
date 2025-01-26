@@ -65,13 +65,13 @@ default selected_category = "soft"  # Initial selection
 default title_screen_set = ""
 #
 default emotions = {
-    "happiness": {"value": 10, "bonus": {"intelligence": 5, "charisma": 10}},
-    "anger": {"value": 30, "bonus": {"strength": 10, "intelligence": -5}},
-    "sadness": {"value": 20, "bonus": {"intelligence": -10, "endurance": 5}},
-    "fear": {"value": 15, "bonus": {"agility": 10, "charisma": -5}},
-    "excitement": {"value": 10, "bonus": {"charisma": 5, "strength": 5}},
+    "Authenticity": {"value": 50, "bonus": {"speech": 5, "luck": -2,"mental_resilience": -6,"pain_tolerance": -5}},
+    "Authority": {"value": 60, "bonus": {"strength": 6, "intelligence": -5}},
+    "Composure": {"value": 20, "bonus": {"speech": 5, "strength": 3, "intelligence": -3, "pain_tolerancEe": 3}},
+    "Confidence": {"value": 15, "bonus": {"speech": -3,"intelligence": -4, "mental_resilience": 4}},
+    "Dignity": {"value": 60, "bonus": {"charisma": 5, "speech": 3, "luck": -2}},
+    "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6,"pain_tolerance": 5}},
 }
-default current_text = "Entered Search Mode, click around and see what you can find."
 # The game starts here.RR
 default npc_name = "???"         # The default NPC name
 default npc_mood = "Normal"      # The default NPC mood
@@ -124,7 +124,23 @@ init python:
     "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
     "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
+    def get_top_emotion_bonuses(emotions):
+        # Sort emotions by value in descending order
+        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
 
+        # Get the top emotion
+        top_emotion = sorted_emotions[0][0] if sorted_emotions else None
+
+        # Get the bonuses for the top emotion
+        if top_emotion and top_emotion in emotions:
+            return top_emotion, emotions[top_emotion]["bonus"]
+        else:
+            return None, {}
+    def get_reduced_bonuses(bonuses):
+        reduced_bonuses = {}
+        for stat, bonus in bonuses.items():
+            reduced_bonuses[stat] = bonus // 2  # Divide by 2 and round down
+        return reduced_bonuses        
     def get_top_emotions(emotions):
         # Sort emotions by value in descending order
         sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
@@ -205,14 +221,6 @@ init python:
         stirring_count = 0
     def get_emotion_value(emotions_dict, emotion):
         return emotions_dict.get(emotion, 0)
-# Function to perform a roll with a base chance and modifiers
-    def roll_action(base_chance, skill_level, modifiers=0):
-        total_chance = base_chance + skill_level + modifiers
-        roll = renpy.random.randint(1, 100)
-        renpy.sound.play("audio/dicesaound.wav")        
-        rolltf = roll <= total_chance
-
-        return rolltf, roll
 
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},

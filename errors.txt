@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 120: invalid syntax
-    default emotions = {
-             ^
+File "game/scripts/health_status.rpy", line 260: '_' is not a keyword argument or valid child of the text statement.
+    text "My  + part.replace("_", " ") +  Feels Great!" size 24 xalign 0.5 color "#00FF00"
+                               ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Jan 25 20:20:18 2025
+Sat Jan 25 21:50:59 2025
