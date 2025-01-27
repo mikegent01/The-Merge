@@ -39,6 +39,7 @@ default right_arm_item = None
 default hud_visible = True  # Start with the HUD visible
 default slot_count = 1
 default roll = 0
+default intelligence_values = [0, 0, 0, 0, 0]
 default rolltf = 0
 #Quests
 default quests = [ #this was retarded so i made it an array
@@ -55,8 +56,14 @@ default quests = [ #this was retarded so i made it an array
  #      "condition": "projector_obtained"
  #  }
 ]
+default minigame_active = False
+default minigame_time = 10
+default minigame_problem = ""
+default minigame_answer = 0
+default minigame_bonus = 0
+default player_answer = ""
 default base_chance = 30  
-default modifiers = 0  
+default total_bonuses = 0  
 default nice = 0
 default mean = 0
 default soft_skills = ["speech","intelligence","luck","pain_tolerance","mental_resilience" ]
@@ -139,33 +146,16 @@ init python:
     def get_reduced_bonuses(bonuses):
         reduced_bonuses = {}
         for stat, bonus in bonuses.items():
-            reduced_bonuses[stat] = bonus // 2  # Divide by 2 and round down
-        return reduced_bonuses        
+            reduced_bonuses[stat] = bonus // 2  # Reduce bonus by half (integer division)
+        return reduced_bonuses
     def get_top_emotions(emotions):
-        # Sort emotions by value in descending order
         sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-
-        # Get the top 3 emotions
         top_emotions = sorted_emotions[:3]
-
-        # Get the remaining emotions
         other_emotions = sorted_emotions[3:]
 
         return top_emotions, other_emotions    
-    def apply_emotion_bonuses(base_chance, skill_level, modifiers=0):
-        # Get the top emotion
-        top_emotions, _ = get_top_emotions(emotions)
-        top_emotion = top_emotions[0][0] if top_emotions else None
 
-        # Apply the bonus from the top emotion
-        if top_emotion and top_emotion in emotions:
-            bonus = emotions[top_emotion]["bonus"].get("intelligence", 0)  # Example: Apply intelligence bonus
-            modifiers += bonus
 
-        # Calculate the total success chance
-        total_chance = base_chance + skill_level + modifiers
-
-        return total_chance    
     def update_stirring_progress():
         global stirring_progress, last_mouse_pos, stirring_direction, stirring_count, stirring_complete
 
@@ -258,8 +248,17 @@ init python:
         else:
             renpy.notify("Wrong direction! Start over.")
             reset_mixing()
+    def perform_roll(base_chance, skill_level, skill_name, total_bonuses):
+        skill_data = stats.get(skill_name, {})
+        skill_value = skill_data.get("current_value", 0)
+        total_chance = base_chance + (skill_level * 5) + skill_value + total_bonuses
+        roll_result = renpy.random.randint(1, 100)
+        # Determine success
+        if roll_result <= total_chance:
+            return True
+        else:
+            return False
 
-    # Function to reset mixing progress
     def reset_mixing():
         global current_mixing_step, mixing_attempts
         current_mixing_step = 0
@@ -921,12 +920,52 @@ init python:
 
 
     current_space_taken = 0  # Tracks the total weight of items in the inventory
+    def start_minigame():
+        global minigame_time, minigame_active, minigame_problem, minigame_answer, player_answer
+        minigame_time = 10  # 10 seconds for the mini-game
+        minigame_active = True
+        minigame_problem, minigame_answer = generate_problem()
+        player_answer = ""  # Reset player's answer
 
+
+    def check_minigame_answer():
+        global minigame_active, minigame_bonus, minigame_problem, minigame_answer, player_answer
+
+        # Debug: Print the player's answer
+        print(f"Player's answer: {player_answer}")
+
+        # Check if the player's answer is correct
+        if player_answer.isdigit() and int(player_answer) == minigame_answer:
+            minigame_bonus += 1
+            renpy.notify("Correct! Well done.")  # Notify the player
+        else:
+            minigame_bonus -= 1
+            renpy.notify(f"The correct answer was {minigame_answer}.")  # Notify the player
+
+        # Generate a new problem
+        minigame_problem, minigame_answer = generate_problem()
+        player_answer = ""  # Reset player's answer
+
+
+
+    def generate_problem():
+        problem_types = ["addition", "multiplication"]
+        problem_type = random.choice(problem_types)
+        num1 = random.randint(1, 10)
+        num2 = random.randint(1, 10)
+
+        if problem_type == "addition":
+            problem = f"{num1} + {num2}"
+            answer = num1 + num2
+        elif problem_type == "multiplication":
+            problem = f"{num1} * {num2}"
+            answer = num1 * num2
+
+        return problem, answer  # Return both the problem and the answer
     def calculate_total_weight():
         """Calculate the total weight of items in the inventory."""
         total_weight = sum(get_item_weight(item) for item in inventory)
         return total_weight
-
     def get_remaining_space():
         """Get the remaining space in the inventory based on item count."""
         return max_space - len(inventory)  # Space based on the number of items
@@ -939,6 +978,23 @@ init python:
         """Prompt the player to remove an item."""
         renpy.notify(message)
         renpy.call_innew_context("prompt_remove_item")  # Call a new screen to handle item removal
+
+    def calculate_total_bonus(skill, sorted_emotions):
+        total_bonus = 0
+
+        top_emotion = sorted_emotions[0][0] if sorted_emotions else None
+
+      #  if top_emotion:
+      #      main_emotion_data = sorted_emotions[0][1]
+      #      if skill in main_emotion_data["bonus"]:
+      #          total_bonus += main_emotion_data["bonus"][skill]
+
+        for emotion, data in sorted_emotions[1:]:
+            if skill in data["bonus"]:
+                reduced_bonus = get_reduced_bonuses(data["bonus"]).get(skill, 0)
+                total_bonus += reduced_bonus
+
+        return total_bonus
 
     def update_inventory(item, action):
         """Update the inventory based on adding or removing items."""
@@ -1170,9 +1226,32 @@ init python:
    # $ inventory.append("Tactical flashlight")
    # $ inventory.append("MG41")    
    # $ inventory.append("thermometer")
+   
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
+label minigame:
+    # Initialize mini-game variables
+    $ minigame_time = 10
+    $ minigame_active = True
+    $ minigame_problem = generate_problem()  # Replace with your problem generation logic
+
+    # Mini-game loop
+    while minigame_time > -1:
+        # Display the mini-game screen
+        call screen minigame_screen
+
+        # Decrease the timer
+        $ minigame_time -= 1
+
+        # Check if the mini-game should end
+        if minigame_time == 0:
+            $ minigame_active = False
+            hide screen minigame_screen
+
+    # End of mini-game
+    return
+
 label start:    
     hide screen character_selection
     $ rng = random.randint(1,100)
@@ -1181,7 +1260,7 @@ label start:
   #  $ inventory.append("First aid kit")
   #  $ inventory.append("radio")    
     $ set_room_temperature (72)
-    jump bootcampinsideprojectorroomstart
+    jump debug
     scene bg mayor
     play sound buzzer
     Q "Come in."
@@ -1606,8 +1685,8 @@ label keepsamuel:
     "The automatic door opens, revealing that the person I told to wait there is no longer there."
     "Thinking back, I never even asked his name, not that it was important anyway."
     "I look at the unplugged projector on the table. I unscrew the film from the projector and put it on the table."
+label debug:
     "Looking to Samuel, I think to myself maybe he isn’t the best person to help me fix this. I press on either way."
-
     menu:
         "Ask Samuel for help":
             "Samuel looks at me and smiles."
@@ -1624,20 +1703,27 @@ label keepsamuel:
             BEN "We’re going."
             "I say as I start walking out of the room. Samuel follows me as we leave the building."
             return
-        "Start removing the projector film (40 chance)":
-            $ base_chance = 1
-            $ rolltf,roll = roll_action(base_chance, stats["intelligence"]["level"] , 0)
-            "You rolled a [roll] and needed [base_chance] "
+        "Start removing the projector film (Intelligence roll 40 chance)":
+            $ intelligence_level = stats["intelligence"]["level"]
+            $ sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
+            $ base_chance = 30  # Example base chance (30%)
+            # Access the intelligence skill level from the stats dictionary
+            $ skill_level = stats["intelligence"]["level"]
+            $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+
+            # Call the roll_screen with the intelligence skill
+            call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+            # Handle the result of the roll
             "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
             
             menu:
-                "Look at the front of the projector" if not rolltf:
+                "Look at the front of the projector" if _return == True:
                     "I look at the front of the projector. The film is slotted into the projector and being held by a screw."
                     "The film seems like it is still intact and can still be used."
                     "I carefully unscrew the film and place it on the table next to the projector."
                     "With the film removed, I move onto the back of the projector."
 
-                "Look at the back of the projector" if rolltf:
+                "Look at the back of the projector" if not _return == True:
                     "I look at the back of the projector. There are four screws holding it in place."
                     "I sit the projector on its side and begin to unscrew the screws."
                     "As I start unscrewing the second screw, Samuel runs over and grabs the projector, sitting it upright."

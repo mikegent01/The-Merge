@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/health_status.rpy", line 260: '_' is not a keyword argument or valid child of the text statement.
-    text "My  + part.replace("_", " ") +  Feels Great!" size 24 xalign 0.5 color "#00FF00"
-                               ^
+File "game/script.rpy", line 996: expected an indented block
+        return total_bonus
+         ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Jan 25 21:50:59 2025
+Sun Jan 26 19:27:17 2025

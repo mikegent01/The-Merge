@@ -1,34 +1,33 @@
-2025-01-26 03:17:35 UTC
+2025-01-27 00:25:59 UTC
 Windows-10-10.0.22631
 Ren'Py 8.2.1.24030407
 
 Early init took 0.05s
-Loading error handling took 0.02s
-Loading script took 0.24s
-Loading save slot metadata took 0.02s
+Loading error handling took 0.06s
+Loading script took 0.90s
+Loading save slot metadata took 0.09s
 Loading persistent took 0.00s
-Running init code took 0.03s
-Loading analysis data took 0.01s
+Running init code took 0.16s
+Loading analysis data took 0.02s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.01s
+Reloading save slot metadata took 0.06s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.00s
+Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
 Initial gc took 0.02s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.19s
+Creating interface object took 0.17s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
+Load screen analysis took 0.03s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
 Prepare screens took 0.05s
-Save pyanalysis. took 0.02s
+Save pyanalysis. took 0.00s
 Save bytecode. took 0.02s
 Running _start took 0.00s
 Interface start took 0.04s
@@ -48,58 +47,90 @@ Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 
 Full traceback:
-  File "game/script.rpy", line 1218, in script
-    call screen roll_screen(base_chance, skill_level, skill_name, modifiers)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
+  File "game/script.rpy", line 1714, in script
+    call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
     self.call("execute")
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
     return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
     return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\parameter.py", line 477, in evaluate
-    value = renpy.python.py_eval(v, locals=scope)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 1218, in <module>
-    call screen roll_screen(base_chance, skill_level, skill_name, modifiers)
-NameError: name 'skill_level' is not defined
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 3413, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 32, in execute
+    frame:
+  File "game/scripts/minigames.rpy", line 40, in execute
+    vbox:
+  File "game/scripts/minigames.rpy", line 42, in execute
+    for emotion, data in top_emotions[1:]:
+  File "game/scripts/minigames.rpy", line 42, in <module>
+    for emotion, data in top_emotions[1:]:
+NameError: name 'top_emotions' is not defined
 
 While running game code:
-  File "game/script.rpy", line 1218, in script
-    call screen roll_screen(base_chance, skill_level, skill_name, modifiers)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "game/script.rpy", line 1218, in <module>
-    call screen roll_screen(base_chance, skill_level, skill_name, modifiers)
-NameError: name 'skill_level' is not defined
-INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-INFO:renpy_warp_service:closing websocket connection :40111
-INFO:renpy_warp_service:connection replaced, service exiting
-INFO:renpy_warp_service:service closed
+  File "game/script.rpy", line 1714, in script
+    call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 32, in execute
+    frame:
+  File "game/scripts/minigames.rpy", line 40, in execute
+    vbox:
+  File "game/scripts/minigames.rpy", line 42, in execute
+    for emotion, data in top_emotions[1:]:
+  File "game/scripts/minigames.rpy", line 42, in <module>
+    for emotion, data in top_emotions[1:]:
+NameError: name 'top_emotions' is not defined
 Resetting cache.
-Early init took 392.28s
+Early init took 36.66s
 Loading error handling took 0.02s
-Loading script took 0.14s
+Loading script took 0.07s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
 Running init code took 0.02s
-Loading analysis data took 0.02s
+Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.00s
+Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.03s
+Initial gc took 0.04s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.14s
+Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.02s
 Build styles took 0.00s
@@ -125,41 +156,94 @@ Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 1714, in script
+    call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
+    self.call("execute")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
+    return renpy.statements.call(method, parsed, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
+    return method(parsed, *args, **kwargs)
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 3413, in call_screen
+    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 32, in execute
+    frame:
+  File "game/scripts/minigames.rpy", line 40, in execute
+    vbox:
+  File "game/scripts/minigames.rpy", line 45, in execute
+    text f"Current Modifier: {total_bonuses + minigame_bonus}" size 20 color "#FFFFFF" xalign 0.5
+  File "game/scripts/minigames.rpy", line 45, in <module>
+    text f"Current Modifier: {total_bonuses + minigame_bonus}" size 20 color "#FFFFFF" xalign 0.5
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
+
+While running game code:
+  File "game/script.rpy", line 1714, in script
+    call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
+    store._return = renpy.call_screen(name, *args, **kwargs)
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 30, in execute
+    screen roll_screen(base_chance, skill_level, skill_name, total_bonuses):
+  File "game/scripts/minigames.rpy", line 32, in execute
+    frame:
+  File "game/scripts/minigames.rpy", line 40, in execute
+    vbox:
+  File "game/scripts/minigames.rpy", line 45, in execute
+    text f"Current Modifier: {total_bonuses + minigame_bonus}" size 20 color "#FFFFFF" xalign 0.5
+  File "game/scripts/minigames.rpy", line 45, in <module>
+    text f"Current Modifier: {total_bonuses + minigame_bonus}" size 20 color "#FFFFFF" xalign 0.5
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int'
 INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+INFO:renpy_warp_service:connection replaced, service exiting
+INFO:renpy_warp_service:service closed
+INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:connection replaced, service exiting
 INFO:renpy_warp_service:service closed
 Resetting cache.
-Early init took 427.84s
-Loading error handling took 0.02s
-Loading script took 0.14s
-Loading save slot metadata took 0.03s
+Early init took 77.71s
+Loading error handling took 0.01s
+Loading script took 0.16s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.02s
-Loading analysis data took 0.01s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.00s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.03s
+
+File "game/script.rpy", line 996: expected an indented block
+        return total_bonus
+         ^
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.14s
-Cleaning stores took 0.00s
-Init translation took 0.02s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.05s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.03s
+Interface start took 0.22s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -171,63 +255,28 @@ Version: b'4.6.0 NVIDIA 560.94'
 Display Info: None
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
-INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-
-Full traceback:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(base_chance, skill_name, modifiers)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
-    self.call("execute")
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\parameter.py", line 477, in evaluate
-    value = renpy.python.py_eval(v, locals=scope)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 1232, in <module>
-    call screen roll_screen(base_chance, skill_name, modifiers)
-NameError: name 'skill_name' is not defined
-
-While running game code:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(base_chance, skill_name, modifiers)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "game/script.rpy", line 1232, in <module>
-    call screen roll_screen(base_chance, skill_name, modifiers)
-NameError: name 'skill_name' is not defined
-INFO:renpy_warp_service:closing websocket connection :40111
-INFO:renpy_warp_service:connection replaced, service exiting
-INFO:renpy_warp_service:service closed
 Resetting cache.
-Early init took 459.84s
-Loading error handling took 0.02s
-Loading script took 0.14s
-Loading save slot metadata took 0.03s
+Early init took 95.38s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Running init code took 0.02s
+Running init code took 0.03s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.00s
+Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
 Initial gc took 0.03s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.15s
+Creating interface object took 0.17s
 Cleaning stores took 0.00s
 Init translation took 0.03s
 Build styles took 0.00s
@@ -238,7 +287,7 @@ Prepare screens took 0.05s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.01s
 Running _start took 0.00s
-Interface start took 0.03s
+Interface start took 0.04s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -254,65 +303,39 @@ INFO:renpy_warp_service:service thread started. periodically scanning ports for 
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-
-Full traceback:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(40, intelligence, 0)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
-    self.call("execute")
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\parameter.py", line 477, in evaluate
-    value = renpy.python.py_eval(v, locals=scope)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "game/script.rpy", line 1232, in <module>
-    call screen roll_screen(40, intelligence, 0)
-NameError: name 'intelligence' is not defined
-
-While running game code:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(40, intelligence, 0)
-  File "renpy/common/000statements.rpy", line 663, in execute_call_screen
-    args, kwargs = a.evaluate()
-  File "game/script.rpy", line 1232, in <module>
-    call screen roll_screen(40, intelligence, 0)
-NameError: name 'intelligence' is not defined
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
 INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:connection replaced, service exiting
 INFO:renpy_warp_service:service closed
 Resetting cache.
-Early init took 469.16s
-Loading error handling took 0.02s
-Loading script took 0.14s
-Loading save slot metadata took 0.04s
+Early init took 454.02s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.01s
 Loading persistent took 0.00s
 Running init code took 0.02s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
 Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.00s
+Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
 Initial gc took 0.04s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.15s
+Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.03s
 Build styles took 0.00s
 Load screen analysis took 0.00s
 Analyze screens took 0.01s
-Save screen analysis took 0.01s
+Save screen analysis took 0.02s
 Prepare screens took 0.05s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.01s
@@ -335,121 +358,58 @@ Maximum texture size: 4096x4096
 INFO:renpy_warp_service:connected to renpy warp socket server on :40111
 
 Full traceback:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(40, "intelligence", 0)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1968, in execute
-    self.call("execute")
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1950, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\statements.py", line 349, in call
-    return method(parsed, *args, **kwargs)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 3413, in call_screen
-    rv = renpy.ui.interact(mouse="screen", type="screen", roll_forward=roll_forward)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
-    self.screen.function(**self.scope)
-  File "game/scripts/minigames.rpy", line 1, in execute
-    screen roll_screen(base_chance, skill_name, modifiers=0):
-  File "game/scripts/minigames.rpy", line 1, in execute
-    screen roll_screen(base_chance, skill_name, modifiers=0):
-  File "game/scripts/minigames.rpy", line 5, in execute
-    frame:
-  File "game/scripts/minigames.rpy", line 8, in execute
-    vbox:
-  File "game/scripts/minigames.rpy", line 19, in execute
-    if show_minigame:
-  File "game/scripts/minigames.rpy", line 20, in execute
-    $ minigame_bonus = intelligence_minigame()
-  File "game/scripts/minigames.rpy", line 20, in <module>
-    $ minigame_bonus = intelligence_minigame()
-  File "game/script.rpy", line 265, in intelligence_minigame
-    user_input = renpy.input(problem, allow="0123456789")
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 984, in input
-    rv = renpy.ui.interact(mouse='prompt', type="input", roll_forward=roll_forward)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 295, in interact
-    raise Exception("ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?\nStack was " + ('\n'.join([str(item) for item in stack])))
-Exception: ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?
-Stack was <Layer: 'transient'>
-<Many: <renpy.display.layout.Fixed object at 0x0000000008d1f460>>
-<renpy.sl2.slast.SLContext object at 0x0000000005719250>
-<renpy.sl2.slast.SLContext object at 0x0000000005719d60>
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
 
 While running game code:
-  File "game/script.rpy", line 1232, in script
-    call screen roll_screen(40, "intelligence", 0)
-  File "renpy/common/000statements.rpy", line 671, in execute_call_screen
-    store._return = renpy.call_screen(name, *args, **kwargs)
-  File "game/scripts/minigames.rpy", line 1, in execute
-    screen roll_screen(base_chance, skill_name, modifiers=0):
-  File "game/scripts/minigames.rpy", line 1, in execute
-    screen roll_screen(base_chance, skill_name, modifiers=0):
-  File "game/scripts/minigames.rpy", line 5, in execute
-    frame:
-  File "game/scripts/minigames.rpy", line 8, in execute
-    vbox:
-  File "game/scripts/minigames.rpy", line 19, in execute
-    if show_minigame:
-  File "game/scripts/minigames.rpy", line 20, in execute
-    $ minigame_bonus = intelligence_minigame()
-  File "game/scripts/minigames.rpy", line 20, in <module>
-    $ minigame_bonus = intelligence_minigame()
-  File "game/script.rpy", line 265, in intelligence_minigame
-    user_input = renpy.input(problem, allow="0123456789")
-Exception: ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?
-Stack was <Layer: 'transient'>
-<Many: <renpy.display.layout.Fixed object at 0x0000000008d1f460>>
-<renpy.sl2.slast.SLContext object at 0x0000000005719250>
-<renpy.sl2.slast.SLContext object at 0x0000000005719d60>
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
 INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:connection replaced, service exiting
 INFO:renpy_warp_service:service closed
 Resetting cache.
-Early init took 495.68s
-Loading error handling took 0.02s
-Loading script took 0.07s
-Loading save slot metadata took 0.07s
+Early init took 473.72s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
 Running init code took 0.02s
 Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.06s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
-Dump and make backups took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.03s
+Initial gc took 0.04s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.15s
+Creating interface object took 0.16s
 Cleaning stores took 0.00s
 Init translation took 0.03s
 Build styles took 0.00s
-Load screen analysis took 0.03s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
 Prepare screens took 0.05s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
+Save bytecode. took 0.01s
 Running _start took 0.00s
 Interface start took 0.03s
 
@@ -466,25 +426,128 @@ Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
-INFO:renpy_warp_service:connected to renpy warp socket server on :40111
 
 Full traceback:
-  File "game/script.rpy", line 1233, in script
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1233, in <module>
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-ValueError: not enough values to unpack (expected 2, got 1)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
 
 While running game code:
-  File "game/script.rpy", line 1233, in script
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-  File "game/script.rpy", line 1233, in <module>
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-ValueError: not enough values to unpack (expected 2, got 1)
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
 INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:connection replaced, service exiting
 INFO:renpy_warp_service:service closed
+Resetting cache.
+Early init took 524.96s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.04s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+INFO:renpy_warp_service:closing websocket connection :40111
+INFO:renpy_warp_service:connection replaced, service exiting
+INFO:renpy_warp_service:service closed
+Resetting cache.
+Early init took 534.43s
+Loading error handling took 0.01s
+Loading script took 0.14s
+Loading save slot metadata took 0.01s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.01s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.05s
+DPI scale factor: 1.000000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.16s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.05s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.04s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1920, 1080)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 560.94'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
+Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+INFO:renpy_warp_service:socket service on :40111 exited
+Screen sizes: virtual=(1280, 755) physical=(1902, 991) drawable=(1902, 991)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:closing websocket connection :40111

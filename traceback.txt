@@ -1,26 +1,30 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1233, in script
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-  File "game/script.rpy", line 1233, in <module>
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-ValueError: not enough values to unpack (expected 2, got 1)
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1233, in script
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+  File "game/script.rpy", line 1711, in script
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1233, in <module>
-    $ (roll_result, roll, total_chance), final_modifiers = _return
-ValueError: not enough values to unpack (expected 2, got 1)
+  File "game/script.rpy", line 1711, in <module>
+    $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+  File "game/script.rpy", line 994, in calculate_total_bonus
+    total_bonus += reduced_bonus
+TypeError: unsupported operand type(s) for +=: 'int' and 'NoneType'
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sat Jan 25 22:25:54 2025
+Sun Jan 26 19:33:54 2025
