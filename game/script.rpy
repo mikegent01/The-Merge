@@ -76,7 +76,7 @@ default emotions = {
     "Authority": {"value": 60, "bonus": {"strength": 6, "intelligence": -5}},
     "Composure": {"value": 20, "bonus": {"speech": 5, "strength": 3, "intelligence": -3, "pain_tolerancEe": 3}},
     "Confidence": {"value": 15, "bonus": {"speech": -3,"intelligence": -4, "mental_resilience": 4}},
-    "Dignity": {"value": 60, "bonus": {"charisma": 5, "speech": 3, "luck": -2}},
+    "Dignity": {"value": 60, "bonus": {"speech": 5, "mental_resilience": 3, "luck": -2}},
     "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6,"pain_tolerance": 5}},
 }
 # The game starts here.RR
@@ -1704,15 +1704,15 @@ label debug:
             "I say as I start walking out of the room. Samuel follows me as we leave the building."
             return
         "Start removing the projector film (Intelligence roll 40 chance)":
-            $ intelligence_level = stats["intelligence"]["level"]
+            $ intelligence_level = stats["speech"]["level"]
             $ sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
             $ base_chance = 30  # Example base chance (30%)
             # Access the intelligence skill level from the stats dictionary
-            $ skill_level = stats["intelligence"]["level"]
-            $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+            $ skill_level = stats["speech"]["level"]
+            $ total_bonuses = calculate_total_bonus("speech", sorted_emotions)
 
             # Call the roll_screen with the intelligence skill
-            call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
+            call screen roll_screen(base_chance, skill_level, "speech", total_bonuses)
             # Handle the result of the roll
             "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
             
@@ -1722,6 +1722,12 @@ label debug:
                     "The film seems like it is still intact and can still be used."
                     "I carefully unscrew the film and place it on the table next to the projector."
                     "With the film removed, I move onto the back of the projector."
+                    "I begin to work on the back of the projector..."
+                    "Hours later..."
+                    "I finish my work and look up from my project only to learn that samuel is no where to be found."
+                    "I should show this to the drill instructor anyway I think to myself as I rise from my seat."
+                    "I do some streches from sitting down so long and head out the door alone to show the sargent my work..."
+                    return
 
                 "Look at the back of the projector" if not _return == True:
                     "I look at the back of the projector. There are four screws holding it in place."

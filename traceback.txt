@@ -1,91 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1690, in script
-    menu:
-  File "game/scripts/health_status.rpy", line 58, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 58, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 60, in execute
-    frame:
-  File "game/scripts/health_status.rpy", line 66, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 81, in execute
-    viewport:
-  File "game/scripts/health_status.rpy", line 87, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 89, in execute
-    if selected_category == "soft" or selected_category == "hard":
-  File "game/scripts/health_status.rpy", line 154, in execute
-    text "Level: [emotions[top_emotion]['level']]" size 20 color "#CCCCCC"
-KeyError: 'level'
+  File "game/script.rpy", line 1707, in script
+    $ intelligence_level = stats["charisma"]["level"]
+  File "game/script.rpy", line 1707, in <module>
+    $ intelligence_level = stats["charisma"]["level"]
+KeyError: 'charisma'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1690, in script
-    menu:
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1618, in execute
-    choice = renpy.exports.menu(choices, self.set, args, kwargs, item_arguments)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1109, in menu
-    rv = renpy.store.menu(new_items)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1364, in display_menu
-    rv = renpy.ui.interact(mouse='menu', type=type, roll_forward=roll_forward)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
-    self.screen.function(**self.scope)
-  File "game/scripts/health_status.rpy", line 58, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 58, in execute
-    screen player_stats_screen():
-  File "game/scripts/health_status.rpy", line 60, in execute
-    frame:
-  File "game/scripts/health_status.rpy", line 66, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 81, in execute
-    viewport:
-  File "game/scripts/health_status.rpy", line 87, in execute
-    vbox:
-  File "game/scripts/health_status.rpy", line 89, in execute
-    if selected_category == "soft" or selected_category == "hard":
-  File "game/scripts/health_status.rpy", line 154, in execute
-    text "Level: [emotions[top_emotion]['level']]" size 20 color "#CCCCCC"
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\text\text.py", line 1738, in __init__
-    self.set_text(text, scope, substitute) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\text\text.py", line 1868, in set_text
-    i, did_sub = renpy.substitutions.substitute(i, scope, substitute) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\substitutions.py", line 368, in substitute
-    s = interpolate(s, kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\substitutions.py", line 86, in interpolate
-    raise e
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\substitutions.py", line 78, in interpolate
-    value = renpy.python.py_eval(code, {}, scope)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1209, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1202, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-  File "<none>", line 1, in <module>
-KeyError: 'level'
+  File "game/script.rpy", line 1707, in script
+    $ intelligence_level = stats["charisma"]["level"]
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 1707, in <module>
+    $ intelligence_level = stats["charisma"]["level"]
+KeyError: 'charisma'
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Mon Jan 27 00:35:45 2025
+Mon Jan 27 00:45:49 2025
