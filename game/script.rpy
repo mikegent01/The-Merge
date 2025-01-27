@@ -984,12 +984,12 @@ init python:
 
         top_emotion = sorted_emotions[0][0] if sorted_emotions else None
 
-      #  if top_emotion:
-      #      main_emotion_data = sorted_emotions[0][1]
-      #      if skill in main_emotion_data["bonus"]:
-      #          total_bonus += main_emotion_data["bonus"][skill]
+        if top_emotion:
+            main_emotion_data = sorted_emotions[0][1]
+            if skill in main_emotion_data["bonus"]:
+                total_bonus += main_emotion_data["bonus"][skill]
 
-        for emotion, data in sorted_emotions[1:]:
+        for emotion, data in sorted_emotions[1:2]:
             if skill in data["bonus"]:
                 reduced_bonus = get_reduced_bonuses(data["bonus"]).get(skill, 0)
                 total_bonus += reduced_bonus

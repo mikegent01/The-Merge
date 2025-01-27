@@ -156,10 +156,11 @@ screen player_stats_screen():
                                 background "#132a16"
                                 padding (15, 10)
                                 vbox:
+                                    
                                     spacing 10
                                     text emotion.capitalize() size 24  bold True 
                                     bar value data["value"] range 100 xmaximum 600 ymaximum 25
-                        
+
                                     # Get reduced bonuses for the emotion
                                     $ reduced_bonuses = get_reduced_bonuses(data["bonus"])
                         
