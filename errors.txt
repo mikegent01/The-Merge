@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 996: expected an indented block
-        return total_bonus
-         ^
+File "game/script.rpy", line 1391: expected statement.
+    emotions["Confidence"]["value"] -= 5
+                                     ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sun Jan 26 19:27:17 2025
+Tue Jan 28 18:54:38 2025

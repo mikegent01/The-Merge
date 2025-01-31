@@ -1260,7 +1260,7 @@ label start:
   #  $ inventory.append("First aid kit")
   #  $ inventory.append("radio")    
     $ set_room_temperature (72)
-    jump debug
+    jump bootcampinsideprojectorroomstart
     scene bg mayor
     play sound buzzer
     Q "Come in."
@@ -1383,6 +1383,7 @@ label bootcampinsideprojectorroomstart:
 
     menu:
         "Yes, sir!":
+            $ emotions["Authority"]["value"] -= 5
             DRI "Good"
             "His frown turns into a slight smile. It seems he approves of me not acknowledging what just happened and just going along with what he says." 
             DRI "You have [rng] hours to fix this! That is when we leave for virginia."
@@ -1601,6 +1602,9 @@ label keepsamuel:
     SAM "Hey, what made you join the force?"
     
     "I drop the box I’m working on, and it almost crushes my leg. before I am able to stablize it"
+    $ emotions["Confidence"]["value"] -= 5    
+    $ emotions["Pride"]["value"] -= 5    
+
     "I look over and back up a bit. Samuel is standing there with that big, stupid smile of his."
     BEN "What made you ask that? Can you help me out here?"
 
@@ -1685,7 +1689,6 @@ label keepsamuel:
     "The automatic door opens, revealing that the person I told to wait there is no longer there."
     "Thinking back, I never even asked his name, not that it was important anyway."
     "I look at the unplugged projector on the table. I unscrew the film from the projector and put it on the table."
-label debug:
     "Looking to Samuel, I think to myself maybe he isn’t the best person to help me fix this. I press on either way."
     menu:
         "Ask Samuel for help":
@@ -1704,16 +1707,12 @@ label debug:
             "I say as I start walking out of the room. Samuel follows me as we leave the building."
             return
         "Start removing the projector film (Intelligence roll 40 chance)":
-            $ intelligence_level = stats["speech"]["level"]
+            $ intelligence_level = stats["intelligence"]["level"]
             $ sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-            $ base_chance = 30  # Example base chance (30%)
-            # Access the intelligence skill level from the stats dictionary
-            $ skill_level = stats["speech"]["level"]
-            $ total_bonuses = calculate_total_bonus("speech", sorted_emotions)
-
-            # Call the roll_screen with the intelligence skill
-            call screen roll_screen(base_chance, skill_level, "speech", total_bonuses)
-            # Handle the result of the roll
+            $ base_chance = 30 
+            $ skill_level = stats["intelligence"]["level"]
+            $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
+            call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
             "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
             
             menu:
@@ -1742,10 +1741,7 @@ label debug:
                     SAM "Let’s go show the Sergeant this!"
                     "After he cleans up the table, I follow him upstairs and out of the building."
                     return
-label unabletofix:
-    "Unfortunately, you couldn’t fix the projector."
-    scene projector_broken
-    "The projector is still broken."
+
 label abandonsamuel:
     "s"
 
