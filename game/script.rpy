@@ -16,6 +16,7 @@ define DOM = Character("Domonic")
 define DRI = Character("Drill Sarg",color="#12a3b6")
 define JES = Character("Jesus")
 define MAR = Character("Marc")
+default selected_item = None
 define MEO = Character("Meowbahh")
 define MIK = Character("Mike")
 define MAR = Character("Marc")
@@ -33,8 +34,12 @@ define Q3 = Character ("??????",color="#14a122")
 define Q4 = Character ("???????",color="#97239e")
 define k =Character("Keemstar",color="#0000FF")
 define co = Character("Commanding Officer Miller",color="#0000FF")
-# Default inventory with some items as string names
-default left_arm_item = None
+default head_item = None  # Item equipped on the head
+default body_item = None  # Item equipped on the body
+default left_hand_item = None  # Item equipped in the left hand
+default right_hand_item = None  # Item equipped in the right hand
+default left_leg_item = None  # Item equipped on the left leg
+default right_leg_item = None  # Item equipped on the right legdefault left_arm_item = None
 default right_arm_item = None
 default hud_visible = True  # Start with the HUD visible
 default slot_count = 1
@@ -84,7 +89,7 @@ default npc_name = "???"         # The default NPC name
 default npc_mood = "Normal"      # The default NPC mood
 default npc_attitude = "Neutral" # The default NPC attitude
 default selected_tab = "Boobs"
-default current_mode = "destruction"
+default current_mode = "construction"
 default mixing_progress = 0
 default amount_input = 0
 default mix_start_time = 0
@@ -424,8 +429,13 @@ init python:
             renpy.notify("You can only craft with two items.")
 #
     def remove_item(item):
-        if item in selected_items:
-            selected_items.remove(item)
+        global selected_item
+        if item in inventory:  # Assuming 'inventory' is your list of items
+            inventory.remove(item)
+        if item == selected_item:  # Clear the selected item if it's the one being removed
+            selected_item = None
+        renpy.restart_interaction()  # Refresh the screen to reflect changes
+
 #
     def select_item(item):
         if item not in selected_items and len(selected_items) < 10:  # Allow only two selections
@@ -879,8 +889,28 @@ init python:
         return item in inventory
     def has_stirring_tool(tool):
         return tool in inventory    
-    def get_armor_details(armor_item):
-        return armor_item["description"]    
+    def add_item(item_name):
+        """
+        Add an item to the inventory if there is space and the item exists in the items dictionary.
+        """
+        global inventory, max_space
+
+        # Check if the item exists in the items dictionary
+        if item_name not in items:
+            return f"Item '{item_name}' does not exist."
+
+        # Check if there is space in the inventory
+        if len(inventory) >= max_space:
+            return "Inventory is full. Cannot add more items."
+
+        # Check if adding the item would exceed the weight limit (if applicable)
+        # Assuming max_weight is a global variable defining the maximum weight capacity
+        if calculate_total_weight() + items[item_name]["weight"] > max_weight:
+            return "Adding this item would exceed the weight limit."
+
+        # Add the item to the inventory
+        inventory.append(item_name)
+        return f"Added '{item_name}' to the inventory."
     def add_item_to_medkit(item_name, healing_info):
 
         global medkit_contents
@@ -967,9 +997,7 @@ init python:
         total_weight = sum(get_item_weight(item) for item in inventory)
         return total_weight
     def get_remaining_space():
-        """Get the remaining space in the inventory based on item count."""
-        return max_space - len(inventory)  # Space based on the number of items
-
+        return max_space - len(inventory) 
     def ToggleScreenVisibility():
         global hud_visible
         hud_visible = not hud_visible  # Toggle between True and False
@@ -1027,106 +1055,64 @@ init python:
         stats[stat_name]["current_xp"] += amount
         if stats[stat_name]["current_xp"] >= stats[stat_name]["max_xp"]:
             stats[stat_name]["current_xp"] = stats[stat_name]["max_xp"] # Cap XP at max if it exceeds
-
+# Define the items dictionary
+    items = {
+        "MG41": {
+            "type": "weapon",
+            "weight": 10,
+            "description": "A powerful machine gun. There are many like it but this one is mine."
+        },
+        "Laser range finder": {
+            "type": "tool",
+            "weight": 1,
+            "description": "Used to measure the distance from here to a target."
+        },
+        "Compass": {
+            "type": "tool",
+            "weight": 1,
+            "description": "A military grade compass used for navigation."
+        },
+        "radio": {
+            "type": "tool",
+            "weight": 2,
+            "description": "A military grade radio used for communication. Is only able to communicate with military units and HQ."
+        },
+        "First aid kit": {
+            "type": "consumable",
+            "weight": 1,
+            "description": "Used to heal minor injuries."
+        },
+        "Tactical flashlight": {
+            "type": "tool",
+            "weight": 1,
+            "description": "This light can survive explosions and runs on solar battery."
+        },
+        "Water Bottle": {
+            "type": "consumable",
+            "weight": 1,
+            "description": "Used to hold water. Can hold up to 500ml of water...or any other liquid for that matter."
+        },
+        "sissor": {
+            "type": "tool",
+            "weight": 1,
+            "description": "Used to cut things."
+        },
+        "Report 001": {
+            "type": "document",
+            "weight": 300,
+            "description": "A report of something? I don't remember what it is for. It's very important."
+        }
+    }
     def get_item_weight(item):
         """Return the weight of an item."""
-        item_weights = {
-            "MG41": 10,
-            "Laser range finder": 1,
-            "Compass": 1,
-            "radio": 2,
-            "First aid kit": 1,
-            "Tactical flashlight": 1,
-            "Water Bottle": 1,
-            "sissor": 1,
-            "Report 001": 300
-        }
-        return item_weights.get(item, 1)  # Default weight if not specified
-    armor_inventory = [
-        {'name': 'Type 07', 'description': 'Lightly Worn.', 'weight': 3,"durability": 150 },
-        {'name': 'No Armor', 'description': 'No Effects.', 'weight': 0,"durability": maxhealth }
-        ]
+        if item in items:
+            return items[item]["weight"]
+        return 1  # Default weight if item not found
     def get_item_description(item):
         """Return the description of an item."""
-        item_descriptions = {
-            "Report 001": "A report of something? I don't remember what it is for. It's very important.",
-            "MG41": "A powerful machine gun. There are many like it but this one is mine.",
-            "Laser range finder": "Used to measure the distance from here to a target.",
-            "Compass": "A military grade compass used for navigation.",
-            "radio": "A military grade radio used for communication. Is only able to communicate with military units and HQ.",
-            "First aid kit": "Used to heal minor injuries.",
-            "Tactical flashlight": "This light can survive explosions and runs on solar battery.",
-            "sissor": "Used to cut things.",
-            "Water Bottle": "Used to hold water. Can hold up to 500ml of water...or any other liquid for that matter."
-        }
-        return item_descriptions.get(item, "No description available.")
-    def equip_item(arm, item):
-        global left_arm_item, right_arm_item,  current_strength, current_space_taken, max_space , default_status
-        if get_remaining_space() < 0:
-            renpy.notify("Your inventory space is negative.. How did you even do this?")
-            return
-
-        if calculate_total_weight() > current_strength:
-            renpy.notify("You cannot carry more weight. Remove some items to reduce the weight.")
-            return
-
-        # Equip items if conditions are met
-        if item in ["MG41", "Laser range finder"]:  # Two-handed items
-            if left_arm_item or right_arm_item:
-                renpy.notify("Both arms must be free to equip a two-handed item.")
-            else:
-                left_arm_item = item
-                right_arm_item = item
-        else:
-            if arm == "left":
-                left_arm_item = item
-            elif arm == "right":
-                right_arm_item = item
-
-        renpy.hide_screen("item_select")
-    def unequip_item(arm):
-        """Unequip an item from the specified arm."""
-        global left_arm_item, right_arm_item
-        if arm == "left":
-            if left_arm_item == right_arm_item:
-                left_arm_item = None
-                right_arm_item = None
-            else:
-                left_arm_item = None
-        elif arm == "right":
-            if right_arm_item == left_arm_item:
-                left_arm_item = None
-                right_arm_item = None
-            else:
-                right_arm_item = None
-        renpy.restart_interaction()
-    def discard_item(arm):
-        global left_arm_item, right_arm_item, inventory, container_inventory
-        item_to_discard = None
-
-        if arm == "left":
-            item_to_discard = left_arm_item
-            left_arm_item = None  # Clear left arm item after deciding
-        elif arm == "right":
-            item_to_discard = right_arm_item
-            right_arm_item = None  # Clear right arm item after deciding
-
-        # Check if the item to discard is valid
-        if item_to_discard:
-            # Remove from player's inventory if it exists
-            if item_to_discard in inventory:
-                inventory.remove(item_to_discard)
-
-            # Check against container_inventory and remove if found
-            for container_item in container_inventory:
-                if container_item["name"] == item_to_discard:
-                    container_inventory.remove(container_item)  # Remove the item from container_inventory
-                    break  # Exit the loop after removing the item
-
-        renpy.restart_interaction()  # Restart the interaction after discarding the item
-
-
-
+        if item in items:
+            return items[item]["description"]
+        return "No description available."  # Default description if item not found
     def set_room_temperature(room_temp):
         for part, attributes in default_status.items():
             if part == "body":
@@ -1153,26 +1139,128 @@ init python:
                 else:
                     renpy.notify("Not enough liquid available.")
                 break         
+    def equip_item(item, slot):
+        """Equip an item to the specified body slot."""
+        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+
+        # Check if the item is in the inventory
+        if item not in inventory:
+            renpy.notify("Item not found in inventory.")
+            return
+
+        # Get item type from the item data
+        item_type = items[item]["type"]
+
+        # Check if the item can be equipped in the selected slot
+        if slot == "head" and item_type == "head":
+            if head_item:
+                inventory.append(head_item)  # Unequip current head item
+            head_item = item
+        elif slot == "body" and item_type == "body":
+            if body_item:
+                inventory.append(body_item)  # Unequip current body item
+            body_item = item
+        elif slot == "left_hand" or item_type == "weapon"  or item_type == "tool":
+            if left_hand_item:
+                inventory.append(left_hand_item)  # Unequip current left hand item
+            left_hand_item = item
+        elif slot == "right_hand" or item_type == "weapon" or item_type == "tool":
+            if right_hand_item:
+                inventory.append(right_hand_item)  # Unequip current right hand item
+            right_hand_item = item
+        elif slot == "left_leg" and item_type == "legs":
+            if left_leg_item:
+                inventory.append(left_leg_item)  # Unequip current left leg item
+            left_leg_item = item
+        elif slot == "right_leg" and item_type == "legs":
+            if right_leg_item:
+                inventory.append(right_leg_item)  # Unequip current right leg item
+            right_leg_item = item
+        else:
+            renpy.notify(f"Cannot equip {item} in {slot} slot.")
+            return
+
+        # Remove the item from the inventory
+        inventory.remove(item)
+        renpy.notify(f"Equipped {item} to {slot} slot.")
+    def unequip_item(slot):
+        """Unequip an item from the specified body slot."""
+        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+
+        if slot == "head" and head_item:
+            inventory.append(head_item)
+            head_item = None
+            renpy.notify("Unequipped item from head slot.")
+        elif slot == "body" and body_item:
+            inventory.append(body_item)
+            body_item = None
+            renpy.notify("Unequipped item from body slot.")
+        elif slot == "left_hand" and left_hand_item:
+            inventory.append(left_hand_item)
+            left_hand_item = None
+            renpy.notify("Unequipped item from left hand slot.")
+        elif slot == "right_hand" and right_hand_item:
+            inventory.append(right_hand_item)
+            right_hand_item = None
+            renpy.notify("Unequipped item from right hand slot.")
+        elif slot == "left_leg" and left_leg_item:
+            inventory.append(left_leg_item)
+            left_leg_item = None
+            renpy.notify("Unequipped item from left leg slot.")
+        elif slot == "right_leg" and right_leg_item:
+            inventory.append(right_leg_item)
+            right_leg_item = None
+            renpy.notify("Unequipped item from right leg slot.")
+        else:
+            renpy.notify("No item to unequip from this slot.")
+    def discard_item(slot):
+        """Discard an item from the specified body slot."""
+        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+
+        item_to_discard = None
+
+        if slot == "head" and head_item:
+            item_to_discard = head_item
+            head_item = None
+        elif slot == "body" and body_item:
+            item_to_discard = body_item
+            body_item = None
+        elif slot == "left_hand" and left_hand_item:
+            item_to_discard = left_hand_item
+            left_hand_item = None
+        elif slot == "right_hand" and right_hand_item:
+            item_to_discard = right_hand_item
+            right_hand_item = None
+        elif slot == "left_leg" and left_leg_item:
+            item_to_discard = left_leg_item
+            left_leg_item = None
+        elif slot == "right_leg" and right_leg_item:
+            item_to_discard = right_leg_item
+            right_leg_item = None
+
+        if item_to_discard:
+            renpy.notify(f"Discarded {item_to_discard} from {slot} slot.")
+        else:
+            renpy.notify("No item to discard from this slot.")
     def use_item(item):
         """Handle the use of an item from the inventory."""
         global inventory, last_label
 
         if item == "First aid kit":
-            renpy.show_screen("heal_menu")   
+            renpy.show_screen("heal_menu")
             inventory.remove("First aid kit")
         elif item == "Cleaning Solution":
             renpy.notify("Nothing to clean.")
         elif item == "Oil":
-            renpy.notify("You cover yourself with oil.")        
+            renpy.notify("You cover yourself with oil.")
         elif item == "Tactical flashlight":
-            renpy.notify("This area is not THAT dark is it?")
+            renpy.notify("This area is not THAT dark, is it?")
         elif item == "radio":
-            renpy.notify("*Listening to radio...")
+            renpy.notify("*Listening to radio...*")
             renpy.sound.play("audio/radio/radio.wav")
-
-        if item == "radio" and last_label == "stairwell" and not visited_stairwell and rng < 50:
-            renpy.notify("*Signal Received Replaying..*")
-            renpy.sound.play("audio/radio/radio02.mp3")
+            if last_label == "stairwell" and not visited_stairwell and rng < 50:
+                renpy.notify("*Signal Received Replaying..*")
+                renpy.sound.play("audio/radio/radio02.mp3")
         elif item == "Laser range finder":
             renpy.notify("Nothing to measure here.")
         elif item == "MG41":
@@ -1186,11 +1274,11 @@ init python:
             elif last_label == "outsideprojectorroom":
                 renpy.notify("The compass points north.")
             elif last_label == "outsideclosetroom":
-                renpy.notify("The compass points west.")  
+                renpy.notify("The compass points west.")
             elif last_label == "outsidecaferoom":
-                renpy.notify("The compass points south west.")                     
+                renpy.notify("The compass points south west.")
             else:
-                renpy.notify("You use the compass, but it doesn't seem to give any useful information in this place.")
+                renpy.notify("You use the compass, but it doesn't seem to give any useful information in this place.")           
 #    $ remove_condition(head, concussion)
 #    $ remove_condition(head, Amnesia)    
 #    $ add_condition("head", "concussion")

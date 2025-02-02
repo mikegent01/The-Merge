@@ -3,173 +3,279 @@ style transparent_button:
     hover_background None  # No background on hover
     padding (10, 5)  # Padding for better clickability
     xalign 0.5  # Center align
-    color "#FFFFFF"  # White text color
+    color "#09ff80"  # White text color
     hover_color "#4CAF50"  # Green text color on hover
     outlines []  # Remove any text outlines
 
-# Apply the transparent_button style to all buttons
-style inventory_button is transparent_button
+style inventory_button:
+    background "#1E4A1E"  # Dark green background for buttons
+    hover_background "#728477"  # Light green hover effect
+    padding (10, 10)
+    color "#FFFFFF"  # White text
+    xalign 0.5 
 
-screen inventory():
-    modal True
-    frame:
-        $ average_health, average_cleanliness, average_temperature = calculate_averages()
-
-        $ medical_level = stats["medical"]["level"]
-        $ can_view_health = is_stat_higher("medical", 100, stats)
-        $ can_view_health_small = is_stat_higher("medical", 59, stats)
-        $ can_view_hygiene = is_stat_higher("intelligence", 50, stats)
-
-        xsize 800
-        ysize 600
-        xalign 0.5
-        yalign 0.5
-        background "#276127"
-        padding (20, 20)
-
-        vbox:
-            spacing 10
-            text "My Inventory" size 40 xalign 0.5 color "#FFFFFF"
-
-            # Show current weight and remaining space
-            $ current_weight = calculate_total_weight()
-            $ remaining_space = get_remaining_space()
-            text "Weight Of Carried Items: [current_weight] kg" size 20 color "#FFFFFF"
-            text "Remaining Space In My Bag: [remaining_space] N" size 20 color "#FFFFFF"
-            text "Max Weight I Can Hold: [current_strength] kg" size 20 color "#FFFFFF"
-
-            # Left and Right Arm Slots
-            hbox:
-                spacing 50
-                # Left Arm Slot
-                vbox:
-                    text "Left Hand" size 24 color "#FFFFFF"
-                    frame:
-                        background "#728477"
-                        xsize 150
-                        ysize 150
-                        if left_arm_item:
-                            if renpy.loadable("images/inventory/" + left_arm_item + ".png"):
-                                add "images/inventory/" + left_arm_item + ".png" xalign 0.5 yalign 0.5
-                            else:
-                                text left_arm_item xalign 0.5 yalign 0.5 color "#FFFFFF"
-                        else:
-                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
-
-                    if not left_arm_item:
-                        textbutton "Equip" action Show("item_select", arm="left") style "inventory_button"
-                    else:
-                        textbutton "Unequip" action Function(unequip_item, "left") style "inventory_button"
-                        textbutton "Discard" action Function(discard_item, "left") style "inventory_button"
-                        textbutton "Use" action Function(use_item, left_arm_item) style "inventory_button"
-
-                # Right Arm Slot
-                vbox:
-                    text "Right Hand" size 24 color "#FFFFFF"
-                    frame:
-                        background "#728477"
-                        xsize 150
-                        ysize 150
-                        if right_arm_item:
-                            if renpy.loadable("images/inventory/" + right_arm_item + ".png"):
-                                add "images/inventory/" + right_arm_item + ".png" xalign 0.5 yalign 0.5
-                            else:
-                                text right_arm_item xalign 0.5 yalign 0.5 color "#FFFFFF"
-                        else:
-                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
-
-                    if not right_arm_item:
-                        textbutton "Equip" action Show("item_select", arm="right") style "inventory_button"
-                    else:
-                        textbutton "Unequip" action Function(unequip_item, "right") style "inventory_button"
-                        textbutton "Discard" action Function(discard_item, "right") style "inventory_button"
-                        textbutton "Use" action Function(use_item, right_arm_item) style "inventory_button"
-
-            # Additional Actions
-            hbox:
-                spacing 20
-                if inventory:
-                    textbutton "Create Items" action Show("crafting_screen") style "inventory_button"
-                textbutton "Create Liquids" action Show("combine_liquids_screen") style "inventory_button"
-                textbutton "View Containers" action Show("liquid_management_screen") style "inventory_button"
-                textbutton "Close" action Hide("inventory") style "inventory_button"
-
-screen equip_armor():
-    modal True
-    frame:
-        xsize 600
-        ysize 500
-        xalign 0.5
-        yalign 0.5
-        background "#113111"
-        padding (20, 20)
-
-        vbox:
-            spacing 10
-            text "Equip Armor" size 30 xalign 0.5 color "#FFFFFF"
-
-            # Display currently equipped armor
-            text "Current Armor: [body_armor_item if body_armor_item else 'None']" size 20 color "#FFFFFF"
-
-            # Scrollable item list for armor
-            text "Available Armor" size 24 color "#FFFFFF"
-            viewport:
-                mousewheel True
-                scrollbars "vertical"
-                vbox:
-                    spacing 10
-                    for armor_item in armor_inventory:
-                        frame:
-                            background "#1E4A1E"
-                            padding (10, 10)
-                            vbox:
-                                $ armor_name = armor_item['name']
-                                $ armor_description = armor_item['description']
-                                $ armor_weight = armor_item['weight']
-                                $ armor_durability = armor_item['durability']
-
-                                text "Name: [armor_name]" size 18 color "#FFFFFF"
-                                text "Weight: [armor_weight] kg" size 16 color "#FFFFFF"
-                                text "Durability: [armor_durability]" size 16 color "#FFFFFF"
-                                text "Description: [armor_description]" size 16 color "#FFFFFF"
-
-                                if armor_name == body_armor_item:
-                                    text "Equipped" size 18 color "#4CAF50" xalign 0.5
-                                elif armor_durability <= 0:
-                                    text "Damaged" size 18 color "#FF0000" xalign 0.5
-                                else:
-                                    textbutton "Equip" action Function(equip_item, "body", armor_name) style "inventory_button"
-
-            # Close button
-            textbutton "Close" action Hide("equip_armor") style "inventory_button" xalign 0.5
-
-screen item_info(item):
+screen slot_selection():
     modal True
     frame:
         xsize 400
-        ysize 400
+        ysize 300
         xalign 0.5
         yalign 0.5
-        background "#000000"
+        background "#1E4A1E"
         padding (20, 20)
 
         vbox:
             spacing 10
-            text "Item Information" size 25 xalign 0.5 color "#FFFFFF"
+            text "Select a Slot to Equip [selected_item]" size 25 xalign 0.5 color "#FFFFFF"
 
-            if renpy.loadable("images/inventory/" + item + ".png"):
-                add "images/inventory/" + item + ".png" xalign 0.5 yalign 0.5 xsize 200 ysize 200
-            else:
-                text "No image available" xalign 0.5 yalign 0.5 color "#FFFFFF"
+            # Only show slots that are valid for the selected item
+            if items[selected_item]["type"] == "weapon":
+                textbutton "Left Hand" action [Function(equip_item, selected_item, "left_hand"), Hide("slot_selection")] style "inventory_button"
+                textbutton "Right Hand" action [Function(equip_item, selected_item, "right_hand"), Hide("slot_selection")] style "inventory_button"
+            elif items[selected_item]["type"] == "tool":
+                textbutton "Left Hand" action [Function(equip_item, selected_item, "left_hand"), Hide("slot_selection")] style "inventory_button"
+                textbutton "Right Hand" action [Function(equip_item, selected_item, "right_hand"), Hide("slot_selection")] style "inventory_button"
+            elif items[selected_item]["type"] == "consumable":
+                textbutton "Body" action [Function(equip_item, selected_item, "body"), Hide("slot_selection")] style "inventory_button"
 
-            text "Weight: [get_item_weight(item)] kg" size 18 color "#FFFFFF"
-            text "Description: [get_item_description(item)]" size 18 color "#FFFFFF"
+            textbutton "Cancel" action Hide("slot_selection") style "inventory_button"
+
+screen inventory():
+    modal True    
+
+    frame:
+        xsize 1200
+        ysize 5000
+        background "#1E4A1E"  # Dark green background for the entire screen
+        padding (20, 20)
+
+        viewport:
+            draggable True
+            mousewheel True
+            scrollbars "vertical"  # Enable vertical scrollbars
 
             hbox:
                 spacing 20
-                textbutton "Use" action Function(use_item, item) style "inventory_button"
-                textbutton "Close" action Hide("item_info") style "inventory_button"
 
+                # Left Side: Inventory Slots
+                frame:
+                    background "#113111"  # Darker green background for the inventory section
+                    xsize 600
+                    ysize 760
+                    padding (10, 10)
+
+                    vbox:
+                        spacing 10
+                        text "Inventory Slots" size 30 xalign 0.5 color "#FFFFFF"
+                        text "Remaining Slots: [get_remaining_space()]" size 20 xalign 0.5 color "#FFFFFF"
+                        
+                        viewport:  # Add a viewport for the inventory slots
+                            draggable True
+                            mousewheel True
+                            scrollbars "vertical"  # Enable vertical scrollbars
+                            xsize 580  # Adjust width to fit within the frame
+                            ysize 600  # Adjust height to limit the scrollable area
+
+                            grid 4 get_remaining_space():  
+                                spacing 10
+                                for i in range(get_remaining_space()): 
+                                    frame:
+                                        background "#728477"  # Light green background for each slot
+                                        xsize 120
+                                        ysize 120
+                                        padding (10, 10)
+
+                                        if i < len(inventory):
+                                            $ item = inventory[i]
+                                            if renpy.loadable("images/inventory/" + item + ".png"):
+                                                add "images/inventory/" + item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                            else:
+                                                text item xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            # Click to select the item
+                                            textbutton "" action SetVariable("selected_item", item) style "transparent_button":
+                                                xfill True
+                                                yfill True
+                                        else:
+                                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                # Right Side: Selected Item Info and Equipped Slots
+                frame:
+                    background "#113111"  # Darker green background for the right section
+                    xsize 560
+                    ysize 760
+                    padding (10, 10)
+
+                    vbox:
+                        spacing 10
+
+                        # Selected Item Info
+                        if selected_item:
+                            text "Selected Item" size 30 xalign 0.5 color "#FFFFFF"
+                            frame:
+                                background "#728477"  # Light green background for the selected item info
+                                padding (10, 10)
+                                vbox:
+                                    spacing 10
+                                    if renpy.loadable("images/inventory/" + selected_item + ".png"):
+                                        add "images/inventory/" + selected_item + ".png" xalign 0.5 yalign 0.5 xsize 200 ysize 200
+                                    else:
+                                        text "No image available" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                    text "Name: [selected_item]" size 18 color "#FFFFFF"
+                                    text "Weight: [get_item_weight(selected_item)] kg" size 18 color "#FFFFFF"
+                                    text "Description: [get_item_description(selected_item)]" size 18 color "#FFFFFF"
+
+                                    # Equip and Discard buttons for the selected item
+                                    textbutton "Equip" action Show("slot_selection") style "inventory_button"
+                                    textbutton "Discard" action Function(remove_item, selected_item) style "inventory_button"
+                                    textbutton "Close" action SetVariable("selected_item", None) style "inventory_button"
+                        # Equipped Slots (Formatted like a body)
+                        if not selected_item:  # Only show equipped items if no item is selected
+                            viewport:  # Add a viewport for the equipped items section
+                                draggable True
+                                mousewheel True
+                                scrollbars "vertical"  # Enable vertical scrollbars
+                                xsize 740  # Adjust width to fit within the frame
+                                ysize 500  # Adjust height to limit the scrollable area
+
+                                vbox:
+                                    spacing 10
+                                    text "Equipped Items" size 30 xalign 0.5 color "#FFFFFF"
+
+                                    # Head Slot
+                                    frame:
+                                        background "#728477"  # Light green background for the slot
+                                        xsize 150
+                                        ysize 150
+                                        xalign 0.5
+
+                                        if head_item:
+                                            if renpy.loadable("images/inventory/" + head_item + ".png"):
+                                                add "images/inventory/" + head_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                            else:
+                                                text head_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                        else:
+                                            text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                        if head_item:
+                                            hbox:
+                                                textbutton "Use" action Function(use_item, head_item) style "inventory_button"
+                                                textbutton "Unequip" action Function(unequip_item, "head") style "inventory_button" 
+
+                                    # Left Hand, Body, and Right Hand Slots
+                                    hbox:
+                                        xalign 0.5
+
+                                        # Left Hand Slot
+                                        frame:
+                                            background "#728477"  # Light green background for the slot
+                                            xsize 150
+                                            ysize 150
+
+                                            if left_hand_item:
+                                                if renpy.loadable("images/inventory/" + left_hand_item + ".png"):
+                                                    add "images/inventory/" + left_hand_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                                else:
+                                                    text left_hand_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                            else:
+                                                text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            if left_hand_item:
+                                                hbox:
+                                                    textbutton "Use" action Function(use_item, left_hand_item) style "inventory_button"
+                                                    textbutton "Unequip" action Function(unequip_item, "left_hand") style "inventory_button"
+
+                                        # Body Slot
+                                        frame:
+                                            background "#728477"  # Light green background for the slot
+                                            xsize 150
+                                            ysize 150
+
+                                            if body_item:
+                                                if renpy.loadable("images/inventory/" + body_item + ".png"):
+                                                    add "images/inventory/" + body_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                                else:
+                                                    text body_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                            else:
+                                                text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            if body_item:
+                                                hbox:
+                                                    textbutton "Use" action Function(use_item, body_item) style "inventory_button"
+                                                    textbutton "Unequip" action Function(unequip_item, "body") style "inventory_button"
+
+                                        # Right Hand Slot
+                                        frame:
+                                            background "#728477"  # Light green background for the slot
+                                            xsize 150
+                                            ysize 150
+
+                                            if right_hand_item:
+                                                if renpy.loadable("images/inventory/" + right_hand_item + ".png"):
+                                                    add "images/inventory/" + right_hand_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                                else:
+                                                    text right_hand_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                            else:
+                                                text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            if right_hand_item:
+                                                hbox:
+                                                    textbutton "Use" action Function(use_item, right_hand_item) style "inventory_button"
+                                                    textbutton "Unequip" action Function(unequip_item, "right_hand") style "inventory_button"
+
+                                    # Left and Right Leg Slots
+                                    hbox:
+                                        xalign 0.5
+
+                                        # Left Leg Slot
+                                        frame:
+                                            background "#728477"  # Light green background for the slot
+                                            xsize 150
+                                            ysize 150
+
+                                            if left_leg_item:
+                                                if renpy.loadable("images/inventory/" + left_leg_item + ".png"):
+                                                    add "images/inventory/" + left_leg_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                                else:
+                                                    text left_leg_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                            else:
+                                                text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            if left_leg_item:
+                                                hbox:
+                                                    textbutton "Use" action Function(use_item, left_leg_item) style "inventory_button"
+                                                    textbutton "Unequip" action Function(unequip_item, "left_leg") style "inventory_button"
+
+                                        # Right Leg Slot
+                                        frame:
+                                            background "#728477"  # Light green background for the slot
+                                            xsize 150
+                                            ysize 150
+                                            padding (10, 10)
+
+                                            if right_leg_item:
+                                                if renpy.loadable("images/inventory/" + right_leg_item + ".png"):
+                                                    add "images/inventory/" + right_leg_item + ".png" xalign 0.5 yalign 0.5 xsize 100 ysize 100
+                                                else:
+                                                    text right_leg_item xalign 0.5 yalign 0.5 color "#FFFFFF"
+                                            else:
+                                                text "Empty" xalign 0.5 yalign 0.5 color "#FFFFFF"
+
+                                            if right_leg_item:
+                                                hbox:
+                                                    spacing 10
+                                                    textbutton "Equip" action Show("slot_selection") style "inventory_button"
+                                                    textbutton "Unequip" action Function(unequip_item, "right_leg") style "inventory_button"
+
+                        # Additional Actions
+                        hbox:
+                            spacing 20
+                            if inventory:
+                                textbutton "Create Items" action Show("crafting_screen") style "inventory_button"
+                            textbutton "Create Liquids" action Show("combine_liquids_screen") style "inventory_button"
+                            textbutton "View Containers" action Show("liquid_management_screen") style "inventory_button"
+                        textbutton "Close" action Hide("inventory") style "inventory_button"
 screen item_select(arm):
     modal True
     frame:

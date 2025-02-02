@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1391: expected statement.
-    emotions["Confidence"]["value"] -= 5
-                                     ^
+File "game/scripts/inventory_screen.rpy", line 137: Line is indented, but the preceding draggable statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+    mousewheel True
+    ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Tue Jan 28 18:54:38 2025
+Sat Feb  1 21:46:30 2025
