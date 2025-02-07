@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/inventory_screen.rpy", line 137: Line is indented, but the preceding draggable statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    mousewheel True
-    ^
+File "game/script.rpy", line 1400: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
+    nearest_neighbor True 
+                          ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Sat Feb  1 21:46:30 2025
+Thu Feb  6 19:52:00 2025

@@ -1,18 +1,14 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While running game code:
-  File "game/script.rpy", line 1383, in script
+While loading <renpy.display.im.Image object ('images/char/Benjerman/ben idle.png') at 0x00000000049c4fa0>:
+  File "game/script.rpy", line 1416, in script
     "I sit in a crowded room. There are chairs laid out in rows."
-  File "renpy/common/00action_other.rpy", line 586, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/script.rpy", line 630, in combine_items
-    renpy.show_screen("motion_minigame", motion_type=recipe["motion"], recipe=recipe)
-KeyError: 'motion'
+OSError: Couldn't find file 'images/char/Benjerman/ben idle.png'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1383, in script
+  File "game/script.rpy", line 1416, in script
     "I sit in a crowded room. There are chairs laid out in rows."
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
     Say.execute(self)
@@ -30,45 +26,48 @@ Full traceback:
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 3201, in interact_core
-    rv = root_widget.event(ev, x, y, 0)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 793, in event
-    rv = self.child.event(ev, x, y, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1426, in event
-    rv = super(Window, self).event(ev, x, y, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 288, in event
-    rv = d.event(ev, x - xo, y - yo, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 288, in event
-    rv = d.event(ev, x - xo, y - yo, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\viewport.py", line 587, in event
-    rv = super(Viewport, self).event(ev, x, y, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 288, in event
-    rv = d.event(ev, x - xo, y - yo, st)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1202, in event
-    rv = i.event(ev, x - xo, y - yo, cst)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 1174, in event
-    return handle_click(self.clicked)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 1095, in handle_click
-    rv = run(action)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 395, in run
-    return action(*args, **kwargs)
-  File "renpy/common/00action_other.rpy", line 586, in __call__
-    rv = self.callable(*self.args, **self.kwargs)
-  File "game/script.rpy", line 630, in combine_items
-    renpy.show_screen("motion_minigame", motion_type=recipe["motion"], recipe=recipe)
-KeyError: 'motion'
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2818, in interact_core
+    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 1352, in draw_screen
+    surftree = renpy.display.render.render_screen(
+  File "render.pyx", line 486, in renpy.display.render.render_screen
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\transform.py", line 957, in render
+    return RenderTransform(self).render(width, height, st, at)
+  File "accelerator.pyx", line 978, in renpy.display.accelerator.RenderTransform.render
+  File "accelerator.pyx", line 413, in renpy.display.accelerator.RenderTransform.render_child
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\image.py", line 513, in render
+    return wrap_render(self.target, width, height, st, at)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\image.py", line 316, in wrap_render
+    rend = render(child, w, h, st, at)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 626, in render
+    return cache.get(self, render=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 309, in get
+    surf = image.load()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 761, in load
+    raise e
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 711, in load
+    filelike = renpy.loader.load(self.filename, directory="images")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\loader.py", line 672, in load
+    raise IOError("Couldn't find file '%s'." % name)
+OSError: Couldn't find file 'images/char/Benjerman/ben idle.png'.
 
 Windows-10-10.0.22631 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sat Feb  1 21:35:07 2025
+Thu Feb  6 20:18:57 2025
