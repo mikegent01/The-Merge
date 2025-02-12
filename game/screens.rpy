@@ -315,12 +315,12 @@ screen navigation():
 
             textbutton _("Main Menu") action MainMenu()
 
-        textbutton _("About") action ShowMenu("about")
+        textbutton _("Journal") action ShowMenu("journal")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action ShowMenu("help")
+            textbutton _("Inventory") action ShowMenu("inventory")
 
         if renpy.variant("pc"):
 
@@ -1598,3 +1598,12 @@ style slider_vbox:
 style slider_slider:
     variant "small"
     xsize 900
+style journal_status:
+    size 20
+    color "#ffd700"
+    xalign 0.5
+
+style journal_title:
+    size 32
+    color "#ffffff"
+    xalign 0.5

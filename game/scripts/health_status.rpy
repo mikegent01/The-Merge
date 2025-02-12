@@ -33,8 +33,7 @@ screen status_screen():
                         if can_view_health:
                             bar value default_status[part]["health"] range 100 xmaximum 400 ymaximum 25
                             textbutton "View Status" action Show("condition_details", part=part) style "inventory_button"
-
-            # Averages Section
+            textbutton "Cancel" action Hide("status_screen") style "inventory_button" xalign 0.5
             frame:
                 background "#222222"
                 padding (10, 10)

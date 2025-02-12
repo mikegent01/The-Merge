@@ -47,7 +47,7 @@ default roll = 0
 default intelligence_values = [0, 0, 0, 0, 0]
 default rolltf = 0
 #Quests
-default quests = [ #this was retarded so i made it an array
+#default quests = [ #this was retarded so i made it an array
  #  {
  #      "name": "New Uniform Quest",
  #      "description": "Go to the front desk to order a new uniform.",
@@ -60,7 +60,7 @@ default quests = [ #this was retarded so i made it an array
  #      "completed": False,
  #      "condition": "projector_obtained"
  #  }
-]
+#]
 default minigame_active = False
 default minigame_time = 10
 default minigame_problem = ""
@@ -100,6 +100,26 @@ default stirring_complete = False
 default last_mouse_pos = (0, 0)
 default stirring_direction = None
 default stirring_count = 0#pytrhon
+default expanded_entry = None    
+default current_journal_section = "quests"
+default selected_entry = None
+default personal_notes_text = ""
+
+# Example data structures
+default quests = [
+    {"title": "Find the Artifact", "desc": "SLOPSLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP  Locate the ancient artifact in the old ruins", "status": "active", "image": "artifact_thumb"},
+    {"title": "Deliver Package", "desc": "Take package to the blacksmith", "status": "completed", "image": None}
+]
+
+default characters = [
+    {"name": "Lydia", "desc": "A skilled warrior from the northern tribes. Has a mysterious past.", "image": "lydia_portrait", "drawing": None},
+    {"name": "Merlin", "desc": "Eccentric inventor obsessed with steam technology.", "image": None, "drawing": None}
+]
+
+default game_notes = [
+    {"text": "The mayor seemed nervous when mentioning the ruins...", "time": "Day 3: Morning"},
+    {"text": "Need to check the old map again", "time": "Day 4: Evening"}
+]
 init python:
     import webbrowser
     import random   
@@ -111,7 +131,7 @@ init python:
     total_cleanliness = 0
     total_temperature = 0
     current_selected_character = "Ben"
-    current_strength = random.randint(36,45)  
+    current_strength = random.randint(16,20)  
     max_space = 10 + current_strength     
     current_sanity = 100
     crafting_items = []
@@ -128,6 +148,7 @@ init python:
         {"name": "Oil", "amount": 30},       # 30 units of oil
         {"name": "Glue", "amount": 30}
     ]   
+    
     default_status = {
     "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
     "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
@@ -1407,11 +1428,11 @@ label bootcampinsideprojectorroomstart:
         play music boot_camp volume 0.5
 
     show ben idle at left with dissolve
-    $ quests.append({
-        "name": "Go to the projector room and listen to the drill sargent.",
-        "description": "I need to report to the drill sargent for a urgent meeting. ",
-        "completed": True,     
-    })
+   # $ quests.append({
+   #     "name": "Go to the projector room and listen to the drill sargent.",
+   #     "description": "I need to report to the drill sargent for a urgent meeting. ",
+   #     "completed": True,     
+   # })
 
     "I sit in a crowded room. There are chairs laid out in rows."
     "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
@@ -1481,11 +1502,11 @@ label bootcampinsideprojectorroomstart:
 
 
     DRI "You are dismissed."
-    $ quests.append({
-        "name": "Fix the projector",
-        "description": "The projector has important information that the drill sargent needs, it is broken and I need to fix it. ",
-        "completed": False,     
-    })
+   # $ quests.append({
+   #     "name": "Fix the projector",
+   #     "description": "The projector has important information that the drill sargent needs, it is broken and I need to fix it. ",
+   #     "completed": False,     
+   # })
     hide sadsargtalk
 
     "As I turn around, I notice two people sitting in their seats. Perhaps I should talk to one of them and ask them for help."
