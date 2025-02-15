@@ -104,7 +104,14 @@ default expanded_entry = None
 default current_journal_section = "quests"
 default selected_entry = None
 default personal_notes_text = ""
-
+default bs = BabelSearch()
+default current_floor = 1
+default current_shelf = 1
+default current_book = 1
+default current_page = 1
+default search_query = ""
+default search_results = []
+default highlight_position = (-1, -1)
 # Example data structures
 default quests = [
     {"title": "Find the Artifact", "desc": "SLOPSLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP  Locate the ancient artifact in the old ruins", "status": "active", "image": "artifact_thumb"},
@@ -124,6 +131,10 @@ init python:
     import webbrowser
     import random   
     import time      
+    import hashlib
+    from collections import deque
+    charset = 'abcdefghijklmnopqrstuvwxyz, .!?;:'  # Expanded character set
+    page_size = 5000  
     minhealth = 0
     maxhealth = 100
     full_weight = 0
@@ -157,6 +168,29 @@ init python:
     "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
     "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
+    def generate_page(floor, shelf, book, page):
+        seed_str = f"{floor}-{shelf}-{book}-{page}"
+        sha = hashlib.sha256(seed_str.encode('utf-8')).hexdigest()
+        seed = int(sha, 16)
+        random.seed(seed)
+        return ''.join([random.choice(charset) for _ in range(page_size)])    
+    class BabelSearch:
+        def __init__(self):
+            self.search_history = deque(maxlen=10)
+    def execute_search(self, query):
+        # Convert query to coordinates
+        sha = hashlib.sha256(query.lower().encode('utf-8')).hexdigest()
+        components = [
+            int(sha[i*8:(i+1)*8], 16) 
+            for i in range(4)
+        ]
+        
+        return (
+            (components[0] % 1000) + 1,  # floor
+            (components[1] % 100) + 1,    # shelf
+            (components[2] % 100) + 1,    # book
+            (components[3] % 100) + 1     # page
+        )                
     def get_top_emotion_bonuses(emotions):
         # Sort emotions by value in descending order
         sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
