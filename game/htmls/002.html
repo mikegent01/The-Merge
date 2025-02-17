@@ -1,40 +1,83 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Terminal</title>
+  <title>USDOD-TERMINAL-2392</title>
   <link rel="stylesheet" href="002.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
 <body>
-  <div class="terminal" id="normal-screen">
-    <h1>Terminal</h1>
-    <p class="output" id="normal-output">> Connection Status: Offline.</p>
-    <div id="console">
-      <div class="output" id="command-output"></div>
-      <div class="input-box">
-        <span class="input-prefix">></span>
-        <input type="text" id="command-input" class="input" autofocus />
+  <div class="desktop">
+    <div class="icons">
+      <div class="icon" data-program="my-computer">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <rect x="4" y="4" width="16" height="12" fill="#ccc"/>
+          <rect x="7" y="16" width="10" height="4" fill="#999"/>
+        </svg>
+        <span>My Computer</span>
+      </div>
+      <div class="icon" data-program="classified">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path d="M4 4h16v16H4z" fill="#fc0"/>
+          <text x="12" y="14" text-anchor="middle" font-size="8" fill="black">🔒<tspan x="12" y="20"></tspan></text>
+        </svg>
+        <span>CLASSIFIED</span>
+      </div>
+      <div class="icon" data-program="recycle-bin">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <path d="M5 7h14v14H5z" fill="#808080"/>
+          <path d="M8 3h8l2 4H6z" fill="#808080"/>
+        </svg>
+        <span>Recycle Bin</span>
+      </div>
+      <div class="icon" data-program="network">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8" fill="#4169E1"/>
+          <path d="M8 12h8M12 8v8" stroke="white" stroke-width="2"/>
+        </svg>
+        <span>Network</span>
+      </div>
+      <div class="icon" data-program="metro">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" fill="#000"/>
+          <path d="M4 12h16M12 4v16" stroke="#0f0" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="#0f0" stroke-width="2"/>
+        </svg>
+        <span>Metro</span>
+      </div>
+      <div class="icon" data-program="internet">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" fill="#0078D7"/>
+          <text x="12" y="16" text-anchor="middle" fill="white" font-size="12">e</text>
+        </svg>
+        <span>Internet</span>
+      </div>
+      <div class="icon" data-program="scp">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" fill="#000"/>
+          <text x="12" y="14" text-anchor="middle" fill="#f00" font-size="8">SCP</text>
+        </svg>
+        <span>SCP Database</span>
+      </div>
+      <div class="icon" data-program="timetable">
+        <svg class="icon-svg" viewBox="0 0 24 24">
+          <rect x="2" y="2" width="20" height="20" fill="#000"/>
+          <path d="M6 8h12M6 12h12M6 16h12" stroke="#0f0" stroke-width="2"/>
+        </svg>
+        <span>Timetable</span>
       </div>
     </div>
-  </div>
-
-  <!-- Hidden SCP Screen -->
-  <div class="terminal" id="scp-screen" style="display: none;">
-    <h1>CONNECTED TO FTP ADR:<span class="errorcode">136.228.116.222</span></h1>
-    <p class="output">> File received from ███</p>
-    <p class="output">> Classification: Euclid</p>
-    <p class="output">> Location: ██████████</p>
-    <p class="output">> File lifetime: 4 days</p>
-    <p class="output">> RELATIONS: #3312 #233 #█████</p>
-    <p class="output">> STATUS: ACTIVE</p>
-    <p class="output">> FILE LOADED: <a href="002a.html">█████</a>. lAST OPENED: 1 HOUR AGO.</p>
-    <div id="console">
-      <div class="output" id="scp-command-output"></div>
-      <div class="input-box">
-        <span class="input-prefix">></span>
-        <input type="text" id="scp-command-input" class="input" autofocus />
-      </div>
+    
+    <div class="taskbar">
+      <button class="start-button">
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <rect width="16" height="16" fill="#008080"/>
+          <path d="M2 2h6v6H2zM8 2h6v6H8zM2 8h6v6H2zM8 8h6v6H8z" fill="#fff"/>
+        </svg>
+        Start
+      </button>
+      <div class="taskbar-items"></div>
+      <div class="time" id="time"></div>
     </div>
   </div>
 
