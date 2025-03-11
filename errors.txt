@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/HUD.rpy", line 85: 'size' is not a keyword argument or valid child of the textbutton statement.
-    size 0.2
-        ^
+File "game/scripts/HUD.rpy", line 246: the action keyword argument was not given a value.
+    textbutton "Close" action hide ("journal_screen")
+                              ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon Feb 10 17:50:52 2025
+Tue Mar 11 15:55:03 2025

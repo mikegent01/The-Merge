@@ -492,15 +492,15 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
           <div class="network-list">
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">Site-████-SECURE</div>
-                <div class="network-type">Secured</div>
+                <div class="network-name">[Site-████-SECURE]</div>
+                <div class="network-type">Secured [Read Only]</div>
                 <div class="network-strength">Signal Strength: Strong</div>
               </div>
               <button class="connect-btn" disabled>Access Denied</button>
             </div>
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">BackroomsNet</div>
+                <div class="network-name">BRnet</div>
                 <div class="network-type">Unknown Protocol</div>
                 <div class="network-strength">Signal Strength: ??????????</div>
               </div>
@@ -508,7 +508,7 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
             </div>
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">Level_0_Public</div>
+                <div class="network-name">Public_sands</div>
                 <div class="network-type">Unsecured</div>
                 <div class="network-strength">Signal Strength: Weak</div>
               </div>
@@ -516,7 +516,7 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
             </div>
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">SCPF-Guest</div>
+                <div class="network-name">████-Guest</div>
                 <div class="network-type">Secured</div>
                 <div class="network-strength">Signal Strength: Medium</div>
               </div>
@@ -567,15 +567,15 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
         <div class="transit-timetable">
           <div class="timetable-header">
             <h2>INTERDIMENSIONAL TRANSIT SCHEDULE</h2>
-            <p class="warning">※ Schedule subject to non-euclidean distortions</p>
+            <p class="warning">※ Schedule subject to non-euclidean distortions and includes trains that are not safe by M.E.G standards</p>
           </div>
           <div class="timetable-content">
-            ${Array.from({ length: 20 }, (_, i) => `
+            ${Array.from({ length: 6590 }, (_, i) => `
               <div class="timetable-row">
                 <div class="time">${moment().add(Math.random() * 60, 'minutes').format('HH:mm')}</div>
-                <div class="route">Route ${['A', 'B', 'C'][Math.floor(Math.random() * 3)]}-${Math.floor(Math.random() * 999)}</div>
+                <div class="route">Route ${['A', 'B', 'C','D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'][Math.floor(Math.random() * 26)]}-${Math.floor(Math.random() * 999)}</div>
                 <div class="destination">Level ${Math.floor(Math.random() * 1000)}</div>
-                <div class="status">${['On Time', 'Delayed', 'Unknown', 'Out of Service', 'Cancelled','In Transit', 'Anomalous signal'][Math.floor(Math.random() * 7)]}</div>
+                <div class="status">${['On Time', 'Delayed', 'Unknown', 'Out of Service', 'Cancelled','In Transit', 'Anomaly Danger','Off-Track'][Math.floor(Math.random() * 7)]}</div>
               </div>
             `).join('')}
           </div>
@@ -599,7 +599,7 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
             <p>Level 0 Breach Report - Security Level 5</p>
           </div>
           <div class="file" data-file="threshold">
-            <h3>PROJECT-THRESHOLD.exe</h3>
+            <h3>PROJECT-THRESHOLD.log</h3>
             <p>Noclip Investigation Tool - Security Level 6</p>
           </div>
           <div class="file" data-file="trainmap">
@@ -614,7 +614,7 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
       const files = win.querySelector('.files');
 
       submit.addEventListener('click', () => {
-        if (input.value === 'pswrd') {
+        if (input.value === 'wspg') {
           win.querySelector('.password-prompt').style.display = 'none';
           files.style.display = 'block';
         } else {
@@ -637,7 +637,7 @@ DESCRIPTION:
 SCP-██████████ is a humanoid entinty that currently resides in ████████████ . The entity has gained notoriety on the internet and displayed the power to see other ████████████ throughout the universe. A holding site located in the North Atlantic Ocean (Latitude: 37.02806, Longitude: -30.54940, Distortion: 1.57) was prepared on ████████████ to contain the entity. Currently the site is abandoned after a earthquake due to a seismic shifts damaged the holding equipment, although new containment procedures are currently being made they are not expected to finish until 2042. Most of the anomalous properties of SCP-██████████ do not effect others however, the possibility of a Great Convergence K-Class Scenario remains possible.`,
           'backrooms': `BACKROOMS INCIDENT LOG - 05/23/20██
 
-0300 hrs: First reports of wall phasing incidents at Site-████
+0300 hrs: First reports of wall phasing incident outside of testing room █████ at Site-████.
 0317 hrs: Multiple personnel reported missing.
 0330 hrs: Recovery team shota-A assembled and deployed to Site-████.
 0345 hrs: Recovery team reports breach at Site-████.
@@ -648,7 +648,7 @@ STATUS: MAINTENANCE
 CLEARANCE: LEVEL 6
 
 Warning: This program is currently in autonomus mode actions will be taken by the system.
-Any system readings currently displayed are not accurate.`,
+Any system readings currently displayed are not accurate. The pulse of the program is to monitor the quantum fluctuations of object ████████ at site ████████. If there is any value above the saftey threshhold pelase consult the system administrator at 612-861-3421`,
           'trainmap': () => {
             createWindow('BACKROOMS TRAIN SYSTEM', `
               <div class="map-viewer">
@@ -770,6 +770,7 @@ Any system readings currently displayed are not accurate.`,
                   <p>Active Trains: <span class="train-count">3</span></p>
                   <p>System Status: <span class="system-status">OPERATIONAL</span></p>
                   <p>Next Maintenance: <span class="next-maintenance">12:00</span></p>
+                  <p>Visible: <span class="next-maintenance">Safe Trains</span></p>                  
                 </div>
               </div>
               <div class="train-list">

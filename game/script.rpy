@@ -1,4 +1,4 @@
-﻿# name of the character.
+# name of the character.
 #extra
 default rng = random.randint(1,100)
 default menu_initialized = False
@@ -104,37 +104,108 @@ default expanded_entry = None
 default current_journal_section = "quests"
 default selected_entry = None
 default personal_notes_text = ""
-default bs = BabelSearch()
-default current_floor = 1
-default current_shelf = 1
-default current_book = 1
-default current_page = 1
-default search_query = ""
-default search_results = []
 default highlight_position = (-1, -1)
-# Example data structures
-default quests = [
-    {"title": "Find the Artifact", "desc": "SLOPSLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP SLOP  Locate the ancient artifact in the old ruins", "status": "active", "image": "artifact_thumb"},
-    {"title": "Deliver Package", "desc": "Take package to the blacksmith", "status": "completed", "image": None}
-]
-
-default characters = [
-    {"name": "Lydia", "desc": "A skilled warrior from the northern tribes. Has a mysterious past.", "image": "lydia_portrait", "drawing": None},
-    {"name": "Merlin", "desc": "Eccentric inventor obsessed with steam technology.", "image": None, "drawing": None}
-]
-
-default game_notes = [
-    {"text": "The mayor seemed nervous when mentioning the ruins...", "time": "Day 3: Morning"},
-    {"text": "Need to check the old map again", "time": "Day 4: Evening"}
-]
+$ quest_filter = "all"
+$ selected_quest = None
 init python:
     import webbrowser
     import random   
     import time      
     import hashlib
-    from collections import deque
-    charset = 'abcdefghijklmnopqrstuvwxyz, .!?;:'  # Expanded character set
-    page_size = 5000  
+    import threading    
+    from http.server import SimpleHTTPRequestHandler
+    from socketserver import TCPServer
+    import os    
+    if not hasattr(persistent, 'journal_entries') or persistent.journal_entries is None:
+        persistent.journal_entries = []  # Ensure it's a list    
+    PORT = 3000
+    HTML_DIR = os.path.join(renpy.config.gamedir, "htmls")
+    if persistent.unlocked_books is None:
+        persistent.unlocked_books = []
+    
+    if persistent.missions is None:
+        persistent.missions = {"active": [], "completed": []}
+    
+    if persistent.journal_entries is None:
+        persistent.journal_entries = []
+    
+    def unlock_book(title, text_file, preview="images/inventory/inventory_hud/default_book.png"):
+        """
+        Unlock a book that can be read in-game.
+        text_file: Path to the text file containing the book content
+        """
+        # Get current game day or use a default
+        current_day = getattr(store, 'day', 1)
+        
+        # Check if the text file exists
+        if renpy.loadable(text_file):
+            new_book = {
+                "title": title, 
+                "text_file": text_file, 
+                "preview": preview, 
+                "date_unlocked": "Day " + str(current_day)
+            }
+            
+            # Check if the book is already unlocked
+            for book in persistent.unlocked_books:
+                if book["title"] == title:
+                    return  # Book already exists
+                    
+            persistent.unlocked_books.append(new_book)
+            renpy.notify("New book added to your journal: " + title)
+        else:
+            renpy.notify("Error: Book file not found: " + text_file)
+    
+    def load_book_text(text_file):
+        """Load book content from a text file and split into pages"""
+        try:
+            with renpy.file(text_file) as f:
+                content = f.read().decode("utf-8")
+                
+            # Split content into pages (each page is about 250 words)
+            words = content.split()
+            words_per_page = 250
+            pages = []
+            
+            for i in range(0, len(words), words_per_page):
+                page_words = words[i:i + words_per_page]
+                pages.append(" ".join(page_words))
+                
+            return pages
+        except:
+            return ["Error loading book content. The file might be missing or corrupted."]
+    
+    def add_mission(title, description, objectives=None):
+        if objectives is None:
+            objectives = []
+        # Get current game day or use a default
+        current_day = getattr(store, 'day', 1)
+        new_mission = {"title": title, "description": description, "objectives": objectives, "progress": 0, "date_added": "Day " + str(current_day)}
+        
+        # Check if mission already exists
+        for mission in persistent.missions["active"]:
+            if mission["title"] == title:
+                return  # Mission already exists
+                
+        persistent.missions["active"].append(new_mission)
+        renpy.notify("New mission added: " + title)
+    
+    def complete_mission(title):
+        for i, mission in enumerate(persistent.missions["active"]):
+            if mission["title"] == title:
+                mission["progress"] = 100
+                persistent.missions["completed"].append(mission)
+                persistent.missions["active"].pop(i)
+                renpy.notify("Mission completed: " + title)
+                return True
+        return False
+    
+    def add_journal_entry(title, content):
+        # Get current game day or use a default
+        current_day = getattr(store, 'day', 1)
+        entry = {"title": title, "content": content, "date": "Day " + str(current_day)}
+        persistent.journal_entries.append(entry)
+        renpy.notify("New journal entry added")
     minhealth = 0
     maxhealth = 100
     full_weight = 0
@@ -168,29 +239,7 @@ init python:
     "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
     "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
-    def generate_page(floor, shelf, book, page):
-        seed_str = f"{floor}-{shelf}-{book}-{page}"
-        sha = hashlib.sha256(seed_str.encode('utf-8')).hexdigest()
-        seed = int(sha, 16)
-        random.seed(seed)
-        return ''.join([random.choice(charset) for _ in range(page_size)])    
-    class BabelSearch:
-        def __init__(self):
-            self.search_history = deque(maxlen=10)
-    def execute_search(self, query):
-        # Convert query to coordinates
-        sha = hashlib.sha256(query.lower().encode('utf-8')).hexdigest()
-        components = [
-            int(sha[i*8:(i+1)*8], 16) 
-            for i in range(4)
-        ]
-        
-        return (
-            (components[0] % 1000) + 1,  # floor
-            (components[1] % 100) + 1,    # shelf
-            (components[2] % 100) + 1,    # book
-            (components[3] % 100) + 1     # page
-        )                
+
     def get_top_emotion_bonuses(emotions):
         # Sort emotions by value in descending order
         sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
@@ -935,11 +984,51 @@ init python:
         renpy.notify(f"{part.replace('_', ' ').capitalize()} health restored by {amount} points.")
 
 
+    class CustomHandler(SimpleHTTPRequestHandler):
+        def translate_path(self, path):
+            path = super().translate_path(path)
+            relpath = os.path.relpath(path, os.getcwd())
+            fullpath = os.path.join(HTML_DIR, relpath)
+            return fullpath
+
+        def log_message(self, format, *args):
+            pass  # Disable logging
+
+    class WebServer(threading.Thread):
+        def __init__(self):
+            super().__init__()
+            self.daemon = True
+            self.server = None
+
+        def run(self):
+            try:
+                self.server = TCPServer(("localhost", PORT), CustomHandler)
+                renpy.notify(f"Web server started on port {PORT}")
+                self.server.serve_forever()
+            except Exception as e:
+                renpy.notify(f"Failed to start server: {str(e)}")
+
+        def stop(self):
+            if self.server:
+                self.server.shutdown()
+                self.server.server_close()
+                renpy.notify("Web server stopped")
+
+    # Initialize web server
+    web_server = WebServer()
+    web_server.start()
+
+    # Register cleanup function
+    def stop_server():
+        web_server.stop()
+
+    config.quit_action = stop_server
+
+    # Modified htmlopen function
     def htmlopen(name):
-        # Use an f-string to correctly format the file path
         renpy.notify("Your web browser has been opened.")
-        html_file_path = renpy.loader.transfn(f"htmls/{name}.html")
-        webbrowser.open(f"file:///{html_file_path}")
+        url = f"http://localhost:{PORT}/{name}.html"
+        webbrowser.open(url)
     def has_item(item):
         return item in inventory
     def has_stirring_tool(tool):
@@ -1467,7 +1556,7 @@ label bootcampinsideprojectorroomstart:
    #     "description": "I need to report to the drill sargent for a urgent meeting. ",
    #     "completed": True,     
    # })
-
+    $ unlock_book("Ancient History", "books/poopy.txt")
     "I sit in a crowded room. There are chairs laid out in rows."
     "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
     "The whole room sits in silence as the images are shown one by one."
