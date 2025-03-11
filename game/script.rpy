@@ -1556,7 +1556,7 @@ label bootcampinsideprojectorroomstart:
    #     "description": "I need to report to the drill sargent for a urgent meeting. ",
    #     "completed": True,     
    # })
-    $ unlock_book("Ancient History", "books/poopy.txt")
+    $ unlock_book("Stars and Stripes", "books/poopy.txt")
     "I sit in a crowded room. There are chairs laid out in rows."
     "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
     "The whole room sits in silence as the images are shown one by one."
