@@ -1,4 +1,4 @@
-# name of the character.
+﻿# name of the character.
 #extra
 default rng = random.randint(1,100)
 default menu_initialized = False
@@ -103,6 +103,9 @@ default stirring_count = 0#pytrhon
 default expanded_entry = None    
 default current_journal_section = "quests"
 default selected_entry = None
+default unlocked_books = []
+default missions = {"active": [], "completed": []}
+default journal_entries = []
 default personal_notes_text = ""
 default highlight_position = (-1, -1)
 $ quest_filter = "all"
@@ -116,19 +119,62 @@ init python:
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
     import os    
+    def get_filtered_item_count(filter_type):
+        """
+        Returns the count of items matching the specified filter type.
+        
+        Args:
+            filter_type (str): The type of items to count ('all', 'weapon', 'armor', 'consumable', etc.)
+            
+        Returns:
+            int: Number of items matching the filter
+        """
+        count = 0
+        
+        # Assuming you have a inventory list or similar structure
+        for item in inventory:
+            if filter_type == "all" or get_item_type(item) == filter_type:
+                count += 1
+                
+        return count
+    
+    def get_max_slots():
+        """
+        Returns the maximum number of inventory slots available to the player.
+        
+        Returns:
+            int: Maximum inventory slots
+        """
+        # You can make this dynamic based on player upgrades or stats
+        return 50  # Default value, adjust as needed
+    
+    def get_filtered_item_at_index(index, filter_type):
+        """
+        Returns the item at the specified index after filtering by type.
+        
+        Args:
+            index (int): The index in the filtered list
+            filter_type (str): The type of items to filter ('all', 'weapon', 'armor', 'consumable', etc.)
+            
+        Returns:
+            item object or None: The item at the index or None if no item exists
+        """
+        filtered_items = []
+        
+        # Filter the inventory
+        for item in inventory:
+            if filter_type == "all" or get_item_type(item) == filter_type:
+                filtered_items.append(item)
+        
+        # Return the item at the index if it exists
+        if 0 <= index < len(filtered_items):
+            return filtered_items[index]
+        else:
+            return None    
     if not hasattr(persistent, 'journal_entries') or persistent.journal_entries is None:
         persistent.journal_entries = []  # Ensure it's a list    
     PORT = 3000
     HTML_DIR = os.path.join(renpy.config.gamedir, "htmls")
-    if persistent.unlocked_books is None:
-        persistent.unlocked_books = []
-    
-    if persistent.missions is None:
-        persistent.missions = {"active": [], "completed": []}
-    
-    if persistent.journal_entries is None:
-        persistent.journal_entries = []
-    
     def unlock_book(title, text_file, preview="images/inventory/inventory_hud/default_book.png"):
         """
         Unlock a book that can be read in-game.
@@ -147,12 +193,12 @@ init python:
             }
             
             # Check if the book is already unlocked
-            for book in persistent.unlocked_books:
+            for book in store.unlocked_books:
                 if book["title"] == title:
                     return  # Book already exists
                     
-            persistent.unlocked_books.append(new_book)
-            renpy.notify("New book added to your journal: " + title)
+            store.unlocked_books.append(new_book)
+       #     renpy.notify("New book added to your journal: " + title)
         else:
             renpy.notify("Error: Book file not found: " + text_file)
     
@@ -175,6 +221,47 @@ init python:
         except:
             return ["Error loading book content. The file might be missing or corrupted."]
     
+    def add_mission(title, description, objectives=None):
+        if objectives is None:
+            objectives = []
+        # Get current game day or use a default
+        current_day = getattr(store, 'day', 1)
+        new_mission = {"title": title, "description": description, "objectives": objectives, "progress": 0, "date_added": "Day " + str(current_day)}
+        
+        # Check if mission already exists
+        for mission in store.missions["active"]:
+            if mission["title"] == title:
+                return  # Mission already exists
+                
+        store.missions["active"].append(new_mission)
+        renpy.notify("New mission added: " + title)
+    
+    def update_mission_progress(title, progress):
+        """Update the progress of a mission (0-100)"""
+        for mission in store.missions["active"]:
+            if mission["title"] == title:
+                mission["progress"] = min(100, max(0, progress))  # Clamp between 0-100
+                if mission["progress"] == 100:
+                    complete_mission(title)
+                return True
+        return False
+    
+    def complete_mission(title):
+        for i, mission in enumerate(store.missions["active"]):
+            if mission["title"] == title:
+                mission["progress"] = 100
+                store.missions["completed"].append(mission)
+                store.missions["active"].pop(i)
+                renpy.notify("Mission completed: " + title)
+                return True
+        return False
+    
+    def add_journal_entry(title, content):
+        # Get current game day or use a default
+        current_day = getattr(store, 'day', 1)
+        entry = {"title": title, "content": content, "date": "Day " + str(current_day)}
+        store.journal_entries.append(entry)
+        renpy.notify("New journal entry added")
     def add_mission(title, description, objectives=None):
         if objectives is None:
             objectives = []
@@ -1003,7 +1090,7 @@ init python:
         def run(self):
             try:
                 self.server = TCPServer(("localhost", PORT), CustomHandler)
-                renpy.notify(f"Web server started on port {PORT}")
+                #renpy.notify(f"Web server started on port {PORT}")
                 self.server.serve_forever()
             except Exception as e:
                 renpy.notify(f"Failed to start server: {str(e)}")
@@ -1012,7 +1099,7 @@ init python:
             if self.server:
                 self.server.shutdown()
                 self.server.server_close()
-                renpy.notify("Web server stopped")
+              #  renpy.notify("Web server stopped")
 
     # Initialize web server
     web_server = WebServer()
@@ -1026,7 +1113,7 @@ init python:
 
     # Modified htmlopen function
     def htmlopen(name):
-        renpy.notify("Your web browser has been opened.")
+    #    renpy.notify("Your web browser has been opened.")
         url = f"http://localhost:{PORT}/{name}.html"
         webbrowser.open(url)
     def has_item(item):

@@ -1,82 +1,70 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While running game code:
-  File "game/script.rpy", line 1560, in script
-    "I sit in a crowded room. There are chairs laid out in rows."
-  File "game/scripts/HUD.rpy", line 200, in execute
-    screen read_book_screen(book):
-  File "game/scripts/HUD.rpy", line 200, in execute
-    screen read_book_screen(book):
-  File "game/scripts/HUD.rpy", line 207, in execute
-    frame:
-  File "game/scripts/HUD.rpy", line 213, in execute
-    vbox:
-  File "game/scripts/HUD.rpy", line 236, in execute
-    hbox:
-  File "game/scripts/HUD.rpy", line 246, in execute
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-  File "game/scripts/HUD.rpy", line 246, in keywords
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-  File "game/scripts/HUD.rpy", line 246, in <module>
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-NameError: name 'hide' is not defined
+While loading <renpy.display.im.Image object ('images/inventory/inventory_hud/Quest_Log.png') at 0x0000000003ce3eb0>:
+  File "game/script.rpy", line 1703, in script
+    menu:
+OSError: Couldn't find file 'images/inventory/inventory_hud/Quest_Log.png'.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1560, in script
-    "I sit in a crowded room. There are chairs laid out in rows."
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
-    Say.execute(self)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
-    renpy.exports.say(who, what, *args, **kwargs)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
-    who(what, *args, **kwargs)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
-    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
-    display_say(who,
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
-    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
+  File "game/script.rpy", line 1703, in script
+    menu:
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1618, in execute
+    choice = renpy.exports.menu(choices, self.set, args, kwargs, item_arguments)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1109, in menu
+    rv = renpy.store.menu(new_items)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1364, in display_menu
+    rv = renpy.ui.interact(mouse='menu', type=type, roll_forward=roll_forward)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
-    self.screen.function(**self.scope)
-  File "game/scripts/HUD.rpy", line 200, in execute
-    screen read_book_screen(book):
-  File "game/scripts/HUD.rpy", line 200, in execute
-    screen read_book_screen(book):
-  File "game/scripts/HUD.rpy", line 207, in execute
-    frame:
-  File "game/scripts/HUD.rpy", line 213, in execute
-    vbox:
-  File "game/scripts/HUD.rpy", line 236, in execute
-    hbox:
-  File "game/scripts/HUD.rpy", line 246, in execute
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-  File "game/scripts/HUD.rpy", line 246, in keywords
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-  File "game/scripts/HUD.rpy", line 246, in <module>
-    textbutton "Close" action [hide ("journal_screen"),hide("read_book_screen")]
-NameError: name 'hide' is not defined
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2818, in interact_core
+    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 1352, in draw_screen
+    surftree = renpy.display.render.render_screen(
+  File "render.pyx", line 486, in renpy.display.render.render_screen
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 754, in render
+    child = renpy.display.render.render(self.child, w, h, st, at)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
+    surf = render(child, width, height, cst, cat)
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 968, in render
+    rv = super(Button, self).render(width, height, st, at)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1361, in render
+    surf = render(child,
+  File "render.pyx", line 170, in renpy.display.render.render
+  File "render.pyx", line 260, in renpy.display.render.render
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 626, in render
+    return cache.get(self, render=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 309, in get
+    surf = image.load()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 761, in load
+    raise e
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 711, in load
+    filelike = renpy.loader.load(self.filename, directory="images")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\loader.py", line 672, in load
+    raise IOError("Couldn't find file '%s'." % name)
+OSError: Couldn't find file 'images/inventory/inventory_hud/Quest_Log.png'.
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Tue Mar 11 15:54:54 2025
+Wed Mar 12 17:12:40 2025
