@@ -5,7 +5,7 @@ screen HUD():
     add "images/bg/overlay/bg overlay.png":
         xalign 0.5
         yalign 1.0
-       # zorder 0
+       # #zorder 0
     
     # Backpack Icon - Left side
    # if inventory:
@@ -21,8 +21,15 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/Quest_Log.png"
         hover "images/inventory/inventory_hud/Quest_Log_hover.png"
-        action Show("inventory")
-        padding (10, 10, 10, 10)        
+        action Show("journal_screen")
+        padding (10, 10, 10, 10)     
+    imagebutton:
+        xalign 0.755
+        yalign 1.0
+        idle "images/inventory/inventory_hud/magna.png"
+        hover "images/inventory/inventory_hud/magna_hover.png"
+        action Show("journal_screen")
+        padding (10, 10, 10, 10)                   
         #oomfie
     text "Benjamin":
         xalign 0.31
@@ -36,13 +43,13 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/meidc_hud.png"
         hover "images/inventory/inventory_hud/medic_hover.png"
-        action Show("status_screen")
+        action Show("status_screen") #status_screen 
         padding (10, 10, 10, 10)
 
     # Head Log Icon - Bottom center
     imagebutton:
-        xalign 0.3
-        yalign 0.95
+        xalign 0.31
+        yalign 1.0
         idle "images/inventory/inventory_hud/head.png"
         hover "images/inventory/inventory_hud/head_hover.png"
         action Show("player_stats_screen")
@@ -246,3 +253,72 @@ screen journal_screen():
                             text "Your journal is empty. Record your thoughts and discoveries here." size 20
             
                             textbutton "Close" action Hide("journal_screen") align (0.5, 1.0)
+
+screen region_highlight():
+    frame:
+        background "#00000088"
+        xfill True
+        yfill True
+        
+        vbox:
+            xalign 0.5
+            yalign 0.5
+            spacing 20
+            
+            text "Search Area":
+                xalign 0.5
+                color "#ffffff"
+                size 40
+                outlines [(2, "#000000", 0, 0)]
+            
+            hbox:
+                spacing 20
+                xalign 0.5
+                
+                textbutton "Top":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "top"), Hide("area_search_buttons"), Jump(last_label)]
+                
+                textbutton "Middle":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "middle"), Hide("area_search_buttons"), Jump(last_label)]
+                
+                textbutton "Bottom":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "bottom"), Hide("area_search_buttons"), Jump(last_label)]
+            
+            hbox:
+                spacing 20
+                xalign 0.5
+                
+                textbutton "Left":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "left"), Hide("area_search_buttons"), Jump(last_label)]
+                
+                textbutton "Center":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "center"), Hide("area_search_buttons"), Jump(last_label)]
+                
+                textbutton "Right":
+                    xsize 150
+                    ysize 80
+                    text_size 24
+                    action [SetVariable("searched_area", "right"), Hide("area_search_buttons"), Jump(last_label)]
+                    
+            # Cancel button
+            textbutton "Cancel":
+                xalign 0.5
+                xsize 150
+                ysize 60
+                text_size 24
+                action [SetVariable("searched_area", None), Hide("area_search_buttons"), Jump(last_label)]
