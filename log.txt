@@ -1,37 +1,36 @@
-2025-03-13 18:36:54 UTC
+2025-04-15 04:19:31 UTC
 Windows-10-10.0.26100
 Ren'Py 8.2.1.24030407
 
-Early init took 0.04s
-Loading error handling took 0.05s
-Loading script took 0.27s
-Loading save slot metadata took 0.12s
+Early init took 0.06s
+Loading error handling took 0.02s
+Loading script took 0.08s
+Loading save slot metadata took 0.03s
 Loading persistent took 0.00s
-Running init code took 0.06s
+Running init code took 0.05s
 Loading analysis data took 0.02s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.08s
+Reloading save slot metadata took 0.09s
 Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
-Initial gc took 0.02s
+Initial gc took 0.03s
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.18s
+nvdrs: b'DRS_SaveSettings() = -1.' (can be ignored)
+Creating interface object took 0.19s
 Cleaning stores took 0.00s
-Init translation took 0.02s
+Init translation took 0.03s
 Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.05s
+Load screen analysis took 0.03s
+Analyze screens took 0.00s
+Save screen analysis took 0.00s
+Prepare screens took 0.06s
 Save pyanalysis. took 0.00s
-Save bytecode. took 0.02s
+Save bytecode. took 0.00s
 Running _start took 0.00s
-Interface start took 0.04s
+Interface start took 0.05s
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -39,10 +38,55 @@ swap interval: 1 frames
 Windowed mode.
 Vendor: "b'NVIDIA Corporation'"
 Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 560.94'
+Version: b'4.6.0 NVIDIA 572.70'
 Display Info: None
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
+INFO:renpy_warp_service:connected to renpy warp socket server on :40111
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61189)
+Traceback (most recent call last):
+  File "lib/python3.9/socketserver.py", line 316, in _handle_request_noblock
+  File "lib/python3.9/socketserver.py", line 347, in process_request
+  File "lib/python3.9/socketserver.py", line 360, in finish_request
+  File "lib/python3.9/http/server.py", line 653, in __init__
+  File "lib/python3.9/socketserver.py", line 747, in __init__
+  File "lib/python3.9/http/server.py", line 427, in handle
+  File "lib/python3.9/http/server.py", line 415, in handle_one_request
+  File "lib/python3.9/http/server.py", line 660, in do_GET
+  File "lib/python3.9/http/server.py", line 860, in copyfile
+  File "lib/python3.9/shutil.py", line 208, in copyfileobj
+  File "lib/python3.9/socketserver.py", line 826, in write
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61191)
+Traceback (most recent call last):
+  File "lib/python3.9/socketserver.py", line 316, in _handle_request_noblock
+  File "lib/python3.9/socketserver.py", line 347, in process_request
+  File "lib/python3.9/socketserver.py", line 360, in finish_request
+  File "lib/python3.9/http/server.py", line 653, in __init__
+  File "lib/python3.9/socketserver.py", line 747, in __init__
+  File "lib/python3.9/http/server.py", line 427, in handle
+  File "lib/python3.9/http/server.py", line 415, in handle_one_request
+  File "lib/python3.9/http/server.py", line 660, in do_GET
+  File "lib/python3.9/http/server.py", line 860, in copyfile
+  File "lib/python3.9/shutil.py", line 208, in copyfileobj
+  File "lib/python3.9/socketserver.py", line 826, in write
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+Player's answer: 13
+Player's answer: 50
+Cleaning stores took 0.00s
+Init translation took 0.00s
+Build styles took 0.00s
+Load screen analysis took 0.03s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+INFO:renpy_warp_service:closing websocket connection :40111
+INFO:renpy_warp_service:connection replaced, service exiting
+INFO:renpy_warp_service:service closed

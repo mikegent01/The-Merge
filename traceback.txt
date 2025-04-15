@@ -1,70 +1,85 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While loading <renpy.display.im.Image object ('images/inventory/inventory_hud/magna.png') at 0x0000000005c0b1c0>:
-  File "game/script.rpy", line 1726, in script
-    menu:
-OSError: Couldn't find file 'images/inventory/inventory_hud/magna.png'.
+While running game code:
+  File "game/script.rpy", line 1725, in script
+    $ renpy.pause(hard=True)
+  File "game/script.rpy", line 1725, in <module>
+    $ renpy.pause(hard=True)
+  File "game/scripts/HUD.rpy", line 159, in execute
+    screen journal_screen():
+  File "game/scripts/HUD.rpy", line 159, in execute
+    screen journal_screen():
+  File "game/scripts/HUD.rpy", line 165, in execute
+    frame:
+  File "game/scripts/HUD.rpy", line 171, in execute
+    vbox:
+  File "game/scripts/HUD.rpy", line 190, in execute
+    if current_tab == "Missions":
+  File "game/scripts/HUD.rpy", line 345, in execute
+    viewport:
+  File "game/scripts/HUD.rpy", line 351, in execute
+    vbox:
+  File "game/scripts/HUD.rpy", line 356, in execute
+    if len(collected_tapes) > 0:
+  File "game/scripts/HUD.rpy", line 356, in <module>
+    if len(collected_tapes) > 0:
+NameError: name 'collected_tapes' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1726, in script
-    menu:
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 1618, in execute
-    choice = renpy.exports.menu(choices, self.set, args, kwargs, item_arguments)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1109, in menu
-    rv = renpy.store.menu(new_items)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1364, in display_menu
-    rv = renpy.ui.interact(mouse='menu', type=type, roll_forward=roll_forward)
+  File "game/script.rpy", line 1725, in script
+    $ renpy.pause(hard=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 1725, in <module>
+    $ renpy.pause(hard=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1661, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2818, in interact_core
-    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 1352, in draw_screen
-    surftree = renpy.display.render.render_screen(
-  File "render.pyx", line 486, in renpy.display.render.render_screen
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 754, in render
-    child = renpy.display.render.render(self.child, w, h, st, at)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\behavior.py", line 968, in render
-    rv = super(Button, self).render(width, height, st, at)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 1361, in render
-    surf = render(child,
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 626, in render
-    return cache.get(self, render=True)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 309, in get
-    surf = image.load()
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 761, in load
-    raise e
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 711, in load
-    filelike = renpy.loader.load(self.filename, directory="images")
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\loader.py", line 672, in load
-    raise IOError("Couldn't find file '%s'." % name)
-OSError: Couldn't find file 'images/inventory/inventory_hud/magna.png'.
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  [Previous line repeated 1 more time]
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/HUD.rpy", line 159, in execute
+    screen journal_screen():
+  File "game/scripts/HUD.rpy", line 159, in execute
+    screen journal_screen():
+  File "game/scripts/HUD.rpy", line 165, in execute
+    frame:
+  File "game/scripts/HUD.rpy", line 171, in execute
+    vbox:
+  File "game/scripts/HUD.rpy", line 190, in execute
+    if current_tab == "Missions":
+  File "game/scripts/HUD.rpy", line 345, in execute
+    viewport:
+  File "game/scripts/HUD.rpy", line 351, in execute
+    vbox:
+  File "game/scripts/HUD.rpy", line 356, in execute
+    if len(collected_tapes) > 0:
+  File "game/scripts/HUD.rpy", line 356, in <module>
+    if len(collected_tapes) > 0:
+NameError: name 'collected_tapes' is not defined
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Thu Mar 13 12:00:23 2025
+Mon Apr 14 20:31:06 2025

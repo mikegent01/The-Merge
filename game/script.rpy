@@ -46,6 +46,8 @@ default slot_count = 1
 default roll = 0
 default intelligence_values = [0, 0, 0, 0, 0]
 default rolltf = 0
+default collected_tapes = []
+
 #Quests
 #default quests = [ #this was retarded so i made it an array
  #  {
@@ -1545,7 +1547,7 @@ init python:
    # $ inventory.append("Tactical flashlight")
    # $ inventory.append("MG41")    
    # $ inventory.append("thermometer")
-   
+       
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
@@ -1574,10 +1576,15 @@ label minigame:
 label start:    
     hide screen character_selection
     $ rng = random.randint(1,100)
-    show screen HUD    
-  #  $ inventory.append("Laser range finder")
-  #  $ inventory.append("First aid kit")
-  #  $ inventory.append("radio")    
+    $ inventory.append("Laser range finder")
+    $ inventory.append("First aid kit")
+    $ inventory.append("radio")    
+    $ collected_tapes.append({
+          "title": "Final Recording", # Give it a relevant title
+          "description": "A significant audio log.", # Add a description
+          "date_found": "The Last Day", # Optional: When/where it was found
+          "audio_file": "audio/final.wav"  # <--- Use the relative path here
+    })    
     $ set_room_temperature (72)
     jump bootcampinsideprojectorroomstart
     scene bg mayor
@@ -1717,18 +1724,18 @@ label bootcampinsideprojectorroomstart:
    #     "description": "The projector has important information that the drill sargent needs, it is broken and I need to fix it. ",
    #     "completed": False,     
    # })
-    hide sadsargtalk
-
     "As I turn around, I notice two people sitting in their seats. Perhaps I should talk to one of them and ask them for help."
+    hide sadsargtalk
+    show screen HUD    
+    show screen tutorial_screen
 
-    menu:
-        "Talk to the person in the front seat":
-            jump FrontSeat
-        "Talk to the person in the back seat":
-            jump BackSeat
+    window hide # FIRST CHOICE
+    $ renpy.pause(hard=True)
+
 
 label FrontSeat:
     show sultan talking at left
+    window show
     "I walk up to the man; he seems like he is distracted with something."
     "As I peer closer to see what he is doing, I realize he is trying to light a cigar."
     "I think of keeping quiet for a moment but realize that I can use this as an opportunity to get him to help me fix the projector."

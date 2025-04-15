@@ -17,6 +17,13 @@ screen HUD():
         action Show("inventory")
         padding (10, 10, 10, 10)
     imagebutton:
+        xalign 0.66
+        yalign 1.0
+        idle "images/inventory/inventory_hud/speechbubble.png"
+        hover "images/inventory/inventory_hud/speechbubble_hover.png"
+        action Show("projector_room_people")
+        padding (10, 10, 10, 10)        
+    imagebutton:
         xalign 0.755
         yalign 0.87
         idle "images/inventory/inventory_hud/Quest_Log.png"
@@ -28,7 +35,7 @@ screen HUD():
         yalign 1.0
         idle "images/inventory/inventory_hud/magna.png"
         hover "images/inventory/inventory_hud/magna_hover.png"
-        action Show("journal_screen")
+        action Show("dynamic_text_screen")
         padding (10, 10, 10, 10)                   
         #oomfie
     text "Benjamin":
@@ -64,7 +71,7 @@ screen read_book_screen(book):
     frame:
         align (0.5, 0.5)
         xsize 800
-        ysize 600
+        ysize 500
      #   background "gui/frame.png"
         
         vbox:
@@ -102,28 +109,82 @@ screen read_book_screen(book):
                 
                 textbutton "Close" action Hide("read_book_screen") 
 
-# The updated journal screen with save-specific variables
+screen tutorial_screen():
+    modal True
+    frame:
+        xalign 0.5
+        yalign 0.5
+        xsize 700
+        padding (30, 30)
+        
+        vbox:
+            spacing 15
+            text "TUTORIAL" xalign 0.5 color "#ff9900" size 36
+            
+            null height 10
+            
+            text "Welcome to Action Mode!" size 28 xalign 0.5
+            
+            null height 5
+            
+            text "In this mode, you can interact with the environment and characters:" size 22
+            
+            null height 10
+            
+            hbox:
+                spacing 20
+                xalign 0.5
+                
+                vbox:
+                    xsize 300
+                    spacing 10
+                    
+                    text "• Press yourself for your Stats Screen" 
+                    text "• Medkit button shows your Health Status"
+                    text "• Backpack opens your Inventory"
+                    text "• Clipboard reveals your Journal"
+                
+                vbox:
+                    xsize 300
+                    spacing 10
+                    
+                    text "• Magnifying Glass lets you Search the Area"
+                    text "• Speech Bubble initiates Conversation"
+                    text "• Weapon button is for Escalation (initiates battles or debates)"
+            
+            null height 20
+                  
+            textbutton "Got it!" xalign 0.5 action [SetVariable("tutorial_shown", True), Hide("tutorial_screen")]                            
+# The updated journal screen with save-specific variables and Tapes tab
 screen journal_screen():
     default current_tab = "Missions"
+
+    # It's good practice to ensure the audio channel used for tapes is stopped when the screen is hidden.
+    on "hide" action Stop("voice") # Using the "voice" channel for tapes, adjust if needed
+
     frame:
         align (0.5, 0.5)
         xsize 800
         ysize 600
-       # background "gui/frame.png"
-        
+       # background "gui/frame.png" # Uncomment if you have this background
+
         vbox:
             spacing 10
             xalign 0.5
             xfill True
-            
-            text "Journal" size 40
-            
-            hbox:
+
+            text "Journal" size 40 align (0.5, 0) # Centered title
+
+            hbox: # Navigation tabs
+                style_prefix "journal_nav" # Apply a style prefix if needed
+                xalign 0.5 # Center the navigation buttons
                 spacing 20
+
                 textbutton "Missions" action SetScreenVariable("current_tab", "Missions")
                 textbutton "Books" action SetScreenVariable("current_tab", "Books")
                 textbutton "Journal" action SetScreenVariable("current_tab", "Journal")
-                textbutton "Close" action Hide("journal_screen") 
+                textbutton "Tapes" action SetScreenVariable("current_tab", "Tapes") # <--- ADDED Tapes button
+                textbutton "Close" action [Stop("voice"), Hide("journal_screen")] # Stop tape audio on close
 
             # MISSIONS TAB
             if current_tab == "Missions":
@@ -132,47 +193,60 @@ screen journal_screen():
                     mousewheel True
                     xfill True
                     yfill True
-                    
+
                     vbox:
                         spacing 20
-                        
+                  
+
                         text "Active Missions:" size 25
-                        
+
                         if len(missions["active"]) > 0:
                             for mission in missions["active"]:
                                 frame:
                                     xfill True
-                                    background "#3333"
-                                    
+                                    background "#33333388" # Slightly darker background
+                                    padding (10, 10) # Add padding inside mission frame
+
                                     vbox:
                                         spacing 5
-                                        text mission["title"] size 22 color "#ff9"
+                                        text mission["title"] size 22 color "#ffff99" # Yellowish for active title
                                         text mission["description"] size 18
-                                        
-                                        if mission["objectives"]:
+
+                                        if mission.get("objectives"): # Use .get() for safer access
                                             vbox:
+                                                spacing 3
                                                 for objective in mission["objectives"]:
-                                                    text "• [objective]" size 16
-                                        
-                                        bar value mission["progress"] range 100 xfill True
+                                                    # Ensure objective is a string before displaying
+                                                    $ objective_text = str(objective)
+                                                    text "• [objective_text]" size 16
+                                        else:
+                                            pass # No objectives to show
+
+                                        # Ensure progress is present and valid
+                                        if mission.get("progress") is not None:
+                                            bar value mission["progress"] range 100  
                         else:
-                            text "No active missions." size 20
-                        
+                            text "No active missions." size 20 align (0.5, 0)
+
+                        # Add spacing between sections
+                        null height 20
+
                         text "Completed Missions:" size 25
-                        
+
                         if len(missions["completed"]) > 0:
                             for mission in missions["completed"]:
                                 frame:
                                     xfill True
-                                    background "#3333"
-                                    
+                                    background "#33333388" # Consistent background
+                                    padding (10, 10) # Add padding
+
                                     vbox:
                                         spacing 5
-                                        text mission["title"] size 22 color "#9f9"
+                                        text mission["title"] size 22 color "#99ff99" # Greenish for completed title
                                         text mission["description"] size 18
                         else:
-                            text "No completed missions." size 20
-            
+                            text "No completed missions." size 20 align (0.5, 0)
+
             # BOOKS TAB
             elif current_tab == "Books":
                 viewport:
@@ -180,50 +254,59 @@ screen journal_screen():
                     mousewheel True
                     xfill True
                     yfill True
-                    
+
                     vbox:
                         spacing 15
-                        
-                        text "Available Books:" size 30
-                        
+
+
+                        text "Available Books:" size 30 align (0.5, 0)
+
                         if len(unlocked_books) > 0:
+                            # Maybe use a grid for books if many previews? Or stick to list.
                             for book in unlocked_books:
                                 frame:
                                     xfill True
-                                    background "#3333"
-                                    
+                                    background "#33333388"
+                                    padding (10, 10)
+
                                     hbox:
-                                        spacing 10
-                                        
+                                        spacing 15 # Increased spacing
+
                                         # Try to use the image if it exists, otherwise use text fallback
-                                        if renpy.loadable(book["preview"]):
+                                        $ preview_path = book.get("preview", "") # Safer access
+                                        if preview_path and renpy.loadable(preview_path):
                                             imagebutton:
-                                                idle book["preview"]
-                                                hover book["preview"]
-                                                action Show("read_book_screen", book=book)
-                                                tooltip "Click to read the book"
-                                                xsize 100
-                                                ysize 150
+                                                idle preview_path
+                                                hover preview_path # Add a hover effect if you have one
+                                                action Show("read_book_screen", book=book, transition=dissolve)
+                                                tooltip "Click to read '[book['title']]'"
+                                                xysize (100, 150) # Use xysize for fixed size
                                         else:
+                                            # Fallback frame
                                             frame:
-                                                xsize 100
-                                                ysize 150
-                                                background "#7777"
-                                                textbutton "[book['title']]":
-                                                    action Show("read_book_screen", book=book)
+                                                xysize (100, 150)
+                                                background "#777777cc" # Darker fallback
+                                                has vbox xalign 0.5 yalign 0.5
+                                                text "[book.get('title', 'Unknown Book')]" size 14 align (0.5, 0.5)
+                                                textbutton "Read": # Add fallback button here too
+                                                    action Show("read_book_screen", book=book, transition=dissolve)
                                                     xalign 0.5
-                                                    yalign 0.5
-                                                    text_size 14
-                                                    tooltip "Click to read the book"
-                                        
+                                                    yalign 0.8 # Position near bottom
+                                                    tooltip "Click to read '[book['title']]'"
+
+
                                         vbox:
                                             yalign 0.5
-                                            text book["title"] size 20
-                                            text "Unlocked: [book['date_unlocked']]" size 16
-                                            textbutton "Read" action Show("read_book_screen", book=book)
+                                            spacing 5
+                                            text book.get("title", "Unknown Title") size 20 # Use .get for safety
+                                            if book.get("date_unlocked"):
+                                                text "Unlocked: [book['date_unlocked']]" size 16
+                                            # "Read" button is clear and accessible
+                                            textbutton "Read Book" action Show("read_book_screen", book=book, transition=dissolve)
+
                         else:
-                            text "No books have been discovered yet." size 20
-            
+                            text "No books have been discovered yet." size 20 align (0.5, 0)
+
             # JOURNAL TAB
             elif current_tab == "Journal":
                 viewport:
@@ -231,94 +314,71 @@ screen journal_screen():
                     mousewheel True
                     xfill True
                     yfill True
-                    
+
                     vbox:
                         spacing 15
-                        
+   
+
+                        text "Personal Entries:" size 30 align(0.5, 0) # Title
+
                         if len(journal_entries) > 0:
-                            for entry in reversed(journal_entries):  # Show newest first
+                            # Iterate through reversed for newest first
+                            for entry in reversed(journal_entries):
                                 frame:
                                     xfill True
-                                    background "#00000033"
-                                    
-                                    vbox:
-                                        spacing 5
-                                        hbox:
-                                            text entry["title"] size 22 color "#9ff"
-                                            null width 20
-                                            text entry["date"] size 16 xalign 1.0
-                                        
-                                        text entry["content"] size 18
-                        else:
-                            text "Your journal is empty. Record your thoughts and discoveries here." size 20
-            
-                            textbutton "Close" action Hide("journal_screen") align (0.5, 1.0)
+                                    background "#00000044" # Slightly different background maybe?
+                                    padding (10, 10)
 
-screen region_highlight():
-    frame:
-        background "#00000088"
-        xfill True
-        yfill True
-        
-        vbox:
-            xalign 0.5
-            yalign 0.5
-            spacing 20
-            
-            text "Search Area":
-                xalign 0.5
-                color "#ffffff"
-                size 40
-                outlines [(2, "#000000", 0, 0)]
-            
-            hbox:
-                spacing 20
-                xalign 0.5
-                
-                textbutton "Top":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "top"), Hide("area_search_buttons"), Jump(last_label)]
-                
-                textbutton "Middle":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "middle"), Hide("area_search_buttons"), Jump(last_label)]
-                
-                textbutton "Bottom":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "bottom"), Hide("area_search_buttons"), Jump(last_label)]
-            
-            hbox:
-                spacing 20
-                xalign 0.5
-                
-                textbutton "Left":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "left"), Hide("area_search_buttons"), Jump(last_label)]
-                
-                textbutton "Center":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "center"), Hide("area_search_buttons"), Jump(last_label)]
-                
-                textbutton "Right":
-                    xsize 150
-                    ysize 80
-                    text_size 24
-                    action [SetVariable("searched_area", "right"), Hide("area_search_buttons"), Jump(last_label)]
-                    
-            # Cancel button
-            textbutton "Cancel":
-                xalign 0.5
-                xsize 150
-                ysize 60
-                text_size 24
-                action [SetVariable("searched_area", None), Hide("area_search_buttons"), Jump(last_label)]
+                                    vbox:
+                                        spacing 8
+                                        hbox: # Title and Date on one line
+                                            text entry.get("title", "Entry") size 22 color "#99ffff" # Cyan title
+                                            null width 20 # Spacer
+                                            text entry.get("date", "") size 16 xalign 1.0 # Align date to the right
+
+                                        text entry.get("content", "") size 18
+                        else:
+                            text "Your journal is empty. Record your thoughts and discoveries here." size 20 align (0.5, 0)
+
+            # TAPES TAB <-------------------- NEW TAB CONTENT --------------------->
+            elif current_tab == "Tapes":
+                viewport:
+                    scrollbars "vertical"
+                    mousewheel True
+                    xfill True
+                    yfill True
+
+                    vbox:
+                        spacing 15
+
+                        text "Collected Tapes:" size 30 align(0.5, 0)
+
+                        if len(collected_tapes) > 0:
+                            for tape in collected_tapes:
+                                frame:
+                                    xfill True
+                                    background "#33333388" # Consistent background
+                                    padding (10, 10)
+
+                                    hbox: # Use hbox for side-by-side layout
+                                        spacing 15
+                                        # Left side: Info
+                                        vbox:
+                                            spacing 5
+                                            text tape.get("title", "Untitled Tape") size 20 color "#FFA500" # Orange-ish title
+                                            if tape.get("description"):
+                                                text tape["description"] size 16
+                                            if tape.get("date_found"):
+                                                text "Found: [tape['date_found']]" size 14 italic True color "#ccc"
+
+                                        # Right side: Play button (aligned to the right)
+                                        null width 20 # Spacer
+                                        vbox: # Use vbox to align button vertically if needed
+                                            yalign 0.5 # Center vertically in the hbox
+                                            # The action list stops previous tape on the 'voice' channel, then plays the new one.
+                                            textbutton "▶ Play" action [Stop("voice"), Play("voice", tape["audio_file"])]
+
+                        else:
+                            text "No audio tapes found yet." size 20 align (0.5, 0)
+
+
