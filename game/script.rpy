@@ -117,7 +117,8 @@ init python:
     import random   
     import time      
     import hashlib
-    import threading    
+    import threading   
+    import urllib
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
     import os    
@@ -1071,53 +1072,102 @@ init python:
         if part in default_status:
             default_status[part]["health"] = min(default_status[part]["health"] + amount, maxhealth)
         renpy.notify(f"{part.replace('_', ' ').capitalize()} health restored by {amount} points.")
-
-
     class CustomHandler(SimpleHTTPRequestHandler):
+        # --- ADJUSTED translate_path ---
         def translate_path(self, path):
-            path = super().translate_path(path)
-            relpath = os.path.relpath(path, os.getcwd())
-            fullpath = os.path.join(HTML_DIR, relpath)
-            return fullpath
+            """Translate a URL path (expected to start with /game/htmls/) to the local filesystem path."""
+            # Decode URL-encoded characters (like %20 for space)
+            decoded_path = urllib.parse.unquote(path)
 
+            # Define the expected prefix in the URL path
+            url_prefix = "/game/htmls/"
+            disk_prefix_to_remove = "game/htmls/" # The part to strip to get the path relative to HTML_DIR
+
+            # Get the path component after the domain, removing leading slash
+            path_component = decoded_path.lstrip('/') # e.g., "game/htmls/006.html" or "radio.css"
+
+            # Check if the path component starts with the expected disk prefix
+            if path_component.startswith(disk_prefix_to_remove):
+                # If it does, remove the prefix to get the path relative to HTML_DIR
+                relative_file_path = path_component[len(disk_prefix_to_remove):] # e.g., "006.html"
+            else:
+                # If it doesn't (e.g., CSS, JS, audio files referenced relatively in the HTML),
+                # assume the path component is already relative to HTML_DIR.
+                relative_file_path = path_component # e.g., "radio.css", "audio/0.wav"
+
+            # Prevent directory traversal attacks (important!)
+            safe_relative_path = os.path.normpath(relative_file_path).lstrip(os.sep)
+
+            # Join the HTML directory (base) with the safe relative path component
+            fullpath = os.path.join(HTML_DIR, safe_relative_path)
+
+            # --- Debugging ---
+            # print(f"Requested path (URL): {path}")
+            # print(f"Decoded path component: {path_component}")
+            # print(f"Relative file path used: {relative_file_path}")
+            # print(f"Attempting to serve (Disk): {fullpath}")
+            # print(f"File exists: {os.path.exists(fullpath)}")
+            # --- End Debugging ---
+
+            return fullpath # Return the absolute disk path
+
+        # Override directory listing (keep this)
+        def list_directory(self, path):
+            self.send_error(404, "File not found or directory listing disabled")
+            return None
+
+        # Disable logging (keep this)
         def log_message(self, format, *args):
-            pass  # Disable logging
+            pass
 
+    # --- Keep the WebServer class and server startup/stop logic the same ---
     class WebServer(threading.Thread):
+        # ... (rest of WebServer class is unchanged) ...
         def __init__(self):
             super().__init__()
             self.daemon = True
             self.server = None
 
         def run(self):
+            if not os.path.isdir(HTML_DIR):
+                renpy.notify(f"Error: HTML directory not found at {HTML_DIR}")
+                print(f"Error: HTML directory not found at {HTML_DIR}")
+                return
             try:
                 self.server = TCPServer(("localhost", PORT), CustomHandler)
-                #renpy.notify(f"Web server started on port {PORT}")
+                print(f"Web server started on http://localhost:{PORT} serving from {HTML_DIR}")
                 self.server.serve_forever()
+            except OSError as e:
+                renpy.notify(f"Failed to start server on port {PORT}: {str(e)}")
+                print(f"Failed to start server on port {PORT}: {str(e)} - Is another application using it?")
             except Exception as e:
                 renpy.notify(f"Failed to start server: {str(e)}")
+                print(f"Failed to start server: {str(e)}")
 
         def stop(self):
             if self.server:
                 self.server.shutdown()
                 self.server.server_close()
-              #  renpy.notify("Web server stopped")
+                print("Web server stopped")
 
-    # Initialize web server
     web_server = WebServer()
     web_server.start()
-
-    # Register cleanup function
     def stop_server():
         web_server.stop()
-
     config.quit_action = stop_server
+    # --- End Server Logic ---
 
-    # Modified htmlopen function
-    def htmlopen(name):
-    #    renpy.notify("Your web browser has been opened.")
-        url = f"http://localhost:{PORT}/{name}.html"
+
+    # --- ADJUSTED open_html function ---
+    def open_html(name, label_value):
+        """Opens the specified HTML file, including /game/htmls/ in the URL."""
+        safe_label = urllib.parse.quote(label_value if label_value else "Unknown")
+        # Construct the URL *with* /game/htmls/ included
+        url = f"http://localhost:{PORT}/game/htmls/{name}.html?lastLabel={safe_label}"
+        print(f"Opening URL: {url}") # Debugging output
         webbrowser.open(url)
+
+
     def has_item(item):
         return item in inventory
     def has_stirring_tool(tool):
@@ -1491,6 +1541,7 @@ init python:
         elif item == "radio":
             renpy.notify("*Listening to radio...*")
             renpy.sound.play("audio/radio/radio.wav")
+            open_html("006", last_label) 
             if last_label == "stairwell" and not visited_stairwell and rng < 50:
                 renpy.notify("*Signal Received Replaying..*")
                 renpy.sound.play("audio/radio/radio02.mp3")
@@ -1736,6 +1787,7 @@ label bootcampinsideprojectorroomstart:
 label FrontSeat:
     show sultan talking at left
     window show
+    hide screen HUD
     "I walk up to the man; he seems like he is distracted with something."
     "As I peer closer to see what he is doing, I realize he is trying to light a cigar."
     "I think of keeping quiet for a moment but realize that I can use this as an opportunity to get him to help me fix the projector."
@@ -2073,6 +2125,8 @@ label abandonsamuel:
 
 label BackSeat:
     show person_back idle at left
+    hide screen HUD
+
     # Add dialogue and interaction for the person in the back seat
     "You decide to talk to the person in the back seat."
     return

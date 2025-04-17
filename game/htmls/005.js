@@ -18,21 +18,21 @@ function blink() {
 const entityData = {
     'Space Pipes': {
         image: '01.gif',
-        audio: '0.wav',
+        audio: 'audio/0.wav',
         description: 'Space pipes are anomulous pipes that exist in damp spaces. These pipes emit a unquie hissing sound, the pipes produce dot-like particles that float around the pipe.',
         danger: 'Space pipes are dangerous and you should avoid making contact or breathing in the particles near the affected pipes. Space pipes while not hostile on their own inhibit a dangerous property. When interacted with space pipes will explode and spread there particles onto other pipes creating more space pipes. Breathing in the particles emitted by the pipes is also harmful to human health and can lead to drowsiness and shortness of breath. Falling asleep on uncontrolled pipes can also cause drowsiness and shortness of breath. Falling asleep next to a space pipe can lead to death by suffocation.', 
         solution: 'Space pipes can be stopped by drying out the general area they are located in. Once the space pipie is completedly dry it can be safely removed from the area. If you have come in contact with space pipes it is advisable to go through a full de-contamination process to assure you will not spread any of the particles onto other pipes.' 
     },
     'Entity 2': {
         image: 'house.png',
-        audio: '1.wav',
+        audio: 'audio/1.wav',
         description: 'Description for Entity 2.',
         danger: 'Danger for Entity 2.',
         solution: 'Solution for Entity 2.'
     },
     'Entity 3': {
         image: 'https://via.placeholder.com/300',
-        audio: '2.wav',
+        audio: 'audio/2.wav',
         description: 'Description for Entity 3.',
         danger: 'Danger for Entity 3.',
         solution: 'Solution for Entity 3.'
