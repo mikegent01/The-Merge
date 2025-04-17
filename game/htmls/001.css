@@ -1,36 +1,159 @@
+/* Basic Reset & Body Styling */
 body {
-  background: linear-gradient(#ccc, #fff);
-  font: 14px sans-serif;
+  font-family: 'Arial', sans-serif; /* Common, readable font */
+  background-color: #e9e9e9; /* Light grey background */
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top */
+  min-height: 100vh;
 }
-.letter {
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  margin: 26px auto 0;
-  max-width: 550px;
-  min-height: 300px;
-  padding: 24px;
-  position: relative;
-  width: 80%;
-}
-.letter:before, .letter:after {
-  content: "";
-  height: 98%;
-  position: absolute;
+
+/* Document Container */
+.scp-document-container {
+  background-color: #ffffff; /* White paper background */
+  border: 1px solid #ccc;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* Standard document width */
   width: 100%;
-  z-index: -1;
+  margin: 20px auto; /* Center the container */
+  padding: 30px 40px; /* Inner padding */
+  border-top: 5px solid #000; /* Thick top border */
 }
-.letter:before {
-  background: #fafafa;
-  box-shadow: 0 0 8px rgba(0,0,0,0.2);
-  left: -5px;
-  top: 4px;
-  transform: rotate(-2.5deg);
+
+/* SCP Header Section */
+.scp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #000; /* Separator line */
 }
-.letter:after {
-  background: #f6f6f6;
-  box-shadow: 0 0 3px rgba(0,0,0,0.2);
-  right: -3px;
-  top: 1px;
-  transform: rotate(1.4deg);
+
+/* SCP Logo Area */
+.scp-logo-container {
+  /* Adjust alignment if needed, but flex on parent (.scp-header) should handle it */
+  min-width: 60px; /* Give it a minimum width */
+  text-align: center; /* Center the image if container is wider */
+  margin-right: 20px; /* Add some space between logo and text */
+}
+
+.scp-logo-image {
+  height: 50px; /* Set a specific height for the logo */
+  width: auto;  /* Let the width adjust automatically to maintain aspect ratio */
+  display: block; /* Helps with spacing/layout */
+  margin: 0 auto; /* Center if needed within its container */
+}
+
+
+
+.scp-header-text {
+  text-align: center;
+  flex-grow: 1; /* Allow text to take available space */
+  margin: 0 20px;
+}
+
+.scp-header-text h1 {
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #000;
+}
+
+.scp-header-text h2 {
+  margin: 5px 0 0 0;
+  font-size: 0.9em;
+  font-weight: normal;
+  color: #555;
+  letter-spacing: 2px; /* Spaced out motto */
+  text-transform: uppercase;
+}
+
+/* Classification Box */
+.classification-box {
+  border: 2px solid #a00; /* Red border */
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.classification-box span {
+  display: block; /* Stack text vertically */
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.classification-box .classification-level {
+  color: #a00; /* Red text */
+  font-size: 1.2em;
+  margin-top: 3px;
+}
+
+/* Dividers */
+hr.divider {
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+hr.content-divider {
+  border: 0;
+  height: 1px;
+  background-color: #eee;
+  margin: 15px 0;
+}
+
+
+/* Letter Content Area */
+.letter-content {
+  margin-top: 20px;
+}
+
+.letter-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+}
+
+/* Memo Metadata (Date, From, To, Subject) */
+.memo-meta {
+  background-color: #f9f9f9; /* Slightly different background for meta */
+  border: 1px solid #eee;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+
+.memo-meta p {
+  margin: 5px 0;
+}
+
+/* Paragraph Styling */
+.letter-content p {
+  margin-bottom: 1em;
+  text-align: justify; /* Justified text looks more formal */
+}
+
+/* Strong Tag Styling */
+.letter-content strong {
+  font-weight: bold;
+  color: #000; /* Make bold text black */
+}
+
+
+.scp-footer {
+  margin-top: 30px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  font-size: 0.8em;
+  color: #777;
 }

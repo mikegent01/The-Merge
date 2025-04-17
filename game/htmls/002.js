@@ -648,7 +648,7 @@ STATUS: MAINTENANCE
 CLEARANCE: LEVEL 6
 
 Warning: This program is currently in autonomus mode actions will be taken by the system.
-Any system readings currently displayed are not accurate. The pulse of the program is to monitor the quantum fluctuations of object ████████ at site ████████. If there is any value above the saftey threshhold pelase consult the system administrator at 612-861-3421`,
+Any system readings currently displayed are not accurate. The pulse of the program is to monitor the quantum fluctuations of object ████████ at site ████████. If there is any value above the safety threshold please  consult the system administrator at 612-861-3421`,
           'trainmap': () => {
             createWindow('BACKROOMS TRAIN SYSTEM', `
               <div class="map-viewer">
