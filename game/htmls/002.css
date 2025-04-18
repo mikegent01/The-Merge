@@ -196,7 +196,8 @@ body {
 }
 
 .text-viewer {
-  background: #fff;
+  background: #000;
+  color: #0f0;
   padding: 20px;
   font-family: "Courier New", monospace;
   white-space: pre-wrap;
@@ -682,32 +683,29 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
+  padding: 20px;
 }
 
-.threshold-visualization {
+.threshold-diagram {
   border: 1px solid #0f0;
-  padding: 10px;
 }
 
 .threshold-parameters {
-  border: 1px solid #0f0;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .parameter {
-  margin-bottom: 15px;
-}
-
-.parameter label {
-  display: block;
-  margin-bottom: 5px;
+  border: 1px solid #0f0;
+  padding: 10px;
 }
 
 .meter {
   height: 20px;
   background: #001;
   border: 1px solid #0f0;
-  margin-bottom: 5px;
+  margin-top: 10px;
 }
 
 .meter .bar {
@@ -724,8 +722,56 @@ body {
   color: #f00;
   border: 1px solid #f00;
   padding: 10px;
-  margin-top: 20px;
+  text-align: center;
   animation: pulse 2s infinite;
+}
+
+.network-drives {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.drive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.drive-item .access-btn {
+  padding: 5px 10px;
+  background: #808080;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.transit-logs {
+  background: #f9f9f9;
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.log-entries {
+  display: grid;
+  gap: 10px;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.threshold-window {
+  background: #000;
+  color: #0f0;
+  font-family: "Courier New", monospace;
 }
 
 @keyframes pulse {

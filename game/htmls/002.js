@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Update clock
   const updateClock = () => {
     const timeElement = document.getElementById('time');
-    timeElement.textContent = moment().format('HH:mm:ss');
+    timeElement.textContent = "08:32";  // Fixed time as requested
   };
 
   setInterval(updateClock, 1000);
@@ -242,32 +242,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="parameter">
                       <label>Quantum Threshold:</label>
                       <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 30}%"></div>
+                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
                       </div>
                       <span>${(Math.random() * 1000).toFixed(2)} μV</span>
                     </div>
                     <div class="parameter">
                       <label>Reality Anchor:</label>
                       <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 30}%"></div>
+                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
                       </div>
-                      <span>${(Math.random() * 30).toFixed(2)}%</span>
+                      <span>${(Math.random() * 100).toFixed(2)}%</span>
                     </div>
                     <div class="parameter">
                       <label>Dimensional Stability:</label>
                       <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 30}%"></div>
+                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
                       </div>
+                      <span>${(Math.random() * 360).toFixed(2)}°</span>
                     </div>
                     <div class="parameter">
                       <label>Noclip Probability:</label>
                       <div class="meter critical">
-                        <div class="bar" style="width: ${Math.random() * 2}%"></div>
+                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
                       </div>
+                      <span>${(Math.random() * 100).toFixed(2)}%</span>
                     </div>
                     <div class="threshold-warning">
                       WARNING: Values exceeding safety threshold. 
-                      Automatic System Stabilization Activated.
+                      Dimensional breach imminent.
                     </div>
                   </div>
                 </div>
@@ -376,11 +378,27 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         win.querySelector('.browser-content').innerHTML = `
           <div class="google-page">
-            Google
-            <div class="connection-error">
-              <h3>⚠️ No Internet Connection</h3>
-              <p>Check your network cables, modem, and router</p>
-              <p>ERR_INTERNET_DISCONNECTED</p>
+            <img src="data:image/svg+xml,${encodeURIComponent(`
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 272 92">
+                <path d="M115.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#EA4335"/>
+                <path d="M163.75 47.18c0 12.77-9.99 22.18-22.25 22.18s-22.25-9.41-22.25-22.18c0-12.85 9.99-22.18 22.25-22.18s22.25 9.32 22.25 22.18zm-9.74 0c0-7.98-5.79-13.44-12.51-13.44s-12.51 5.46-12.51 13.44c0 7.9 5.79 13.44 12.51 13.44s12.51-5.55 12.51-13.44z" fill="#FBBC05"/>
+                <path d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.61 5.21 7.87 11.17 7.87 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.09 0-12.52 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.73 5.63 13.36 12.35 13.36 6.63 0 11.84-5.63 11.84-13.36z" fill="#4285F4"/>
+                <path d="M225 3v65h-9.5V3h9.5z" fill="#34A853"/>
+                <path d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-22.18 0-13.19 9.49-22.18 20.92-22.18 11.51 0 17.14 9.16 18.98 14.11l1.01 2.52-29.65 12.28c2.27 4.45 5.8 6.72 10.75 6.72 4.96 0 8.4-2.44 10.92-6.14zm-23.27-7.98l19.82-8.23c-1.09-2.77-4.37-4.7-8.23-4.7-4.95 0-11.84 4.37-11.59 12.93z" fill="#EA4335"/>
+              </svg>
+            `)}" alt="Google" class="google-logo">
+            <div class="connection-info">
+              <p>Status: Connected</p>
+              <p class="warning">Internet Access Restricted</p>
+            </div>
+            <div class="search-box">
+              <input type="text" placeholder="Enter network credentials">
+              <button>Login</button>
+            </div>
+            <div class="error-message">
+              ERROR: Access to internet resources is restricted.
+              <br>Only authorized personnel may proceed.
+              <br>Error code: AUTH_403
             </div>
           </div>
         `;
@@ -394,11 +412,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>Secure. Contain. Protect.</p>
           </div>
           <div class="scp-list">
-            <div class="scp-item">
+            <div class="scp-item" data-scp="pipes">
               <h3>Space Pipes</h3>
               <p>Pipes of Space</p>
             </div>
-           <div class="scp-item">
+            <div class="scp-item" data-scp="096">
               <h3>SCP-████</h3>
               <p>The "████ ████"</p>
             </div>
@@ -414,38 +432,18 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `);
 
-      const triggerLockdown = () => {
-        const lockdownWindow = document.createElement('div');
-        lockdownWindow.className = 'lockdown-screen';
-        lockdownWindow.innerHTML = `
-          <div class="lockdown-content">
-            <div class="warning-symbol">⚠</div>
-            <h1>SECURITY BREACH DETECTED</h1>
-            <p>Unauthorized access to classified SCP Foundation files.</p>
-            <p>System lockdown initiated.</p>
-            <p>Process code: 78391</p>
-            <p>Please wait for administrator assistance.</p>
-            <div class="lockdown-footer">
-              Site-████ SECURITY PROTOCOL ACTIVATED
-            </div>
-          </div>
-        `;
-        document.body.appendChild(lockdownWindow);
-      };
-
       const scpData = {
-        '173': {
+        'pipes': {
           title: 'Space Pipes',
           class: 'Euclid',
           description: `Object Class: Euclid
 
 Special Containment Procedures:
-Space pipes can be stopped by drying out the general area they are located in. Once the space pipie is completedly dry it can be safely removed from the area. If you have come in contact with space pipes it is advisable to go through a full de-contamination process to assure you will not spread any of the particles onto other pipes.
-Description:
-Space pipes are dangerous and you should avoid making contact or breathing in the particles near the affected pipes. Space pipes while not hostile on their own inhibit a dangerous property. When interacted with space pipes will explode and spread there particles onto other pipes creating more space pipes. Breathing in the particles emitted by the pipes is also harmful to human health and can lead to drowsiness and shortness of breath. Falling asleep on uncontrolled pipes can also cause drowsiness and shortness of breath. Falling asleep next to a space pipe can lead to death by suffocation.
-Space pipes can be stopped by drying out the general area they are located in. Once the space pipie is completedly dry it can be safely removed from the area. If you have come in contact with space pipes it is advisable to go through a full de-contamination process to assure you will not spread any of the particles onto other pipes.`
+Item is to be kept in a locked container at all times. When personnel must enter item's container, no fewer than 3 may enter at any time and the door is to be relocked behind them. At all times, two persons must maintain direct eye contact with item until all personnel have vacated and relocked the container.
 
-},
+Description:
+Moved to Site-19 1993. Origin is as of yet unknown. It is constructed from concrete and rebar with traces of Krylon brand spray paint. Item is animate and extremely hostile. The object cannot move while within a direct line of sight. Line of sight must be broken in order for item to move. This is invariably fatal to personnel. Personnel assigned to enter container are instructed to alert one another before blinking.`
+        },
         '096': {
           title: 'SCP-096',
           class: 'Euclid',
@@ -479,12 +477,29 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
           `);
 
           // Trigger lockdown after random delay
-          setTimeout(triggerLockdown, (Math.random() * 4000 + 1000));
+          setTimeout(() => {
+            const lockdownWindow = document.createElement('div');
+            lockdownWindow.className = 'lockdown-screen';
+            lockdownWindow.innerHTML = `
+              <div class="lockdown-content">
+                <div class="warning-symbol">⚠</div>
+                <h1>SECURITY BREACH DETECTED</h1>
+                <p>Unauthorized access to classified SCP Foundation files.</p>
+                <p>System lockdown initiated.</p>
+                <p>Process code: 78391</p>
+                <p>Please wait for administrator assistance.</p>
+                <div class="lockdown-footer">
+                  SITE-19 SECURITY PROTOCOL ACTIVATED
+                </div>
+              </div>
+            `;
+            document.body.appendChild(lockdownWindow);
+          }, (Math.random() * 4000 + 1000));
         }
       });
     },
     'network': () => {
-      createWindow('Network Connections', `
+      const win = createWindow('Network Connections', `
         <div class="network-interface">
           <div class="network-header">
             <h3>Available Networks</h3>
@@ -492,15 +507,15 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
           <div class="network-list">
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">[Site-████-SECURE]</div>
-                <div class="network-type">Secured [Read Only]</div>
+                <div class="network-name">SITE-19-SECURE</div>
+                <div class="network-type">Secured</div>
                 <div class="network-strength">Signal Strength: Strong</div>
               </div>
               <button class="connect-btn" disabled>Access Denied</button>
             </div>
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">BRnet</div>
+                <div class="network-name">BackroomsNet</div>
                 <div class="network-type">Unknown Protocol</div>
                 <div class="network-strength">Signal Strength: ??????????</div>
               </div>
@@ -508,57 +523,66 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
             </div>
             <div class="network-item">
               <div class="network-info">
-                <div class="network-name">Public_sands</div>
+                <div class="network-name">Level_0_Public</div>
                 <div class="network-type">Unsecured</div>
                 <div class="network-strength">Signal Strength: Weak</div>
               </div>
               <button class="connect-btn">Connect</button>
             </div>
-            <div class="network-item">
+            <div class="network-item connected">
               <div class="network-info">
-                <div class="network-name">████-Guest</div>
+                <div class="network-name">SCPF-Guest</div>
                 <div class="network-type">Secured</div>
                 <div class="network-strength">Signal Strength: Medium</div>
               </div>
-              <button class="connect-btn">Connect</button>
+              <button class="connect-btn">Connected</button>
             </div>
           </div>
           <div class="network-status">
-            <p>Current Connection: None</p>
-            <p>Status: Searching for networks...</p>
-            <p class="error-message">Warning: Anomalous signals detected</p>
+            <p>Current Connection: SCPF-Guest</p>
+            <p>Status: Connected</p>
+            <div class="network-drives">
+              <h4>Available Network Drives</h4>
+              <div class="drive-item" data-drive="archives">
+                <span>Site Archives</span>
+                <button class="access-btn">Access Restricted</button>
+              </div>
+              <div class="drive-item" data-drive="research">
+                <span>Research Logs</span>
+                <button class="access-btn">Access Restricted</button>
+              </div>
+              <div class="drive-item" data-drive="transit">
+                <span>Transit Logs</span>
+                <button class="access-btn">View Log</button>
+              </div>
+            </div>
           </div>
         </div>
       `);
 
-      document.querySelectorAll('.connect-btn').forEach(btn => {
-        if (!btn.disabled) {
-          btn.addEventListener('click', () => {
-            const networkName = btn.closest('.network-item').querySelector('.network-name').textContent;
-            document.querySelector('.network-status').innerHTML = `
-              <p>Current Connection: ${networkName}</p>
-              <p>Status: Connected</p>
-              <p class="warning">Notice: Network access restricted</p>
-            `;
-            
-            document.querySelectorAll('.browser').forEach(browser => {
-              const content = browser.querySelector('.browser-content');
-              content.innerHTML = `
-                <div class="google-page">
-                  Google
-                  <div class="search-box">
-                    <input type="text" placeholder="Enter password to access internet...">
-                    <button>Login</button>
+      win.querySelector('.network-drives').addEventListener('click', (e) => {
+        const driveItem = e.target.closest('.drive-item');
+        if (!driveItem) return;
+
+        const drive = driveItem.dataset.drive;
+        if (drive === 'transit') {
+          createWindow('Transit Logs', `
+            <div class="transit-logs">
+              <h3>Interdimensional Transit Logs</h3>
+              <div class="log-entries">
+                ${Array.from({length: 20}, (_, i) => `
+                  <div class="log-entry">
+                    <div class="log-time">${moment().subtract(i, 'hours').format('YYYY-MM-DD HH:mm')}</div>
+                    <div class="log-route">Route ${['A', 'B', 'C'][Math.floor(Math.random() * 3)]}-${Math.floor(Math.random() * 999)}</div>
+                    <div class="log-destination">Level ${Math.floor(Math.random() * 1000)}</div>
+                    <div class="log-status">${['Completed', 'Interrupted', 'Unknown', 'Anomaly Detected'][Math.floor(Math.random() * 4)]}</div>
                   </div>
-                  <div class="error-message">
-                    ERROR: Access to internet resources is restricted to authorized personnel only.
-                    <br>Please contact your system administrator for access credentials.
-                    <br>Error code: AUTH_403
-                  </div>
-                </div>
-              `;
-            });
-          });
+                `).join('')}
+              </div>
+            </div>
+          `);
+        } else {
+          alert('Access to this drive is currently restricted.');
         }
       });
     },
@@ -567,15 +591,15 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
         <div class="transit-timetable">
           <div class="timetable-header">
             <h2>INTERDIMENSIONAL TRANSIT SCHEDULE</h2>
-            <p class="warning">※ Schedule subject to non-euclidean distortions and includes trains that are not safe by M.E.G standards</p>
+            <p class="warning">※ Schedule subject to non-euclidean distortions</p>
           </div>
           <div class="timetable-content">
-            ${Array.from({ length: 6590 }, (_, i) => `
+            ${Array.from({ length: 20 }, (_, i) => `
               <div class="timetable-row">
                 <div class="time">${moment().add(Math.random() * 60, 'minutes').format('HH:mm')}</div>
-                <div class="route">Route ${['A', 'B', 'C','D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'][Math.floor(Math.random() * 26)]}-${Math.floor(Math.random() * 999)}</div>
+                <div class="route">Route ${['A', 'B', 'C'][Math.floor(Math.random() * 3)]}-${Math.floor(Math.random() * 999)}</div>
                 <div class="destination">Level ${Math.floor(Math.random() * 1000)}</div>
-                <div class="status">${['On Time', 'Delayed', 'Unknown', 'Out of Service', 'Cancelled','In Transit', 'Anomaly Danger','Off-Track'][Math.floor(Math.random() * 7)]}</div>
+                <div class="status">${['On Time', 'Delayed', 'Unknown', 'Time Paradox'][Math.floor(Math.random() * 4)]}</div>
               </div>
             `).join('')}
           </div>
@@ -590,7 +614,11 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
           <button class="submit-password">SUBMIT</button>
         </div>
         <div class="files" style="display: none;">
-          <div class="file" data-file="scp">
+          <div class="file" data-file="scp1">
+            <h3>SCP-████████.doc</h3>
+            <p>19:23:25</p>
+          </div>
+          <div class="file" data-file="scp2">
             <h3>SCP-████████.doc</h3>
             <p>Pending name and classifications</p>
           </div>
@@ -622,12 +650,8 @@ SCP-096 is a humanoid creature measuring approximately 2.38 meters in height. Su
         }
       });
 
-      files.addEventListener('click', (e) => {
-        const file = e.target.closest('.file');
-        if (!file) return;
-
-        const fileContents = {
-          'scp': `SCP-████████████
+      const fileContents = {
+        'scp1': `              SCP-████████████
 OBJECT CLASS: Pending
 
 SPECIAL CONTAINMENT PROCEDURES:
@@ -635,7 +659,8 @@ Unable to contain at this time. Current Status is to observe all actions of █�
 
 DESCRIPTION:
 SCP-██████████ is a humanoid entinty that currently resides in ████████████ . The entity has gained notoriety on the internet and displayed the power to see other ████████████ throughout the universe. A holding site located in the North Atlantic Ocean (Latitude: 37.02806, Longitude: -30.54940, Distortion: 1.57) was prepared on ████████████ to contain the entity. Currently the site is abandoned after a earthquake due to a seismic shifts damaged the holding equipment, although new containment procedures are currently being made they are not expected to finish until 2042. Most of the anomalous properties of SCP-██████████ do not effect others however, the possibility of a Great Convergence K-Class Scenario remains possible.`,
-          'backrooms': `BACKROOMS INCIDENT LOG - 05/23/20██
+
+        'backrooms': `              BACKROOMS INCIDENT LOG - 05/23/20██
 
 0300 hrs: First reports of wall phasing incident outside of testing room █████ at Site-████.
 0317 hrs: Multiple personnel reported missing.
@@ -643,30 +668,25 @@ SCP-██████████ is a humanoid entinty that currently resides 
 0345 hrs: Recovery team reports breach at Site-████.
 0350 hrs: Remaning personnel evacuated and recovery team deployed to backrooms.
 0355 hrs: Pending incident report from recovery team.`,
-          'threshold': `PROJECT THRESHOLD
+
+        'threshold': `              PROJECT THRESHOLD
 STATUS: MAINTENANCE
 CLEARANCE: LEVEL 6
 
 Warning: This program is currently in autonomus mode actions will be taken by the system.
-Any system readings currently displayed are not accurate. The pulse of the program is to monitor the quantum fluctuations of object ████████ at site ████████. If there is any value above the safety threshold please  consult the system administrator at 612-861-3421`,
-          'trainmap': () => {
-            createWindow('BACKROOMS TRAIN SYSTEM', `
-              <div class="map-viewer">
-                <p>This file has been moved to the Network Monitor.</p>
-                <p>Please use the Network application to view train system status.</p>
-              </div>
-            `);
-          }
-        };
+Any system readings currently displayed are not accurate. The pulse of the program is to monitor the quantum fluctuations of object ████████ at site ████████. If there is any value above the safety threshold please consult the system administrator at 612-861-3421`
+      };
 
-        if (typeof fileContents[file.dataset.file] === 'function') {
-          fileContents[file.dataset.file]();
-        } else {
-          const win = createWindow(file.querySelector('h3').textContent, `
-            <div class="${file.dataset.file === 'trainmap' ? 'map-viewer' : 'text-viewer'}">
+      files.addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+
+        if (fileContents[file.dataset.file]) {
+          createWindow(file.querySelector('h3').textContent, `
+            <div class="text-viewer">
               ${fileContents[file.dataset.file]}
             </div>
-          `, file.dataset.file === 'trainmap' ? 800 : 500);
+          `);
         }
       });
     },
@@ -680,41 +700,30 @@ Any system readings currently displayed are not accurate. The pulse of the progr
     'metro': () => {
       const trainData = {
         locations: [
-          { id: 'pi', name: 'Level π', x: 150, y: 100 },
-          { id: '0', name: 'Level 0', x: 300, y: 100 },
-          { id: '9', name: 'Level 9', x: 450, y: 150 },
-          { id: '36b', name: 'Level 36-B', x: 600, y: 200 },
-          { id: '11', name: 'Level 11?', x: 450, y: 300 },
-          { id: '990', name: 'Level 990', x: 300, y: 300 },
-          { id: 'dark', name: 'Dark Metro', x: 150, y: 300 },
-          { id: '6.1', name: 'Level 6.1', x: 150, y: 200 },
-          { id: 'end', name: 'The End', x: 400, y: 400 },
-          { id: '1883', name: 'Level 1883', x: 500, y: 400 },
-          { id: '188', name: 'Level 188', x: 600, y: 400 },
-          { id: '14', name: 'Level 14', x: 700, y: 350 },
-          { id: 'airport', name: 'Level 36', x: 750, y: 250 },
-          { id: '10', name: 'Level 10', x: 700, y: 150 },
-          { id: '4', name: 'Level 4', x: 650, y: 50 },
-          { id: 'hub', name: 'The Hub', x: 500, y: 50 },
-          { id: '-33', name: 'Level -33', x: 350, y: 50 },
-          { id: '3', name: 'Level 3', x: 200, y: 50 }
+          { id: 'hub', name: 'The Hub', x: 400, y: 200, central: true },
+          { id: 'pi', name: 'Level π', x: 200, y: 100 },
+          { id: '0', name: 'Level 0', x: 600, y: 100 },
+          { id: '9', name: 'Level 9', x: 300, y: 300 },
+          { id: '36b', name: 'Level 36-B', x: 500, y: 300 },
+          { id: '11', name: 'Level 11', x: 700, y: 200 },
+          { id: '990', name: 'Level 990', x: 200, y: 400 },
+          { id: '3', name: 'Level 3', x: 600, y: 400 }
         ],
         connections: [
-          ['pi', '0'],
-          ['0', '9'],
-          ['9', '36b'],
-          ['36b', '11'],
-          ['11', '990'],
-          ['990', 'dark'],
-          ['dark', '6.1'],
-          ['6.1', 'pi']
+          ['hub', 'pi'],
+          ['hub', '0'],
+          ['hub', '9'],
+          ['hub', '36b'],
+          ['hub', '11'],
+          ['hub', '990'],
+          ['hub', '3']
         ],
         trains: [
           {
             id: 'A1',
             type: 'a',
-            route: ['pi', '0', '9', '36b', '11', 'hub'],
-            speed: 0.001,
+            route: ['pi', 'hub', '0', 'hub', '9', 'hub'],
+            speed: 0.0005,
             position: 0,
             progress: 0,
             waiting: 0
@@ -722,8 +731,8 @@ Any system readings currently displayed are not accurate. The pulse of the progr
           {
             id: 'B1',
             type: 'b',
-            route: ['36b', '11', '990', 'dark', '6.1', 'hub'],
-            speed: 0.001,
+            route: ['36b', 'hub', '11', 'hub', '990', 'hub'],
+            speed: 0.0005,
             position: 0,
             progress: 0,
             waiting: 0
@@ -731,8 +740,8 @@ Any system readings currently displayed are not accurate. The pulse of the progr
           {
             id: 'STEAM1',
             type: 'steam',
-            route: ['hub', '-33', '3', 'pi', 'hub'],
-            speed: 0.0015, 
+            route: ['3', 'hub', '990', 'hub'],
+            speed: 0.0007, 
             position: 0,
             progress: 0,
             waiting: 0
@@ -770,7 +779,6 @@ Any system readings currently displayed are not accurate. The pulse of the progr
                   <p>Active Trains: <span class="train-count">3</span></p>
                   <p>System Status: <span class="system-status">OPERATIONAL</span></p>
                   <p>Next Maintenance: <span class="next-maintenance">12:00</span></p>
-                  <p>Visible: <span class="next-maintenance">Safe Trains</span></p>                  
                 </div>
               </div>
               <div class="train-list">
@@ -953,7 +961,86 @@ Any system readings currently displayed are not accurate. The pulse of the progr
 
       setInterval(updateTrainInfo, 1000);
       updateTrainInfo();
-    }
+    },
+    'threshold': () => {
+      const win = createWindow('PROJECT THRESHOLD', `
+        <div class="threshold-window">
+          <div class="threshold-header">
+            <h2>Controlled Noclip Experiment</h2>
+            <p class="warning">SYSTEM STABILITY CRITICAL</p>
+          </div>
+          <div class="threshold-content">
+            <div class="threshold-diagram">
+              <svg viewBox="0 0 500 300" class="noclip-space">
+                <defs>
+                  <pattern id="glitch" patternUnits="userSpaceOnUse" width="50" height="50">
+                    <path d="M0 0h50v50H0z" fill="none" stroke="#0f0" stroke-width="0.5"/>
+                    <path d="M25 0v50M0 25h50" stroke="#0f0" stroke-width="0.5" opacity="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="500" height="300" fill="#001"/>
+                <rect x="100" y="50" width="300" height="200" fill="url(#glitch)" opacity="0.7"/>
+                <rect x="150" y="100" width="200" height="100" fill="#300" opacity="0.5" class="unstable-zone"/>
+              </svg>
+            </div>
+            <div class="threshold-parameters">
+              <div class="parameter">
+                <label>Ground Stability Index</label>
+                <div class="meter">
+                  <div class="bar stability-bar"></div>
+                </div>
+                <span class="stability-value">0.00</span>
+              </div>
+              <div class="parameter">
+                <label>Noclip Potential</label>
+                <div class="meter">
+                  <div class="bar noclip-bar"></div>
+                </div>
+                <span class="noclip-value">0.00</span>
+              </div>
+              <div class="parameter">
+                <label>Dimensional Stress</label>
+                <div class="meter critical">
+                  <div class="bar stress-bar"></div>
+                </div>
+                <span class="stress-value">0.00</span>
+              </div>
+              <div class="threshold-warning">
+                WARNING: Dimensional Instability Increasing
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+
+      const updateParameters = () => {
+        const stabilityBar = win.querySelector('.stability-bar');
+        const noclipBar = win.querySelector('.noclip-bar');
+        const stressBar = win.querySelector('.stress-bar');
+        const unstableZone = win.querySelector('.unstable-zone');
+
+        const stability = Math.random();
+        const noclip = Math.random();
+        const stress = Math.random();
+
+        stabilityBar.style.width = `${stability * 100}%`;
+        noclipBar.style.width = `${noclip * 100}%`;
+        stressBar.style.width = `${stress * 100}%`;
+
+        win.querySelector('.stability-value').textContent = stability.toFixed(2);
+        win.querySelector('.noclip-value').textContent = noclip.toFixed(2);
+        win.querySelector('.stress-value').textContent = stress.toFixed(2);
+
+        unstableZone.style.opacity = 0.3 + (stress * 0.7);
+      };
+
+      const parameterInterval = setInterval(updateParameters, 1000);
+      updateParameters();
+
+      win.addEventListener('remove', () => {
+        clearInterval(parameterInterval);
+      });
+    },
   };
 
   const startMenu = {
