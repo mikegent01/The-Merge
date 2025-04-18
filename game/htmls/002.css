@@ -98,7 +98,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
+  min-width: 300px;
   background: #c0c0c0;
   border: 2px solid #fff;
   border-right-color: #000;
@@ -107,50 +107,70 @@ body {
   z-index: 100;
 }
 
-.window.active {
-  z-index: 1000;
+.window.maximized {
+  width: 100vw !important;
+  height: calc(100vh - 30px) !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+}
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 15px;
+  height: 15px;
+  cursor: nwse-resize;
+  background: #c0c0c0;
+  border-top: 1px solid #000;
+  border-left: 1px solid #000;
+}
+
+.window-content {
+  background: #fff;
+  padding: 20px;
+  overflow: auto;
+  position: relative;
 }
 
 .title-bar {
   background: #000080;
   color: white;
-  padding: 5px;
+  padding: 2px 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: move;
+  user-select: none;
 }
 
 .title-bar.inactive {
   background: #808080;
 }
-
 .title-bar-controls {
-  display: flex;
-  gap: 2px;
+  display: flex; /* This makes the buttons inside arrange horizontally */
+  align-items: center; /* Optional: Vertically aligns buttons if heights differ */
 }
 
+/* Keep the existing rule for the buttons themselves */
 .title-bar-controls button {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 14px;
+  margin-left: 2px; /* Keeps a small space between buttons */
   background: #c0c0c0;
   border: 1px solid #fff;
   border-right-color: #000;
   border-bottom-color: #000;
+  font-size: 9px;
+  line-height: 1;
+  padding: 0;
   cursor: pointer;
+  display: flex; /* This centers the content *inside* the button */
+  align-items: center;
+  justify-content: center;
 }
 
-.window-content {
-  padding: 30px;
-  background: #fff;
-  min-height: 200px;
-  transition: opacity 0.3s ease;
-}
-
-.window-content.loading {
-  opacity: 0.5;
-  cursor: wait;
-}
 
 .password-prompt {
   text-align: center;

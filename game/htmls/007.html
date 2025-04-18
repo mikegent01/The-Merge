@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crumpled Document 007</title>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="007.css">
+</head>
+<body>
+    <main>
+        <!-- Main container for the crumpled paper effect -->
+        <div class="crumpled-paper">
+            <p class="doc-title">Field Note - Sector G Anomaly</p>
+            <p>
+                Entry Date: ██/██/████<br>
+                Time: Approx 04:15
+            </p>
+            <p>
+                Team encountered unexpected spatial distortion near Grid Ref ███-███. Compass readings erratic. Radio contact intermittent. Sgt. █████ reported visual hallucinations - "walls breathing". Standard procedure? Unsure.
+            </p>
+            <p>
+                Heard it again. That low hum. Doesn't sound right. Feels like the air is vibrating. Pvt. █████ is unresponsive. Need to fall back to designated rally point, but the layout... it's changed. Corridor doesn't lead back the way it should.
+            </p>
+            <p>
+                [Illegible smudge]... trapped? Request immediate assistance. Coordinates unreliable. Prioritize containment... [Rest of note torn/unreadable]
+            </p>
+            <!-- *** END OF CONTENT *** -->
+        </div>
+    </main>
+
+    <!-- SVG Filter Definition for Crumple Effect -->
+    <svg style="position:absolute; height:0; width:0;">
+      <defs>
+        <filter id="crumple-filter">
+          <!-- Generate noise -->
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="3" result="noise"/>
+          <!-- Use the noise to displace the element's pixels -->
+          <!-- Scale controls the intensity of the crumpling -->
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G"/>
+          <!-- Optional: Add subtle lighting effect -->
+          <feGaussianBlur stdDeviation="0.5" result="blur"/>
+          <feSpecularLighting surfaceScale="5" specularConstant=".35" specularExponent="20" lighting-color="#E0E0E0" result="specOut" in="blur">
+          <fePointLight x="-5000" y="-10000" z="20000"/>
+          </feSpecularLighting>
+          <feComposite in="specOut" in2="SourceGraphic" operator="in" result="specOut"/>
+          <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+        </filter>
+      </defs>
+    </svg>
+    <!-- End SVG Filter Definition -->
+
+</body>
+</html>

@@ -1,26 +1,40 @@
+import moment from "https://unpkg.com/moment@2.29.4/dist/moment.js"
 document.addEventListener('DOMContentLoaded', () => {
   const windows = new Set();
   let activeWindow = null;
+  let nextZIndex = 100;
+  let currentNetwork = null; // Track network connection state
 
   // Update clock
   const updateClock = () => {
     const timeElement = document.getElementById('time');
-    timeElement.textContent = "08:32";  // Fixed time as requested
+    // Use Moment.js for real time if preferred, or keep fixed time
+    // timeElement.textContent = moment().format('HH:mm');
+    timeElement.textContent = "08:32"; // Fixed time as requested
   };
 
   setInterval(updateClock, 1000);
   updateClock();
 
-  function createWindow(title, content, width = 500) {
+  function createWindow(title, content, width = 500, height = 'auto') {
     const windowEl = document.createElement('div');
     windowEl.className = 'window';
     windowEl.style.width = `${width}px`;
+    if (height !== 'auto') {
+      windowEl.style.height = `${height}px`;
+    }
+
+    // Position windows with offset but ensure they stay in viewport
+    const offset = windows.size * 20;
+    const maxOffset = Math.min(window.innerWidth, window.innerHeight) / 4;
+    const adjustedOffset = offset % maxOffset;
+    windowEl.style.transform = `translate(${adjustedOffset}px, ${adjustedOffset}px)`;
 
     const windowHTML = `
       <div class="title-bar">
         <div class="title-bar-text">${title}</div>
         <div class="title-bar-controls">
-          <button class="minimize">_</button>
+          <button class="minimize">-</button>
           <button class="maximize">□</button>
           <button class="close">×</button>
         </div>
@@ -31,11 +45,23 @@ document.addEventListener('DOMContentLoaded', () => {
     windowEl.innerHTML = windowHTML;
     document.body.appendChild(windowEl);
     windows.add(windowEl);
+    windowEl.dataset.title = title;
 
     makeWindowDraggable(windowEl);
     setupWindowControls(windowEl);
     activateWindow(windowEl);
     updateTaskbar();
+
+    // Make window resizable (basic implementation)
+    makeWindowResizable(windowEl);
+
+    // Ensure content area takes up available space if height is set
+    if (height !== 'auto') {
+        const titleBarHeight = windowEl.querySelector('.title-bar').offsetHeight;
+        const contentEl = windowEl.querySelector('.window-content');
+        contentEl.style.height = `calc(100% - ${titleBarHeight}px)`;
+        contentEl.style.overflow = 'auto'; // Add scroll if needed
+    }
 
     return windowEl;
   }
@@ -43,52 +69,220 @@ document.addEventListener('DOMContentLoaded', () => {
   function makeWindowDraggable(windowEl) {
     const titleBar = windowEl.querySelector('.title-bar');
     let isDragging = false;
-    let currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+    let startX, startY, initialX, initialY;
 
     titleBar.addEventListener('mousedown', e => {
-      if (e.target === titleBar) {
+      // Only drag if clicking the title bar itself, not controls
+      if (e.target === titleBar || e.target === titleBar.querySelector('.title-bar-text')) {
         isDragging = true;
-        initialX = e.clientX - xOffset;
-        initialY = e.clientY - yOffset;
+        // Bring window to front when starting drag
         activateWindow(windowEl);
+
+        startX = e.clientX;
+        startY = e.clientY;
+        // Get current transform values
+        const style = window.getComputedStyle(windowEl);
+        const matrix = new DOMMatrixReadOnly(style.transform);
+        initialX = matrix.m41; // translateX
+        initialY = matrix.m42; // translateY
+
+        windowEl.style.cursor = 'grabbing'; // Indicate dragging
+        document.body.style.userSelect = 'none'; // Prevent text selection during drag
       }
     });
 
     document.addEventListener('mousemove', e => {
       if (isDragging) {
         e.preventDefault();
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
-        xOffset = currentX;
-        yOffset = currentY;
+        const currentX = initialX + (e.clientX - startX);
+        const currentY = initialY + (e.clientY - startY);
         windowEl.style.transform = `translate(${currentX}px, ${currentY}px)`;
       }
     });
 
     document.addEventListener('mouseup', () => {
-      isDragging = false;
+      if (isDragging) {
+        isDragging = false;
+        windowEl.style.cursor = 'grab'; // Restore cursor
+        document.body.style.userSelect = ''; // Restore text selection
+      }
     });
+
+    // Set initial cursor
+     titleBar.style.cursor = 'grab';
   }
+
+    function makeWindowResizable(windowEl) {
+        const handle = document.createElement('div');
+        handle.className = 'resize-handle';
+        windowEl.appendChild(handle);
+
+        let isResizing = false;
+        let startX, startY, initialWidth, initialHeight;
+
+        handle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialWidth = windowEl.offsetWidth;
+            initialHeight = windowEl.offsetHeight;
+            windowEl.style.cursor = 'nwse-resize';
+            document.body.style.userSelect = 'none';
+            e.stopPropagation(); // Prevent dragging while resizing
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isResizing) {
+                const newWidth = initialWidth + (e.clientX - startX);
+                const newHeight = initialHeight + (e.clientY - startY);
+                // Set minimum dimensions
+                windowEl.style.width = `${Math.max(200, newWidth)}px`;
+                windowEl.style.height = `${Math.max(150, newHeight)}px`;
+
+                 // Adjust content height dynamically
+                const titleBarHeight = windowEl.querySelector('.title-bar').offsetHeight;
+                const contentEl = windowEl.querySelector('.window-content');
+                contentEl.style.height = `calc(100% - ${titleBarHeight}px)`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                windowEl.style.cursor = 'default';
+                document.body.style.userSelect = '';
+            }
+        });
+    }
 
   function setupWindowControls(windowEl) {
     const closeBtn = windowEl.querySelector('.close');
+    const minimizeBtn = windowEl.querySelector('.minimize');
+    const maximizeBtn = windowEl.querySelector('.maximize');
+
     closeBtn.addEventListener('click', () => {
       windowEl.remove();
       windows.delete(windowEl);
       if (activeWindow === windowEl) {
-        activeWindow = null;
+        // Find the next highest z-index window to activate
+        let nextActive = null;
+        let maxZ = -1;
+        windows.forEach(w => {
+            const z = parseInt(w.style.zIndex || '0');
+            if (z > maxZ) {
+                maxZ = z;
+                nextActive = w;
+            }
+        });
+        activeWindow = nextActive;
+        if (activeWindow) {
+            activateWindow(activeWindow, false); // Activate without incrementing z-index
+        }
       }
       updateTaskbar();
     });
+
+     minimizeBtn.addEventListener('click', () => {
+        windowEl.style.display = 'none';
+        if (activeWindow === windowEl) {
+          // Find next highest z-index window to activate
+          let nextActive = null;
+          let maxZ = -1;
+          windows.forEach(w => {
+              if (w !== windowEl && w.style.display !== 'none') {
+                  const z = parseInt(w.style.zIndex || '0');
+                  if (z > maxZ) {
+                      maxZ = z;
+                      nextActive = w;
+                  }
+              }
+          });
+          activeWindow = nextActive;
+          if (activeWindow) {
+            activateWindow(activeWindow, false);
+          } else {
+            // If no other windows are open, make the desktop active implicitly
+            if (activeWindow) {
+                activeWindow.classList.remove('active');
+                activeWindow.querySelector('.title-bar').classList.add('inactive');
+            }
+             activeWindow = null;
+          }
+        }
+        updateTaskbar();
+    });
+
+     maximizeBtn.addEventListener('click', () => {
+        // Basic toggle: maximize/restore (no true OS maximization)
+        if (windowEl.classList.contains('maximized')) {
+            windowEl.classList.remove('maximized');
+            windowEl.style.top = windowEl.dataset.originalTop || '50%';
+            windowEl.style.left = windowEl.dataset.originalLeft || '50%';
+            windowEl.style.width = windowEl.dataset.originalWidth || '500px';
+            windowEl.style.height = windowEl.dataset.originalHeight || 'auto';
+            windowEl.style.transform = windowEl.dataset.originalTransform || 'translate(-50%, -50%)';
+            makeWindowResizable(windowEl); // Re-enable resizing
+             if (windowEl.querySelector('.resize-handle')) {
+                 windowEl.querySelector('.resize-handle').style.display = 'block';
+             }
+
+             // Re-adjust content height if original was auto
+            if (windowEl.dataset.originalHeight === 'auto') {
+                windowEl.querySelector('.window-content').style.height = 'auto';
+            } else {
+                 const titleBarHeight = windowEl.querySelector('.title-bar').offsetHeight;
+                windowEl.querySelector('.window-content').style.height = `calc(100% - ${titleBarHeight}px)`;
+            }
+
+        } else {
+            windowEl.classList.add('maximized');
+            // Store original position and size
+            windowEl.dataset.originalTop = windowEl.style.top;
+            windowEl.dataset.originalLeft = windowEl.style.left;
+            windowEl.dataset.originalWidth = windowEl.style.width;
+            windowEl.dataset.originalHeight = windowEl.style.height;
+            windowEl.dataset.originalTransform = windowEl.style.transform;
+
+            // Maximize (fill screen minus taskbar)
+            const taskbarHeight = document.querySelector('.taskbar').offsetHeight;
+            windowEl.style.top = '0px';
+            windowEl.style.left = '0px';
+            windowEl.style.width = '100vw';
+            windowEl.style.height = `calc(100vh - ${taskbarHeight}px)`;
+            windowEl.style.transform = 'translate(0, 0)';
+
+            // Adjust content height
+            const titleBarHeight = windowEl.querySelector('.title-bar').offsetHeight;
+            windowEl.querySelector('.window-content').style.height = `calc(100% - ${titleBarHeight}px)`;
+
+
+            // Disable resizing when maximized
+            if (windowEl.querySelector('.resize-handle')) {
+                 windowEl.querySelector('.resize-handle').style.display = 'none';
+             }
+        }
+    });
   }
 
-  function activateWindow(windowEl) {
+  function activateWindow(windowEl, incrementZ = true) {
+    if (activeWindow === windowEl) {
+        // If already active, ensure it's at the top
+        if (incrementZ) {
+            windowEl.style.zIndex = nextZIndex++;
+        }
+        return; // No need to deactivate/reactivate
+    }
     if (activeWindow) {
       activeWindow.classList.remove('active');
+      activeWindow.querySelector('.title-bar').classList.remove('active'); // Use .active on title bar
       activeWindow.querySelector('.title-bar').classList.add('inactive');
     }
     windowEl.classList.add('active');
+    windowEl.querySelector('.title-bar').classList.add('active');
     windowEl.querySelector('.title-bar').classList.remove('inactive');
+    if (incrementZ) {
+      windowEl.style.zIndex = nextZIndex++;
+    }
     activeWindow = windowEl;
     updateTaskbar();
   }
@@ -98,20 +292,63 @@ document.addEventListener('DOMContentLoaded', () => {
     taskbarItems.innerHTML = '';
 
     windows.forEach(window => {
-      const title = window.querySelector('.title-bar-text').textContent;
+      const title = window.dataset.title; // Use stored title
       const item = document.createElement('div');
-      item.className = `taskbar-item ${window === activeWindow ? 'active' : ''}`;
+      item.className = `taskbar-item ${window === activeWindow ? 'active' : ''} ${window.style.display === 'none' ? 'minimized' : ''}`;
       item.textContent = title;
       item.addEventListener('click', () => {
         if (window === activeWindow) {
-          window.style.display = window.style.display === 'none' ? 'block' : 'none';
+          // If active, minimize it
+          window.style.display = 'none';
+          // Activate next window or null
+           let nextActive = null;
+          let maxZ = -1;
+          windows.forEach(w => {
+              if (w !== window && w.style.display !== 'none') {
+                  const z = parseInt(w.style.zIndex || '0');
+                  if (z > maxZ) {
+                      maxZ = z;
+                      nextActive = w;
+                  }
+              }
+          });
+          activeWindow = nextActive;
+          if (activeWindow) {
+            activateWindow(activeWindow, false);
+          } else {
+             // If minimizing the last visible window
+             if (activeWindow) {
+                 activeWindow.classList.remove('active');
+                 activeWindow.querySelector('.title-bar').classList.add('inactive');
+             }
+              activeWindow = null;
+          }
+
         } else {
+          // If not active or minimized, bring to front and activate
           window.style.display = 'block';
           activateWindow(window);
         }
+         updateTaskbar(); // Update immediately after click
       });
       taskbarItems.appendChild(item);
     });
+  }
+
+  // Function to show loading indicator
+  function showLoading(windowContentElement) {
+      windowContentElement.innerHTML = `
+          <div class="loading-indicator">
+              <div class="spinner"></div>
+              Loading...
+          </div>`;
+      windowContentElement.classList.add('loading');
+  }
+
+  // Function to hide loading indicator and show content
+  function showContent(windowContentElement, content) {
+      windowContentElement.innerHTML = content;
+      windowContentElement.classList.remove('loading');
   }
 
   // Program handlers
@@ -134,32 +371,37 @@ document.addEventListener('DOMContentLoaded', () => {
           }, 1500); // Loading delay
         },
         'd-drive': (callback) => {
-          const isConnected = document.querySelector('.network-status')?.textContent.includes('Connected');
-          
+          // Check network connection status
+          const isConnected = !!currentNetwork; // Check if currentNetwork is not null/undefined
+
           setTimeout(() => {
             if (isConnected) {
+              // If connected, show inaccessible content (simulating permissions issue)
               callback(`
                 <div class="folder-content">
                   <div class="error-message">
-                    NETWORK DRIVE CONTENTS INACCESSIBLE
+                    NETWORK DRIVE CONTENTS INACCESSIBLE (Drive D:)
                     <br><br>
-                    Error code: 0x80070035
+                    Error code: 0x80070035 (Network path not found or insufficient permissions)
                     <br>
-                    Access denied due to insufficient permissions.
+                    Connection established to: ${currentNetwork}
                     <br>
-                    Please contact network administrator.
+                    Please contact network administrator for drive access permissions.
                   </div>
                 </div>
               `);
             } else {
+              // If not connected, show network error
               callback(`
                 <div class="folder-content">
                   <div class="error-message">
-                    NETWORK ERROR: Unable to establish connection to network drive.
+                    NETWORK ERROR: Unable to establish connection to network drive (D:).
                     <br><br>
                     Error code: 0x80070035
                     <br>
-                    Check your network connection and try again.
+                    Check your network connection status in 'Network Connections' and try again.
+                    <br>
+                    No active network connection detected.
                   </div>
                 </div>
               `);
@@ -171,13 +413,13 @@ document.addEventListener('DOMContentLoaded', () => {
             callback(`
               <div class="folder-content">
                 <div class="error-message">
-                  This application has been deprecated.
+                  This shortcut is deprecated.
                   <br><br>
-                  Please use the Internet Explorer icon on the desktop.
+                  Please use the 'Secure Browser' icon on the desktop or Start Menu.
                 </div>
               </div>
             `);
-          }, 2000);
+          }, 1200);
         },
         'reports': (callback) => {
           setTimeout(() => {
@@ -186,29 +428,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="error-message">
                   FOLDER EMPTY
                   <br><br>
-                  No documents found in this location.
+                  No mission reports or documents found in this location.
+                  <br>
+                  Ensure sync with central command is complete.
                 </div>
               </div>
             `);
-          }, 2000);
+          }, 1800);
         },
         'system32': (callback) => {
           setTimeout(() => {
             callback(`
               <div class="folder-content">
                 <div class="error-message">
-                  CRITICAL SYSTEM FILES
+                  CRITICAL SYSTEM FILES - ACCESS RESTRICTED
                   <br><br>
-                  Access to this folder has been restricted by DoD Directive 8500.1
+                  Modification or deletion of files in this directory is prohibited under DoD Directive 8500.1 and UCMJ Article 92.
                   <br>
-                  Unauthorized access attempts will be logged and reported.
+                  Unauthorized access attempts are logged and subject to disciplinary action.
                 </div>
               </div>
             `);
           }, 2000);
         },
-        'threshold': (callback) => {
-          setTimeout(() => {
+        'threshold': (callback) => { // Keep existing Threshold functionality
+           setTimeout(() => {
             callback(`
               <div class="threshold-viewer">
                 <div class="threshold-header">
@@ -217,74 +461,76 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="threshold-content">
                   <div class="threshold-visualization">
-                    <svg viewBox="0 0 500 300" class="threshold-diagram">
-                      <defs>
-                        <pattern id="glitch" patternUnits="userSpaceOnUse" width="50" height="50">
-                          <path d="M0 0h50v50H0z" fill="none" stroke="#0f0" stroke-width="0.5"/>
-                          <path d="M25 0v50M0 25h50" stroke="#0f0" stroke-width="0.5" opacity="0.5"/>
-                        </pattern>
-                      </defs>
-                      <rect width="500" height="300" fill="#001"/>
-                      <path d="M100 50h300v200H100z" fill="url(#glitch)" stroke="#0f0"/>
-                      <rect x="150" y="100" width="200" height="100" fill="#300" opacity="0.5"/>
-                      <path d="M150 150h200" stroke="#f00" stroke-width="2" stroke-dasharray="5,5"/>
-                      <text x="250" y="140" fill="#0f0" text-anchor="middle">THRESHOLD ZONE</text>
-                      <g class="measurement-points">
-                        ${Array.from({length: 8}, (_, i) => `
-                          <circle cx="${150 + i * 28}" cy="150" r="2" fill="#f00"/>
-                          <line x1="${150 + i * 28}" y1="150" x2="${150 + i * 28}" y2="160" 
-                            stroke="#f00" stroke-width="1"/>
-                        `).join('')}
-                      </g>
-                    </svg>
+                     <svg viewBox="0 0 500 300" class="noclip-space">
+                        <defs>
+                          <pattern id="glitch-pattern" patternUnits="userSpaceOnUse" width="50" height="50">
+                            <path d="M0 0h50v50H0z" fill="none" stroke="#0f0" stroke-width="0.5"/>
+                            <path d="M25 0v50M0 25h50" stroke="#0f0" stroke-width="0.5" opacity="0.5"/>
+                          </pattern>
+                           <filter id="glitch-filter">
+                              <feTurbulence type="fractalNoise" baseFrequency="0.1 0.9" numOctaves="3" result="warp"/>
+                              <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="20" in="SourceGraphic" in2="warp"/>
+                           </filter>
+                        </defs>
+                        <rect width="500" height="300" fill="#001"/>
+                        <rect x="100" y="50" width="300" height="200" fill="url(#glitch-pattern)" opacity="0.7" class="glitch-rect"/>
+                        <rect x="150" y="100" width="200" height="100" fill="#300" opacity="0.5" class="unstable-zone"/>
+                      </svg>
                   </div>
-                  <div class="threshold-parameters">
-                    <div class="parameter">
-                      <label>Quantum Threshold:</label>
-                      <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
+                   <div class="threshold-parameters">
+                       <div class="parameter">
+                        <label>Ground Stability Index:</label>
+                        <div class="meter">
+                          <div class="bar stability-bar" style="width: ${Math.random() * 100}%"></div>
+                        </div>
+                        <span class="stability-value">${(Math.random() * 1).toFixed(2)}</span>
                       </div>
-                      <span>${(Math.random() * 1000).toFixed(2)} μV</span>
-                    </div>
-                    <div class="parameter">
-                      <label>Reality Anchor:</label>
-                      <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
+                      <div class="parameter">
+                        <label>Noclip Potential:</label>
+                        <div class="meter">
+                          <div class="bar noclip-bar" style="width: ${Math.random() * 100}%"></div>
+                        </div>
+                        <span class="noclip-value">${(Math.random() * 1).toFixed(2)}</span>
                       </div>
-                      <span>${(Math.random() * 100).toFixed(2)}%</span>
-                    </div>
-                    <div class="parameter">
-                      <label>Dimensional Stability:</label>
-                      <div class="meter">
-                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
+                      <div class="parameter">
+                        <label>Dimensional Stress:</label>
+                        <div class="meter critical">
+                          <div class="bar stress-bar" style="width: ${Math.random() * 100}%"></div>
+                        </div>
+                        <span class="stress-value">${(Math.random() * 1).toFixed(2)}</span>
                       </div>
-                      <span>${(Math.random() * 360).toFixed(2)}°</span>
-                    </div>
-                    <div class="parameter">
-                      <label>Noclip Probability:</label>
-                      <div class="meter critical">
-                        <div class="bar" style="width: ${Math.random() * 100}%"></div>
+                      <div class="threshold-warning">
+                        WARNING: Dimensional Instability Increasing. Monitor Threshold Values.
                       </div>
-                      <span>${(Math.random() * 100).toFixed(2)}%</span>
                     </div>
-                    <div class="threshold-warning">
-                      WARNING: Values exceeding safety threshold. 
-                      Dimensional breach imminent.
-                    </div>
-                  </div>
                 </div>
               </div>
             `);
 
-            // Animate parameters
-            setInterval(() => {
-              document.querySelectorAll('.threshold-parameters .bar').forEach(bar => {
-                bar.style.width = `${Math.random() * 100}%`;
-              });
-              document.querySelectorAll('.threshold-parameters span').forEach(span => {
-                span.textContent = `${(Math.random() * 100).toFixed(2)}${span.textContent.slice(-1)}`;
-              });
-            }, 1000);
+            // Animate parameters and maybe the SVG glitch effect
+            const winContent = document.querySelector('.threshold-viewer'); // Need specific window
+            if (winContent) {
+              const parameterInterval = setInterval(() => {
+                 if (!document.body.contains(winContent)) { // Stop if window closed
+                    clearInterval(parameterInterval);
+                    return;
+                 }
+                  const stabilityBar = winContent.querySelector('.stability-bar');
+                  const noclipBar = winContent.querySelector('.noclip-bar');
+                  const stressBar = winContent.querySelector('.stress-bar');
+                  const unstableZone = winContent.querySelector('.unstable-zone');
+
+                  stabilityBar.style.width = `${Math.random() * 100}%`;
+                  noclipBar.style.width = `${Math.random() * 100}%`;
+                  stressBar.style.width = `${Math.random() * 100}%`;
+
+                  winContent.querySelector('.stability-value').textContent = (Math.random() * 1).toFixed(2);
+                  winContent.querySelector('.noclip-value').textContent = (Math.random() * 1).toFixed(2);
+                  winContent.querySelector('.stress-value').textContent = (Math.random() * 1).toFixed(2);
+
+                  unstableZone.style.opacity = 0.3 + (Math.random() * 0.7);
+              }, 1000);
+            }
           }, 1500);
         }
       };
@@ -1042,6 +1288,326 @@ Any system readings currently displayed are not accurate. The pulse of the progr
       });
     },
   };
+
+  Object.assign(programs, {
+    'ops-center': () => {
+      createWindow('Ops Center', `
+        <div class="folder-content">
+          <h2>Operations Center</h2>
+          <p style="margin-bottom:15px">Unified Command Operations Dashboard</p>
+          <div class="file" style="font-size:16px;margin-bottom:10px;" data-file="logistics-report">
+            <b>LOGISTICS-OPS-REPORT.doc</b>
+            <p>Division Readiness & Supply Chain Summary</p>
+          </div>
+          <div class="file" style="font-size:16px;margin-bottom:10px;" data-file="ops-orders">
+            <b>OPERATIONS-ORDERS.log</b>
+            <p>Mission Assignment Queue - Clearance Required</p>
+          </div>
+          <div class="file" style="font-size:16px;" data-file="critical-alerts">
+            <b>CRITICAL-ALERTS.txt</b>
+            <p>Active Station Warnings</p>
+          </div>
+        </div>
+      `);
+      const win = document.querySelector('.window.active');
+      win.querySelector('.folder-content').addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+        if(file.dataset.file === "logistics-report"){
+          createWindow('LOGISTICS-OPS-REPORT.doc', `
+            <div class="text-viewer" style="font-size:15px;">LOGISTICS REPORT - ALL SITES<br>
+            --------------------------------<br>
+            Overall Supply Status: GREEN<br>
+            Emergency Reserves: 89.7%<br>
+            <br>
+            Latest shipment arrival delayed (Level 11)<br>
+            <br>
+            Note: Order #L1847-22 is missing – escalation required.<br>
+            <br>
+            Memo: Do NOT allow unscheduled movement of classified materials via metro.<br>
+            </div>
+          `);
+        } else if(file.dataset.file === "ops-orders") {
+          createWindow('OPERATIONS-ORDERS.log', `
+            <div class="text-viewer" style="font-size:15px;">
+            ACTIVE MISSION QUEUE:<br>
+            [ ] 0932Z: Recon - Observe the location as described in Addendum 0001-A <br>
+            [X] 0700Z: Secure - ██████████ <br>
+            [ ] 1005Z: Deliver - Deliver recovered materials directly to Site-19 <br>
+            <br>
+            See site commander for full access.
+            </div>
+          `);
+        } else if(file.dataset.file === "critical-alerts") {
+          createWindow('CRITICAL-ALERTS.txt', `
+            <div class="text-viewer" style="color:#f00;font-size:15px;">
+            <b>//CRITICAL ALERTS//</b>
+            1. Unusual electromagnetic output: County of Ruckersville.
+            2. Threshold controller reporting "high instability".
+            3. Train System Alert: STEAM1 requires preventive maintenance.<br>
+            <br>
+            See Ops Center manager for incident codes and documentation.
+            </div>
+          `);
+        }
+      });
+    },
+    'personnel': () => {
+      createWindow('Personnel Records', `
+        <div class="folder-content">
+          <h2>Personnel Database</h2>
+          <div class="file" style="font-size:15px;" data-file="staff-list">
+            <b>STAFF-ROSTER.csv</b><br>
+            <p>Personnel List</p>
+          </div>
+          <div class="file" style="font-size:15px;" data-file="incident-log">
+            <b>INCIDENT-LOG.txt</b><br>
+            <p>Recent Incidents - Access: LEVEL 3</p>
+          </div>
+        </div>
+      `);
+      const win = document.querySelector('.window.active');
+      win.querySelector('.folder-content').addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+        if(file.dataset.file === "staff-list") {
+          // Use characters from script.rpy
+          createWindow('STAFF-ROSTER.csv', `
+            <div class="text-viewer" style="font-size:14px;">
+LASTNAME,FIRSTNAME,RANK/ID,LAST SEEN<br>
+Jones,J.J.,DRILL SGT,Projector Room<br>
+Miller,[REDACTED],CMD OFC,Command Center<br>
+Smith,Benjamin,PVT987,Bootcamp Wing<br> <!-- Assuming player character -->
+Miller,Samuel,PVT123,Bootcamp Wing<br> <!-- Samuel -->
+Khan,Sultan,SPC456,Projector Room<br> <!-- Guy from projector room -->
+Smith,Emma,CIV001,[REDACTED]/Deceased<br> <!-- From file found -->
+[REDACTED],[REDACTED],SEC LVL 5,Unknown<br> <!-- Placeholder for mystery -->
+            </div>
+          `);
+        } else if(file.dataset.file === "incident-log") {
+          createWindow('INCIDENT-LOG.txt', `
+            <div class="text-viewer" style="font-size:14px;">
+[15:44] ALERT: Personnel Lewis missing, last seen entering Level 0 east access.
+[17:20] INFO: Security check, all accounted.
+[19:05] NOTE: Restricted area breach attempt - ALERT sent to security.
+[21:10] WARNING: System32 access flag raised on terminal 2392 - NO FURTHER ACTION.
+            </div>
+          `);
+        }
+      });
+    },
+    'logistics': () => {
+      createWindow('Logistics', `
+        <div class="folder-content">
+          <h2>Logistics Field Suite</h2>
+          <div class="file" style="font-size:15px;" data-file="supply-status">
+            <b>SUPPLY-STATUS.xlsx</b>
+            <p>Automated Depot Report</p>
+          </div>
+          <div class="file" style="font-size:15px;" data-file="vehicle-schedule">
+            <b>VEHICLE-SCHEDULE.csv</b>
+            <p>On-site Transports</p>
+          </div>
+        </div>
+      `);
+      const win = document.querySelector('.window.active');
+      win.querySelector('.folder-content').addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+        if(file.dataset.file === "supply-status") {
+          createWindow('SUPPLY-STATUS.xlsx', `
+            <div class="text-viewer" style="font-size:14px;">
+DEPOT,FOOD,WATER,TOOLS,NOTES<br>
+Main Building,95%,93%,85%,Nominal<br>
+Level 0,49%,80%,22%,Backorder queued<br>
+Site 19,100%,100%,92%,-<br>
+LOG-Wing,76%,66%,68%,Restocking
+            </div>
+          `);
+        } else if(file.dataset.file === "vehicle-schedule") {
+          createWindow('VEHICLE-SCHEDULE.csv', `
+            <div class="text-viewer" style="font-size:14px;">
+ID,TYPE,LOCATION,STATUS<br>
+TR0976,KAT1,Depot,Queued<br>
+SR0431,Leichttraktor,Depot,Ready<br>
+MT1420,Kettenkrad,Depot,In Use
+            </div>
+          `);
+        }
+      });
+    },
+    'comms': () => {
+      createWindow('Secure Comms', `
+        <div class="folder-content">
+          <h2>Secure Communications</h2>
+          <div class="file" style="font-size:15px;" data-file="message-inbox">
+            <b>MESSAGE-INBOX</b><br>
+            <p>3 Unread Messages</p>
+          </div>
+          <div class="file" style="font-size:15px;" data-file="outbox">
+            <b>OUTBOX</b>
+            <p>No outgoing messages</p>
+          </div>
+        </div>
+      `);
+      const win = document.querySelector('.window.active');
+      win.querySelector('.folder-content').addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+        if(file.dataset.file === "message-inbox") {
+          createWindow('MESSAGE-INBOX', `
+            <div class="text-viewer" style="font-size:14px;">
+[UNREAD] From: SYSTEM<br>
+"Network access logs locked down. Code Yellow is initialized."<br><br>
+[UNREAD] From: Site Security<br>
+"This weeks password is: WSPG. Remember be safe, be smart, be vigilant. Your life can depend on it."<br><br>
+[UNREAD] From: Ops Center<br>
+"Project Threshold: monitor instability metrics closely."
+            </div>
+          `);
+        } else if(file.dataset.file === "outbox") {
+          createWindow('OUTBOX', `<div class="text-viewer">No outgoing messages.</div>`);
+        }
+      });
+    },
+    'threat': () => {
+      createWindow('Threat Assessment', `
+        <div class="folder-content">
+          <h2>Threat Assessment Hub</h2>
+          <div class="file" data-file="latest-briefing" style="font-size:15px;">
+            <b>LATEST-BRIEFING.pdf</b>
+            <p>Threat Report: Unauthorized Noclip</p>
+          </div>
+          <div class="file" data-file="threat-list" style="font-size:15px;">
+            <b>THREAT-LIST.log</b>
+            <p>Potential Anomalies Detected 4</p>
+          </div>
+        </div>
+      `);
+      const win = document.querySelector('.window.active');
+      win.querySelector('.folder-content').addEventListener('click', (e) => {
+        const file = e.target.closest('.file');
+        if (!file) return;
+        if(file.dataset.file === "latest-briefing") {
+          createWindow('LATEST-BRIEFING.pdf', `
+            <div class="text-viewer" style="font-size:14px;">
+<big><b>CONFIDENTIAL</b></big><br>
+The people deserve the truth. You must bring me that projector at all costs. I have swapped the tapes at base ████ it seems he hasn't realized it yet. The plan is proceeding well we need to get the projector closer to point V. Once the tape is played all will be known. The full extent of what is going on will be known..
+            </div>
+          `);
+        } else if(file.dataset.file === "threat-list") {
+          createWindow('THREAT-LIST.log', `
+            <div class="text-viewer" style="font-size:14px;">
+# List of Current Threats:
+1) Level 990 - Unstable ground detected
+2) Secure ████
+3) Discrepancy: Staff count for the Hub is diffrent from the count in the logs.
+4) Unauthorized device connected (SCP-2306)
+            </div>
+          `);
+        }
+      });
+    },
+    'internet': () => {
+      createWindow('USDOD SECURE BROWSER', `
+        <div class="browser">
+          <div class="browser-toolbar">
+            <svg viewBox="0 0 24 24" style="width:24px;height:24px;margin-right:8px;">
+              <circle cx="12" cy="12" r="10" fill="#003366"/>
+              <rect x="6" y="6" width="12" height="4" fill="#fff"/>
+              <rect x="6" y="14" width="12" height="4" fill="#fff"/>
+            </svg>
+            <span style="font-family:monospace;">https://secure-intranet.mil/landing</span>
+          </div>
+          <div class="browser-content">
+            <h1 style="color:#003366;margin-bottom:10px;">USDOD SECURE INTRANET</h1>
+            <p>This workstation is connected to a secure Department of Defense network.</p>
+            <div style="margin:18px 0;">
+
+            </div>
+            <div style="background:#eef;border:1px solid #ccd;padding:18px;font-size:15px;max-width:370px;">
+              <b>Notice:</b> Web browsing, search, and external access are disabled.
+              <br>For approved resources, open local documentation.
+              <br><span style="color:#f00;">INTERNET ACCESS: <b>RESTRICTED TO AUTHORIZED PERSONNEL</b></span>
+              <br>(Contact Network Administrator for access escalation.)
+            </div>
+          </div>
+        </div>
+      `, 650);
+    },
+    'network': () => {
+      createWindow('WiFi Networks', `
+        <div class="network-interface">
+          <div class="network-header">
+            <h3>WiFi Network Connections</h3>
+            <p>Select a network to connect:</p>
+          </div>
+          <div class="network-list" style="margin-bottom:12px;">
+            <div class="network-item" data-ssid="SITE-19-SECURE">
+              <div>
+                <div class="network-name">SITE-19-SECURE</div>
+                <div class="network-type">Secured</div>
+                <div class="network-strength">Signal: Strong</div>
+              </div>
+              <button class="connect-btn" disabled>Access Denied</button>
+            </div>
+            <div class="network-item" data-ssid="BackroomsNet">
+              <div>
+                <div class="network-name">BackroomsNet</div>
+                <div class="network-type">Unknown</div>
+                <div class="network-strength">Signal: ???</div>
+              </div>
+              <button class="connect-btn" disabled>Error</button>
+            </div>
+            <div class="network-item" data-ssid="Level_0_Public">
+              <div>
+                <div class="network-name">Level_0_Public</div>
+                <div class="network-type">Open</div>
+                <div class="network-strength">Signal: Weak</div>
+              </div>
+              <button class="connect-btn">Connect</button>
+            </div>
+            <div class="network-item${currentNetwork==='SCPF-Guest'?' connected':''}" data-ssid="SCPF-Guest">
+              <div>
+                <div class="network-name">SCPF-Guest</div>
+                <div class="network-type">WPA2</div>
+                <div class="network-strength">Signal: Medium</div>
+              </div>
+              <button class="connect-btn">${currentNetwork==='SCPF-Guest'?'Connected':'Connect'}</button>
+            </div>
+          </div>
+          <div class="network-status">
+            <p>Current Connection: <b class="curr-network">${currentNetwork||'--'}</b></p>
+            <p>Status: <span class="net-status">${currentNetwork?'Connected':'--'}</span></p>
+          </div>
+        </div>
+      `);
+      // Add logic for connecting
+      const win = document.querySelector('.window.active');
+      win.querySelector('.network-list').addEventListener('click', e => {
+        const btn = e.target.closest('.connect-btn');
+        if(!btn || btn.disabled) return;
+        const netItem = btn.closest('.network-item');
+        const ssid = netItem.dataset.ssid;
+        if (['Level_0_Public','SCPF-Guest'].includes(ssid)) {
+          btn.textContent='Connecting...';
+          btn.disabled = true;
+          setTimeout(()=>{
+            currentNetwork = ssid;
+            btn.textContent="Connected";
+            Array.from(win.querySelectorAll('.connect-btn')).forEach(b=>{if(b!==btn) b.textContent='Connect';});
+            win.querySelector('.curr-network').textContent = currentNetwork;
+            win.querySelector('.net-status').textContent = "Connected";
+          },1200);
+        } else {
+          alert('Access Denied.');
+        }
+      });
+    }
+  });
+
+  // update icons to be consistently interactable, but leave handler as above (already attaches event listener to all .icon)
+  // No further code needed here because all relevant icons now have a handler in `programs`.
 
   const startMenu = {
     init() {
