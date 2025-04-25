@@ -1,239 +1,212 @@
-/* --- Basic Setup --- */
 body {
-    background-color: #7f8c8d; /* Muted background */
     margin: 0;
-    padding: 30px;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden; /* Prevent scrollbars if walkie is large */
+    height: 100vh;
+    background-color: #333; /* Darker background */
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Prevent scrollbars */
 }
 
-/* --- Walkie-Talkie Body --- */
-.walkie-talkie {
-    width: 220px; /* Width of the device */
-    background: linear-gradient(to bottom, #4a4a4a, #2c2c2c); /* Dark grey gradient */
-    border-radius: 20px; /* Rounded corners */
-    border: 2px solid #1a1a1a;
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.6), /* Outer shadow */
-        inset 0 2px 4px rgba(255, 255, 255, 0.1), /* Inner highlight */
-        inset 0 -2px 3px rgba(0, 0, 0, 0.4); /* Inner shadow */
-    padding: 20px 15px;
+.container {
+    position: absolute; /* Needed for dragging */
+    width: 280px; /* Slightly smaller */
+    user-select: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px; /* Apply radius to container too */
+    background-color: #4a5a41; /* Radio color */
+    overflow: hidden; /* Keep antenna inside */
+}
+
+.drag-handle {
+    cursor: move;
+    height: 15px; /* Smaller handle */
+    width: 100%;
+    background-color: #333;
+    border-bottom: 1px solid #222;
+}
+
+.radio {
+    /* background-color: #4a5a41; inherited from container */
+    /* border-radius: 10px; applied to container */
+    padding: 15px;
     position: relative; /* For antenna positioning */
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Space between panels */
-    color: #e0e0e0; /* Default text color */
 }
 
-/* --- Antenna --- */
 .antenna {
     position: absolute;
-    width: 14px;
-    height: 90px;
-    background: linear-gradient(to bottom, #666, #333);
-    border: 1px solid #222;
-    border-radius: 6px 6px 0 0; /* Rounded top */
-    top: -85px; /* Position above the body */
-    left: 75%; /* Position towards the right */
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+    top: -60px; /* Relative to radio padding */
+    right: 25px;
+    width: 4px;
+    height: 60px;
+    background-color: #ccc;
+    border-radius: 2px 2px 0 0;
 }
 
-.antenna-tip {
-    width: 18px;
-    height: 18px;
-    background-color: #282828;
-    border-radius: 50%;
-    border: 1px solid #111;
+.antenna-top {
     position: absolute;
-    top: -9px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* --- Top Panel (Speaker & Display) --- */
-.top-panel {
-    background-color: rgba(0, 0, 0, 0.15); /* Slightly inset look */
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-    margin-top: 10px; /* Space below antenna area */
-}
-
-.speaker-grille {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columns */
-    gap: 5px;
-    margin-bottom: 10px;
-    padding: 5px 10px;
-}
-
-.speaker-grille span {
-    display: block;
-    width: 6px;
-    height: 6px;
-    background-color: #1f1f1f;
+    top: -8px;
+    left: -2px; /* Center on antenna */
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    margin: auto;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.6);
+    background-color: #aaa;
 }
 
-/* --- Display Screen --- */
-.display-screen {
-    background-color: #1e3a1e; /* Dark green LCD background */
-    border: 2px solid #111;
+.display-panel {
+    background-color: #212f1c;
+    border: 2px solid #1a1a1a;
     border-radius: 5px;
-    padding: 8px 10px;
-    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
-    font-family: 'Consolas', 'Lucida Console', monospace;
-    font-size: 13px;
-    color: #5fff5f; /* Bright green text */
-    text-shadow: 0 0 5px rgba(95, 255, 95, 0.6);
-    line-height: 1.4;
+    padding: 8px;
+    margin-bottom: 15px;
+    color: #90ee90; /* Lighter green */
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 3px #90ee90;
 }
 
-.display-line {
-    margin-bottom: 2px;
+.display-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 12px;
 }
-.display-line:last-child {
+.display-row:last-child {
     margin-bottom: 0;
 }
 
-.channel-line {
-    display: flex;
-    justify-content: space-between; /* Space out CH and SIG */
-    font-size: 12px;
-    color: #4ccc4c; /* Slightly dimmer */
+.frequency-display {
+    background-color: #0f1a0a;
+    border-radius: 3px;
+    padding: 5px 8px;
+    font-size: 18px; /* Larger frequency */
+    text-align: center;
+    margin-top: 8px;
+    letter-spacing: 1px;
+    font-weight: bold;
 }
 
-/* --- Controls Panel --- */
-.controls-panel {
+.controls {
     display: flex;
-    align-items: center; /* Align power and channels vertically */
-    gap: 15px;
-    padding: 10px 5px;
+    justify-content: space-around; /* Space around for 2 knobs */
+    margin-bottom: 20px;
+    padding: 0 20px; /* Add some horizontal padding */
 }
 
-/* Power Button Section */
-.power-section {
+.knob-container {
+    text-align: center;
+}
+
+.knob {
+    width: 55px; /* Smaller knobs */
+    height: 55px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #6a7b61, #394832);
+    border: 2px solid #2d3827;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.4), 0 1px 1px rgba(255,255,255,0.2);
+    position: relative;
+    cursor: pointer;
+    margin: 0 auto; /* Center knob in container */
+}
+
+.knob-indicator {
+    position: absolute;
+    top: 5px; /* Start indicator near top */
+    left: 50%;
+    width: 3px; /* Thicker indicator */
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 2px;
+    transform-origin: 50% 22.5px; /* Rotate around center of knob */
+    transform: translateX(-50%) rotate(0deg); /* Start at 0 */
+    pointer-events: none; /* Don't interfere with drag */
+}
+
+.knob-label {
+    color: #eee;
+    font-size: 10px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.buttons {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.channel-button, .power-button {
+    padding: 7px 12px;
+    background-color: #2a2a2a;
+    border: 1px solid #111;
+    border-radius: 4px;
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+}
+.channel-button:hover, .power-button:hover {
+    background-color: #3a3a3a;
+}
+.channel-button:active, .power-button:active {
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    transform: translateY(1px);
+}
+
+.channel-button.active {
+    background-color: #5a6b51; /* Match radio color */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+    color: #fff;
 }
 
 .power-button {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Round button */
-    background: linear-gradient(to bottom, #d9534f, #c9302c); /* Red gradient */
-    border: 1px solid #a94442;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0; /* Remove default padding */
+    background-color: #b00; /* Standard power red */
 }
-.power-button svg {
-    width: 24px;
-    height: 24px;
+.power-button:hover {
+    background-color: #d00;
 }
 
-.indicator-light {
-    width: 12px;
-    height: 12px;
-    background-color: #333; /* Off state */
+.speaker {
+    background-color: #1a1a1a;
+    border-radius: 3px;
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 5px 8px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.6);
+}
+
+.speaker-line {
+    height: 2px; /* Thicker lines */
+    background-color: #333;
+    border-radius: 1px;
+}
+
+.power-indicator {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    border: 1px solid #111;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #111; /* Darker off state */
+    border: 1px solid #000;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.indicator-light.on {
-    background-color: #5fff5f; /* Green when on */
-    box-shadow: 0 0 8px rgba(95, 255, 95, 0.8), inset 0 1px 1px rgba(255,255,255,0.2);
+.power-indicator.on {
+    background-color: #7fff00; /* Bright green */
+    box-shadow: 0 0 6px #7fff00, 0 0 3px #7fff00 inset;
+    border: 1px solid #6acc00;
 }
 
-/* Channel Buttons Grid */
-.channel-grid {
-    flex-grow: 1; /* Take remaining space */
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 buttons per row */
-    gap: 8px;
-}
-
-/* General Control Button Styling */
-.control-button {
-    background: linear-gradient(to bottom, #6c757d, #495057); /* Grey gradient */
-    border: 1px solid #343a40;
-    color: #f8f9fa;
-    padding: 10px 5px; /* Adjust padding */
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 3px 5px rgba(0,0,0,0.3), inset 0 -1px 1px rgba(255,255,255,0.1);
-    transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
-    text-shadow: 0 -1px 1px rgba(0,0,0,0.4);
-}
-
-.control-button:hover {
-    background: linear-gradient(to bottom, #7c858d, #5a6067);
-}
-
-.control-button:active,
-.control-button.active { /* Style for the currently selected channel */
-    background: linear-gradient(to top, #6c757d, #495057); /* Invert gradient */
-    transform: translateY(2px); /* Press down effect */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-    color: #fff;
-}
-
-/* --- Bottom Panel (Mic & Context) --- */
-.bottom-panel {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 5px;
-    margin-top: auto; /* Push to bottom */
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
-}
-
-.mic-grille {
-    display: flex;
-    gap: 4px;
-}
-
-.mic-grille span {
-    display: block;
-    width: 5px;
-    height: 5px;
-    background-color: #1f1f1f;
-    border-radius: 50%;
-}
-
-.context-display {
+.brand {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
-    color: #a0a0a0;
-    text-align: right;
+    font-weight: bold;
     font-style: italic;
-}
-
-/* --- Optional Branding --- */
-.brand-label {
-    font-size: 9px;
-    color: #888;
-    text-align: center;
-    margin-top: 5px;
-    letter-spacing: 1px;
-}
-
-/* --- Hide Audio Element --- */
-#radio-audio {
-    display: none;
 }

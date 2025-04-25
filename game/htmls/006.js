@@ -1,434 +1,405 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Configuration ---
-    const debugMode = true; // SET TO true FOR 0-5 second waits, false for 0-300 second waits
-    const minWaitSeconds = debugMode ? 0 : 0;
-    const maxWaitSeconds = debugMode ? 50 : 300; // 300 seconds = 5 minutes // Adjusted debug max wait
+    const TUNING_THRESHOLD = 0.050; // MHz tolerance for tuning
+    const MIN_MESSAGE_DELAY = 5000; // 5 seconds (ms)
+    const MAX_MESSAGE_DELAY = 15000; // 15 seconds (ms)
 
-    // --- Get DOM Elements ---
-    const audioElement = document.getElementById('radio-audio');
-    const beepAudioElement = document.getElementById('beep-audio'); // <<< GET BEEP ELEMENT
+    // --- Frequency Ranges ---
+    const frequencyRanges = {
+        'civil': { min: 26.965, max: 27.405, default: 27.185 },
+        'secure': { min: 30.000, max: 88.000, default: 45.500 }
+    };
+
+    // --- Target Frequencies (Where static/messages trigger) ---
+    const targetFrequencies = {
+        'civil': [27.185], // Example CB channel 19
+        'secure': [45.500, 75.125] // Example military frequencies
+    };
+
+    // --- NEW: Label-Specific Audio Mapping ---
+    // Structure: labelAudioMap[labelValue][channel][frequency] = [audioFile1, audioFile2, ...]
+    // Note: Frequencies here MUST match targetFrequencies and use .toFixed(3) format.
+    const labelAudioMap = {
+        'bootcampinsideprojectorroomstart': {
+            'secure': {
+                '45.500': ['audio/1.wav', 'audio/2.mp3'], // Military-style messages
+                '75.125': ['audio/0.wav']                 // Another secure message/sound
+            }
+            // Add civil messages for this label if needed
+            // 'civil': {
+            //     '27.185': ['audio/some_other_file.wav']
+            // }
+        },
+        'some_other_label': { // Example for a different scenario
+            'civil': {
+                '27.185': ['audio/a1.wav', 'audio/a2.wav'] // Civilian-style messages
+            }
+            // Add secure messages for this label if needed
+        },
+        // Add more labels and their corresponding audio files here
+        'default_label_if_needed': {
+             'civil': { '27.185': ['audio/a1.wav'] },
+             'secure': { '45.500': ['audio/0.wav'] }
+        }
+    };
+
+    // --- DOM Elements ---
+    const container = document.getElementById('draggable-radio');
+    const dragHandle = document.getElementById('drag-handle');
     const statusDisplay = document.getElementById('radio-status');
     const channelDisplay = document.getElementById('radio-channel-display');
-    const signalLevelDisplay = document.getElementById('signal-level');
-    const locationDisplay = document.getElementById('location-context');
-    const powerButton = document.getElementById('power-button');
+    const frequencyDisplay = document.getElementById('frequency-display');
     const powerIndicator = document.getElementById('power-indicator');
+    const powerButton = document.getElementById('power-button');
     const channelButtons = document.querySelectorAll('.channel-button');
+    const volumeKnob = document.getElementById('volume-knob');
+    const volumeIndicator = document.getElementById('volume-indicator');
+    const tuningKnob = document.getElementById('tuning-knob');
+    const tuningIndicator = document.getElementById('tuning-indicator');
+
+    const staticAudio = document.getElementById('static-audio');
+    const messageAudio = document.getElementById('message-audio');
 
     // --- State Variables ---
     let isOn = false;
     let currentChannel = null;
-    let lastLabel = 'Unknown';
-    let currentAudioContext = null;
-    let playedSpecificAudio = new Set();
-    let isWaitingForNextAudio = false;
-    let staticTimerId = null;
-    let isPermanentStatic = false;
-    let isBeeping = false; // <<< Flag to track if beep is playing
-
-    // --- Get lastLabel from URL ---
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-    lastLabel = getQueryParam('lastLabel') || 'Unknown';
-    if (locationDisplay) {
-       // locationDisplay.textContent = `LOC: ${lastLabel}`; // Keep commented if not needed
-    } else {
-        console.warn("Element with ID 'location-context' not found.");
-    }
-
-    // --- Configuration Maps ---
-
-    // ** Signal Strength Map **
-    const signalStrengthMap = {
-        'FrontSeat': 'STRONG',
-        'bootcampinsideprojectorroomstart': 'STRONG',
-        'stairwell': 'MODERATE',
-        'outsideprojectorroom': 'STRONG',
-        'storageroom': 'WEAK',
-        'laboratory': 'NONE',
-        'outsideclosetroom': 'STRONG',
-        'outsidecaferoom': 'STRONG',
-        'bg militaryentrance': 'STRONG',
-        'bg maindeskentrance': 'STRONG',
-        'apple': 'WEAK',
-        'mirrorstorage': 'WEAK',
-        'default': 'MODERATE'
-    };
-
-    // ** Audio Mapping Structure **
-    // Paths are relative to the htmls/ folder (e.g., game/htmls/audio/...)
-    // UPDATE THIS WITH YOUR ACTUAL FILES AND STRUCTURE
-    const audioMap = {
-        '1': { // Channel 1
-            'FrontSeat': { // Label
-                specific: ['audio/1.wav', 'audio/frontseat_extra1.mp3', 'audio/frontseat_extra2.wav'], // List of specific sounds
-                static: 'audio/static_low.wav', // Static sound for this context
-                playSpecificFirst: true // Start with a specific sound?
-            },
-            'bootcampinsideprojectorroomstart': {
-                specific: ['audio/a1.wav', 'audio/a2.wav'],
-                static: 'audio/2.mp3',
-                playSpecificFirst: true
-            },
-            // Add other labels for channel 1...
-            'default': { // Default for channel 1 if label not found
-                specific: [], // No specific audio
-                static: 'audio/placeholder_static.mp3',
-                playSpecificFirst: false // Start with static
-            }
-        },
-        '2': { // Channel 2 - Example starting with static
-             'default': {
-                specific: ['audio/channel2_message1.wav', 'audio/channel2_anomaly.mp3'],
-                static: 'audio/placeholder_static.mp3',
-                playSpecificFirst: false // Start with static, then play specific randomly
-            }
-        },
-        '3': { // Channel 3 - Example with only static
-             'default': {
-                specific: [],
-                static: 'audio/placeholder_static.mp3',
-                playSpecificFirst: false
-            }
-        },
-        // Add channels 4, 5, 6 with similar structures...
-        '4': { 'default': { specific: [], static: 'audio/placeholder_static.mp3', playSpecificFirst: false } },
-        '5': { 'default': { specific: [], static: 'audio/placeholder_static.mp3', playSpecificFirst: false } },
-        '6': { 'default': { specific: [], static: 'audio/placeholder_static.mp3', playSpecificFirst: false } }
-    };
+    let currentFrequency = 0;
+    let volumeLevel = 0.5;
+    let tuningRotation = 135;
+    let isDraggingKnob = false;
+    let isDraggingRadio = false;
+    let dragOffsetX, dragOffsetY;
+    let messageTimeoutId = null;
+    let currentLabel = null; // Store the detected valid label
+    let hasValidLabel = false; // Flag if *any* known label is detected
 
     // --- Helper Functions ---
-    function getAudioContext(channel, label) {
-        if (audioMap[channel]) {
-            return audioMap[channel][label] || audioMap[channel]['default'];
-        }
-        // Fallback if channel doesn't exist
-        console.warn(`Channel ${channel} not found in audioMap. Using default static.`);
-        return { specific: [], static: 'audio/placeholder_static.mp3', playSpecificFirst: false };
+    function getUrlParameter(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
     }
-
-    function getFullUrl(relativePath) {
-        // Ensure relativePath is a string and not empty
-        if (typeof relativePath !== 'string' || !relativePath) {
-            console.error("Invalid relative path provided to getFullUrl:", relativePath);
-            return null; // Or handle error appropriately
-        }
-        try {
-            return new URL(relativePath, window.location.href).href;
-        } catch (e) {
-            console.error(`Error creating URL from relative path "${relativePath}":`, e);
-            return null; // Or handle error appropriately
-        }
-    }
-
-    function logDebug(message) {
-        if (debugMode) {
-            console.log(`[DEBUG] ${message}`);
-        }
-    }
-
-    // --- Core Audio Functions ---
 
     function updateDisplay() {
         if (isOn) {
             statusDisplay.textContent = 'STATUS: ONLINE';
-            if (powerIndicator) powerIndicator.classList.add('on');
-
-            if (currentChannel) {
-                channelDisplay.textContent = `CH: ${currentChannel}`;
-                const strength = signalStrengthMap[lastLabel] || signalStrengthMap['default'];
-                signalLevelDisplay.textContent = strength;
-            } else {
-                channelDisplay.textContent = 'CH: --';
-                signalLevelDisplay.textContent = 'N/A';
-            }
+            powerIndicator.classList.add('on');
+            channelDisplay.textContent = currentChannel ? `CH: ${currentChannel.toUpperCase()}` : 'CH: --';
+            frequencyDisplay.textContent = currentChannel ? `${currentFrequency.toFixed(3)} MHz` : '---.--- MHz';
+            channelButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.channel === currentChannel);
+            });
         } else {
             statusDisplay.textContent = 'STATUS: OFF';
+            powerIndicator.classList.remove('on');
             channelDisplay.textContent = 'CH: --';
-            signalLevelDisplay.textContent = 'N/A';
-            if (powerIndicator) powerIndicator.classList.remove('on');
+            frequencyDisplay.textContent = '---.--- MHz';
+            channelButtons.forEach(btn => btn.classList.remove('active'));
+        }
+        volumeIndicator.style.transform = `translateX(-50%) rotate(${volumeLevel * 270}deg)`;
+        tuningIndicator.style.transform = `translateX(-50%) rotate(${tuningRotation}deg)`;
+    }
+
+    function stopAllAudio() {
+        clearTimeout(messageTimeoutId);
+        messageTimeoutId = null;
+        if (!staticAudio.paused) {
+            staticAudio.pause();
+            staticAudio.currentTime = 0;
+        }
+        if (!messageAudio.paused) {
+            messageAudio.pause();
+            messageAudio.currentTime = 0;
         }
     }
 
-    function playSpecificAudio(audioPath) {
-        if (!isOn) return;
-        logDebug(`Playing specific audio: ${audioPath}`);
-        isWaitingForNextAudio = false;
-        isPermanentStatic = false;
-        isBeeping = false; // No longer beeping
-        clearTimeout(staticTimerId);
-
-        const fullUrl = getFullUrl(audioPath);
-        if (!fullUrl) return; // Stop if URL creation failed
-
-        if (audioElement.src !== fullUrl || audioElement.paused) {
-            audioElement.src = fullUrl;
-            audioElement.load();
-            audioElement.loop = false; // Ensure specific audio does not loop
-            audioElement.play().then(() => {
-                logDebug(`Successfully started: ${audioPath}`);
-                playedSpecificAudio.add(audioPath); // Mark as played *after* successfully starting
-            }).catch(e => console.warn("Specific audio play failed:", e));
-        } else {
-             logDebug(`Audio ${audioPath} already playing or set.`);
-        }
-        updateDisplay();
-    }
-
-    function playStaticAudio(loop = true) {
-        if (!isOn || !currentAudioContext || !currentAudioContext.static) return;
-        logDebug(`Playing static audio: ${currentAudioContext.static} (Loop: ${loop})`);
-
-        const fullUrl = getFullUrl(currentAudioContext.static);
-        if (!fullUrl) return; // Stop if URL creation failed
-
-        // Only change source if needed, always set loop and play
-        if (audioElement.src !== fullUrl || audioElement.loop !== loop) { // Also check if loop status needs changing
-            audioElement.src = fullUrl;
-            audioElement.load();
-        }
-        audioElement.loop = loop; // Control looping based on parameter
-        // Play only if paused or source changed
-        if (audioElement.paused || audioElement.src !== fullUrl) {
-             audioElement.play().catch(e => console.warn("Static audio play failed:", e));
-        }
-        updateDisplay();
-    }
-
-    function playNextSpecificAudio() {
-        if (!isOn || !currentAudioContext) return;
-        logDebug("Attempting to play next specific audio...");
-        isWaitingForNextAudio = false;
-        clearTimeout(staticTimerId);
-
-        const availableSpecific = currentAudioContext.specific.filter(
-            audioPath => !playedSpecificAudio.has(audioPath)
-        );
-
-        if (availableSpecific.length > 0) {
-            const randomIndex = Math.floor(Math.random() * availableSpecific.length);
-            const nextAudio = availableSpecific[randomIndex];
-            logDebug(`Found ${availableSpecific.length} unplayed specific audio. Will beep before: ${nextAudio}`);
-
-            // --- Play Beep First ---
-            if (beepAudioElement && beepAudioElement.src && !beepAudioElement.src.endsWith('/')) { // Check if beep element and src exist and is valid
-                isBeeping = true; // Set beeping flag
-
-                // Define the handler that will play the specific audio AFTER the beep
-                const playSpecificAfterBeep = () => {
-                    beepAudioElement.removeEventListener('ended', playSpecificAfterBeep); // Clean up listener immediately
-                    isBeeping = false; // Clear beeping flag
-                    // Double-check state in case it changed during the beep
-                    if (isOn && currentChannel) {
-                        playSpecificAudio(nextAudio);
-                    } else {
-                        logDebug("State changed during beep, cancelling specific audio play.");
-                    }
-                };
-
-                // Add listener that runs only once
-                beepAudioElement.addEventListener('ended', playSpecificAfterBeep, { once: true });
-
-                // Play the beep
-                beepAudioElement.currentTime = 0; // Rewind beep
-                beepAudioElement.play().catch(e => {
-                    console.warn("Beep play failed:", e);
-                    beepAudioElement.removeEventListener('ended', playSpecificAfterBeep); // Clean up listener on error
-                    isBeeping = false; // Clear beeping flag on error
-                    // If beep fails, play specific audio immediately as a fallback.
-                    playSpecificAudio(nextAudio); // Fallback
-                });
-            } else {
-                // If beep element doesn't exist or has no source, play specific audio directly
-                logDebug("Beep element/src not found or invalid, playing specific audio directly.");
-                playSpecificAudio(nextAudio);
-            }
-            // --- End Beep Logic ---
-
-        } else {
-            logDebug("No unplayed specific audio left. Switching to permanent static.");
-            isPermanentStatic = true;
-            playStaticAudio(true); // Play static indefinitely (loop=true)
-        }
-    }
-
-    function playStaticAndScheduleNext() {
-        if (!isOn || !currentAudioContext) return; // Check if radio is on and context exists
-
-        if (isPermanentStatic) {
-            logDebug("In permanent static mode. Ensuring static loop.");
-            playStaticAudio(true); // Ensure static is playing and looping
-            return;
-        };
-
-        logDebug("Playing static and scheduling next specific audio check...");
-        playStaticAudio(true); // Play static (looping while waiting)
-        isWaitingForNextAudio = true;
-
-        const waitTime = (Math.random() * (maxWaitSeconds - minWaitSeconds) + minWaitSeconds) * 1000; // Time in milliseconds
-        logDebug(`Waiting for ${waitTime / 1000} seconds before next specific audio.`);
-
-        clearTimeout(staticTimerId); // Clear previous timer if any
-        staticTimerId = setTimeout(() => {
-            // Check state again before playing - crucial!
-            if (isOn && currentChannel && isWaitingForNextAudio) {
-                playNextSpecificAudio();
-            } else {
-                logDebug("Timer fired, but state changed (off/channel switch/no longer waiting). Aborting scheduled play.");
-                isWaitingForNextAudio = false; // Ensure flag is cleared if timer aborted
-            }
-        }, waitTime);
-    }
-
-    function stopAudio() {
-        logDebug("Stopping all audio and timers.");
-        clearTimeout(staticTimerId);
-        staticTimerId = null;
-        isWaitingForNextAudio = false;
-        isPermanentStatic = false;
-        isBeeping = false; // Clear beeping flag
-
-        // Stop main audio
-        if (audioElement && !audioElement.paused) {
-            audioElement.pause();
-            audioElement.currentTime = 0;
-        }
-        if (audioElement) audioElement.loop = false; // Ensure loop is off
-
-        // Stop beep audio
-        if (beepAudioElement && !beepAudioElement.paused) {
-            beepAudioElement.pause();
-            beepAudioElement.currentTime = 0;
-            logDebug("Beep audio stopped.");
-            // Note: {once: true} listener should self-remove, but explicit removal is safer if needed.
-            // However, managing the exact handler reference adds complexity. Relying on state checks.
-        }
-
-        updateDisplay();
-    }
-
-    function selectChannel(channel) {
-        logDebug(`Selecting channel: ${channel}`);
-        if (!isOn) {
-            logDebug("Cannot select channel, radio is off.");
-            return;
-        }
-
-        // Stop current playback and timers before switching
-        stopAudio();
-
-        // Update channel state
-        currentChannel = channel;
-        currentAudioContext = getAudioContext(channel, lastLabel);
-        playedSpecificAudio = new Set(); // Reset played list for the new context
-        isPermanentStatic = false; // Reset permanent static flag
-
-        // Check if context is valid
-        if (!currentAudioContext) {
-            console.error(`Failed to get audio context for channel ${channel}, label ${lastLabel}. Cannot proceed.`);
-            currentChannel = null; // Reset channel if context failed
-            updateDisplay();
-            return;
-        }
-
-        logDebug(`Audio context set. Specific: ${currentAudioContext.specific?.length || 0}, Static: ${currentAudioContext.static}, Play Specific First: ${currentAudioContext.playSpecificFirst}`);
-
-        // Update button visuals
-        channelButtons.forEach(btn => btn.classList.remove('active'));
-        const selectedButton = document.querySelector(`.channel-button[data-channel="${channel}"]`);
-        if (selectedButton) {
-            selectedButton.classList.add('active');
-        }
-
-        // Decide initial playback based on context config
-        if (currentAudioContext.playSpecificFirst && currentAudioContext.specific?.length > 0) {
-            logDebug("Context starts with specific audio.");
-            playNextSpecificAudio(); // This will beep then pick the first random specific one
-        } else {
-            logDebug("Context starts with static or has no specific audio.");
-            playStaticAndScheduleNext(); // Start static and schedule the first specific check (if any specific exist)
-        }
-
-        updateDisplay(); // Update channel number, signal etc.
-    }
-
-    // --- Event Listeners ---
-    if (powerButton) {
-        powerButton.addEventListener('click', () => {
-            isOn = !isOn;
-            logDebug(`Power toggled: ${isOn ? 'ON' : 'OFF'}`);
-            if (isOn) {
-                // If turning on, re-initialize the current channel if one was selected
-                if (currentChannel) {
-                    // Re-run select logic to start sequence correctly
-                    // Need a slight delay sometimes for audio context to be ready after power on? Test.
-                    // setTimeout(() => selectChannel(currentChannel), 50); // Optional small delay
-                    selectChannel(currentChannel);
-                } else {
-                    updateDisplay(); // Just update display if no channel selected yet
-                }
-            } else {
-                stopAudio(); // Stop everything
-                currentChannel = null; // Reset channel selection visually/logically
-                channelButtons.forEach(btn => btn.classList.remove('active'));
-                updateDisplay(); // Update display to OFF state
-            }
-        });
-    } else {
-        console.error("Power button not found.");
-    }
-
-    if (channelButtons.length > 0) {
-        channelButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const channel = button.getAttribute('data-channel');
-                // Only re-select if channel changed OR if it's the same channel but nothing is playing (e.g., after error)
-                if (currentChannel !== channel || (currentChannel === channel && audioElement.paused && !isBeeping)) {
-                    selectChannel(channel);
-                } else {
-                    logDebug(`Channel ${channel} already selected and playing/beeping.`);
+    function playStatic() {
+        if (!isOn || !currentChannel) return;
+        // Check if already playing to avoid interrupting seeks etc.
+        if (staticAudio.paused) {
+            console.log("Attempting to play static...");
+            staticAudio.volume = volumeLevel * 0.7;
+            staticAudio.currentTime = 0; // Reset position
+             // Use a promise to handle potential play interruptions
+            staticAudio.play().then(() => {
+                 console.log("Static playing.");
+            }).catch(e => {
+                // Ignore errors often caused by rapid start/stop, but log others
+                if (e.name !== 'AbortError') {
+                    console.error("Error playing static:", e);
                 }
             });
-        });
-    } else {
-        console.error("No channel buttons found.");
+        }
     }
 
-    // --- Audio Element Event Listener (Main Radio Audio) ---
-    audioElement.addEventListener('ended', () => {
-        logDebug(`Audio ended: ${audioElement.src}`);
-        // Get the expected full URL for the current context's static audio
-        const staticFullUrl = currentAudioContext ? getFullUrl(currentAudioContext.static) : null;
+    function scheduleRandomMessage(tunedFrequency) {
+        // Messages only play if a *valid label* was detected on page load
+        if (!hasValidLabel || !isOn || !currentChannel || !currentLabel) {
+             console.log("Conditions not met for scheduling message (No valid label, off, no channel).");
+             return;
+        }
 
-        // Check if the audio that just ended was NOT the static audio for the current context
-        if (staticFullUrl && audioElement.src === staticFullUrl) {
-            // --- Static Audio Ended ---
-            // The 'loop' attribute should handle restarting. This is a fallback/check.
-            if (isPermanentStatic) {
-                logDebug("Static ended in permanent mode, loop should restart it.");
-                if (audioElement.paused) audioElement.play().catch(e => console.warn("Static loop restart failed:", e));
-            } else if (isWaitingForNextAudio) {
-                logDebug("Static ended while waiting for timer, loop should restart it.");
-                if (audioElement.paused) audioElement.play().catch(e => console.warn("Static loop restart failed:", e));
-            } else {
-                logDebug("Static ended unexpectedly (not waiting, not permanent). Restarting loop.");
-                 if (audioElement.paused) audioElement.play().catch(e => console.warn("Static loop restart failed:", e));
+        // --- MODIFIED: Look up messages based on the detected label ---
+        const messagesForLabelFreq = labelAudioMap[currentLabel]?.[currentChannel]?.[tunedFrequency.toFixed(3)];
+        // --- End Modification ---
+
+        if (!messagesForLabelFreq || messagesForLabelFreq.length === 0) {
+            console.log(`No specific messages defined for label '${currentLabel}', channel ${currentChannel}, freq ${tunedFrequency.toFixed(3)} MHz.`);
+            // If no messages, just let static play. Don't clear timeout here, static is handled elsewhere.
+            return;
+        }
+
+        clearTimeout(messageTimeoutId); // Clear previous scheduled message (if any)
+
+        const delay = Math.random() * (MAX_MESSAGE_DELAY - MIN_MESSAGE_DELAY) + MIN_MESSAGE_DELAY;
+        console.log(`Scheduling message for label '${currentLabel}' at ${tunedFrequency.toFixed(3)} in ${Math.round(delay / 1000)}s`);
+
+        messageTimeoutId = setTimeout(() => {
+            // Re-check conditions *just before* playing
+            if (!isOn || currentChannel === null || Math.abs(currentFrequency - tunedFrequency) > TUNING_THRESHOLD || !hasValidLabel) {
+                console.log("Conditions changed before message could play. Aborting message.");
+                stopAllAudio(); // Make sure static stops if tuned away or turned off
+                return;
             }
-        } else {
-            // --- Specific Audio Ended ---
-            // Only transition if radio is on, channel selected, and we weren't already waiting for the next timer
-            if (isOn && currentChannel && !isWaitingForNextAudio && !isBeeping) {
-                 logDebug("Specific audio finished, switching to static and scheduling next.");
-                 playStaticAndScheduleNext(); // Play static and set timer for the *next* specific audio
-            } else {
-                 logDebug("Specific audio ended, but state indicates no action needed (e.g., turned off, channel changed, already waiting/beeping).");
+
+            const messageIndex = Math.floor(Math.random() * messagesForLabelFreq.length);
+            const messageSrc = messagesForLabelFreq[messageIndex];
+            console.log(`Playing message: ${messageSrc}`);
+
+            if (!staticAudio.paused) staticAudio.pause(); // Pause static
+
+            messageAudio.src = messageSrc;
+            messageAudio.volume = volumeLevel;
+            messageAudio.play().then(() => {
+                 messageAudio.onended = () => {
+                    console.log("Message finished.");
+                    messageAudio.onended = null;
+                    // Restart static AND schedule next message IF still tuned correctly
+                    if (isOn && currentChannel && Math.abs(currentFrequency - tunedFrequency) <= TUNING_THRESHOLD && hasValidLabel) {
+                        console.log("Restarting static and scheduling next message.");
+                        playStatic();
+                        scheduleRandomMessage(tunedFrequency); // Recursive call for next message
+                    } else {
+                        console.log("Conditions changed after message finished. Not restarting static/scheduling.");
+                        stopAllAudio();
+                    }
+                };
+            }).catch(e => {
+                console.error("Error playing message:", e);
+                 // If message fails, cautiously restart static and reschedule
+                 if (isOn && currentChannel && Math.abs(currentFrequency - tunedFrequency) <= TUNING_THRESHOLD && hasValidLabel) {
+                    playStatic();
+                    scheduleRandomMessage(tunedFrequency);
+                }
+            });
+
+        }, delay);
+    }
+
+     function checkTuning() {
+        if (!isOn || !currentChannel) {
+            stopAllAudio();
+            return;
+        }
+
+        let isTuned = false;
+        let tunedTargetFreq = null;
+
+        if (targetFrequencies[currentChannel]) {
+            for (const targetFreq of targetFrequencies[currentChannel]) {
+                if (Math.abs(currentFrequency - targetFreq) <= TUNING_THRESHOLD) {
+                    isTuned = true;
+                    tunedTargetFreq = targetFreq;
+                    break;
+                }
             }
         }
-    }); // <-- This closes the 'ended' listener function
 
-    // --- Initial State ---
-    updateDisplay(); // Set initial display based on default state (off)
+        if (isTuned) {
+            // Only start static/schedule if static isn't already playing for this frequency
+            if (staticAudio.paused) {
+                console.log(`Tuned to ${tunedTargetFreq.toFixed(3)} MHz! Starting static.`);
+                playStatic();
+                // Schedule message *only if* a valid label was detected on load
+                if (hasValidLabel) {
+                     scheduleRandomMessage(tunedTargetFreq);
+                } else {
+                    console.log("Tuned, but no valid label detected. Static only.")
+                }
+            } else {
+                 // Already tuned and static is playing, do nothing extra.
+                 // The message loop handles rescheduling if applicable.
+            }
+        } else {
+            // Not tuned to any target frequency, stop everything.
+            if (!staticAudio.paused || messageTimeoutId !== null) {
+                 console.log("Tuned away from target frequency. Stopping audio.");
+                 stopAllAudio();
+            }
+        }
+    }
 
-}); // <-- This is the CORRECT closing brace and parenthesis for the main DOMContentLoaded listener
+    // --- Knob Drag Logic (Identical to previous version) ---
+    function startKnobDrag(e, knobType) {
+        e.preventDefault();
+        isDraggingKnob = knobType;
+        document.addEventListener('mousemove', handleKnobDrag);
+        document.addEventListener('touchmove', handleKnobDrag, { passive: false });
+        document.addEventListener('mouseup', stopKnobDrag);
+        document.addEventListener('touchend', stopKnobDrag);
+    }
+    function handleKnobDrag(e) {
+        if (!isDraggingKnob || !isOn) return;
+        e.preventDefault();
+        const knobElement = (isDraggingKnob === 'volume') ? volumeKnob : tuningKnob;
+        const rect = knobElement.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const clientX = e.clientX || e.touches[0].clientX;
+        const clientY = e.clientY || e.touches[0].clientY;
+        const angle = Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI) + 90;
+        let rotation = angle < 0 ? angle + 360 : angle;
+        rotation = Math.max(0, Math.min(270, rotation));
+
+        if (isDraggingKnob === 'volume') {
+            volumeLevel = rotation / 270;
+            staticAudio.volume = volumeLevel * 0.7;
+            if (!messageAudio.paused) messageAudio.volume = volumeLevel;
+            volumeIndicator.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+        } else if (isDraggingKnob === 'tuning' && currentChannel) {
+            tuningRotation = rotation;
+            const range = frequencyRanges[currentChannel];
+            const freqSpan = range.max - range.min;
+            currentFrequency = range.min + (tuningRotation / 270) * freqSpan;
+            frequencyDisplay.textContent = `${currentFrequency.toFixed(3)} MHz`;
+            tuningIndicator.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+            checkTuning(); // Check tuning dynamically as knob moves
+        }
+    }
+    function stopKnobDrag() {
+        if (!isDraggingKnob) return;
+        const wasTuning = (isDraggingKnob === 'tuning');
+        isDraggingKnob = false;
+        document.removeEventListener('mousemove', handleKnobDrag);
+        document.removeEventListener('touchmove', handleKnobDrag);
+        document.removeEventListener('mouseup', stopKnobDrag);
+        document.removeEventListener('touchend', stopKnobDrag);
+        // Final check ONLY if the tuning knob was released
+        if (wasTuning && isOn && currentChannel) {
+             checkTuning();
+        }
+    }
+
+    // --- Radio Drag Logic (Identical to previous version) ---
+    function startRadioDrag(e) { /* ... same as before ... */ }
+    function handleRadioDrag(e) { /* ... same as before ... */ }
+    function stopRadioDrag() { /* ... same as before ... */ }
+    // --- [Copy the Radio Drag Logic functions from the previous answer here] ---
+     function startRadioDrag(e) {
+        e.preventDefault();
+        isDraggingRadio = true;
+        const rect = container.getBoundingClientRect();
+        const clientX = e.clientX || e.touches[0].clientX;
+        const clientY = e.clientY || e.touches[0].clientY;
+        dragOffsetX = clientX - rect.left;
+        dragOffsetY = clientY - rect.top;
+        container.style.cursor = 'grabbing';
+        document.addEventListener('mousemove', handleRadioDrag);
+        document.addEventListener('touchmove', handleRadioDrag, { passive: false });
+        document.addEventListener('mouseup', stopRadioDrag);
+        document.addEventListener('touchend', stopRadioDrag);
+    }
+
+    function handleRadioDrag(e) {
+        if (!isDraggingRadio) return;
+        e.preventDefault();
+        const clientX = e.clientX || e.touches[0].clientX;
+        const clientY = e.clientY || e.touches[0].clientY;
+        let newX = clientX - dragOffsetX;
+        let newY = clientY - dragOffsetY;
+        const maxX = window.innerWidth - container.offsetWidth;
+        const maxY = window.innerHeight - container.offsetHeight;
+        newX = Math.max(0, Math.min(maxX, newX));
+        newY = Math.max(0, Math.min(maxY, newY));
+        container.style.left = `${newX}px`;
+        container.style.top = `${newY}px`;
+    }
+
+    function stopRadioDrag() {
+        isDraggingRadio = false;
+        container.style.cursor = 'default';
+        dragHandle.style.cursor = 'move';
+        document.removeEventListener('mousemove', handleRadioDrag);
+        document.removeEventListener('touchmove', handleRadioDrag);
+        document.removeEventListener('mouseup', stopRadioDrag);
+        document.removeEventListener('touchend', stopRadioDrag);
+    }
+
+
+    // --- Event Listeners ---
+    powerButton.addEventListener('click', () => {
+        isOn = !isOn;
+        console.log(`Power ${isOn ? 'ON' : 'OFF'}`);
+        if (!isOn) {
+            stopAllAudio();
+            currentChannel = null;
+        }
+        updateDisplay();
+         if (isOn && currentChannel) { // Re-check tuning if turning on with a channel selected
+            checkTuning();
+        }
+    });
+
+    channelButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (!isOn) return;
+            const selectedChannel = button.dataset.channel;
+            if (selectedChannel !== currentChannel) {
+                console.log(`Channel selected: ${selectedChannel}`);
+                stopAllAudio();
+                currentChannel = selectedChannel;
+                const range = frequencyRanges[currentChannel];
+                currentFrequency = range.default;
+                const freqSpan = range.max - range.min;
+                tuningRotation = freqSpan > 0 ? ((currentFrequency - range.min) / freqSpan) * 270 : 135;
+                tuningRotation = Math.max(0, Math.min(270, tuningRotation));
+                updateDisplay();
+                checkTuning(); // Check default frequency on channel change
+            }
+        });
+    });
+
+    volumeKnob.addEventListener('mousedown', (e) => startKnobDrag(e, 'volume'));
+    volumeKnob.addEventListener('touchstart', (e) => startKnobDrag(e, 'volume'), { passive: false });
+    tuningKnob.addEventListener('mousedown', (e) => startKnobDrag(e, 'tuning'));
+    tuningKnob.addEventListener('touchstart', (e) => startKnobDrag(e, 'tuning'), { passive: false });
+
+    dragHandle.addEventListener('mousedown', startRadioDrag);
+    dragHandle.addEventListener('touchstart', startRadioDrag, { passive: false });
+
+    // --- Initialization ---
+    function initializeRadio() {
+        // --- MODIFIED: Check URL Parameter against the map ---
+        const labelFromUrl = getUrlParameter('lastLabel');
+        console.log(`URL Parameter 'lastLabel': ${labelFromUrl}`);
+        if (labelFromUrl && labelAudioMap[labelFromUrl]) {
+            currentLabel = labelFromUrl; // Store the valid label found
+            hasValidLabel = true;
+            console.log(`Valid label '${currentLabel}' detected. Messages enabled for this label.`);
+        } else {
+            currentLabel = null;
+            hasValidLabel = false;
+            console.warn("No valid/known 'lastLabel' found in URL or map. Message playback disabled. Static will still play on tune.");
+        }
+        // --- End Modification ---
+
+        const initialX = (window.innerWidth - container.offsetWidth) / 2;
+        const initialY = (window.innerHeight - container.offsetHeight) / 2;
+        container.style.left = `${initialX}px`;
+        container.style.top = `${initialY}px`;
+        staticAudio.volume = volumeLevel * 0.7;
+        messageAudio.volume = volumeLevel;
+        updateDisplay();
+    }
+
+    initializeRadio();
+});

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactical Military Radio V6 (Refined Tuning)</title>
+    <style>
+        /* --- PASTE YOUR FULL ORIGINAL CSS HERE --- */
+        /* --- Ensure the styles from the previous version are included --- */
+        /* --- Including the .light.signal opacity transition --- */
+
+        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #1a1a1a; font-family: 'Courier New', monospace; color: #e0e0e0; }
+        .radio-container { position: relative; width: 340px; height: 600px; background: linear-gradient(145deg, #383838, #1e1e1e); border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.05), inset 0 -2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(85, 255, 85, 0.05); padding: 20px; display: flex; flex-direction: column; align-items: center; border: 1px solid #111; border-top: 1px solid #4a4a4a; border-left: 1px solid #4a4a4a; }
+        .antenna { width: 10px; height: 70px; background: linear-gradient(to bottom, #222, #444); border: 1px solid #111; border-radius: 5px 5px 0 0; position: absolute; top: -55px; right: 35px; box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.4); } .antenna::before { content: ''; position: absolute; bottom: -8px; left: -4px; width: 18px; height: 10px; background: linear-gradient(145deg, #333, #1a1a1a); border-radius: 3px; border: 1px solid #111; box-shadow: inset 0 1px 2px rgba(0,0,0,0.5); } .antenna::after { content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: #111; border-radius: 50%; }
+        .radio-display { width: calc(100% - 40px); height: 65px; background-color: #050f05; border: 2px solid #1a2a1a; border-radius: 6px; color: #3f9f3f; display: flex; justify-content: center; align-items: center; position: relative; font-family: 'Orbitron', 'Courier New', monospace; font-size: 28px; letter-spacing: 3px; text-shadow: 0 0 8px rgba(85, 255, 85, 0.5); overflow: hidden; box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 0 8px rgba(85, 255, 85, 0.15); margin-bottom: 10px; } .display-scanline { position: absolute; top: 0; left: 0; width: 100%; height: 1.5px; background-color: rgba(85, 255, 85, 0.15); animation: scanline 3s linear infinite alternate; pointer-events: none; box-shadow: 0 0 5px rgba(85, 255, 85, 0.2); } @keyframes scanline { 0% { top: 5%; } 100% { top: 95%; } } .frequency-display { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; position: relative; z-index: 2; } .mode-indicator { position: absolute; top: 5px; right: 8px; font-size: 12px; font-weight: bold; color: #2a6a2a; z-index: 3; background: rgba(0,0,0,0.3); padding: 1px 3px; border-radius: 2px; } .mode-indicator.secure { color: #6a2a2a; }
+        .mode-switch-area { display: flex; align-items: center; gap: 8px; margin-bottom: 25px; margin-top: 10px; } .mode-switch { width: 100px; height: 35px; display: flex; justify-content: space-between; align-items: center; background-color: #111; border: 1px solid #444; border-top-color: #555; border-left-color: #555; border-radius: 18px; padding: 0 4px; position: relative; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 1px rgba(255, 255, 255, 0.05); cursor: pointer; } .mode-switch.dynamic-mode { cursor: default; } .switch-label { color: #999; font-size: 11px; font-weight: bold; text-transform: uppercase; z-index: 1; user-select: none; padding: 0 8px; text-shadow: 0 1px 1px rgba(0,0,0,0.5); pointer-events: none; } .switch-slider { position: absolute; width: 50px; height: 29px; background: linear-gradient(145deg, #4a4a4a, #2a2a2a); border: 1px solid #1a1a1a; border-radius: 15px; left: 4px; transition: left 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1); z-index: 3; cursor: default; } .mode-switch.dynamic-mode .switch-slider { cursor: grab; transition: none; } .mode-switch.dynamic-mode .switch-slider:active { cursor: grabbing; } .switch-slider.secure { left: calc(100% - 50px - 4px); } #switchInteractionToggle { background: #222; border: 1px solid #444; color: #888; font-size: 9px; padding: 3px 5px; border-radius: 4px; cursor: pointer; line-height: 1; transition: background 0.2s, color 0.2s; font-weight: bold; white-space: nowrap; } #switchInteractionToggle:hover { background: #333; color: #aaa; } #switchInteractionToggle.dynamic { background: #444; color: #ccc; }
+        .power-button { position: absolute; top: 15px; left: 15px; width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(145deg, #5a0000, #a00000); border: 2px solid #400; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 100, 100, 0.2), inset 0 -1px 1px rgba(0,0,0,0.3); cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background 0.2s ease, transform 0.1s ease; z-index: 10; } .power-button:active { transform: scale(0.95); background: linear-gradient(145deg, #7a0000, #c00000); } .power-button.on { background: linear-gradient(145deg, #005a00, #00a000); border-color: #040; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(100, 255, 100, 0.2), inset 0 -1px 1px rgba(0,0,0,0.3), 0 0 8px rgba(0, 255, 0, 0.3); } .power-symbol { width: 14px; height: 14px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50%; position: relative; border-top-color: transparent; transform: rotate(45deg); } .power-symbol::before { content: ''; position: absolute; width: 2px; height: 8px; background-color: rgba(255, 255, 255, 0.7); top: -6px; left: 50%; transform: translateX(-50%); }
+        .main-controls-area { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; padding: 0 5px; margin-top: 10px; margin-bottom: 20px; }
+        .left-dials { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .right-volume { display: flex; flex-direction: column; align-items: center; }
+        .dial-group { display: flex; flex-direction: column; align-items: center; }
+        .dial-label { text-align: center; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; color: #888; font-weight: bold; text-shadow: 0 1px 1px #000; }
+        .dial-container { position: relative; width: 110px; height: 110px; } .dial-container.fine-tune { width: 90px; height: 90px; } .dial-container.volume { width: 90px; height: 90px; }
+        .dial-base { width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, #2a2a2a 50%, #1c1c1c 100%); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5), inset 0 3px 5px rgba(0, 0, 0, 0.6), inset 0 -1px 2px rgba(255, 255, 255, 0.05); position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid #111; }
+        .dial-knob { position: absolute; width: 65%; height: 65%; border-radius: 50%; background: linear-gradient(145deg, #555, #303030); border: 2px solid #222; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 1px rgba(0,0,0,0.3); z-index: 4; display: flex; justify-content: center; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(0deg); transition: transform 0.1s linear, box-shadow 0.2s ease; cursor: pointer; user-select: none; }
+        .dial-knob.disabled { cursor: not-allowed; opacity: 0.7; } .dial-knob:active { background: linear-gradient(145deg, #606060, #353535); transform: translate(-50%, -50%) scale(0.98) rotate(var(--rotation-angle, 0deg)); } .dial-knob.dragging { cursor: grabbing; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 1px rgba(0,0,0,0.3), 0 0 12px 3px rgba(85, 255, 85, 0.5); }
+        .dial-marker { position: absolute; width: 4px; height: 30%; background-color: #af4c4c; border-radius: 2px; top: 5px; box-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        .radio-speaker { width: calc(100% - 50px); height: 80px; background: #111; border-radius: 8px; margin-top: 25px; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; border: 1px solid #333; box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8); } .speaker-grill { width: 95%; height: 90%; background-image: radial-gradient(rgba(85, 255, 85, 0.1) 1px, transparent 1px), radial-gradient(rgba(85, 255, 85, 0.1) 1px, #1a1a1a 1px); background-size: 6px 6px; background-position: 0 0, 3px 3px; border-radius: 5px; mask-image: linear-gradient(black, black); } .visualizer { position: absolute; bottom: 10px; width: 80%; height: 30px; display: flex; justify-content: space-evenly; align-items: flex-end; gap: 2px; } .visualizer-bar { width: 5px; background-color: #2a6a2a; height: 2px; opacity: 0.7; border-radius: 1px; transition: height 0.05s ease-out, background-color 0.1s ease; } .status-lights { display: flex; justify-content: center; gap: 30px; width: 100%; margin-top: 25px; margin-bottom: 10px; } .light { width: 22px; height: 22px; border-radius: 50%; background-color: #111; border: 2px solid #333; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(255, 255, 255, 0.05); position: relative; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s ease, box-shadow 0.3s ease; } .light::before { content: ''; position: absolute; width: 60%; height: 60%; border-radius: 50%; background-color: #222; box-shadow: inset 0 1px 2px rgba(0,0,0,0.5); transition: background-color 0.3s ease, box-shadow 0.3s ease; } .light::after { content: ''; position: absolute; top: 3px; left: 50%; transform: translateX(-50%); width: 10px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); }
+        .light.power { opacity: 1 !important; } .light.auth { opacity: 1 !important; }
+        .light.signal { opacity: 0.2; transition: background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.2s ease-out; }
+        .light.signal.active { background-color: #040; border-color: #060; }
+        .light.signal.active::before { background-color: #1aff1a; box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.7), 0 0 15px 4px rgba(50, 255, 50, 0.5), inset 0 0 5px rgba(150, 255, 150, 0.5); animation: pulse 1.8s infinite alternate; }
+        .light.power.active { background-color: #400; border-color: #600; } .light.power.active::before { background-color: #ff1a1a; box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.7), 0 0 15px 4px rgba(255, 50, 50, 0.5), inset 0 0 5px rgba(255, 150, 150, 0.5); animation: pulse 1.8s infinite alternate; }
+        .light.auth.active { background-color: #004; border-color: #006; } .light.auth.active::before { background-color: #1a1aff; box-shadow: 0 0 10px 2px rgba(0, 0, 255, 0.7), 0 0 15px 4px rgba(50, 50, 255, 0.5), inset 0 0 5px rgba(150, 150, 255, 0.5); animation: pulse 1.8s infinite alternate; }
+        @keyframes pulse { 0% { opacity: 0.8; transform: scale(1); } 100% { opacity: 1; transform: scale(1.05); } }
+        .radio-model { position: absolute; bottom: 5px; font-size: 9px; color: #555; letter-spacing: 1px; font-weight: bold; } .screw { position: absolute; width: 6px; height: 6px; background: radial-gradient(circle, #666 20%, #333 80%); border-radius: 50%; box-shadow: inset 0 0.5px 1px rgba(0, 0, 0, 0.8), 0 0.5px 0.5px rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; } .screw::before, .screw::after { content: ''; position: absolute; background-color: rgba(0,0,0,0.5); width: 1px; height: 70%; } .screw::after { width: 70%; height: 1px; } .screw-tl { top: 8px; left: 8px; } .screw-tr { top: 8px; right: 8px; } .screw-bl { bottom: 8px; left: 8px; } .screw-br { bottom: 8px; right: 8px; } .scuff { position: absolute; border-radius: 2px; background-color: rgba(200, 200, 200, 0.1); filter: blur(0.5px); pointer-events: none; } .scuff-1 { top: 50px; left: 5px; width: 30px; height: 3px; transform: rotate(-15deg); } .scuff-2 { bottom: 80px; right: 8px; width: 40px; height: 2px; transform: rotate(10deg); } .scuff-3 { top: 150px; left: 10px; width: 3px; height: 25px; transform: rotate(5deg); }
+        .debug-panel { position: fixed; bottom: 10px; left: 10px; background-color: rgba(0, 20, 0, 0.85); color: #0f0; padding: 15px; border-radius: 5px; font-size: 11px; display: none; z-index: 100; border: 1px solid #0a4a0a; font-family: 'Consolas', 'Menlo', monospace; max-width: 280px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); } .debug-panel div { margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .debug-panel span { color: #af0; font-weight: bold; } .debug-panel label { color: #0f0; }
+        #debugToggle { position: fixed; bottom: 10px; right: 10px; background-color: #1a1a1a; color: #0f0; border: 1px solid #0f0; border-radius: 5px; padding: 6px 12px; font-size: 11px; cursor: pointer; font-family: 'Consolas', 'Menlo', monospace; z-index: 101; opacity: 0.8; transition: opacity 0.2s ease; } #debugToggle:hover { opacity: 1; background-color: #2a2a2a; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    </style>
+</head>
+<body>
+    <div class="radio-container">
+         <!-- HTML structure identical to previous version -->
+         <div class="antenna"></div><div class="screw screw-tl"></div><div class="screw screw-tr"></div><div class="screw screw-bl"></div><div class="screw screw-br"></div><div class="scuff scuff-1"></div><div class="scuff scuff-2"></div><div class="scuff scuff-3"></div>
+        <div class="power-button" id="powerButton"><div class="power-symbol"></div></div>
+        <div class="radio-display"><div class="frequency-display" id="frequencyDisplay">000.000</div><div class="mode-indicator" id="modeIndicator">CIV</div><div class="display-scanline"></div></div>
+        <div class="mode-switch-area"><div class="mode-switch" id="modeSwitch"><div class="switch-label">CIV</div><div class="switch-slider" id="modeSlider"></div><div class="switch-label">SEC</div></div><button id="switchInteractionToggle" title="Toggle Switch Interaction Mode">Tap</button></div>
+        <div class="main-controls-area">
+            <div class="left-dials">
+                <div class="dial-group"><div class="dial-label">MHz</div><div class="dial-container" id="mhzContainer"><div class="dial-base"><div class="dial-knob" id="mhzKnob" data-control-type="mhz"><div class="dial-marker"></div></div></div></div></div>
+                <div class="dial-group"><div class="dial-label">kHz</div><div class="dial-container fine-tune" id="khzContainer"><div class="dial-base"><div class="dial-knob" id="khzKnob" data-control-type="khz"><div class="dial-marker"></div></div></div></div></div>
+            </div>
+            <div class="right-volume">
+                <div class="dial-group"><div class="dial-label">Volume</div><div class="dial-container volume" id="volumeContainer"><div class="dial-base"><div class="dial-knob volume-knob" id="volumeKnob" data-control-type="volume"><div class="dial-marker"></div></div></div></div></div>
+            </div>
+        </div>
+        <div class="radio-speaker"><div class="speaker-grill"></div><div class="visualizer" id="audioVisualizer"></div></div>
+        <div class="status-lights"><div class="light power" id="powerLight"></div><div class="light signal" id="signalLight"></div><div class="light auth" id="authLight"></div></div>
+        <div class="radio-model">TRC-550 TACTICAL</div>
+    </div>
+    <button id="debugToggle">DEBUG</button>
+    <div class="debug-panel" id="debugPanel">
+         <!-- Debug spans identical to previous -->
+        <div>Power: <span id="dbgPower">Off</span></div><div>URL Valid: <span id="dbgUrlValid">No</span></div><div>Last Label: <span id="dbgLastLabel">-</span></div><div>Mode: <span id="dbgMode">Civilian</span></div><div>Switch Mode: <span id="dbgSwitchMode">Tap</span></div><div>Target Freq: <span id="dbgTargetFreq">---.---</span></div><div>Target Msg: <span id="dbgTargetMsg">---</span></div><div>Target Chan: <span id="dbgTargetChan">---</span></div><div>Current Freq: <span id="dbgCurrentFreq">000.000</span></div><div>Total kHz Diff: <span id="dbgKhzDiff">N/A</span></div><div>Clarity Factor: <span id="dbgClarity">N/A</span></div><div>Volume: <span id="dbgVolume">50%</span></div><div>Tuning State: <span id="dbgTuningState">Far</span></div><div>Audio State: <span id="dbgAudioState">Idle</span></div><div>Civ Msg Played: <span id="dbgCivPlayed">No</span></div><div>Sec Msg Played: <span id="dbgSecPlayed">No</span></div><div>Interaction: <span id="dbgInteraction">Idle</span></div>
+    </div>
+
+    <script>
+        // --- Constants ---
+        const AUDIO_PATH = 'audio/';
+        const LABEL_CONFIG = { /* (Paste LABEL_CONFIG) */
+            'bootcampinsideprojectorroomstart': { civilian: { freq: '107.000', messageAudio: AUDIO_PATH + 'a1.wav', channelAudio: AUDIO_PATH + '2.mp3' }, secure: { freq: '329.762', messageAudio: AUDIO_PATH + 'b1.wav', channelAudio: AUDIO_PATH + 'secure_channel_ambient.wav' } },
+            'another_label_example': { civilian: { freq: '088.500', messageAudio: AUDIO_PATH + 'civ_radio_chatter.mp3', channelAudio: AUDIO_PATH + 'ambient_music.mp3' }, secure: { freq: '415.125', messageAudio: AUDIO_PATH + 'sec_transmission.ogg', channelAudio: AUDIO_PATH + 'data_stream.wav' } }
+        };
+        const VALID_LABELS = Object.keys(LABEL_CONFIG);
+        const MHZ_RANGE = { min: 0, max: 500 }; const KHZ_RANGE = { min: 0, max: 975 }; const VOLUME_RANGE = { min: 0, max: 100 };
+        const MHZ_STEP = 1; const KHZ_STEP = 25; const VOLUME_STEP = 5;
+        const VISUALIZER_BARS = 25; const MAX_KNOB_ROTATION = 140; const DRAG_SENSITIVITY = 0.4;
+        const CLICK_VS_DRAG_THRESHOLD = 5; const CLICK_MAX_DURATION = 250;
+
+        // UPDATED: Tuning Range/Clarity Constants
+        const MAX_SIGNAL_AUDIBLE_KHZ_DIFF = 20000; // Max total diff (kHz) where signal is audible at all
+        const CLARITY_RAMP_KHZ_DIFF = 4000;     // Total diff (kHz) over which main gain/static levels ramp (e.g. +/- 2 MHz)
+        const FINE_TUNE_KHZ_RANGE = 150;        // Pure kHz diff (when MHz matches) for final clarity filter adjustment
+
+        // Clarity Constants (remain the same)
+        const MIN_SIGNAL_GAIN = 0.0; const MAX_SIGNAL_GAIN = 1.0;
+        const MIN_STATIC_GAIN = 0.1; const MAX_STATIC_GAIN = 0.8;
+        const MIN_FILTER_FREQ = 400; const MAX_FILTER_FREQ = 10000;
+        const AUDIO_SMOOTHING_TIME = 0.07; // Slightly slower smoothing
+
+        // --- DOM Elements ---
+        // (Identical)
+        const powerButton = document.getElementById('powerButton'); const frequencyDisplay = document.getElementById('frequencyDisplay'); const modeIndicator = document.getElementById('modeIndicator'); const modeSwitch = document.getElementById('modeSwitch'); const modeSlider = document.getElementById('modeSlider'); const switchInteractionToggle = document.getElementById('switchInteractionToggle'); const mhzKnob = document.getElementById('mhzKnob'); const khzKnob = document.getElementById('khzKnob'); const volumeKnob = document.getElementById('volumeKnob'); const allKnobs = [mhzKnob, khzKnob, volumeKnob]; const powerLight = document.getElementById('powerLight'); const signalLight = document.getElementById('signalLight'); const authLight = document.getElementById('authLight'); const audioVisualizer = document.getElementById('audioVisualizer'); const debugToggle = document.getElementById('debugToggle'); const debugPanel = document.getElementById('debugPanel'); const dbgPower = document.getElementById('dbgPower'); const dbgUrlValid = document.getElementById('dbgUrlValid'); const dbgLastLabel = document.getElementById('dbgLastLabel'); const dbgMode = document.getElementById('dbgMode'); const dbgSwitchMode = document.getElementById('dbgSwitchMode'); const dbgTargetFreq = document.getElementById('dbgTargetFreq'); const dbgTargetMsg = document.getElementById('dbgTargetMsg'); const dbgTargetChan = document.getElementById('dbgTargetChan'); const dbgCurrentFreq = document.getElementById('dbgCurrentFreq'); const dbgKhzDiff = document.getElementById('dbgKhzDiff'); const dbgClarity = document.getElementById('dbgClarity'); const dbgVolume = document.getElementById('dbgVolume'); const dbgTuningState = document.getElementById('dbgTuningState'); const dbgAudioState = document.getElementById('dbgAudioState'); const dbgCivPlayed = document.getElementById('dbgCivPlayed'); const dbgSecPlayed = document.getElementById('dbgSecPlayed'); const dbgInteraction = document.getElementById('dbgInteraction');
+
+        // --- Audio Elements & Context ---
+        // (Identical)
+        let audioContext; let analyser; let mainGainNode; let staticGainNode; let signalGainNode; let signalFilterNode;
+        const staticAudio = new Audio(AUDIO_PATH + 'placeholder_static.wav'); staticAudio.loop = true;
+        const beepAudio = new Audio(AUDIO_PATH + 'radio_beep.mp3');
+        const tuneAudio = new Audio(AUDIO_PATH + 'tune.wav'); tuneAudio.loop = true;
+        const civilianMessageAudio = new Audio(); const secureMessageAudio = new Audio();
+        const channelAudio = new Audio(); channelAudio.loop = true;
+        let staticSource, channelSource, civMsgSource, secMsgSource, tuneSource, beepSource;
+
+        // --- State Variables ---
+        // (Identical)
+        let isPoweredOn = false; let isSecureMode = false; let currentMhz = 0; let currentKhz = 0; let currentVolume = 50;
+        let isValidUrl = false; let lastLabel = ''; let civilianMessagePlayed = false; let secureMessagePlayed = false;
+        let currentTuningState = 'far'; let totalKhzDifference = Infinity; let pureKhzDifference = Infinity; // Add pure Khz diff state
+        let targetFrequency = null; let targetMessageAudioPath = null; let targetChannelAudioPath = null;
+        let isSwitchDynamicMode = false; let isDraggingSwitch = false; let switchDragStartX = 0; let switchSliderStartX = 0;
+        const switchMinLeft = 4; let switchMaxLeft = 46;
+        let isPotentialDrag = false; let isDraggingKnob = false; let currentDragKnob = null; let startDragAngle = 0;
+        let currentKnobAngle = { mhz: 0, khz: 0, volume: 0 };
+        let mouseDownTime = 0; let mouseDownPos = { x: 0, y: 0 };
+        let isTuningSoundPlaying = false;
+
+        // --- Initialization ---
+        // (Identical)
+        function init() { console.log("Radio Initializing..."); parseUrl(); setupInitialUI(); setupEventListeners(); calculateSwitchMaxLeft(); updateDebugPanel(); console.log("Radio Initialized."); }
+        function parseUrl() { const urlParams = new URLSearchParams(window.location.search); lastLabel = urlParams.get('lastLabel') || ''; isValidUrl = VALID_LABELS.includes(lastLabel); dbgLastLabel.textContent = lastLabel || '-'; }
+        function setupInitialUI() { updateFrequencyDisplayAndKnobs(); updateVolumeDisplayAndKnob(currentVolume); updateModeIndicator(); updateLights(); createVisualizerBars(); updateKnobStates(); updateSwitchInteractionModeUI(); }
+        function calculateSwitchMaxLeft() { const switchWidth = modeSwitch.offsetWidth; const sliderWidth = modeSlider.offsetWidth; switchMaxLeft = switchWidth - sliderWidth - switchMinLeft; console.log(`Calculated switch max left: ${switchMaxLeft}px`); }
+        function setupEventListeners() { powerButton.addEventListener('click', togglePower); switchInteractionToggle.addEventListener('click', toggleSwitchInteractionMode); debugToggle.addEventListener('click', () => debugPanel.classList.toggle('active')); allKnobs.forEach(knob => { knob.addEventListener('mousedown', handleKnobMouseDown); knob.addEventListener('click', handleKnobClick); }); setupSwitchListeners(); civilianMessageAudio.addEventListener('ended', handleMessageEnd); secureMessageAudio.addEventListener('ended', handleMessageEnd); }
+
+        // --- Audio Context and Visualizer Setup ---
+        // (Identical)
+        function setupAudio() { /* (Paste setupAudio from previous version) */ if (audioContext) return; try { console.log("Setting up Audio Context..."); audioContext = new (window.AudioContext || window.webkitAudioContext)(); mainGainNode = audioContext.createGain(); updateVolumeDisplayAndKnob(currentVolume); mainGainNode.connect(audioContext.destination); analyser = audioContext.createAnalyser(); analyser.fftSize = 128; dataArray = new Uint8Array(analyser.frequencyBinCount); mainGainNode.connect(analyser); staticGainNode = audioContext.createGain(); staticGainNode.gain.value = MAX_STATIC_GAIN; staticGainNode.connect(mainGainNode); staticSource = connectAudioSource(staticAudio, staticGainNode); signalGainNode = audioContext.createGain(); signalGainNode.gain.value = MIN_SIGNAL_GAIN; signalFilterNode = audioContext.createBiquadFilter(); signalFilterNode.type = 'lowpass'; signalFilterNode.frequency.value = MIN_FILTER_FREQ; signalFilterNode.Q.value = 1; signalGainNode.connect(signalFilterNode); signalFilterNode.connect(mainGainNode); channelSource = connectAudioSource(channelAudio, signalGainNode); civMsgSource = connectAudioSource(civilianMessageAudio, signalGainNode); secMsgSource = connectAudioSource(secureMessageAudio, signalGainNode); beepSource = connectAudioSource(beepAudio, mainGainNode); tuneSource = connectAudioSource(tuneAudio, mainGainNode); console.log("Audio Context and Nodes Ready."); requestAnimationFrame(updateVisualization); } catch (e) { console.error("Web Audio API setup failed:", e); } }
+        function connectAudioSource(audioElement, targetNode) { /* (Identical) */ if (!audioContext || !targetNode) return null; if (!audioElement.sourceNode && audioElement.currentSrc) { try { const source = audioContext.createMediaElementSource(audioElement); source.connect(targetNode); audioElement.sourceNode = source; console.log(`Connected ${audioElement.src.split('/').pop()} to ${targetNode.constructor.name}`); return source; } catch (error) { console.error(`Error connecting source for ${audioElement.src}:`, error); } } return audioElement.sourceNode || null; }
+        function createVisualizerBars() { /* (Identical) */ audioVisualizer.innerHTML = ''; for (let i = 0; i < VISUALIZER_BARS; i++) { const bar = document.createElement('div'); bar.className = 'visualizer-bar'; bar.style.height = '2px'; bar.style.backgroundColor = '#2a4a2a'; audioVisualizer.appendChild(bar); } }
+        function updateVisualization() { /* (Identical) */ if (!isPoweredOn || !analyser || !dataArray || !audioContext || audioContext.state !== 'running') { const bars = audioVisualizer.children; for (let i = 0; i < bars.length; i++) { if (bars[i]) { bars[i].style.height = '2px'; bars[i].style.backgroundColor = '#2a4a2a'; } } if(isPoweredOn) requestAnimationFrame(updateVisualization); return; } analyser.getByteFrequencyData(dataArray); const bars = audioVisualizer.children; const bufferLength = analyser.frequencyBinCount; const barCount = Math.min(VISUALIZER_BARS, bars.length); for (let i = 0; i < barCount; i++) { const dataIndex = Math.floor((i / barCount) * bufferLength); const value = dataArray[dataIndex] || 0; const barHeight = Math.max(2, (value / 255) * 28 + 2); if (bars[i]) { bars[i].style.height = `${barHeight}px`; const intensity = value / 255; const green = Math.floor(100 + intensity * 155); const red = Math.floor(85 * (1 - intensity)); bars[i].style.backgroundColor = `rgb(${red}, ${green}, 50)`; } } requestAnimationFrame(updateVisualization); }
+
+        // --- Event Handlers ---
+        // (Identical to previous version, rely on updated core logic functions)
+        function togglePower() { /* (Identical) */ isPoweredOn = !isPoweredOn; powerButton.classList.toggle('on', isPoweredOn); console.log("Power toggled:", isPoweredOn ? "ON" : "OFF"); if (isPoweredOn) { if (!audioContext) { setupAudio(); } else if (audioContext.state === 'suspended') { audioContext.resume().then(() => { console.log("AudioContext resumed."); }); } determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); requestAnimationFrame(updateVisualization); } else { stopAllAudio(); applyClarityEffect(); } updateKnobStates(); updateSwitchInteractionState(); updateLights(); updateDebugPanel(); }
+        function handleMessageEnd() { /* (Identical) */ console.log("Special message ended."); determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); updateDebugPanel(); }
+
+        // --- Switch Interaction (Identical) ---
+        function toggleSwitchInteractionMode() { /* (Identical) */ isSwitchDynamicMode = !isSwitchDynamicMode; updateSwitchInteractionModeUI(); setupSwitchListeners(); updateDebugPanel(); }
+        function updateSwitchInteractionModeUI() { /* (Identical) */ switchInteractionToggle.textContent = isSwitchDynamicMode ? 'Dyn' : 'Tap'; switchInteractionToggle.classList.toggle('dynamic', isSwitchDynamicMode); modeSwitch.classList.toggle('dynamic-mode', isSwitchDynamicMode); modeSlider.style.cursor = isSwitchDynamicMode ? 'grab' : 'default'; }
+        function setupSwitchListeners() { /* (Identical) */ modeSwitch.removeEventListener('click', handleSwitchTap); modeSlider.removeEventListener('mousedown', handleSwitchDragStart); document.removeEventListener('mousemove', handleSwitchDragMove); document.removeEventListener('mouseup', handleSwitchDragEnd); if (isSwitchDynamicMode) { console.log("Enabling Dynamic Switch Mode"); modeSlider.addEventListener('mousedown', handleSwitchDragStart); modeSwitch.style.pointerEvents = 'none'; modeSlider.style.pointerEvents = 'auto'; } else { console.log("Enabling Tap Switch Mode"); modeSwitch.addEventListener('click', handleSwitchTap); modeSwitch.style.pointerEvents = 'auto'; modeSlider.style.pointerEvents = 'none'; } updateSwitchInteractionState(); }
+        function handleSwitchTap() { /* (Identical) */ if (!isPoweredOn || isSwitchDynamicMode) return; console.log("Switch tapped"); toggleModeLogic(); }
+        function handleSwitchDragStart(e) { /* (Identical) */ if (!isPoweredOn || !isSwitchDynamicMode) return; e.preventDefault(); isDraggingSwitch = true; switchDragStartX = e.clientX; switchSliderStartX = modeSlider.offsetLeft; modeSlider.style.cursor = 'grabbing'; modeSlider.style.transition = 'none'; document.addEventListener('mousemove', handleSwitchDragMove); document.addEventListener('mouseup', handleSwitchDragEnd); console.log("Switch drag start"); }
+        function handleSwitchDragMove(e) { /* (Identical) */ if (!isDraggingSwitch) return; const currentX = e.clientX; const deltaX = currentX - switchDragStartX; let newLeft = switchSliderStartX + deltaX; newLeft = Math.max(switchMinLeft, Math.min(switchMaxLeft, newLeft)); modeSlider.style.left = `${newLeft}px`; }
+        function handleSwitchDragEnd(e) { /* (Identical) */ if (!isDraggingSwitch) return; isDraggingSwitch = false; modeSlider.style.cursor = 'grab'; document.removeEventListener('mousemove', handleSwitchDragMove); document.removeEventListener('mouseup', handleSwitchDragEnd); const currentLeft = modeSlider.offsetLeft; const midpoint = (switchMinLeft + switchMaxLeft) / 2; const shouldBeSecure = currentLeft > midpoint; console.log(`Switch drag end. Final left: ${currentLeft}px. Should be secure: ${shouldBeSecure}`); if (shouldBeSecure !== isSecureMode) { toggleModeLogic(); } else { updateSwitchSliderPosition(); console.log("Switch state unchanged, snapping back."); } }
+        function toggleModeLogic() { /* (Identical) */ if (!isPoweredOn) return; isSecureMode = !isSecureMode; console.log("Mode toggled via logic:", isSecureMode ? "Secure" : "Civilian"); updateModeIndicator(); playKnobBeep(); updateSwitchSliderPosition(); determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); updateDebugPanel(); }
+        function updateSwitchSliderPosition() { /* (Identical) */ modeSlider.style.transition = isDraggingSwitch ? 'none' : 'left 0.25s cubic-bezier(0.68, -0.55, 0.27, 1.55)'; modeSlider.classList.toggle('secure', isSecureMode); if (isSwitchDynamicMode && !isDraggingSwitch) { modeSlider.style.left = isSecureMode ? `${switchMaxLeft}px` : `${switchMinLeft}px`; } }
+        function updateSwitchInteractionState() { /* (Identical) */ updateSwitchSliderPosition(); updateSwitchInteractionModeUI(); switchInteractionToggle.disabled = !isPoweredOn; if (!isPoweredOn) { modeSwitch.style.pointerEvents = 'none'; modeSlider.style.pointerEvents = 'none'; } else { setupSwitchListeners(); } }
+
+        // --- Combined Knob Interaction (Identical) ---
+        function handleKnobMouseDown(e) { /* (Identical) */ if (!isPoweredOn) return; const knob = e.currentTarget; isPotentialDrag = true; isDraggingKnob = false; currentDragKnob = knob; mouseDownTime = Date.now(); mouseDownPos = { x: e.clientX, y: e.clientY }; dbgInteraction.textContent = "Potential Drag"; const rect = knob.getBoundingClientRect(); const knobCenterX = rect.left + rect.width / 2; const knobCenterY = rect.top + rect.height / 2; startDragAngle = Math.atan2(e.clientY - knobCenterY, e.clientX - knobCenterX); document.addEventListener('mousemove', handleKnobDragMove); document.addEventListener('mouseup', handleKnobMouseUp); }
+        function handleKnobDragMove(e) { /* (Identical) */ if (!isPotentialDrag && !isDraggingKnob) return; const dx = e.clientX - mouseDownPos.x; const dy = e.clientY - mouseDownPos.y; const distSq = dx * dx + dy * dy; if (isPotentialDrag && distSq > CLICK_VS_DRAG_THRESHOLD * CLICK_VS_DRAG_THRESHOLD) { console.log("Drag started"); isDraggingKnob = true; isPotentialDrag = false; currentDragKnob.classList.add('dragging'); dbgInteraction.textContent = "Dragging"; playTuningSound(); } if (isDraggingKnob) { const knob = currentDragKnob; const rect = knob.getBoundingClientRect(); const knobCenterX = rect.left + rect.width / 2; const knobCenterY = rect.top + rect.height / 2; const currentAngle = Math.atan2(e.clientY - knobCenterY, e.clientX - knobCenterX); let angleDelta = currentAngle - startDragAngle; if (angleDelta > Math.PI) angleDelta -= 2 * Math.PI; if (angleDelta < -Math.PI) angleDelta += 2 * Math.PI; const controlType = knob.dataset.controlType; const valueDelta = angleDelta * (180 / Math.PI) * DRAG_SENSITIVITY; if (controlType === 'mhz') updateMhzValue(currentMhz + valueDelta); else if (controlType === 'khz') updateKhzValue(currentKhz + valueDelta * 2); else if (controlType === 'volume') updateVolumeValue(currentVolume + valueDelta); updateKnobRotation(knob, controlType); startDragAngle = currentAngle; } }
+        function handleKnobMouseUp(e) { /* (Identical) */ if (!isPotentialDrag && !isDraggingKnob) return; dbgInteraction.textContent = "Mouse Up"; if (isDraggingKnob) { console.log("Drag ended"); stopTuningSound(); currentDragKnob.classList.remove('dragging'); } isPotentialDrag = false; isDraggingKnob = false; currentDragKnob = null; document.removeEventListener('mousemove', handleKnobDragMove); document.removeEventListener('mouseup', handleKnobMouseUp); updateDebugPanel(); }
+        function handleKnobClick(e) { /* (Identical) */ if (!isPoweredOn || isDraggingKnob) { console.log("Click ignored (was dragging or powered off)"); return; } const clickTime = Date.now(); const duration = clickTime - mouseDownTime; const dx = e.clientX - mouseDownPos.x; const dy = e.clientY - mouseDownPos.y; const distSq = dx * dx + dy * dy; if (duration < CLICK_MAX_DURATION && distSq <= CLICK_VS_DRAG_THRESHOLD * CLICK_VS_DRAG_THRESHOLD) { console.log("Knob Click detected"); dbgInteraction.textContent = "Click Action"; const knob = e.currentTarget; const rect = knob.getBoundingClientRect(); const clickXRelative = e.clientX - rect.left; const controlType = knob.dataset.controlType; let step = (clickXRelative < rect.width / 2) ? -1 : 1; if (controlType === 'mhz') adjustMhz(step * MHZ_STEP); else if (controlType === 'khz') adjustKhz(step * KHZ_STEP); else if (controlType === 'volume') adjustVolume(step * VOLUME_STEP); } else { console.log("Click ignored (duration/distance threshold exceeded)"); dbgInteraction.textContent = "Click Ignored (Threshold)"; } }
+
+        // --- Knob Value Update Logic ---
+        // (Identical - calls determine/apply)
+        function adjustMhz(step) { updateMhzValue(currentMhz + step); playKnobBeep(); determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); updateDebugPanel(); }
+        function adjustKhz(step) { updateKhzValue(currentKhz + step); playKnobBeep(); determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); updateDebugPanel(); }
+        function adjustVolume(step) { updateVolumeValue(currentVolume + step); updateDebugPanel(); }
+        function updateMhzValue(newValue) { currentMhz = clampValue(newValue, MHZ_RANGE.min, MHZ_RANGE.max); updateFrequencyDisplayAndKnobs(); determineTuningState(); applyClarityEffect(); }
+        function updateKhzValue(newValue) { currentKhz = clampValue(newValue, KHZ_RANGE.min, KHZ_RANGE.max); updateFrequencyDisplayAndKnobs(); determineTuningState(); applyClarityEffect(); }
+        function updateVolumeValue(newValue) { currentVolume = clampValue(newValue, VOLUME_RANGE.min, VOLUME_RANGE.max); updateVolumeDisplayAndKnob(currentVolume); }
+        function updateKnobStates() { /* (Identical) */ const isDisabled = !isPoweredOn; allKnobs.forEach(knob => { knob.classList.toggle('disabled', isDisabled); }); }
+
+        // --- Update Functions ---
+        // (Identical)
+        function clampValue(value, min, max) { return Math.max(min, Math.min(max, value)); }
+        function updateFrequencyDisplayAndKnobs() { /* (Identical) */ const mhzInt = Math.round(currentMhz); const khzInt = Math.round(currentKhz); const displayMhz = clampValue(mhzInt, MHZ_RANGE.min, MHZ_RANGE.max); const displayKhz = clampValue(khzInt, KHZ_RANGE.min, KHZ_RANGE.max); const formattedFreq = `${displayMhz.toString().padStart(3, '0')}.${displayKhz.toString().padStart(3, '0')}`; frequencyDisplay.textContent = formattedFreq; dbgCurrentFreq.textContent = formattedFreq; updateKnobRotation(mhzKnob, 'mhz'); updateKnobRotation(khzKnob, 'khz'); }
+        function updateVolumeDisplayAndKnob(volumeValue) { /* (Identical) */ const clampedVolume = clampValue(Math.round(volumeValue), VOLUME_RANGE.min, VOLUME_RANGE.max); dbgVolume.textContent = `${clampedVolume}%`; updateKnobRotation(volumeKnob, 'volume'); if (audioContext && mainGainNode) { mainGainNode.gain.setTargetAtTime(clampedVolume / 100, audioContext.currentTime, AUDIO_SMOOTHING_TIME); } }
+        function updateKnobRotation(knobElement, controlType) { /* (Identical) */ let value, range; if (controlType === 'mhz') { value = currentMhz; range = MHZ_RANGE; } else if (controlType === 'khz') { value = currentKhz; range = KHZ_RANGE; } else if (controlType === 'volume') { value = currentVolume; range = VOLUME_RANGE; } else return; const clampedValue = clampValue(Math.round(value), range.min, range.max); const ratio = (range.max === range.min) ? 0 : (clampedValue - range.min) / (range.max - range.min); const rotation = ratio * (MAX_KNOB_ROTATION * 2) - MAX_KNOB_ROTATION; currentKnobAngle[controlType] = rotation; knobElement.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`; }
+        function updateModeIndicator() { /* (Identical) */ const modeText = isSecureMode ? 'SEC' : 'CIV'; modeIndicator.textContent = modeText; modeIndicator.classList.toggle('secure', isSecureMode); dbgMode.textContent = modeText; }
+        function updateLights() { // (Identical logic, uses totalKhzDifference)
+            powerLight.classList.toggle('active', isPoweredOn);
+            authLight.classList.toggle('active', isValidUrl && isPoweredOn);
+            let lightClarityFactor = 0; let lightActive = false;
+             // Base light fade on the FINE_TUNE range when MHz matches for sharper feedback
+             // Or use the broader CLARITY_RAMP otherwise
+             let diffForLight = totalKhzDifference;
+             let rangeForLight = CLARITY_RAMP_KHZ_DIFF; // Default wider ramp
+             if(currentTuningState !== 'far' && Math.round(currentMhz) === parseInt(targetFrequency?.split('.')[0] || '-1', 10)) {
+                 // If MHz matches, use pure kHz diff and fine tune range for light
+                 diffForLight = pureKhzDifference;
+                 rangeForLight = FINE_TUNE_KHZ_RANGE;
+             }
+
+            if (isPoweredOn && isValidUrl && diffForLight !== Infinity && diffForLight <= rangeForLight) {
+                lightClarityFactor = Math.max(0, 1 - (diffForLight / rangeForLight));
+                lightActive = true; // Active if within range used for calculation
+            }
+            const baseOpacity = 0.2;
+            signalLight.style.opacity = lightActive ? (baseOpacity + lightClarityFactor * (1.0 - baseOpacity)) : baseOpacity;
+            signalLight.classList.toggle('active', lightActive);
+        }
+        function updateDebugPanel() { /* (Paste updateDebugPanel, check audio state logic) */ if (!debugPanel.classList.contains('active')) return; dbgPower.textContent = isPoweredOn ? 'ON' : 'Off'; dbgUrlValid.textContent = isValidUrl ? 'Yes' : 'No'; dbgTuningState.textContent = currentTuningState.charAt(0).toUpperCase() + currentTuningState.slice(1); dbgTargetFreq.textContent = targetFrequency || '---.---'; dbgTargetMsg.textContent = targetMessageAudioPath ? targetMessageAudioPath.split('/').pop() : '---'; dbgTargetChan.textContent = targetChannelAudioPath ? targetChannelAudioPath.split('/').pop() : '---'; dbgCivPlayed.textContent = civilianMessagePlayed ? 'Yes' : 'No'; dbgSecPlayed.textContent = secureMessagePlayed ? 'Yes' : 'No'; dbgSwitchMode.textContent = isSwitchDynamicMode ? 'Dynamic' : 'Tap'; dbgKhzDiff.textContent = totalKhzDifference === Infinity ? 'N/A' : `${totalKhzDifference.toFixed(0)} kHz`; const clarityPercent = totalKhzDifference === Infinity || totalKhzDifference > CLARITY_RAMP_KHZ_DIFF ? 0 : Math.max(0, 1 - (totalKhzDifference / CLARITY_RAMP_KHZ_DIFF)) * 100; dbgClarity.textContent = totalKhzDifference === Infinity ? 'N/A' : `${clarityPercent.toFixed(0)}%`; let audioState = "Idle"; if (isPoweredOn) { let sounds = []; if (isTuningSoundPlaying) sounds.push("Tuning"); if (!staticAudio.paused) sounds.push("Static"); if (!channelAudio.paused && channelAudio.src) sounds.push(`Channel (${channelAudio.src.split('/').pop()})`); if (!civilianMessageAudio.paused && civilianMessageAudio.src) sounds.push(`CivMsg (${civilianMessageAudio.src.split('/').pop()})`); if (!secureMessageAudio.paused && secureMessageAudio.src) sounds.push(`SecMsg (${secureMessageAudio.src.split('/').pop()})`); if (!beepAudio.paused && sounds.length > 0 && !isTuningSoundPlaying) sounds.push("+Beep"); else if (!beepAudio.paused) sounds.push("Beep"); if (sounds.length > 0) audioState = sounds.join(' + '); else audioState = "Silent?"; } dbgAudioState.textContent = audioState; dbgInteraction.textContent = isDraggingKnob ? "Dragging" : isPotentialDrag ? "Potential Drag" : "Idle"; }
+
+
+        // --- Core Logic ---
+
+        // UPDATED: determineTuningState using total difference AND pure kHz difference
+        function determineTuningState() {
+            targetFrequency = null; targetMessageAudioPath = null; targetChannelAudioPath = null;
+            currentTuningState = 'far'; totalKhzDifference = Infinity; pureKhzDifference = Infinity; // Reset differences
+
+            if (!isPoweredOn || !isValidUrl) { updateLights(); return; }
+            const labelConfig = LABEL_CONFIG[lastLabel]; if (!labelConfig) { updateLights(); return; }
+            const modeConfig = isSecureMode ? labelConfig.secure : labelConfig.civilian; if (!modeConfig || !modeConfig.freq || !modeConfig.messageAudio || !modeConfig.channelAudio) { updateLights(); return; }
+
+            targetFrequency = modeConfig.freq;
+            targetMessageAudioPath = modeConfig.messageAudio;
+            targetChannelAudioPath = modeConfig.channelAudio;
+
+            const [targetMhzStr, targetKhzStr] = targetFrequency.split('.');
+            const targetMhz = parseInt(targetMhzStr, 10);
+            const targetKhz = parseInt(targetKhzStr, 10);
+            const roundedCurrentMhz = Math.round(currentMhz);
+            const roundedCurrentKhz = Math.round(currentKhz);
+            const targetFreqTotalKhz = targetMhz * 1000 + targetKhz;
+            const currentFreqTotalKhz = roundedCurrentMhz * 1000 + roundedCurrentKhz;
+            totalKhzDifference = Math.abs(currentFreqTotalKhz - targetFreqTotalKhz);
+
+            // Calculate pure kHz difference ONLY if MHz matches
+            if (roundedCurrentMhz === targetMhz) {
+                 pureKhzDifference = Math.abs(roundedCurrentKhz - targetKhz);
+            } else {
+                 pureKhzDifference = Infinity; // Indicate MHz mismatch for fine-tune checks
+            }
+
+            // Determine state (mainly for message trigger, audio based on difference)
+            if (totalKhzDifference === 0) {
+                currentTuningState = 'exact';
+            // Use the wider audible threshold for 'near' state now? Or keep it tighter?
+            // Let's base 'near'/'far' on the CLARITY RAMP for simplicity of state definition.
+            } else if (totalKhzDifference <= CLARITY_RAMP_KHZ_DIFF) {
+                 currentTuningState = 'near';
+            } else {
+                 currentTuningState = 'far';
+            }
+
+            console.log(`Tuning: State=${currentTuningState}, TotalDiff=${totalKhzDifference}, PureKhzDiff=${pureKhzDifference}`);
+            updateLights(); // Update lights based on calculated state/clarity
+            dbgTuningState.textContent = currentTuningState.charAt(0).toUpperCase() + currentTuningState.slice(1);
+            dbgKhzDiff.textContent = `${totalKhzDifference.toFixed(0)} kHz`;
+        }
+
+        // UPDATED: applyClarityEffect with refined logic
+        function applyClarityEffect() {
+            if (!isPoweredOn || !audioContext) { /* (Identical off-state handling) */ if(staticGainNode) staticGainNode.gain.setTargetAtTime(0, audioContext?.currentTime || 0, AUDIO_SMOOTHING_TIME); if(signalGainNode) signalGainNode.gain.setTargetAtTime(0, audioContext?.currentTime || 0, AUDIO_SMOOTHING_TIME); if(signalFilterNode) signalFilterNode.frequency.setTargetAtTime(MIN_FILTER_FREQ, audioContext?.currentTime || 0, AUDIO_SMOOTHING_TIME); dbgClarity.textContent = 'N/A'; return; }
+
+            // 1. Base Clarity (affects gain, uses CLARITY_RAMP_KHZ_DIFF)
+             let baseClarity = 0;
+             if (totalKhzDifference !== Infinity && totalKhzDifference <= CLARITY_RAMP_KHZ_DIFF) {
+                 baseClarity = Math.max(0, 1 - (totalKhzDifference / CLARITY_RAMP_KHZ_DIFF));
+             }
+             dbgClarity.textContent = `${(baseClarity * 100).toFixed(0)}% (Base)`; // Show base clarity
+
+            // 2. Fine Tune Clarity (affects filter *only* when MHz matches, uses FINE_TUNE_KHZ_RANGE)
+            let fineTuneClarity = 0;
+            let clarityForFilter = baseClarity; // Default filter follows base clarity
+            if (pureKhzDifference !== Infinity && pureKhzDifference <= FINE_TUNE_KHZ_RANGE) {
+                 fineTuneClarity = Math.max(0, 1 - (pureKhzDifference / FINE_TUNE_KHZ_RANGE));
+                 clarityForFilter = fineTuneClarity; // Fine tune overrides filter clarity when MHz matches
+                 dbgClarity.textContent += ` + ${(fineTuneClarity * 100).toFixed(0)}% (Fine)`;
+            }
+
+
+            // 3. Audibility Floor (ensure signal is slightly audible if within wide range)
+            let audibilityFactor = 0;
+            if (totalKhzDifference !== Infinity && totalKhzDifference <= MAX_SIGNAL_AUDIBLE_KHZ_DIFF) {
+                // A simple factor, maybe logarithmic later if needed
+                audibilityFactor = Math.max(0, 1 - (totalKhzDifference / MAX_SIGNAL_AUDIBLE_KHZ_DIFF));
+            }
+            const minAudibleSignalGain = 0.01; // Barely audible floor
+
+            // 4. Apply Gains & Filter
+            const targetStaticGain = MIN_STATIC_GAIN + (MAX_STATIC_GAIN - MIN_STATIC_GAIN) * (1 - baseClarity); // Inversely related to base clarity
+            // Signal gain based on base clarity, but with a minimum floor based on wider audibility
+            const targetSignalGain = Math.max(minAudibleSignalGain * audibilityFactor, MIN_SIGNAL_GAIN + (MAX_SIGNAL_GAIN - MIN_SIGNAL_GAIN) * baseClarity);
+            // Filter based on the potentially boosted fine-tune clarity
+            const targetFilterFreq = MIN_FILTER_FREQ + (MAX_FILTER_FREQ - MIN_FILTER_FREQ) * clarityForFilter;
+
+            staticGainNode.gain.setTargetAtTime(targetStaticGain, audioContext.currentTime, AUDIO_SMOOTHING_TIME);
+            signalGainNode.gain.setTargetAtTime(targetSignalGain, audioContext.currentTime, AUDIO_SMOOTHING_TIME);
+            signalFilterNode.frequency.setTargetAtTime(targetFilterFreq, audioContext.currentTime, AUDIO_SMOOTHING_TIME);
+
+            console.log(`Clarity - Base:${baseClarity.toFixed(2)} Fine:${fineTuneClarity.toFixed(2)} | Gains - Static:${targetStaticGain.toFixed(2)} Signal:${targetSignalGain.toFixed(2)} | Filter:${targetFilterFreq.toFixed(0)}Hz`);
+        }
+
+
+        // UPDATED: checkFrequencyAndAudio for concurrent playback
+        function checkFrequencyAndAudio() {
+            if (isTuningSoundPlaying || !isPoweredOn) { updateDebugPanel(); return; }
+
+            // 1. Ensure Static is always playing
+            ensureAudioPlaying(staticAudio, true);
+
+            // 2. Ensure Channel audio plays if within wide audible range
+            if (totalKhzDifference <= MAX_SIGNAL_AUDIBLE_KHZ_DIFF) {
+                 ensureAudioPlaying(channelAudio, true, targetChannelAudioPath);
+            } else {
+                 ensureAudioStopped(channelAudio);
+            }
+
+            // 3. Handle one-time message only on 'exact' tune (total diff = 0)
+            if (currentTuningState === 'exact') {
+                const messageTypePlayed = isSecureMode ? secureMessagePlayed : civilianMessagePlayed;
+                const messageAudioObject = isSecureMode ? secureMessageAudio : civilianMessageAudio;
+
+                // Check if message should play AND is not currently playing
+                if (!messageTypePlayed && targetMessageAudioPath && messageAudioObject.paused) {
+                    console.log(`>>> Playing ${isSecureMode ? 'Secure' : 'Civilian'} Message (${targetMessageAudioPath}) <<<`);
+                    if (messageAudioObject.src !== targetMessageAudioPath) { messageAudioObject.src = targetMessageAudioPath; }
+                    playOneShotAudio(messageAudioObject);
+                    if (isSecureMode) secureMessagePlayed = true; else civilianMessagePlayed = true;
+                }
+            } else {
+                 // If not exactly tuned, ensure any potentially playing *message* audio is stopped
+                 ensureAudioStopped(civilianMessageAudio);
+                 ensureAudioStopped(secureMessageAudio);
+            }
+            updateDebugPanel();
+        }
+
+
+        // --- Audio Playback Control (Mostly Identical) ---
+        function ensureAudioPlaying(audioElement, loop, srcPath = null) { /* (Identical) */ if (!isPoweredOn || !audioContext || !audioContext.state || audioContext.state !== 'running') return; if (!audioElement) return; if (srcPath && audioElement.src !== srcPath) { console.log(`Setting src for ${audioElement === channelAudio ? 'channel' : 'other'} to ${srcPath}`); audioElement.src = srcPath; if (audioElement.sourceNode) { audioElement.sourceNode.disconnect(); audioElement.sourceNode = null; } let targetNode = (audioElement === staticAudio) ? staticGainNode : (audioElement === channelAudio || audioElement === civilianMessageAudio || audioElement === secureMessageAudio) ? signalGainNode : mainGainNode; connectAudioSource(audioElement, targetNode); } else if (!audioElement.currentSrc && !srcPath) { return; } audioElement.loop = loop; if (audioElement.paused) { console.log(`Ensuring Play: ${audioElement.src.split('/').pop()}`); audioElement.play().catch(e => console.error(`Error playing ${audioElement.src}:`, e)); } }
+        function ensureAudioStopped(audioElement) { /* (Identical) */ if (audioElement && !audioElement.paused) { console.log(`Ensuring Stop: ${audioElement.src.split('/').pop()}`); audioElement.pause(); audioElement.currentTime = 0; } }
+        function playOneShotAudio(audioElement) { /* (Identical) */ if (!isPoweredOn || !audioContext || !audioContext.state || audioContext.state !== 'running') return; if (!audioElement || !audioElement.src) return; let targetNode = (audioElement === civilianMessageAudio || audioElement === secureMessageAudio) ? signalGainNode : mainGainNode; connectAudioSource(audioElement, targetNode); console.log(`Playing One-Shot: ${audioElement.src.split('/').pop()}`); audioElement.currentTime = 0; audioElement.play().catch(e => console.error(`Error playing one-shot ${audioElement.src}:`, e)); updateDebugPanel(); }
+        function stopAllAudio() { /* (Identical) */ const allAudio = [staticAudio, beepAudio, tuneAudio, civilianMessageAudio, secureMessageAudio, channelAudio]; allAudio.forEach(audio => { if (audio && !audio.paused) { audio.pause(); audio.currentTime = 0; } }); isTuningSoundPlaying = false; console.log("Stopped all audio."); updateDebugPanel(); }
+        function playKnobBeep() { playOneShotAudio(beepAudio); }
+        function playTuningSound() { /* (Identical) */ if (!isPoweredOn || !audioContext || isTuningSoundPlaying) return; isTuningSoundPlaying = true; ensureAudioStopped(staticAudio); ensureAudioStopped(channelAudio); ensureAudioStopped(civilianMessageAudio); ensureAudioStopped(secureMessageAudio); playOneShotAudio(tuneAudio); console.log("Starting tuning sound."); updateDebugPanel(); }
+        function stopTuningSound() { /* (Identical) */ if (!isTuningSoundPlaying) return; isTuningSoundPlaying = false; ensureAudioStopped(tuneAudio); console.log("Stopped tuning sound."); determineTuningState(); applyClarityEffect(); checkFrequencyAndAudio(); updateDebugPanel(); }
+
+        // --- Run Initialization ---
+        init();
+
+    </script>
+</body>
+</html>

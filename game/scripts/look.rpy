@@ -8,16 +8,16 @@ screen dynamic_text_screen():
             spacing 10
            
             if last_label == "bootcampinsideprojectorroomstart":
-                text "I am inside of a projector room. I can perform a search on the area to the north, south, east, west, and center. Which area should I search?"
+                text "I am inside of a projector room."
                 
                 # Adding direction buttons for the projector room
                 hbox:
                     spacing 15
-                    textbutton "North" action [Hide("dynamic_text_screen"), Show("north_search_dialogue")]
-                    textbutton "South" action [Hide("dynamic_text_screen"), Show("south_search_dialogue")]
-                    textbutton "East" action [Hide("dynamic_text_screen"), Show("east_search_dialogue")]
-                    textbutton "West" action [Hide("dynamic_text_screen"), Show("west_search_dialogue")]
-                    textbutton "Center" action [Hide("dynamic_text_screen"), Show("center_search_dialogue")]
+                    textbutton "Look at the projector." action [Hide("dynamic_text_screen"), Show("north_search_dialogue")]
+                    textbutton "Look at the exit door." action [Hide("dynamic_text_screen"), Show("south_search_dialogue")]
+                    textbutton "Look at the people sitting down." action [Hide("dynamic_text_screen"), Show("east_search_dialogue")]
+                    textbutton "Look at the wall" action [Hide("dynamic_text_screen"), Show("west_search_dialogue")]
+                    textbutton "Look at the projector" action [Hide("dynamic_text_screen"), Show("center_search_dialogue")]
                 
             elif last_label == "home_scene":
                 text "You're back at home. It's quiet and peaceful."
@@ -51,9 +51,7 @@ screen north_search_dialogue():
         vbox:
             spacing 10
             if last_label == "bootcampinsideprojectorroomstart":
-                text "There is a desk with the projector on it... There is also a speakng podium with a lamp and microphone..."
-                text "Talking into the microphone would be a bad idea...."
-            #    textbutton "Take Lens" action [Hide("north_search_dialogue"), SetVariable("has_lens", True), Show("dynamic_text_screen")]
+                text "There is a desk with the projector on it.There is also a speakng podium with a lamp and microphone.Talking into the microphone would be a bad idea."
                 textbutton "Return" action [Hide("north_search_dialogue"), Show("dynamic_text_screen")]
 
 # South search dialogue
@@ -65,9 +63,7 @@ screen south_search_dialogue():
         
         vbox:
             spacing 10
-            text "There is the exit door...outside the door is a wall....."
-            text "It smells pretty bad....."
-         #   textbutton "Flip Switch" action [Hide("south_search_dialogue"), SetVariable("lights_on", True), Show("dynamic_text_screen")]
+            text "There is the exit door.outside the door is a wall.It smells pretty bad"
             textbutton "Return" action [Hide("south_search_dialogue"), Show("dynamic_text_screen")]
 
 # East search dialogue
@@ -79,11 +75,7 @@ screen east_search_dialogue():
         
         vbox:
             spacing 10
-            text "There are two people sitting down...talking to them might be a good idea"
-            text "The one in the front is wearing a orange t-shirt and has a ottoman turban on his head."
-            text "The one in the back has a paper mache in the shape of a moon on his head and is wearing a bag"
-            text "Expect clowns when you come to a circus "
-         #   textbutton "Examine Reels" action [Hide("east_search_dialogue"), Show("reels_dialogue")]
+            text "There are two people sitting down.talking to them might be a good idea. The one in the front is wearing an orange t-shirt and has a ottoman turban on his head.The one in the back has a paper mache in the shape of a moon on his head and is wearing a bag"
             textbutton "Return" action [Hide("east_search_dialogue"), Show("dynamic_text_screen")]
 
 # West search dialogue
@@ -95,10 +87,9 @@ screen west_search_dialogue():
         
         vbox:
             spacing 10
-            text "I found nothing just an empty wall..."
-            text "It smells rather bad maybe I should clean it."
-            if has_item("tissue"):
-                textbutton "Clean Window" action [Hide("west_search_dialogue"), SetVariable("window_clean", True), Show("clean_window_dialogue")]
+            text "I found nothing just an empty wall.It smells rather bad maybe I should clean it."
+            if has_item("Tissue") and not "clean_window" == True:
+                textbutton "Clean Window" action [Hide("west_search_dialogue"), Show("clean_window_dialogue")]
             else:
                 text "Maybe i can find something in this room.."
             textbutton "Return" action [Hide("west_search_dialogue"), Show("dynamic_text_screen")]
@@ -112,11 +103,10 @@ screen center_search_dialogue():
         
         vbox:
             spacing 10
-            text "There is a more modern projector on the ceiling... Why are we not using that projector?"
-            text "....!"
-            if not has_item("tissue"):
-                text "There is a wet tissue someone used to blow there nose during the meeting...I pick it up"
-                $ inventory.append("tissue")    
+            text "There is a more modern projector on the ceiling. Why are we not using that projector?"
+            if not has_item("Tissue"):
+                text "There is a wet Tissue hanging down from the projector. It looks like someone used this paper to blow their nose during the meeting.I pick it up"
+                $ inventory.append("Tissue")    
             textbutton "Return" action [Hide("center_search_dialogue"), Show("dynamic_text_screen")]
 
 
@@ -129,6 +119,5 @@ screen clean_window_dialogue():
         
         vbox:
             spacing 10
-            text "I wipe away years of dust and grime from the wall..."
-            text "It helps calm my nerves."
-            textbutton "Return" action [Hide("clean_window_dialogue"), Show("dynamic_text_screen")]
+            text "I wipe away years of dust and grime from the wall.It helps calm my nerves"
+            textbutton "Return" action [Hide("clean_window_dialogue"), Show("dynamic_text_screen"),SetVariable("clean_window", True)]

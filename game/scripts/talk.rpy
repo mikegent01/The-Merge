@@ -8,8 +8,8 @@ screen projector_room_people():
         
         vbox:
             spacing 10
-            text "There are three people in the projector room. I have talked to the drill sargent. Who else should i talk to?"
-            
-            textbutton "Talk to the person in the front seat" action [Hide("projector_room_people"), Jump("FrontSeat")]
-            textbutton "Talk to the person in the back seat" action [Hide("projector_room_people"), Jump("BackSeat")]
-            textbutton "Return" action Hide("projector_room_people")
+            if last_label == "bootcampinsideprojectorroomstart":
+                text "There are three people in the projector room. I have talked to the drill sargent. Who else should i talk to?"
+                textbutton "Talk to the person in the front seat" action [Hide("projector_room_people"), Jump("FrontSeat")]
+                textbutton "Talk to the person in the back seat" action [Hide("projector_room_people"), Jump("BackSeat")]
+                textbutton "Return" action Hide("projector_room_people")

@@ -3,78 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Field Radio Unit</title>
-    <link rel="stylesheet" href="006.css"> <!-- Link to the new CSS -->
+    <title>Interactive Radio Tuner (Label Dependent)</title>
+    <link rel="stylesheet" href="006.css"> <!-- Use the same CSS as before -->
 </head>
 <body>
-    <!-- Main Walkie Talkie Body -->
-    <div class="walkie-talkie">
-
-        <!-- Antenna -->
-        <div class="antenna">
-            <div class="antenna-tip"></div>
-        </div>
-
-        <!-- Top Section: Speaker & Display -->
-        <div class="top-panel">
-            <div class="speaker-grille">
-                <!-- Multiple spans for speaker holes -->
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span>
+    <div class="container" id="draggable-radio">
+        <div class="drag-handle" id="drag-handle"></div>
+        <div class="radio">
+            <div class="antenna">
+                <div class="antenna-top"></div>
             </div>
-            <div class="display-screen" id="radio-display-area"> <!-- Reusing ID for JS -->
-                <div class="display-line" id="radio-status">STATUS: OFF</div>
-                <div class="display-line channel-line">
+
+            <div class="display-panel">
+                <div class="display-row">
+                    <span id="radio-status">STATUS: OFF</span>
+                    <div class="power-indicator" id="power-indicator"></div>
+                </div>
+                <div class="display-row">
                     <span id="radio-channel-display">CH: --</span>
-                    <span id="radio-signal-strength">SIG: <span id="signal-level">N/A</span></span>
+                </div>
+                <div class="frequency-display" id="frequency-display">---.--- MHz</div>
+            </div>
+
+            <div class="controls">
+                <div class="knob-container">
+                    <div class="knob" id="volume-knob">
+                        <div class="knob-indicator" id="volume-indicator"></div>
+                    </div>
+                    <div class="knob-label">VOLUME</div>
+                </div>
+
+                <div class="knob-container">
+                    <div class="knob" id="tuning-knob">
+                        <div class="knob-indicator" id="tuning-indicator"></div>
+                    </div>
+                    <div class="knob-label">TUNING</div>
                 </div>
             </div>
+
+            <div class="buttons">
+                <button class="channel-button" data-channel="civil">CIVIL</button>
+                <button class="channel-button" data-channel="secure">SECURE</button>
+                <button class="power-button" id="power-button">POWER</button>
+            </div>
+
+            <div class="speaker">
+                <div class="speaker-line"></div><div class="speaker-line"></div>
+                <div class="speaker-line"></div><div class="speaker-line"></div>
+                <div class="speaker-line"></div><div class="speaker-line"></div>
+            </div>
+
+            <div class="brand">SIM-RADIO LD</div> <!-- LD for Label Dependent -->
         </div>
-
-        <!-- Mid Section: Controls -->
-        <div class="controls-panel">
-            <div class="power-section">
-                 <button class="control-button power-button" id="power-button">
-                     <!-- Power Symbol (optional SVG or text) -->
-                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0 1 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-1.68.59-3.22 1.58-4.42L5.17 5.17A8.96 8.96 0 0 0 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.1-.75-4.03-1.97-5.58z"></path></svg>
-                 </button>
-                 <div class="indicator-light" id="power-indicator"></div>
-            </div>
-            <div class="channel-grid" id="channel-selectors"> <!-- Reusing ID for JS -->
-                <button class="control-button channel-button" data-channel="1">1</button>
-                <button class="control-button channel-button" data-channel="2">2</button>
-                <button class="control-button channel-button" data-channel="3">3</button>
-                <button class="control-button channel-button" data-channel="4">4</button>
-                <button class="control-button channel-button" data-channel="5">5</button>
-                <button class="control-button channel-button" data-channel="6">6</button>
-                <!-- Add more buttons if needed -->
-            </div>
-        </div>
-
-        <!-- Bottom Section: Mic & Context -->
-        <div class="bottom-panel">
-            <div class="mic-grille">
-                <span></span><span></span><span></span>
-                <span></span><span></span><span></span>
-            </div>
-            <div class="context-display" id="location-context">
-                <!-- Location text injected by JS -->
-          <!---      Loading Context...-->
-            </div>
-        </div>
-
-        <!-- Branding/Label (Optional) -->
-        <div class="brand-label">MODEL ACP-500</div>
-
-        <!-- Hidden Audio Player (Keep for JS) -->
-        <audio id="radio-audio" preload="auto"></audio>
-        <audio id="beep-audio" preload="auto" src="audio/radio_beep.mp3"></audio> 
     </div>
 
-    <!-- Link to the existing JavaScript -->
-    <script src="006.js"></script> <!-- Make sure this points to your JS file (006.js or radio.js) -->
+    <!-- Hidden Audio Elements - Updated Sources -->
+    <audio id="static-audio" src="audio/placeholder_static.wav" loop preload="auto"></audio>
+    <audio id="message-audio" preload="auto"></audio>
+    <!-- Optional: You can add these back if you want beep/tune sounds -->
+    <!-- <audio id="beep-audio" src="audio/radio_beep.mp3" preload="auto"></audio> -->
+    <!-- <audio id="tuning-audio" src="audio/tune.wav" preload="auto"></audio> -->
+
+
+    <script src="006.js"></script>
 </body>
 </html>

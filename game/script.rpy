@@ -1186,11 +1186,6 @@ init python:
         if len(inventory) >= max_space:
             return "Inventory is full. Cannot add more items."
 
-        # Check if adding the item would exceed the weight limit (if applicable)
-        # Assuming max_weight is a global variable defining the maximum weight capacity
-        if calculate_total_weight() + items[item_name]["weight"] > max_weight:
-            return "Adding this item would exceed the weight limit."
-
         # Add the item to the inventory
         inventory.append(item_name)
         return f"Added '{item_name}' to the inventory."
@@ -1345,6 +1340,16 @@ init python:
             "weight": 10,
             "description": "A powerful machine gun. There are many like it but this one is mine."
         },
+        "Tissue": {
+            "type": "junk",
+            "weight": 2,
+            "description": "A Tissue to wipe away your sorrows.."
+        },     
+        "Wet Tissue": {
+            "type": "junk",
+            "weight": 2,
+            "description": "A Wet Tissue...yuck!"
+        },                   
         "Laser range finder": {
             "type": "tool",
             "weight": 1,
@@ -1536,6 +1541,13 @@ init python:
             renpy.notify("Nothing to clean.")
         elif item == "Oil":
             renpy.notify("You cover yourself with oil.")
+        elif item == "Tissue":
+            renpy.notify("You blow your nose")
+            remove_item("Tissue")
+            add_item("Wet Tissue")
+        elif item == "Wet Tissue":
+            renpy.notify("You place the wet tissue on the floor carefully.")
+            remove_item("Wet Tissue")
         elif item == "Tactical flashlight":
             renpy.notify("This area is not THAT dark, is it?")
         elif item == "radio":

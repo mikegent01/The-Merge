@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1144: unexpected unindent
-        def stop(self):
-        ^
+File "game/script.rpy", line 1553: unmatched '}'
+        }
+         ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Thu Apr 17 22:24:45 2025
+Fri Apr 18 15:56:33 2025

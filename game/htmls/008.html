@@ -1,0 +1,1064 @@
+<!DOCTYPE html> <!-- this map will be changed later this is a placeholder idea i had i dont think were going to russia lol-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCP-DOD JOINT OPERATION</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: #111;
+            color: #33ff33;
+            padding: 0;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .tablet-container {
+            position: relative;
+            width: 90vw;
+            max-width: 1000px;
+        }
+        
+        .tablet-screen {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            bottom: 70px;
+            background-color: #0a0a0a;
+            border-radius: 5px;
+            padding: 20px;
+            overflow-y: auto;
+            border: 2px solid #444;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+        
+        .tablet-buttons {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+        }
+        
+        .tablet-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            border: 2px solid #666;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .tablet-button:hover {
+            background-color: #444;
+        }
+        
+        .tablet-button:active {
+            background-color: #222;
+            transform: scale(0.95);
+        }
+        
+        .tablet-status {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 60px;
+        }
+        
+        .tablet-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #33ff33;
+        }
+        
+        .blinking {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 100%;
+        }
+        
+        header {
+            border-bottom: 2px solid #33ff33;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .organization-logo {
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .scp-logo {
+            font-size: 12px;
+            font-weight: bold;
+            background-color: #000;
+            color: white;
+            padding: 5px;
+            border: 2px solid white;
+        }
+        
+        .dod-logo {
+            font-size: 12px;
+            font-weight: bold;
+            background-color: #003366;
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+        
+        .security-tag {
+            background-color: #ff0000;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        
+        .status-indicators {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .indicator-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-bottom: 5px;
+        }
+        
+        .green { background-color: #33ff33; }
+        .yellow { background-color: #ffff33; }
+        .red { background-color: #ff3333; }
+        
+        .main-content {
+            display: flex;
+            gap: 15px;
+            height: calc(100% - 180px);
+        }
+        
+        .map-container {
+            flex: 2;
+            position: relative;
+            border: 2px solid #33ff33;
+            padding: 10px;
+            background-color: #0f0f0f;
+            min-height: 400px;
+        }
+        
+        .map-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .sidebar {
+            flex: 1;
+            border: 2px solid #33ff33;
+            padding: 15px;
+            background-color: #0f0f0f;
+            height: 100%;
+            overflow-y: auto;
+            font-size: 12px;
+        }
+        
+        .sidebar h3 {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #33ff33;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .district-info {
+            margin-bottom: 15px;
+        }
+        
+        .district-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+        
+        .anomaly-level {
+            display: inline-block;
+            padding: 2px 6px;
+            margin-top: 3px;
+            font-size: 10px;
+            border-radius: 3px;
+        }
+        
+        .level-high { background-color: #ff3333; color: white; }
+        .level-medium { background-color: #ffaa33; color: black; }
+        .level-low { background-color: #33ff33; color: black; }
+        .level-unknown { background-color: #aaaaaa; color: black; }
+        
+        .alert-box {
+            background-color: #330000;
+            border: 1px solid #ff3333;
+            color: #ff3333;
+            padding: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .map-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .control-btn {
+            background-color: #1a1a1a;
+            color: #33ff33;
+            border: 1px solid #33ff33;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        
+        .coordinates {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 3px 8px;
+            border: 1px solid #33ff33;
+            font-size: 10px;
+        }
+        
+        .tab-container {
+            margin-bottom: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .tab {
+            padding: 4px 10px;
+            background-color: #1a1a1a;
+            border: 1px solid #33ff33;
+            color: #33ff33;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        
+        .tab.active {
+            background-color: #33ff33;
+            color: #000000;
+        }
+        
+        .tab-content {
+            background-color: #1a1a1a;
+            padding: 10px;
+            border: 1px solid #33ff33;
+            max-height: 230px;
+            overflow-y: auto;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .entity-info {
+            margin-top: 15px;
+        }
+        
+        .entity-box {
+            border: 1px solid #ff3333;
+            padding: 8px;
+            margin-bottom: 8px;
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        
+        .entity-id {
+            color: #ff3333;
+            font-weight: bold;
+        }
+        
+        .clearance-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 3px 8px;
+            border: 1px solid #ff3333;
+            color: #ff3333;
+            font-size: 10px;
+        }
+        
+        #clock {
+            font-weight: bold;
+        }
+        
+        .personnel-status {
+            margin-top: 15px;
+        }
+        
+        .personnel-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .online {
+            color: #33ff33;
+        }
+        
+        .offline {
+            color: #aaaaaa;
+        }
+        
+        .danger {
+            color: #ff3333;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: #aaaaaa;
+        }
+        
+        .operation-notes {
+            margin-top: 15px;
+        }
+        
+        .operation-notes h3 {
+            margin-bottom: 8px;
+        }
+        
+        .note {
+            background-color: #1a1a1a;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-left: 3px solid #33ff33;
+        }
+        
+        .timestamp {
+            font-size: 10px;
+            color: #aaaaaa;
+            margin-bottom: 3px;
+        }
+        
+        .screen-content {
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .boot-screen {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+        }
+        
+        .boot-logo {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .boot-progress {
+            width: 80%;
+            height: 20px;
+            border: 1px solid #33ff33;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .boot-progress-bar {
+            height: 100%;
+            background-color: #33ff33;
+            width: 0%;
+            transition: width 3s ease-in-out;
+        }
+        
+        .boot-status {
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+        
+        .diagnostic-screen {
+            display: none;
+            height: 100%;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .diagnostic-header {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .diagnostic-item {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .diagnostic-name {
+            font-weight: bold;
+        }
+        
+        .diagnostic-value {
+            font-family: monospace;
+        }
+        
+        .diagnostic-ok {
+            color: #33ff33;
+        }
+        
+        .tablet-power-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 15px;
+            height: 30px;
+            background-color: #666;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .battery-indicator {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        .battery-icon {
+            width: 30px;
+            height: 15px;
+            border: 1px solid #aaa;
+            border-radius: 2px;
+            position: relative;
+            padding: 1px;
+        }
+        
+        .battery-level {
+            height: 100%;
+            background-color: #33ff33;
+            width: 75%;
+        }
+        
+        .battery-cap {
+            position: absolute;
+            height: 7px;
+            width: 3px;
+            background-color: #aaa;
+            right: -4px;
+            top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tablet-container">
+        <!-- SVG for the tablet device -->
+        <svg width="100%" height="100%" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
+            <!-- Tablet body -->
+            <rect x="50" y="50" width="1100" height="700" rx="20" ry="20" fill="#333" stroke="#555" stroke-width="2"></rect>
+            
+            <!-- Screen area -->
+            <rect x="100" y="100" width="1000" height="550" rx="5" ry="5" fill="#222" stroke="#444" stroke-width="2"></rect>
+            
+            <!-- Ruggedized corners -->
+            <rect x="40" y="40" width="60" height="60" rx="10" ry="10" fill="#444" stroke="#555" stroke-width="2"></rect>
+            <rect x="1100" y="40" width="60" height="60" rx="10" ry="10" fill="#444" stroke="#555" stroke-width="2"></rect>
+            <rect x="40" y="700" width="60" height="60" rx="10" ry="10" fill="#444" stroke="#555" stroke-width="2"></rect>
+            <rect x="1100" y="700" width="60" height="60" rx="10" ry="10" fill="#444" stroke="#555" stroke-width="2"></rect>
+            
+            <!-- Button cutouts -->
+            <circle cx="600" cy="700" r="25" fill="#222" stroke="#444" stroke-width="2"></circle>
+            <circle cx="450" cy="700" r="25" fill="#222" stroke="#444" stroke-width="2"></circle>
+            <circle cx="750" cy="700" r="25" fill="#222" stroke="#444" stroke-width="2"></circle>
+            
+            <!-- Status light cutouts -->
+            <circle cx="200" cy="75" r="8" fill="#222" stroke="#444" stroke-width="1"></circle>
+            <circle cx="600" cy="75" r="8" fill="#222" stroke="#444" stroke-width="1"></circle>
+            <circle cx="1000" cy="75" r="8" fill="#222" stroke="#444" stroke-width="1"></circle>
+            
+            <!-- Power button cutout -->
+            <rect x="1120" y="150" width="20" height="50" rx="5" ry="5" fill="#222" stroke="#444" stroke-width="1"></rect>
+            
+            <!-- Battery indicator cutout -->
+            <rect x="100" y="75" width="50" height="18" rx="3" ry="3" fill="#222" stroke="#444" stroke-width="1"></rect>
+            
+            <!-- Military-style grip textures -->
+            <rect x="60" y="170" width="20" height="300" rx="5" ry="5" fill="#444" stroke="#555" stroke-width="1"></rect>
+            <rect x="1120" y="250" width="20" height="300" rx="5" ry="5" fill="#444" stroke="#555" stroke-width="1"></rect>
+            
+            <!-- Antenna -->
+            <rect x="1050" y="40" width="10" height="30" rx="5" ry="5" fill="#444" stroke="#555" stroke-width="1"></rect>
+            <rect x="1050" y="10" width="10" height="30" rx="0" ry="0" fill="#666" stroke="#777" stroke-width="1"></rect>
+        </svg>
+        
+        <div class="tablet-status">
+            <div class="tablet-indicator green"></div>
+            <div class="tablet-indicator yellow"></div>
+            <div class="tablet-indicator red blinking"></div>
+        </div>
+        
+        <div class="tablet-screen">
+            <div class="screen-content">
+                <div class="container">
+                    <header>
+                        <div class="logo-container">
+                            <div class="organization-logo">
+                                <div class="scp-logo">SCP</div>
+                                <div class="dod-logo">DOD</div>
+                            </div>
+                            <div class="logo">OPERATION PERIMETER</div>
+                        </div>
+                        <div class="security-tag">LEVEL 3 CLEARANCE REQUIRED</div>
+                    </header>
+                    
+                    <div class="top-bar">
+                        <div class="session-info">
+                            <div>SESSION ID: <span id="session-id">JOD-78945-X</span></div>
+                            <div>TIME: <span id="clock">06:00:00</span></div>
+                        </div>
+                        <div class="status-indicators">
+                            <div class="status-indicator">
+                                <div class="indicator-light green"></div>
+                                <div>SECURE</div>
+                            </div>
+                            <div class="status-indicator">
+                                <div class="indicator-light yellow"></div>
+                                <div>CONTAIN</div>
+                            </div>
+                            <div class="status-indicator">
+                                <div class="indicator-light red blinking"></div>
+                                <div>PROTECT</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-box">
+                        ALERT: DOD-SCP JOINT OPERATION ACTIVE. ANOMALOUS ACTIVITY IN ZAMOSKVORECH DISTRICT. MTF UNITS DEPLOYED.
+                    </div>
+                    
+                    <div class="main-content">
+                        <div class="map-container">
+                            <img src="map.png" alt="Operations Map" class="map-image">
+                            <div class="clearance-indicator">DOD-SCP LEVEL 3 ACCESS</div>
+                            <div class="coordinates">57.19°N, 39.41°E</div>
+                            
+                            <div class="map-controls">
+                                <button class="control-btn">ZOOM IN</button>
+                                <button class="control-btn">TOGGLE ANOMALY MARKERS</button>
+                                <button class="control-btn">SHOW MTF POSITIONS</button>
+                                <button class="control-btn">ZOOM OUT</button>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar">
+                            <h3>DISTRICT ANALYSIS</h3>
+                            
+                            <div class="tab-container">
+                                <div class="tabs">
+                                    <div class="tab active" data-tab="districts">DISTRICTS</div>
+                                    <div class="tab" data-tab="entities">ENTITIES</div>
+                                    <div class="tab" data-tab="personnel">PERSONNEL</div>
+                                </div>
+                                
+                                <div class="tab-content" id="districts-content">
+                                    <div class="district-info">
+                                        <div class="district-name">ZAMOSKVORECH DISTRICT</div>
+                                        <p>Primary operational zone. DOD-SCP joint containment perimeter established.</p>
+                                        <div class="anomaly-level level-high">ANOMALY LEVEL: HIGH</div>
+                                        <p>WARNING: Reality distortion measured at 78% above baseline.</p>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">KHAMOVNIKI DISTRICT</div>
+                                        <p>Secondary containment zone. DOD forces providing perimeter security.</p>
+                                        <div class="anomaly-level level-medium">ANOMALY LEVEL: MEDIUM</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">DONSKOY DISTRICT</div>
+                                        <p>Minor effects observed. DOD mobile command post established.</p>
+                                        <div class="anomaly-level level-low">ANOMALY LEVEL: LOW</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">TEKSTILSHCHIKI DISTRICT</div>
+                                        <p>SCP monitoring stations active. Civilian evacuation planning underway.</p>
+                                        <div class="anomaly-level level-low">ANOMALY LEVEL: LOW</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">PECHATNIKI DISTRICT</div>
+                                        <p>Water anomalies detected. SCP samples collected for Site-19 analysis.</p>
+                                        <div class="anomaly-level level-medium">ANOMALY LEVEL: MEDIUM</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">DUBROVKA</div>
+                                        <p>DOD monitoring station established. UAV surveillance active.</p>
+                                        <div class="anomaly-level level-low">ANOMALY LEVEL: LOW</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">POLSCHAD ILYICHA</div>
+                                        <p>Vegetation anomalies. SCP field research team deployed.</p>
+                                        <div class="anomaly-level level-medium">ANOMALY LEVEL: MEDIUM</div>
+                                    </div>
+                                    
+                                    <div class="district-info">
+                                        <div class="district-name">ANDRONOVKA</div>
+                                        <p>Communications disruption. DOD signal corps attempting restoration.</p>
+                                        <div class="anomaly-level level-medium">ANOMALY LEVEL: MEDIUM</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content hidden" id="entities-content">
+                                    <div class="entity-box">
+                                        <div class="entity-id">SCP-████</div>
+                                        <p>Location: Zamoskvorech District, central area</p>
+                                        <p>Classification: Reality Bender</p>
+                                        <p>Status: CONTAINED - DOD-SCP MONITORING ACTIVE</p>
+                                    </div>
+                                    
+                                    <div class="entity-box">
+                                        <div class="entity-id">SCP-████-B</div>
+                                        <p>Location: Near Pechatniki water source</p>
+                                        <p>Classification: Aquatic Manifestation</p>
+                                        <p>Status: UNDER OBSERVATION</p>
+                                    </div>
+                                    
+                                    <div class="entity-box">
+                                        <div class="entity-id">SCP-████-C (HOUSE)</div>
+                                        <p>Location: [REDACTED]</p>
+                                        <p>Classification: Spatial Anomaly</p>
+                                        <p>Status: CONTAINMENT PROTOCOL ACTIVE</p>
+                                        <p class="danger">WARNING: Do not approach without Level 4 clearance</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content hidden" id="personnel-content">
+                                    <div class="personnel-status">
+                                        <div class="personnel-item">
+                                            <span>MTF Alpha-1 ("Red Right Hand")</span>
+                                            <span class="online">ACTIVE</span>
+                                        </div>
+                                        <div class="personnel-item">
+                                            <span>DOD Special Unit Delta</span>
+                                            <span class="online">ACTIVE</span>
+                                        </div>
+                                        <div class="personnel-item">
+                                            <span>SCP Research Team Bravo-9</span>
+                                            <span class="online">ACTIVE</span>
+                                        </div>
+                                        <div class="personnel-item">
+                                            <span>DOD Containment Support</span>
+                                            <span class="online">ACTIVE</span>
+                                        </div>
+                                        <div class="personnel-item">
+                                            <span>SCP Exploration Team Bravo-2</span>
+                                            <span class="danger">SIGNAL LOST</span>
+                                        </div>
+                                        <div class="personnel-item">
+                                            <span>DOD Civilian Evacuation Team</span>
+                                            <span class="offline">STANDBY</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="operation-notes">
+                                <h3>OPERATION NOTES</h3>
+                                
+                                <div class="note">
+                                    <div class="timestamp">04.25.2025 - 05:45</div>
+                                    <p>DOD UAV surveillance confirms perimeter integrity. SCP containment specialists report stable readings.</p>
+                                </div>
+                                
+                                <div class="note">
+                                    <div class="timestamp">04.25.2025 - 04:30</div>
+                                    <p>SCP-DOD Joint Task Force reports temporal distortion increasing in Khamovniki District. DOD reinforcements requested.</p>
+                                </div>
+                                
+                                <div class="note">
+                                    <div class="timestamp">04.24.2025 - 23:57</div>
+                                    <p>Lost contact with SCP Exploration Team Bravo-2. Last known position near the anomalous house in [REDACTED] sector. Recovery team preparing for dispatch.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer">
+                        SCP-DOD JOINT OPERATION • SECURE • CONTAIN • PROTECT | CLASSIFIED INFORMATION - AUTHORIZED PERSONNEL ONLY
+                    </div>
+                </div>
+            </div>
+            
+            <div class="boot-screen" id="boot-screen">
+                <div class="boot-logo">SCP-DOD JOINT OPERATIONS</div>
+                <div class="boot-logo">TACTICAL FIELD TERMINAL</div>
+                <div class="boot-progress">
+                    <div class="boot-progress-bar" id="boot-progress-bar"></div>
+                </div>
+                <div class="boot-status" id="boot-status">Initializing system...</div>
+            </div>
+            
+            <div class="diagnostic-screen" id="diagnostic-screen">
+                <div class="diagnostic-header">SYSTEM DIAGNOSTIC</div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Operating System:</div>
+                    <div class="diagnostic-value diagnostic-ok">SCPDOS v7.3.2 - OK</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Battery:</div>
+                    <div class="diagnostic-value diagnostic-ok">76% - 8.2 hours remaining</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Secure Connection:</div>
+                    <div class="diagnostic-value diagnostic-ok">ESTABLISHED - SCP NET</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">GPS Signal:</div>
+                    <div class="diagnostic-value diagnostic-ok">STRONG - 9 SATELLITES</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Encryption:</div>
+                    <div class="diagnostic-value diagnostic-ok">AES-512 ACTIVE</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Reality Anchor:</div>
+                    <div class="diagnostic-value diagnostic-ok">FUNCTIONAL</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Memetic Filters:</div>
+                    <div class="diagnostic-value diagnostic-ok">ACTIVE</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Scranton Reality Detector:</div>
+                    <div class="diagnostic-value diagnostic-ok">CALIBRATED</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Personnel Authentication:</div>
+                    <div class="diagnostic-value diagnostic-ok">LEVEL 3 ACCESS GRANTED</div>
+                </div>
+                
+                <div class="diagnostic-item">
+                    <div class="diagnostic-name">Hardware Integrity:</div>
+                    <div class="diagnostic-value diagnostic-ok">100%</div>
+                </div>
+                
+                <div class="diagnostic-header">PRESS BUTTON 1 TO CONTINUE</div>
+            </div>
+        </div>
+        
+        <div class="tablet-buttons">
+            <div class="tablet-button" id="button1">1</div>
+            <div class="tablet-button" id="button2">2</div>
+            <div class="tablet-button" id="button3">3</div>
+        </div>
+        
+        <div class="tablet-power-button" id="power-button"></div>
+        
+        <div class="battery-indicator">
+            <div class="battery-icon">
+                <div class="battery-level"></div>
+                <div class="battery-cap"></div>
+            </div>
+            <span>76%</span>
+        </div>
+    </div>
+    
+    <script>
+        // Set initial time to 0600 hours
+        document.getElementById('clock').textContent = '06:00:00';
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.add('hidden'));
+                
+                // Show the selected tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-content`).classList.remove('hidden');
+            });
+        });
+        
+        // Button functionality
+        const button1 = document.getElementById('button1');
+        const button2 = document.getElementById('button2');
+        const button3 = document.getElementById('button3');
+        const powerButton = document.getElementById('power-button');
+        const screenContent = document.querySelector('.screen-content');
+        const bootScreen = document.getElementById('boot-screen');
+        const diagnosticScreen = document.getElementById('diagnostic-screen');
+        
+        // Button 1: Toggle main screen / diagnostic
+        button1.addEventListener('click', function() {
+            const isMainVisible = getComputedStyle(screenContent).display !== 'none';
+            const isDiagnosticVisible = getComputedStyle(diagnosticScreen).display !== 'none';
+            
+            if (isMainVisible) {
+                screenContent.style.display = 'none';
+                diagnosticScreen.style.display = 'block';
+                bootScreen.style.display = 'none';
+            } else if (isDiagnosticVisible) {
+                screenContent.style.display = 'block';
+                diagnosticScreen.style.display = 'none';
+                bootScreen.style.display = 'none';
+            }
+        });
+        
+        // Button 2: Toggle alert messages
+        button2.addEventListener('click', function() {
+            const alertBox = document.querySelector('.alert-box');
+            
+            if (alertBox.style.display === 'none') {
+                alertBox.style.display = 'block';
+            } else {
+                const alerts = [
+                    "ALERT: DOD-SCP JOINT OPERATION ACTIVE. ANOMALOUS ACTIVITY IN ZAMOSKVORECH DISTRICT. MTF UNITS DEPLOYED.",
+                    "ALERT: INCREASED TEMPORAL DISTORTION DETECTED IN KHAMOVNIKI DISTRICT. CONTAINMENT TEAMS ALERTED.",
+                    "ALERT: RECOVERY MISSION FOR EXPLORATION TEAM BRAVO-2 SCHEDULED FOR 0700 HOURS.",
+                    "ALERT: ANOMALOUS ENTITY CONTAINMENT AT 87% STABILITY. MONITORING PROTOCOLS ACTIVE."
+                ];
+                
+                const randomAlert = alerts[Math.floor(Math.random() * alerts.length)];
+                alertBox.textContent = randomAlert;
+            }
+        });
+        
+        // Button 3: Toggle between map views
+        button3.addEventListener('click', function() {
+            const mapContainer = document.querySelector('.map-container');
+            const mapImage = document.querySelector('.map-image');
+            
+            // This would typically switch between different map layers
+            // Here we're just changing a border to simulate a different view
+            if (mapContainer.style.borderColor === 'red') {
+                mapContainer.style.borderColor = '#33ff33';
+                mapImage.style.filter = 'none';
+            } else {
+                mapContainer.style.borderColor = 'red';
+                mapImage.style.filter = 'hue-rotate(30deg)';
+            }
+        });
+        
+        // Power button: Toggle boot screen
+        powerButton.addEventListener('click', function() {
+            const screenVisible = getComputedStyle(screenContent).display !== 'none' || 
+                                  getComputedStyle(diagnosticScreen).display !== 'none';
+            
+            if (screenVisible) {
+                // Turn off
+                screenContent.style.display = 'none';
+                diagnosticScreen.style.display = 'none';
+                bootScreen.style.display = 'flex';
+                document.getElementById('boot-progress-bar').style.width = '0%';
+                document.getElementById('boot-status').textContent = 'System shutting down...';
+                
+                setTimeout(() => {
+                    bootScreen.style.display = 'none';
+                }, 2000);
+            } else {
+                // Boot up
+                bootScreen.style.display = 'flex';
+                document.getElementById('boot-status').textContent = 'Initializing system...';
+                
+                setTimeout(() => {
+                    document.getElementById('boot-progress-bar').style.width = '30%';
+                    document.getElementById('boot-status').textContent = 'Loading secure environment...';
+                }, 1000);
+                
+                setTimeout(() => {
+                    document.getElementById('boot-progress-bar').style.width = '60%';
+                    document.getElementById('boot-status').textContent = 'Establishing secure connection...';
+                }, 2000);
+                
+                setTimeout(() => {
+                    document.getElementById('boot-progress-bar').style.width = '100%';
+                    document.getElementById('boot-status').textContent = 'Authentication successful. Welcome, Agent.';
+                }, 3000);
+                
+                setTimeout(() => {
+                    bootScreen.style.display = 'none';
+                    diagnosticScreen.style.display = 'block';
+                }, 4000);
+            }
+        });
+        
+        // Time update (starting from 0600)
+        function updateClock() {
+            const clockElement = document.getElementById('clock');
+            const currentTime = clockElement.textContent;
+            const [hours, minutes, seconds] = currentTime.split(':').map(Number);
+            
+            let newSeconds = seconds + 1;
+            let newMinutes = minutes;
+            let newHours = hours;
+            
+            if (newSeconds >= 60) {
+                newSeconds = 0;
+                newMinutes++;
+            }
+            
+            if (newMinutes >= 60) {
+                newMinutes = 0;
+                newHours++;
+            }
+            
+            if (newHours >= 24) {
+                newHours = 0;
+            }
+            
+            const formattedHours = String(newHours).padStart(2, '0');
+            const formattedMinutes = String(newMinutes).padStart(2, '0');
+            const formattedSeconds = String(newSeconds).padStart(2, '0');
+            
+            clockElement.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        
+        // Simulate activity
+        function simulateActivity() {
+            // Randomly update one of the notes every minute
+            const activities = [
+                "MTF Alpha-1 reports secure perimeter around anomaly house. No civilian sightings.",
+                "DOD aerial surveillance confirms no unauthorized personnel in restricted zone.",
+                "SCP containment team successfully deployed portable Scranton Reality Anchors.",
+                "Communication restored with forward outpost in Andronovka district.",
+                "DOD reports unusual electromagnetic readings near Khamovniki district border.",
+                "Field samples show 47% increase in anomalous particles. Analysis ongoing.",
+                "Security breach attempt detected and contained at southwestern perimeter."
+            ];
+            
+            const notes = document.querySelector('.operation-notes');
+            const newNote = document.createElement('div');
+            newNote.className = 'note';
+            
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            
+            const timestamp = document.createElement('div');
+            timestamp.className = 'timestamp';
+            timestamp.textContent = `04.25.2025 - ${hours}:${minutes}`;
+            
+            const content = document.createElement('p');
+            content.textContent = activities[Math.floor(Math.random() * activities.length)];
+            
+            newNote.appendChild(timestamp);
+            newNote.appendChild(content);
+            
+            notes.appendChild(newNote);
+            
+            // Remove oldest note if there are more than 5
+            const allNotes = notes.querySelectorAll('.note');
+            if (allNotes.length > 5) {
+                notes.removeChild(allNotes[0]);
+            }
+        }
+        
+        // Simulate activity every 60 seconds
+        setInterval(simulateActivity, 60000);
+    </script>
+</body>
+</html>
