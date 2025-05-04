@@ -1,72 +1,26 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1796, in script
-    $ renpy.pause(hard=True)
-  File "game/script.rpy", line 1796, in <module>
-    $ renpy.pause(hard=True)
-  File "game/scripts/look.rpy", line 82, in execute
-    screen west_search_dialogue():
-  File "game/scripts/look.rpy", line 82, in execute
-    screen west_search_dialogue():
-  File "game/scripts/look.rpy", line 83, in execute
-    frame:
-  File "game/scripts/look.rpy", line 88, in execute
-    vbox:
-  File "game/scripts/look.rpy", line 91, in execute
-    if has_item("Tissue") and not clean_window == True:
-  File "game/scripts/look.rpy", line 91, in <module>
-    if has_item("Tissue") and not clean_window == True:
-NameError: name 'clean_window' is not defined
+  File "game/script.rpy", line 1976, in script
+    $ open_html("003")
+  File "game/script.rpy", line 1976, in <module>
+    $ open_html("003")
+TypeError: open_html() missing 1 required positional argument: 'label_value'
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1796, in script
-    $ renpy.pause(hard=True)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+  File "game/script.rpy", line 1976, in script
+    $ open_html("003")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1796, in <module>
-    $ renpy.pause(hard=True)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1661, in pause
-    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
-    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
-    d.visit_all(callback, seen)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
-    callback(self)
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
-    root_widget.visit_all(lambda d : d.per_interact())
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
-    self.update()
-  File "d:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
-    self.screen.function(**self.scope)
-  File "game/scripts/look.rpy", line 82, in execute
-    screen west_search_dialogue():
-  File "game/scripts/look.rpy", line 82, in execute
-    screen west_search_dialogue():
-  File "game/scripts/look.rpy", line 83, in execute
-    frame:
-  File "game/scripts/look.rpy", line 88, in execute
-    vbox:
-  File "game/scripts/look.rpy", line 91, in execute
-    if has_item("Tissue") and not clean_window == True:
-  File "game/scripts/look.rpy", line 91, in <module>
-    if has_item("Tissue") and not clean_window == True:
-NameError: name 'clean_window' is not defined
+  File "game/script.rpy", line 1976, in <module>
+    $ open_html("003")
+TypeError: open_html() missing 1 required positional argument: 'label_value'
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Fri Apr 18 16:02:17 2025
+Sat May  3 21:25:13 2025

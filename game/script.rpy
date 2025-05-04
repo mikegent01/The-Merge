@@ -1685,7 +1685,7 @@ label start:
             jump bootcampinsideprojectorroomstart 
         "Refuse to hand over item":
             "You look down at the report.."
-            $ htmlopen("004")
+            $ open_html("004", last_label)
             "You feel like your we browser opened..."
             Q "I see..."
             Q "I don't think you understand the rules of this place."
@@ -1707,7 +1707,7 @@ label bootcampinsideprojectorroomstart:
     else:
         play music boot_camp volume 0.5
 
-    show ben idle at left with dissolve
+    show ben sitting at left with dissolve # Changed to 'sitting' as he's in a chair
    # $ quests.append({
    #     "name": "Go to the projector room and listen to the drill sargent.",
    #     "description": "I need to report to the drill sargent for a urgent meeting. ",
@@ -1734,7 +1734,7 @@ label bootcampinsideprojectorroomstart:
     "My mind must have tried to forget this fact. He was sitting in his seat with a red book in his lap. The room being too dark to know what was on the cover."
     "I hear Samuel whisper to me."
 
-    show samuel chill  at right
+    show samuel chill at right # Use the image tag defined
 
     SAM "Psst, hey Benjamin."
     SAM "I was told you would like this. It is a report on what happened today, I stole it from the supply main desk."
@@ -1797,7 +1797,7 @@ label bootcampinsideprojectorroomstart:
 
 
 label FrontSeat:
-    show sultan talking at left
+    show sultan talking at left # Use the image tag
     window show
     hide screen HUD
     "I walk up to the man; he seems like he is distracted with something."
@@ -1892,10 +1892,10 @@ label FrontSeat:
             jump abandonsamuel
 label keepsamuel:
     scene outsideprojectorroomnosamuel
-    show ben idle at left
-    show samuel redbook at right
+    show ben neutral at left
+    show samuel redbook at right # Use the image tag
 
-    "As I deliberate, I feel a tug on my arm."
+    "As I deliberate, I feel a tug on my arm." # Samuel is shown, maybe add expression?
     SAM "Don't worry, it will be fun!"
     scene storageroom 
     show ben idle at left
@@ -1910,8 +1910,8 @@ label keepsamuel:
     "He continues this for two more tries before I have enough."
 
     BEN "Are you sure the screwdriver is in there?"
-    SAM "There was a screwdriver in there, I am sure of it. The door was open before—that's how I got this book."
-
+    SAM "There was a screwdriver in there, I am sure of it. The door was open before—that's how I got this book." # Samuel is shown, maybe add expression?
+    # Consider `show samuel sameulnormal at right` if he looks normal, or another if frustrated/sad
     "Before I can ask about him reading a picture book, he shoves it in my face."
     scene bookfullscreen1
     "I realize that while the cover looked like a picture book, there are words inside."
@@ -1925,12 +1925,12 @@ label keepsamuel:
 
     "Unable to tell if he’s lying or not, I flip through the rest of the book, seeing crude writings and pictures, with text describing a fictional event."
     BEN "Is this a fan fiction? What are you, thirteen?"
-    scene storageroom 
-    show ben book at left
-    show samuel at right
-    
+    scene storageroom # Back to the room
+    show ben neutral at left
+    show samuel sameulnormal at right # Use the image tag
+
     "Before he answers my question, I interrupt him again."
-    BEN "You know what, never mind, I don’t need to know or want to know."
+    BEN "You know what, never mind, I don’t need to know or want to know." # Ben is shown
     
     "He’s about to cry."
     SAM "Just stay here while I figure out the passcode to that door."
@@ -1940,7 +1940,7 @@ label keepsamuel:
     "As I’m walking, I consider going to get a bite to eat but decide against it. I continue down the hallway until I reach one of the main desks."
 
     scene apple
-    show ben idle at left
+    show ben neutral at left
 
     "As I approach the main desk, I smell a murky scent in the air. My eyes tear up as I approach the two shadowy figures."
 
@@ -1950,14 +1950,14 @@ label keepsamuel:
     Q2 "There should be a screwdriver in the storage closet, but you need a password to enter it."
 
     "My eyes narrow."
-    BEN "You wouldn’t happen to have a password, would you?"
+    BEN "You wouldn’t happen to have a password, would you?" # Ben is shown
     
     "He stares at me blankly, like I just asked something shocking."
     Q2 "No... I do not. This may be the main desk of this building, but our building is not equipped with the modern amenities the other buildings have. This building is the oldest in the camp."
     hide ben
     "As I walk past him, I head to the right, noticing the maintenance hallway. Maybe there’s a screwdriver in here."
 
-    scene bg staircase
+    scene bg staircase # Changed scene, need to show Ben again if he's visible
     show ben idle at left
 
     "I quickly search around the hallway, only finding empty storage containers."
@@ -1965,23 +1965,23 @@ label keepsamuel:
     "I quickly spin around to see Samuel, book in hand. Standing there with that stupid smile he always puts on."
     "The red book in his hands looking at it.  I see the bright and cheery image in front of a sun shining, it's image contrasted with the bleak reality I am living in."
     
-    show samuel redbook at right
+    show samuel redbook at right # Use the image tag
 
     "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants. I think to myself the sooner I talk to him the faster he will leave"
     SAM "What do you want? Didn’t I tell you to wait there?"
-    "He looks at me with a sad face."
+    "He looks at me with a sad face." # samuel redbook is shown, maybe change expression if available?
     SAM "I wanted to show you this."
     "He pulls out the book he was holding and opens it, and something falls out."
     "I bend down and pick up the slip of paper."
-    $ htmlopen("003")                    
+    $ open_html("003", last_label)                    
     "I rip up the note."
     SAM "H-hey, why did you do that?"
     "He tries to grab the scraps of paper."
-    BEN "It said to discard it after we read it, so..."
+    BEN "It said to discard it after we read it, so..." # Ben is shown
     "I shrug."
     SAM "That note looked new! Like it was put in the notebook not too long ago."
 
-    "He picks up the scraps of paper and looks like he’s about to cry again."
+    "He picks up the scraps of paper and looks like he’s about to cry again." # Samuel is shown
     BEN "You sure are sensitive."
 
     "I sigh and ask him to look for a screwdriver in this room, since he’s here."
@@ -1996,14 +1996,14 @@ label keepsamuel:
     $ emotions["Pride"]["value"] -= 5    
 
     "I look over and back up a bit. Samuel is standing there with that big, stupid smile of his."
-    BEN "What made you ask that? Can you help me out here?"
+    BEN "What made you ask that? Can you help me out here?" # Ben is shown (idle)
 
     SAM "I was just curious, that’s all."
     "A moment of silence fills the room. As he rushes over to grab the other side of the box and help me place it down, I try to think of something to say, but I can’t think of anything."
     "I feel my face heating up as the box finally rests on the floor and finally say..."
     
-    BEN "I joined for myself, that’s all."
-
+    BEN "I joined for myself, that’s all." # Ben is shown (idle)
+    # Samuel is also present helping, maybe show him too? `show samuel sameulnormal at right`?
     SAM "Really? That’s boring!"
     "He sticks out his tounge as I try to open the locked box."
     SAM "Let me help you out."
@@ -2017,14 +2017,14 @@ label keepsamuel:
 
     "I stare into the mirror seeing a blank face stare back at me. I have worked my way up to this position, I should be proud. I should be happy but my face says otherwise."
     "As I put down the mirror. I look back at samuel he is staring at the container he has a somber experession, he looked like he was reminiscing on something from the past that has long been forgotten. At least that is what I thought." 
-    show ben idle at left
-    show samuel redbook at right    
+    show ben neutral at left
+    show samuel redbook at right # Use the image tag
     "A moment of silence fills the room. I try to think of something to say, but I can’t think of anything."
     "I put the mirror back in the box and close the container."
     
-    BEN "Can you help me put this back?"
+    BEN "Can you help me put this back?" # Ben is shown
     SAM "S-Sure.."
-    "He grabs the other end of the box. He helps me place it down where it was before."
+    "He grabs the other end of the box. He helps me place it down where it was before." # Samuel is shown
     BEN "Come on, there might be something upstairs."
     "He regains his smile and runs to catch up behind me as I walk up the stairs."
 
@@ -2035,10 +2035,10 @@ label keepsamuel:
     
     "I glance at the sign on the wall and walk to the left. I feel him yank my arm."
     scene bg maindeskentrance
-    show ben idle at left
+    show ben neutral at left
 
-    show samuel redbook at right    
-
+    show samuel redbook at right # Use the image tag
+    # Samuel yanking arm, maybe a more active pose like 'samuel sholder' if appropriate?
     SAM "H-hey, where do you think you’re going? You can’t just walk away without telling me!"
 
     "As I walked up to the main desk, I saw a note on the table."
@@ -2050,7 +2050,7 @@ label keepsamuel:
                 "I look down at my watch 10:41 AM. They must be out for an early lunch. I look down at the table and notice a guest list."
                 "The list is populated with names none of which I recognize. Except for one. J.J R Jones, the drill instructor, looking at the sheet he is placed an order for item #65912 (A blue toolbox)."
             "I open the gate and pick up the key on the table, I slot the key into the keyhole quickly. Looking back I see samuel looking back at me disapprovingly. I enter the room."
-            BEN "There might be a toolbox back here, you never know. I am just checking"
+            BEN "There might be a toolbox back here, you never know. I am just checking" # Ben is shown (neutral)
             "I enter the backroom and look around, there are file cabinets, each labled with people’s names. I shrug there dosen't seem to be a screwdriver here. As I am leaving I notice a folder on the ground labled Erika."
             "I pick it up and a coin falls out, picking it up I check the folder for more. As I flip through the pages in the foldera statsfing sound is made as I pull a page out"
             if rng < 20:   
@@ -2090,7 +2090,7 @@ label keepsamuel:
             "When I wake up, I see the projector is fixed, and Samuel is sitting on a chair reading his book."
             "I honestly didn’t expect him to know how to fix a projector, but I won’t question it."
             "I look at my watch and realize that I need to get ready to move out."
-            "I wake Samuel up. He looks visibly shaken."
+            "I wake Samuel up. He looks visibly shaken." # Maybe show Samuel here? `show samuel chill at right`?
             SAM "H-huh?"
             "He talks in a groggy voice and looks up at me."
             BEN "We’re going."
@@ -2136,10 +2136,9 @@ label abandonsamuel:
     "s"
 
 label BackSeat:
-    show person_back idle at left
+    # show person_back idle at left # Character 'person_back' is not defined. Commenting out or replace.
     hide screen HUD
 
     # Add dialogue and interaction for the person in the back seat
     "You decide to talk to the person in the back seat."
     return
-

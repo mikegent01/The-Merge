@@ -119,7 +119,7 @@ screen tutorial_screen():
         
         vbox:
             spacing 15
-            text "TUTORIAL" xalign 0.5 color "#ff9900" size 36
+            text "TUTORIAL [last_label]" xalign 0.5 color "#ff9900" size 36
             
             null height 10
             
