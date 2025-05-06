@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 1553: unmatched '}'
-        }
-         ^
+File "game/script.rpy", line 2225: expected end of line
+    stop sound "osprey_nearby.ogg"
+               ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Fri Apr 18 15:56:33 2025
+Mon May  5 19:49:15 2025

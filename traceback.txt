@@ -1,26 +1,37 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1976, in script
-    $ open_html("003")
-  File "game/script.rpy", line 1976, in <module>
-    $ open_html("003")
-TypeError: open_html() missing 1 required positional argument: 'label_value'
+  File "renpy/common/00keymap.rpy", line 487, in script
+    python hide:
+  File "renpy/common/00keymap.rpy", line 487, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 511, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+TypeError: cannot pickle '_thread.lock' object (perhaps store._web_server_instance._tstate_lock = <unlocked _thread.lock object at 0x0000000005ce6750>)
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1976, in script
-    $ open_html("003")
+  File "renpy/common/00keymap.rpy", line 487, in script
+    python hide:
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1976, in <module>
-    $ open_html("003")
-TypeError: open_html() missing 1 required positional argument: 'label_value'
+  File "renpy/common/00keymap.rpy", line 487, in <module>
+    python hide:
+  File "renpy/common/00keymap.rpy", line 511, in _execute_python_hide
+    renpy.save("_reload-1", "reload save game")
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\loadsave.py", line 436, in save
+    reraise(t, e, tb)
+  File "lib/python3.9/future/utils/__init__.py", line 444, in raise_
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\loadsave.py", line 417, in save
+    dump((roots, renpy.game.log), logf)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\compat\pickle.py", line 103, in dump
+    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
+TypeError: cannot pickle '_thread.lock' object (perhaps store._web_server_instance._tstate_lock = <unlocked _thread.lock object at 0x0000000005ce6750>)
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Sat May  3 21:25:13 2025
+Mon May  5 20:28:31 2025

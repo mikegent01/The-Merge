@@ -1,18 +1,21 @@
-2025-05-04 01:23:42 UTC
+2025-05-06 00:28:39 UTC
 Windows-10-10.0.26100
 Ren'Py 8.2.1.24030407
 
 Early init took 0.05s
 Loading error handling took 0.02s
-Loading script took 0.18s
+Loading script took 0.33s
 Loading save slot metadata took 0.02s
 Loading persistent took 0.00s
-Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted - Is another application using it?
-Running init code took 0.05s
-Loading analysis data took 0.02s
+[Web Server] Serving files from: D:\wre\The Merge\game\htmls
+[Web Server Control] Starting web server...
+[Web Server Thread] Server starting on http://localhost:3000
+Running init code took 0.06s
+Loading analysis data took 0.01s
 Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
+Reloading save slot metadata took 0.01s
 Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
 Dump and make backups took 0.03s
 Cleaning cache took 0.00s
 Making clean stores took 0.00s
@@ -24,8 +27,8 @@ Creating interface object took 0.18s
 Cleaning stores took 0.00s
 Init translation took 0.03s
 Build styles took 0.00s
-Load screen analysis took 0.03s
-Analyze screens took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
 Save screen analysis took 0.02s
 Prepare screens took 0.06s
 Save pyanalysis. took 0.00s
@@ -47,146 +50,8 @@ INFO:renpy_warp_service:service thread started. periodically scanning ports for 
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-
-Full traceback:
-  File "game/script.rpy", line 1976, in script
-    $ htmlopen("003")
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1976, in <module>
-    $ htmlopen("003")
-NameError: name 'htmlopen' is not defined
-
-While running game code:
-  File "game/script.rpy", line 1976, in script
-    $ htmlopen("003")
-  File "game/script.rpy", line 1976, in <module>
-    $ htmlopen("003")
-NameError: name 'htmlopen' is not defined
+[Web Server Control] Server already running.
+Opening URL: http://localhost:3000/003.html?lastLabel=keepsamuel
 INFO:renpy_warp_service:closing websocket connection :40111
 INFO:renpy_warp_service:connection replaced, service exiting
 INFO:renpy_warp_service:service closed
-Resetting cache.
-Early init took 89.61s
-Loading error handling took 0.02s
-Loading script took 0.20s
-Loading save slot metadata took 0.02s
-Loading persistent took 0.00s
-Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted - Is another application using it?
-Running init code took 0.02s
-Loading analysis data took 0.02s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.04s
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.20s
-Cleaning stores took 0.00s
-Init translation took 0.04s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.06s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.04s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.28'
-Display Info: None
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-
-Full traceback:
-  File "game/script.rpy", line 1976, in script
-    $ open_html("003")
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "game/script.rpy", line 1976, in <module>
-    $ open_html("003")
-TypeError: open_html() missing 1 required positional argument: 'label_value'
-
-While running game code:
-  File "game/script.rpy", line 1976, in script
-    $ open_html("003")
-  File "game/script.rpy", line 1976, in <module>
-    $ open_html("003")
-TypeError: open_html() missing 1 required positional argument: 'label_value'
-INFO:renpy_warp_service:closing websocket connection :40111
-INFO:renpy_warp_service:connection replaced, service exiting
-INFO:renpy_warp_service:service closed
-Resetting cache.
-Early init took 130.28s
-Loading error handling took 0.01s
-Loading script took 0.18s
-Loading save slot metadata took 0.02s
-Loading persistent took 0.00s
-Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted - Is another application using it?
-Running init code took 0.03s
-Loading analysis data took 0.02s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.06s
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.17s
-Cleaning stores took 0.00s
-Init translation took 0.04s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.06s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.04s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.28'
-Display Info: None
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:connected to renpy warp socket server on :40111
-Opening URL: http://localhost:3000/game/htmls/003.html?lastLabel=_after_load
-Opening URL: http://localhost:3000/game/htmls/003.html?lastLabel=keepsamuel
-INFO:renpy_warp_service:socket service on :40111 exited
-INFO:renpy_warp_service:connected to renpy warp socket server on :40112
-INFO:renpy_warp_service:socket service on :40112 exited
-INFO:renpy_warp_service:closing websocket connection :40111
-INFO:renpy_warp_service:closing websocket connection :40112

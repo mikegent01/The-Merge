@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Merge - TODO Checklist</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #2a2a2a;
+        }
+        h2 {
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            color: #555;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        label {
+            cursor: pointer;
+        }
+        .sub-task {
+            margin-left: 30px;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            background-color: #f9f9f9;
+        }
+        .file-path {
+            font-family: monospace;
+            font-size: 0.85em;
+            color: #0066cc;
+        }
+        .character-name {
+            font-style: italic;
+            color: #b66c12;
+        }
+        .plot-point {
+            font-weight: bold;
+            color: #d30000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>The Merge - Development TODO Checklist</h1>
+
+    <h2>Core Script & Narrative</h2>
+    <ul>
+        <li><input type="checkbox" id="script-finish"><label for="script-finish">Finish <span class="file-path">d:\wre\The Merge\game\script.rpy</span></label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="script-osprey-continue"><label for="script-osprey-continue">Continue story after Osprey briefing scene (arrival at LZ, initial encounters).</label></li>
+                <li><input type="checkbox" id="plot-op-flashpoint"><label for="plot-op-flashpoint">Develop <span class="plot-point">Operation Flashpoint</span></label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-op-phase1"><label for="plot-op-phase1">Script Phase 1: LZ Secure & Advance to Point Alpha</label>
+                            <ul class="sub-task">
+                                <li><input type="checkbox" id="plot-op-lz-hot"><label for="plot-op-lz-hot">Detail "hot LZ" arrival: enemy types, initial combat/stealth.</label></li>
+                                <li><input type="checkbox" id="plot-op-lz-secure"><label for="plot-op-lz-secure">Script securing the LZ.</label></li>
+                                <li><input type="checkbox" id="plot-op-noncombatants"><label for="plot-op-noncombatants">Implement evacuation/interaction with non-combatants.</label></li>
+                                <li><input type="checkbox" id="plot-op-path-alpha"><label for="plot-op-path-alpha">Design and script journey to Point Alpha ("The Nest").</label></li>
+                                <li><input type="checkbox" id="plot-op-dt9-nu7-collab1"><label for="plot-op-dt9-nu7-collab1">Integrate initial DT9/Nu-7 collaboration/communication.</label></li>
+                            </ul>
+                        </li>
+                        <li><input type="checkbox" id="plot-op-phase2"><label for="plot-op-phase2">Define and Script Phase 2 Objectives (post-"The Nest" initial breach).</label></li>
+                        <li><input type="checkbox" id="plot-op-phase3"><label for="plot-op-phase3">Define and Script Phase 3 Objectives (culmination of Operation Flashpoint).</label></li>
+                        <li><input type="checkbox" id="plot-op-gear"><label for="plot-op-gear">Detail acquisition/use of "protective gear" against cognitohazards.</label></li>
+                        <li><input type="checkbox" id="plot-op-personnel"><label for="plot-op-personnel">Script encounters with "important personnel" to be secured.</label></li>
+                        <li><input type="checkbox" id="plot-op-threats"><label for="plot-op-threats">Design and script encounters with "unknown threats" in the area.</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="plot-the-nest"><label for="plot-the-nest">Develop <span class="plot-point">The Nest</span> (Point Alpha)</label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-nest-layout"><label for="plot-nest-layout">Design layout/key areas of the residential complex.</label></li>
+                        <li><input type="checkbox" id="plot-nest-breach"><label for="plot-nest-breach">Script player team's breach (2nd floor windows) & Delta team's breach (entrances).</label></li>
+                        <li><input type="checkbox" id="plot-nest-interior"><label for="plot-nest-interior">Detail events, challenges (cognitohazards, entities), and discoveries inside.</label></li>
+                        <li><input type="checkbox" id="plot-nest-target-define"><label for="plot-nest-target-define">Define the "main target": nature, abilities, motivations.</label></li>
+                        <li><input type="checkbox" id="plot-nest-target-encounter"><label for="plot-nest-target-encounter">Script the confrontation/capture of the target.</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="plot-scp"><label for="plot-scp">Develop <span class="plot-point">SCP-██████████</span></label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-scp-define"><label for="plot-scp-define">Define its properties, anomalous effects, and containment status/history.</label></li>
+                        <li><input type="checkbox" id="plot-scp-connection"><label for="plot-scp-connection">Clarify its connection to Ruckersville events, Energy Beams, Cognitohazard, and The Nest.</label></li>
+                        <li><input type="checkbox" id="plot-scp-lore"><label for="plot-scp-lore">Write scenes/documents/lore drops revealing information about it.</label></li>
+                        <li><input type="checkbox" id="plot-scp-effects"><label for="plot-scp-effects">Integrate its direct/indirect effects into gameplay and narrative.</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="plot-convergence"><label for="plot-convergence">Develop <span class="plot-point">Great Convergence</span></label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-convergence-define"><label for="plot-convergence-define">Define what it is (interdimensional merging, reality alteration?).</label></li>
+                        <li><input type="checkbox" id="plot-convergence-effects"><label for="plot-convergence-effects">Detail its current and potential effects on the world/characters.</label></li>
+                        <li><input type="checkbox" id="plot-convergence-link"><label for="plot-convergence-link">Explain its link to SCP-██████████ and other anomalous phenomena.</label></li>
+                        <li><input type="checkbox" id="plot-convergence-goal"><label for="plot-convergence-goal">Is understanding/stopping it the ultimate goal?</label></li>
+                        <li><input type="checkbox" id="plot-convergence-show"><label for="plot-convergence-show">Script scenes/events that demonstrate its effects (environmental changes, new entities).</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="plot-cognitohazard"><label for="plot-cognitohazard">Develop <span class="plot-point">Cognitohazard</span></label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-cognito-effects"><label for="plot-cognito-effects">Define specific sensory/mental/physical effects on unprotected individuals.</label></li>
+                        <li><input type="checkbox" id="plot-cognito-scenes"><label for="plot-cognito-scenes">Script scenes where the cognitohazard is an active threat or influences characters/environment.</label></li>
+                        <li><input type="checkbox" id="plot-cognito-gear-func"><label for="plot-cognito-gear-func">Detail how protective gear works and its limitations.</label></li>
+                        <li><input type="checkbox" id="plot-cognito-source"><label for="plot-cognito-source">Is it solely from the Energy Beams or are there other sources?</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="plot-energy-beams"><label for="plot-energy-beams">Develop <span class="plot-point">Energy Beams</span></label>
+                    <ul class="sub-task">
+                        <li><input type="checkbox" id="plot-beams-visuals"><label for="plot-beams-visuals">Describe their appearance, scale, and behavior.</label></li>
+                        <li><input type="checkbox" id="plot-beams-origin"><label for="plot-beams-origin">Clarify their origin (SCP? Target? Natural phenomenon?).</label></li>
+                        <li><input type="checkbox" id="plot-beams-effects-env"><label for="plot-beams-effects-env">Detail environmental effects beyond radio blocking (e.g., physical distortions, energy fields).</label></li>
+                        <li><input type="checkbox" id="plot-beams-stability"><label for="plot-beams-stability">Are they stable, growing, fluctuating? Can they be influenced?</label></li>
+                        <li><input type="checkbox" id="plot-beams-interaction"><label for="plot-beams-interaction">Script player/NPC interaction or direct observation of the beams.</label></li>
+                        <li><input type="checkbox" id="plot-beams-purpose"><label for="plot-beams-purpose">What is their ultimate purpose or consequence if unaddressed?</label></li>
+                    </ul>
+                </li>
+                <li><input type="checkbox" id="script-lz"><label for="script-lz">Write scenes for arriving at Virginia LZ.</label></li>
+                <li><input type="checkbox" id="script-choices"><label for="script-choices">Implement mission phase interactions & choices.</label></li>
+                <li><input type="checkbox" id="script-chars"><label for="script-chars">Integrate choices related to <span class="character-name">Samuel</span>, <span class="character-name">Bagman</span>, <span class="character-name">Lt. Harry</span>.</label></li>
+                <li><input type="checkbox" id="script-projector"><label for="script-projector">Resolve "fix the projector" storyline/branching.</label></li>
+                <li><input type="checkbox" id="script-bagman-story"><label for="script-bagman-story">Develop <span class="character-name">Bagman</span>'s backstory (why the bag?).</label></li>
+                <li><input type="checkbox" id="script-pistol-scene"><label for="script-pistol-scene">Address the "pistol on lap" scene and its consequences/follow-up.</label></li>
+                <li><input type="checkbox" id="script-delta9-nu7"><label for="script-delta9-nu7">Detail interactions/roles of Delta 9 (DT9) and Nu-7 battalions.</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="script-char-refine"><label for="script-char-refine">Refine Character Interactions</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="script-relations"><label for="script-relations">Develop relationship mechanics (Trust, Friendship, Hostility).</label></li>
+                <li><input type="checkbox" id="script-dialogue"><label for="script-dialogue">Add more dialogue/choices involving key characters.</label></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>HTML App Integration & Content</h2>
+    <ul>
+        <li><input type="checkbox" id="html-briefing"><label for="html-briefing">Rewrite Mission Briefing (<span class="file-path">d:\wre\The Merge\game\htmls\010\missionBriefing.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-briefing-align"><label for="html-briefing-align">Align text with <span class="character-name">Lt. Harry</span>'s briefing in script (<span class="plot-point">Operation Flashpoint</span>, DT9, Nu-7, Point Alpha, etc.).</label></li>
+                <li><input type="checkbox" id="html-briefing-audio"><label for="html-briefing-audio">Replace/remove placeholder audio (<span class="file-path">CL4UJ9J4.wav</span>).</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-facilitymap"><label for="html-facilitymap">Make Proper Facility Map (<span class="file-path">d:\wre\The Merge\game\htmls\010\facilityMap.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-facilitymap-loc"><label for="html-facilitymap-loc">Define location (Fort Belvoir? Ruckersville Staging? Target?).</label></li>
+                <li><input type="checkbox" id="html-facilitymap-layout"><label for="html-facilitymap-layout">Update layout to match chosen location & script needs.</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-tactical"><label for="html-tactical">Update Tactical Overlay (<span class="file-path">d:\wre\The Merge\game\htmls\010\tacticalOverlay.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-tactical-layout"><label for="html-tactical-layout">Ensure airfield layout matches Ruckersville staging area.</label></li>
+                <li><input type="checkbox" id="html-tactical-units"><label for="html-tactical-units">Add Nu-7 units if applicable.</label></li>
+                <li><input type="checkbox" id="html-tactical-markers"><label for="html-tactical-markers">Add objective markers if needed.</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-personnel"><label for="html-personnel">Enhance Personnel Database (<span class="file-path">d:\wre\The Merge\game\htmls\010\personnelDatabase.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-personnel-chars"><label for="html-personnel-chars">Add other relevant characters (<span class="character-name">CO Miller</span>?).</label></li>
+                <li><input type="checkbox" id="html-personnel-details"><label for="html-personnel-details">Fill in accurate details based on script roles.</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-scp"><label for="html-scp">Update SCP Database (<span class="file-path">d:\wre\The Merge\game\htmls\010\scpDatabase.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-scp-align"><label for="html-scp-align">Ensure <span class="plot-point">SCP-██████████</span> entry aligns with script details.</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-newsweather"><label for="html-newsweather">Integrate Weather & News (<span class="file-path">.../weatherSystem.js</span>, <span class="file-path">.../newsApp.js</span>)</label>
+            <ul class="sub-task">
+                <li><input type="checkbox" id="html-news-write"><label for="html-news-write">Write news articles referencing weather & script events (Virginia location).</label></li>
+            </ul>
+        </li>
+        <li><input type="checkbox" id="html-003"><label for="html-003">Review/Update content for <span class="file-path">003.html</span> (Note from Samuel's book).</label></li>
+        <li><input type="checkbox" id="html-004"><label for="html-004">Review/Update content for <span class="file-path">004.html</span> (Report details when refusing mayor).</label></li>
+        <li><input type="checkbox" id="html-006"><label for="html-006">Review/Update content for <span class="file-path">006.html</span> (Radio interaction content).</label>
+        </li>
+    </ul>
+
+    <h2>Gameplay Mechanics & Systems</h2>
+    <ul>
+        <li><input type="checkbox" id="mech-inventory"><label for="mech-inventory">Refine Inventory/Crafting/Deconstruction (in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-liquid"><label for="mech-liquid">Test and expand Liquid Mixing system (recipes, containers, stirring in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-skills"><label for="mech-skills">Develop Skill/Stat System (XP, rolls, emotions in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-health"><label for="mech-health">Implement Health/Status System (injuries, medkits in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-journal"><label for="mech-journal">Expand Journal/Mission System (dynamic updates in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-equipment"><label for="mech-equipment">Test and refine Equipment system (head, body, hands, legs slots in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="mech-minigame"><label for="mech-minigame">Integrate and test Math Minigame (in <span class="file-path">script.rpy</span>)</label></li>
+    </ul>
+
+    <h2>Technical & Polish</h2>
+    <ul>
+        <li><input type="checkbox" id="tech-webserver"><label for="tech-webserver">Review Web Server code (in <span class="file-path">script.rpy</span>)</label></li>
+        <li><input type="checkbox" id="tech-lastlabel"><label for="tech-lastlabel">Verify `last_label` functionality for all `open_html` calls.</label></li>
+        <li><input type="checkbox" id="tech-testing"><label for="tech-testing">Test HTML App interactions within Ren'Py.</label></li>
+        <li><input type="checkbox" id="tech-audio"><label for="tech-audio">Add/Refine Sound Effects & Music.</label></li>
+        <li><input type="checkbox" id="tech-visuals"><label for="tech-visuals">Visual Polish (UI, character expressions, transitions).</label></li>
+        <li><input type="checkbox" id="tech-unused-vars"><label for="tech-unused-vars">Review <span class="file-path">script.rpy</span> for unused variables or functions.</label></li>
+        <li><input type="checkbox" id="tech-char-defs"><label for="tech-char-defs">Ensure all defined characters in <span class="file-path">script.rpy</span> are used or planned.</label></li>
+    </ul>
+
+</body>
+</html>

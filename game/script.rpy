@@ -24,6 +24,7 @@ define EMA = Character("Emma")
 define MYS = Character("Mystery Man")
 define PLA = Character("Placeholder")
 define PRE = Character("President")
+define LT = Character("Lieutenant", color="#c4a74a") # Added Lieutenant
 define SAM = Character("Samuel",color="#b66c1261")
 define SIM = Character("Sim")
 define SUL = Character("Sultan",color="#aeadb7")
@@ -119,6 +120,7 @@ init python:
     import hashlib
     import threading   
     import urllib
+    import urllib.parse # Make sure this is imported
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
     import os    
@@ -176,8 +178,6 @@ init python:
             return None    
     if not hasattr(persistent, 'journal_entries') or persistent.journal_entries is None:
         persistent.journal_entries = []  # Ensure it's a list    
-    PORT = 3000
-    HTML_DIR = os.path.join(renpy.config.gamedir, "htmls")
     def unlock_book(title, text_file, preview="images/inventory/inventory_hud/default_book.png"):
         """
         Unlock a book that can be read in-game.
@@ -1072,98 +1072,201 @@ init python:
         if part in default_status:
             default_status[part]["health"] = min(default_status[part]["health"] + amount, maxhealth)
         renpy.notify(f"{part.replace('_', ' ').capitalize()} health restored by {amount} points.")
-    class CustomHandler(SimpleHTTPRequestHandler):
-        # --- ADJUSTED translate_path ---
+    WEBSERVER_PORT = 3000
+    PORT = 3000
+    # Construct the absolute path to the htmls directory
+    HTML_SERVE_DIR = os.path.abspath(os.path.join(renpy.config.gamedir, "htmls"))
+
+    # --- Sanity Check ---
+    if not os.path.isdir(HTML_SERVE_DIR):
+        print(f"[Web Server Error] HTML directory not found or is not a directory: {HTML_SERVE_DIR}")
+        # Optionally, raise an error or notify the user
+        # raise Exception(f"Required HTML directory not found: {HTML_SERVE_DIR}")
+    else:
+        print(f"[Web Server] Serving files from: {HTML_SERVE_DIR}")
+
+    # --- Custom Request Handler ---
+    class RenpyHTTPRequestHandler(SimpleHTTPRequestHandler):
+        # Override the base class directory to our specific HTML_SERVE_DIR
+        # This simplifies path handling significantly. The server will *only*
+        # look for files within this directory.
+        def __init__(self, *args, **kwargs):
+            # Python 3.7+ way to change directory for the handler
+            if sys.version_info >= (3, 7):
+                 kwargs['directory'] = HTML_SERVE_DIR
+            super().__init__(*args, **kwargs)
+            # Python 3.6 fallback (less common now)
+            # if sys.version_info < (3, 7):
+            #    self.directory = HTML_SERVE_DIR # Note: This might need adjustment for 3.6
+
+        # --- Security & Functionality Enhancements ---
         def translate_path(self, path):
-            """Translate a URL path (expected to start with /game/htmls/) to the local filesystem path."""
-            # Decode URL-encoded characters (like %20 for space)
+            """
+            Translate a URL path to a filesystem path within HTML_SERVE_DIR.
+            Includes security checks.
+            """
+            # Decode URL encoding (e.g., %20 -> space)
+            path = path.split('?', 1)[0]  # Remove query string
+            path = path.split('#', 1)[0]  # Remove fragment
             decoded_path = urllib.parse.unquote(path)
 
-            # Define the expected prefix in the URL path
-            url_prefix = "/game/htmls/"
-            disk_prefix_to_remove = "game/htmls/" # The part to strip to get the path relative to HTML_DIR
+            # --- Path Cleaning & Security ---
+            # Make the path relative by removing leading slashes
+            relative_path = decoded_path.lstrip('/')
+            # Normalize the path (collapses .., handles separators)
+            safe_relative_path = os.path.normpath(relative_path)
 
-            # Get the path component after the domain, removing leading slash
-            path_component = decoded_path.lstrip('/') # e.g., "game/htmls/006.html" or "radio.css"
+            # **Crucial Security Check**: Prevent escaping the HTML_SERVE_DIR
+            # After normalization, the path should not start with '..' or be absolute
+            if safe_relative_path.startswith('..') or os.path.isabs(safe_relative_path):
+                print(f"[Web Server Security] Blocked potentially unsafe path: {path}")
+                # Return a path deliberately outside the serve dir or non-existent
+                # This will likely lead to a 404 naturally by the base handler.
+                # We return just the 'unsafe' part to let the base handler fail.
+                return "ACCESS_DENIED_INVALID_PATH" # Or just an empty string ""
 
-            # Check if the path component starts with the expected disk prefix
-            if path_component.startswith(disk_prefix_to_remove):
-                # If it does, remove the prefix to get the path relative to HTML_DIR
-                relative_file_path = path_component[len(disk_prefix_to_remove):] # e.g., "006.html"
-            else:
-                # If it doesn't (e.g., CSS, JS, audio files referenced relatively in the HTML),
-                # assume the path component is already relative to HTML_DIR.
-                relative_file_path = path_component # e.g., "radio.css", "audio/0.wav"
+            # Join the *base serving directory* with the safe relative path
+            full_path = os.path.join(HTML_SERVE_DIR, safe_relative_path)
 
-            # Prevent directory traversal attacks (important!)
-            safe_relative_path = os.path.normpath(relative_file_path).lstrip(os.sep)
+            # --- Debugging (Uncomment to see path translation) ---
+            # print(f"[Web Server Debug] Request Path: {path}")
+            # print(f"[Web Server Debug] Decoded Path: {decoded_path}")
+            # print(f"[Web Server Debug] Safe Relative Path: {safe_relative_path}")
+            # print(f"[Web Server Debug] Calculated Full Path: {full_path}")
+            # print(f"[Web Server Debug] Full Path Exists: {os.path.exists(full_path)}")
+            # ---
 
-            # Join the HTML directory (base) with the safe relative path component
-            fullpath = os.path.join(HTML_DIR, safe_relative_path)
+            # Return the calculated *absolute* filesystem path
+            # The base SimpleHTTPRequestHandler expects this.
+            return full_path
 
-            # --- Debugging ---
-            # print(f"Requested path (URL): {path}")
-            # print(f"Decoded path component: {path_component}")
-            # print(f"Relative file path used: {relative_file_path}")
-            # print(f"Attempting to serve (Disk): {fullpath}")
-            # print(f"File exists: {os.path.exists(fullpath)}")
-            # --- End Debugging ---
 
-            return fullpath # Return the absolute disk path
 
-        # Override directory listing (keep this)
-        def list_directory(self, path):
-            self.send_error(404, "File not found or directory listing disabled")
-            return None
-
-        # Disable logging (keep this)
         def log_message(self, format, *args):
+            """Optional: Suppress logging to console."""
+            # Comment out the next line to see default HTTP request logs
             pass
 
-    # --- Keep the WebServer class and server startup/stop logic the same ---
-    class WebServer(threading.Thread):
-        # ... (rest of WebServer class is unchanged) ...
-        def __init__(self):
+    # --- Web Server Thread ---
+    class WebServerThread(threading.Thread):
+        def __init__(self, port):
             super().__init__()
-            self.daemon = True
+            self.daemon = True  # Allows Ren'Py to exit even if this thread is running
+            self.port = port
             self.server = None
+            self._stop_event = threading.Event()
 
         def run(self):
-            if not os.path.isdir(HTML_DIR):
-                renpy.notify(f"Error: HTML directory not found at {HTML_DIR}")
-                print(f"Error: HTML directory not found at {HTML_DIR}")
+            # Check again if the directory exists right before starting
+            if not os.path.isdir(HTML_SERVE_DIR):
+                print(f"[Web Server Thread Error] HTML directory gone or invalid before start: {HTML_SERVE_DIR}")
                 return
+
             try:
-                self.server = TCPServer(("localhost", PORT), CustomHandler)
-                print(f"Web server started on http://localhost:{PORT} serving from {HTML_DIR}")
+                # Create the server, binding to localhost only on the specified port, using our custom handler
+                self.server = TCPServer(("localhost", self.port), RenpyHTTPRequestHandler)
+                print(f"[Web Server Thread] Server starting on http://localhost:{self.port}")
+                # Start serving requests until stop() is called
                 self.server.serve_forever()
+                # This line is reached after shutdown() is called
+                print("[Web Server Thread] Server stopped.")
+
             except OSError as e:
-                renpy.notify(f"Failed to start server on port {PORT}: {str(e)}")
-                print(f"Failed to start server on port {PORT}: {str(e)} - Is another application using it?")
+                print(f"[Web Server Thread Error] Failed to start server on port {self.port}: {e}")
+                print(f"[Web Server Thread Error] Is another application (or game instance) already using port {self.port}?")
+                renpy.notify(f"Error: Could not start internal web server on port {self.port}. Port possibly in use.")
             except Exception as e:
-                renpy.notify(f"Failed to start server: {str(e)}")
-                print(f"Failed to start server: {str(e)}")
+                print(f"[Web Server Thread Error] An unexpected error occurred: {e}")
 
         def stop(self):
             if self.server:
+                print("[Web Server Thread] Shutting down server...")
+                # Shutdown the server loop (must be called from a different thread)
                 self.server.shutdown()
+                # Close the server socket
                 self.server.server_close()
-                print("Web server stopped")
+                self.server = None # Clear the reference
+                print("[Web Server Thread] Server shutdown complete.")
 
-    web_server = WebServer()
-    web_server.start()
-    def stop_server():
-        web_server.stop()
-    config.quit_action = stop_server
-    # --- End Server Logic ---
+    # --- Global Server Instance & Control Functions ---
+    _web_server_instance = None
 
+    def start_web_server():
+        global _web_server_instance
+        if _web_server_instance is None or not _web_server_instance.is_alive():
+            if os.path.isdir(HTML_SERVE_DIR): # Only start if dir is valid
+                print("[Web Server Control] Starting web server...")
+                _web_server_instance = WebServerThread(WEBSERVER_PORT)
+                _web_server_instance.start()
+            else:
+                print(f"[Web Server Control] Cannot start server, HTML directory is invalid: {HTML_SERVE_DIR}")
+                renpy.notify(f"Error: Cannot start web server. HTML folder missing or invalid.")
+        else:
+            print("[Web Server Control] Server already running.")
 
-    # --- ADJUSTED open_html function ---
+    def stop_web_server():
+        global _web_server_instance
+        if _web_server_instance and _web_server_instance.is_alive():
+            print("[Web Server Control] Stopping web server...")
+            _web_server_instance.stop()
+            _web_server_instance.join(timeout=2.0) # Wait briefly for thread to finish
+            if _web_server_instance.is_alive():
+                print("[Web Server Control Warning] Server thread did not stop cleanly.")
+            _web_server_instance = None
+        else:
+            print("[Web Server Control] Server not running or already stopped.")
+
+    # --- Ren'Py Integration ---
+    # Start the server automatically
+    start_web_server()
+
+    # Register the stop function to be called when Ren'Py quits
+    config.quit_action = stop_web_server
+
+    # --- Function to Open HTML Files ---
+    # --- Function to Open HTML Files ---
+    def open_html(filename_no_ext, last_label=None):
+        """
+        Opens the specified HTML file (without extension) from the 'htmls' directory
+        in the default web browser. Includes the '/game/htmls/' prefix in the URL.
+        Passes the last Ren'Py label as a query parameter.
+        """
+        if _web_server_instance is None or not _web_server_instance.is_alive():
+             print("[Open HTML Error] Web server is not running. Cannot open HTML.")
+             renpy.notify("Internal web server is not running.")
+             return
+
+        # We *construct* the URL to *include* /game/htmls/ because that's what
+        # the browser will request. The server handler will then map it correctly.
+        # VVVVV THIS LINE IS NOW CORRECT VVVVV
+        base_url = f"http://localhost:{WEBSERVER_PORT}/{filename_no_ext}.html" # Use WEBSERVER_PORT
+
+        query_params = {}
+        if last_label:
+            query_params['lastLabel'] = last_label
+
+        # Add query parameters if any
+        if query_params:
+            encoded_params = urllib.parse.urlencode(query_params)
+            full_url = f"{base_url}?{encoded_params}"
+        else:
+            full_url = base_url
+
+        print(f"[Open HTML] Opening URL: {full_url}")
+        try:
+            success = webbrowser.open(full_url)
+            if not success:
+                print("[Open HTML Warning] webbrowser.open() reported failure. Is a browser available?")
+                renpy.notify("Could not open web browser.")
+        except Exception as e:
+            print(f"[Open HTML Error] Failed to open browser: {e}")
+            renpy.notify(f"Error opening browser: {e}")
+
     def open_html(name, label_value):
         """Opens the specified HTML file, including /game/htmls/ in the URL."""
         safe_label = urllib.parse.quote(label_value if label_value else "Unknown")
         # Construct the URL *with* /game/htmls/ included
-        url = f"http://localhost:{PORT}/game/htmls/{name}.html?lastLabel={safe_label}"
+        url = f"http://localhost:{PORT}/{name}.html?lastLabel={safe_label}"
         print(f"Opening URL: {url}") # Debugging output
         webbrowser.open(url)
 
@@ -1389,6 +1492,11 @@ init python:
             "type": "document",
             "weight": 300,
             "description": "A report of something? I don't remember what it is for. It's very important."
+        },
+        "Pistol": { # Added Pistol
+            "type": "weapon",
+            "weight": 2,
+            "description": "A standard issue sidearm. Reliable in a pinch."
         }
     }
     def get_item_weight(item):
@@ -1637,6 +1745,7 @@ label minigame:
     return
 
 label start:    
+    $ start_web_server() # IF YOU REMOVE THIS YOU ARE STUPID
     hide screen character_selection
     $ rng = random.randint(1,100)
     $ inventory.append("Laser range finder")
@@ -1726,7 +1835,7 @@ label bootcampinsideprojectorroomstart:
     DRI "Approximately 0300 hours ago, an unknown event occurred near Ruckersville, Virginia, causing major power outages throughout the state."
     DRI "An Incident Relief Division was promptly sent to investigate the problem. Their team reported a several sightings of unknown creatures before we lost contact with them."
     DRI "We have a estimate of around 200 MIA and 100 dead. We must act swiftly and efficiently."
-    DRI "Your job will be to find out what happened to the IRD team and to terminate all enemy threats."
+    DRI "You will be briefed further on this mission by lieutenant harry during intital takeoff."
 
     hide sadbigsarg
 
@@ -2094,7 +2203,7 @@ label keepsamuel:
             SAM "H-huh?"
             "He talks in a groggy voice and looks up at me."
             BEN "We’re going."
-            "I say as I start walking out of the room. Samuel follows me as we leave the building."
+            # "I say as I start walking out of the room. Samuel follows me as we leave the building." # Replaced with jump
             return
         "Start removing the projector film (Intelligence roll 40 chance)":
             $ intelligence_level = stats["intelligence"]["level"]
@@ -2116,7 +2225,7 @@ label keepsamuel:
                     "I finish my work and look up from my project only to learn that samuel is no where to be found."
                     "I should show this to the drill instructor anyway I think to myself as I rise from my seat."
                     "I do some streches from sitting down so long and head out the door alone to show the sargent my work..."
-                    return
+                    jump mission_briefing # Jump to the next part
 
                 "Look at the back of the projector" if not _return == True:
                     "I look at the back of the projector. There are four screws holding it in place."
@@ -2130,7 +2239,7 @@ label keepsamuel:
                     "He then begins to clean everything up and, with a smile, says—"
                     SAM "Let’s go show the Sergeant this!"
                     "After he cleans up the table, I follow him upstairs and out of the building."
-                    return
+                    jump mission_briefing # Jump to the next part
 
 label abandonsamuel:
     "s"
@@ -2141,4 +2250,149 @@ label BackSeat:
 
     # Add dialogue and interaction for the person in the back seat
     "You decide to talk to the person in the back seat."
+    return
+
+label mission_briefing:
+    # Assuming the projector is fixed and Ben is with Samuel (or alone if Samuel left in the intelligence roll path)
+    scene bootcampinsideprojectorroomstartm
+    show ben idle at left
+    # Show Samuel if he's supposed to be here
+    if "samuel" in renpy.get_showing_tags(): # Check if Samuel was shown before the jump
+        show samuel redbook at right
+        SAM "Alright,"
+        "Samuel says, picking up the fixed projector."
+        SAM "Should we get going? We need to get ge-"
+    else:
+        "I pick up the fixed projector, ready to report back."
+
+    # Drill Sergeant enters
+    play sound "door_open.ogg"
+    show sadsargtalk at center with moveinright
+    DRI "What the hell are you still doing here, maggots?"
+    if "samuel" in renpy.get_showing_tags():
+        DRI "Did you fix the projector?"
+    else:
+        DRI "Did {i}you{/i} fix the projector?"
+
+    BEN "Sir, we just-"
+    DRI " Everyone is already gathered outside! People are gathering for a very important meeting!"
+    DRI "You will follow me, and points will be deducted since you are late!"
+
+    BEN "SIR YES SIR!"
+    if "samuel" in renpy.get_showing_tags():
+        SAM "SIR YES SIR!"
+        hide samuel redbook
+
+    hide ben idle
+    hide sadsargtalk
+    # Transition outside
+    scene bg landing_zone
+    # Narrate movement
+    "We follow him outside to the landing zone. There are five Osprey ships outside, rotors kicking up dust, and soldiers lined up in rows."
+    "I quickly head towards my platoon and stand in position."
+    show ben idle at center
+    play sound "osprey_nearby.ogg" loop volume 0.6
+
+    "As I stand at the landing zone, an Osprey lands nearby, the downdraft buffeting us."
+    # play sound "osprey_landing.ogg"
+    "I look to the left to see Samuel smiling and staring at the Osprey."
+    # show samuel chill at left
+    "Looking right, I see the Sergeant standing firm, looking determined."
+    show sadsargtalk at right
+
+    DRI " Dirtbag! You may have proven yourself fixing that projector, but this will be the real test."
+    "The wind from the Osprey causes me to put my hands up to cover my eyes from the sheer force of it."
+
+    DRI "This mission may be the last one you go on."
+    DRI " I will be staying here. It is your problem now."
+    hide sadsargtalk with moveoutright
+
+    "As he leaves, I look back to the center. A Lieutenant walks down the retractable stairs of the Osprey, sizing everyone up."
+    show lt stern at center # Use a stern pose if available
+
+    LT "We have a serious situation on our hands."
+    LT "The LZ will be hot by the time of arrival. Thirty mikes. Once you reach the landing zone, you will secure it and evacuate any non-combatants as you match your way to Point Alpha."
+    LT "Point Alpha is a residential complex where your main target, designated 'The Nest', is located."
+    LT "Is there any questions?"
+    pause 1.0
+    LT "Good." 
+    LT " Make sure you bring that projector. It is essential it gets delivered to The Nest."
+    BEN "Yes, sir!"
+
+    # Boarding the Osprey
+    hide ben idle
+    # hide samuel chill
+    hide lt stern
+    scene bg osprey_interior
+    play sound "osprey_interior_hum.ogg" loop volume 0.7
+    stop sound
+
+    "The Lieutenant directs us all onto multiple Ospreys. Samuel and I are split up for the first time in a while."
+    "I almost start to worry about him, but then I calm myself. I don't really care how he holds up on his own."
+    "I sit down on my seat; it feels nice and cushiony. The first time I have sat down since the initial meeting."
+    show ben sitting at left
+
+    "The Lieutenant jumps onto the ship; I feel it shake a bit."
+    show lt stern at right
+
+    "I feel a tap on my shoulder and look to my right."
+    show bag sitting at center
+    BEN " What the hell?"
+    BAG "Y-you forgot your weapon... a-and your uniform."
+    BEN "Huh?"
+    "He turns away, hiding his already hidden face with his hands."
+    BEN " Why the hell are you wearing a bag on your head and not a helmet? Take that off!"
+    # Player reaches for the bag
+    "I reach for his bag..."
+    play sound "slap.ogg"
+    BAG "Don't touch that!"
+    BEN " Best not to push it..."
+
+    LT "Is there a problem, soldier?"
+    BEN "Yes sir! I do not have my weapon or my uniform!"
+    LT " We are behind schedule already! You will have to make do with what you have!"
+    BEN "But I have nothing!"
+    LT "Well, that is just too bad! You will have to suck it up!"
+    "I feel someone put something heavy on my lap. Looking down, I see a pistol."
+    $ inventory.append("Pistol")
+    $ renpy.notify("Pistol added to inventory.")
+    LT "I will read out your orders too. Do you understand, maggot?!"
+    BEN " SIR YES SIR!"
+
+    "As I look down at the gun on my lap, the Lieutenant speaks up."
+    LT "We have a very important mission on our hands. Multiple undisclosed beams of energy have begun extruding from the earth. These beams seem to be emanating energy capable of blocking out radio and microwaves and have been classified as a cognitohazard."
+    LT "You will be provided protective glasses and gear capable of blocking out most of the harmful effects.”"
+
+    "As he talks, I hold the weapon in my lap, feeling the tightness of the grip, feeling each bump and indent on the gun."
+    "I move my hand to the release as he continues."
+
+    LT "There are multiple power outages and unknowns when we arrive near the landing zone. The operation will be designated as Operation Flashpoint. This operation will come in three phases. Our battalion has been designated as Delta 9, or DT9 for short."
+    LT "We will be working in collaboration with another battalion designated Nu-7. Doing a radiowave analysis, we were able to determine the central location of the main energy sources.”"
+
+    "The magazine falls out of the gun onto my lap."
+    play sound "pistol_mag_out.ogg"
+    "I pick it up and look inside, seeing all the bullets that will eventually be used in this gun."
+    "I slowly slot the magazine back into the gun."
+    play sound "pistol_mag_in.ogg"
+
+    LT "Our main priority is to capture and secure the suspected perpetrator of this incident. Looking at your tactical map, we will enter from the side windows on the second floor while Team Delta will enter through the side and main entrances."
+    LT "As you will be in two groups of three, you are recommended to form an echelon right formation, but if the situation calls for it, you may break formation."
+    LT "I and the other team's Lieutenant will stand guard outside while you breach and clear the rooms. It will be mandatory during this section to wear the protective gear provided to you. There is no telling what can await you inside that house.”"
+
+    "I move my hand upwards slowly and rhythmically, feeling the stock and eventually the whole cylinder of the gun. There are many guns like this here, but this one is mine."
+    "I cock back the gun slowly."
+    play sound "pistol_cock.ogg"
+
+    LT "Our target's details are classified; however, it is imperative that we capture the target alive, as he is the key to solving all of this."
+    LT "For any other unauthorized personnel, a shoot-on-sight policy has been vetted and put in place by the ethics committee. Other organizations will be working closely with us on this mission, so the policy is only authorized within 30ft of the target's location."
+    LT "I cannot stress the importance of capturing the target alive. Your secondary objectives are securing important personnel and eliminating all unknown threats in the area."
+    LT "The other phases of the plan will be relayed to you once the main objective is complete. Do I have any questions?"
+
+    "I leave my gun on my lap and look back up. I see Bagman give me a quick glance, then look back up at the Lieutenant. Everyone is looking at the Lieutenant."
+
+    # The story pauses here, waiting for the next event
+    pause 2.0
+    # Maybe jump to the next label
+    "The Osprey hums onward, carrying us towards the unknown."
+
     return
