@@ -1,37 +1,22 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "renpy/common/00keymap.rpy", line 487, in script
-    python hide:
-  File "renpy/common/00keymap.rpy", line 487, in <module>
-    python hide:
-  File "renpy/common/00keymap.rpy", line 511, in _execute_python_hide
-    renpy.save("_reload-1", "reload save game")
-TypeError: cannot pickle '_thread.lock' object (perhaps store._web_server_instance._tstate_lock = <unlocked _thread.lock object at 0x0000000005ce6750>)
+  File "game/script.rpy", line 7, in script
+    image bootcampinsideprojectorroomstartm = Movie(size=(1280, 755),zoom = 1,play="images/movie_background.webm")
+Exception: Images may only be declared inside init blocks.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "renpy/common/00keymap.rpy", line 487, in script
-    python hide:
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
-    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
-    exec(bytecode, globals, locals)
-  File "renpy/common/00keymap.rpy", line 487, in <module>
-    python hide:
-  File "renpy/common/00keymap.rpy", line 511, in _execute_python_hide
-    renpy.save("_reload-1", "reload save game")
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\loadsave.py", line 436, in save
-    reraise(t, e, tb)
-  File "lib/python3.9/future/utils/__init__.py", line 444, in raise_
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\loadsave.py", line 417, in save
-    dump((roots, renpy.game.log), logf)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\compat\pickle.py", line 103, in dump
-    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
-TypeError: cannot pickle '_thread.lock' object (perhaps store._web_server_instance._tstate_lock = <unlocked _thread.lock object at 0x0000000005ce6750>)
+  File "game/script.rpy", line 7, in script
+    image bootcampinsideprojectorroomstartm = Movie(size=(1280, 755),zoom = 1,play="images/movie_background.webm")
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 926, in execute
+    renpy.exports.image(self.imgname, img)
+  File "d:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 336, in image
+    raise Exception("Images may only be declared inside init blocks.")
+Exception: Images may only be declared inside init blocks.
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Mon May  5 20:28:31 2025
+Sat May 17 22:41:42 2025
