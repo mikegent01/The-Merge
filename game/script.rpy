@@ -4,7 +4,176 @@ default rng = random.randint(1,100)
 default menu_initialized = False
 transform half_size: 
     zoom 0.5 
-image bootcampinsideprojectorroomstartm = Movie(size=(1280, 755),zoom = 1,play="images/movie_background.webm")
+
+image ani1_background:
+    Animation(
+        "images/bg/Starting_Room/2/satgescene1.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene2.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene3.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene4.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene5.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene6.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene7.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene8.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene9.png", 99999999.1 # Holds on the last frame
+    )
+    xysize (config.screen_width, config.screen_height)
+
+image drillsargpickup:
+    xysize (config.screen_width, config.screen_height)
+    "images/bg/Starting_Room/3/drillsargpickupstart1.png"
+    pause 0.6
+    "images/bg/Starting_Room/3/drillsargpickupstart2.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart3.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart4.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart5.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart6.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart7.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart8.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart9.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart10.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart11.png"
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart11.png" # Duplicate frame
+    pause 0.1
+    "images/bg/Starting_Room/3/drillsargpickupstart13.png"
+    # This frame will hold indefinitely as it's the last in the ATL block
+
+# Removed malformed image definition that was here,
+# as its content is now part of ani2_background's loop.
+
+
+
+image 0drillsargpickupstart0:
+    "images/bg/Starting_Room/4/0drillsargpickupstart10.png" #projector on table image
+    xysize (config.screen_width, config.screen_height)
+
+image 0drillsargpickupstart:
+    "images/bg/Starting_Room/3/0drillsargpickupstart.png" # empty room image
+    xysize (config.screen_width, config.screen_height)
+
+image satgescene9:
+    "images/bg/Starting_Room/2/satgescene9.png" #standing next to projector
+    xysize (config.screen_width, config.screen_height)
+
+image ani2_background:
+    xysize (config.screen_width, config.screen_height)
+    # Part 1: Initial sequence (plays once)
+    "images/bg/Starting_Room/1/ani2stagescene1.png" # Hesitates
+    pause 0.4
+    "images/bg/Starting_Room/1/ani2stagescene2.png" # Hesitates
+    pause 0.4
+    "images/bg/Starting_Room/1/ani2stagescene1.png" # Loop once - Hesitates
+    pause 0.4
+    "images/bg/Starting_Room/1/ani2stagescene2.png" # Loop once - Hesitates
+    pause 0.4
+    "images/bg/Starting_Room/1/ani2stagescene3.png" # Normal speed
+    pause 0.1
+    "images/bg/Starting_Room/1/ani2stagescene4.png" # Normal speed
+    pause 0.1
+    "images/bg/Starting_Room/1/ani2stagescene5.png" # Takes step
+    pause 0.2
+    "images/bg/Starting_Room/1/ani2stagescene6.png" # Jumps onto chair part 1
+    pause 0.15
+    "images/bg/Starting_Room/1/ani2stagescene7.png" # Jumps onto chair part 2 / lands
+    pause 0.25
+    "images/bg/Starting_Room/1/ani2stagescene8.png" # Moves hand
+    pause 0.3
+    "images/bg/Starting_Room/1/ani2stagescene9.png" # Settles into chair (plays briefly)
+    pause 0.1
+
+    # Part 2: Looping idle animation
+    Animation(
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene3.png", 5.8,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene4.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene5.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene6.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene3.png", 5.8,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene9.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene10.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene3.png", 5.8,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene13.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene14.png", 0.1,
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene15.png", 0.1  # Last frame of the loop
+    )
+
+image anistagescene:
+    Animation(
+        "images/bg/Starting_Room/4/0drillsargpickupstart1.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart2.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart3.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart4.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart5.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart6.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart7.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart8.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart9.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart10.png", 0.3,
+        "images/bg/Starting_Room/4/0drillsargpickupstart0.png", 99999.0  # Hold on this frame
+    )
+    xysize (config.screen_width, config.screen_height)
+
+image projector_hum_animation:
+    xysize (config.screen_width, config.screen_height) # Applied to the whole ATL block
+    # Part 1: Initial sequence (plays once)
+    "images/bg/Starting_Room/5/projector_on1.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on2.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on3.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on4.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on5.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on6.png"
+    pause 0.5
+    "images/bg/Starting_Room/5/projector_on7.png"
+    pause 0.5
+    # Part 2: Looping animation
+    Animation(
+        "images/bg/Starting_Room/5/projector_on8.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on9.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on10.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on11.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5,  # Was projector_on14.png
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5,  # Was projector_on15.png
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5,  # Was projector_on16.png
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5,  # Was projector_on17.png
+        "images/bg/Starting_Room/5/projector_on18.png", 0.5,
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5   # Was projector_on19.png
+    )
+image dim_overlay:
+    xysize (config.screen_width, config.screen_height)
+    Solid("#000000") # Start with a solid black color
+    alpha 0.0       # Start fully transparent
+    linear 1.0 alpha 0.6 # Fade to 60% opacity (equivalent to #00000099) over 1 second
+
+image light_turning_on_effect:
+    Solid("#FFFFFF") # White color
+    alpha 0.0
+    xysize (config.screen_width, config.screen_height)
+    # Quick ramp up to a bright flash
+    linear 0.05 alpha 1.0 # Flash to full white opacity
+    # Hold flash briefly
+    pause 0.05 # Shorter hold
+    Solid("#ffffff00")
+image dim_overlay_fadeout:
+    xysize (config.screen_width, config.screen_height)
+    Solid("#000000")
+    alpha 0.6
+    linear 1.0 alpha 0.0  
 # Chara
 define BAG = Character("Bagman",color="#b66c12")
 define BAL = Character("Baldi")
@@ -124,6 +293,15 @@ init python:
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
     import os    
+    if 'dimming_layer' not in config.layers:
+        try:
+            # Insert 'dimming_layer' right after 'master'
+            master_index = config.layers.index('master')
+            config.layers.insert(master_index + 1, 'dimming_layer')
+        except ValueError:
+            # Fallback if 'master' isn't found (shouldn't happen in default Ren'Py)
+            config.layers.append('dimming_layer')
+
     def get_filtered_item_count(filter_type):
         """
         Returns the count of items matching the specified filter type.
@@ -1743,656 +1921,929 @@ label minigame:
 
     # End of mini-game
     return
+label start:
+    $ set_room_temperature(72)
+    play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 # Assuming 'boot_camp' is the correct filename
+    scene ani1_background with None
+    show screen stagecurtians
 
-label start:    
-    $ start_web_server() # IF YOU REMOVE THIS YOU ARE STUPID
-    hide screen character_selection
-    $ rng = random.randint(1,100)
-    $ inventory.append("Laser range finder")
-    $ inventory.append("First aid kit")
-    $ inventory.append("radio")    
-    $ collected_tapes.append({
-          "title": "Final Recording", # Give it a relevant title
-          "description": "A significant audio log.", # Add a description
-          "date_found": "The Last Day", # Optional: When/where it was found
-          "audio_file": "audio/final.wav"  # <--- Use the relative path here
-    })    
-    $ set_room_temperature (72)
-    jump bootcampinsideprojectorroomstart
-    scene bg mayor
-    play sound buzzer
-    Q "Come in."
-    play sound door
-    pause 4
-    show bg mayormeeting
-    Q "You must be the courier..."  
-    play sound slide
-    show bg mayorhandoff
-    pause 0.3
-    scene bg mayorframe1
-    pause 0.3
-    scene bg mayorframe2
-    pause 0.3
-    scene bg mayorframe3
-    pause 0.3
-    scene bg mayorframe4
-    pause 0.3
-    show bg mayormeeting
+    BEN "I can only feel excitement, as I finally go to sit down."
+    scene satgescene9 with None
+    BEN "We are going on a real mission, no more training, no more drills.\nI finally can put my skills to good use."
+    BEN "I have accepted my fate long before I woke up this morning knowing what this job entailed,\nand I intend to make this mission a success by myself."
+    scene ani2_background with None
+    "I sit down on a wooden chair." 
+    "The material feeling cheap and hallow, the chair creaking with every movement.\nI pay attention to the sounds around me, people around me muttering and talking."
+    "The dampness from the old moldy brick walls."
+    scene drillsargpickup with None
+    "And the sweat of the soldiers who just got back from training."
+    scene 0drillsargpickupstart with None
+    "Almost distracts me from the fact that I forgot to put on my uniform this morning."
+    "The soldiers all sit in rows of chairs, laid out in a linear sequence, ridged but not sturdy."
+    "The room is packed with soldiers and people."
+    scene anistagescene
+    "A thud sound is made from the front of the room.\nA metallic box item is placed on the table, the box having a single lens at the front of it and two films atop of it."
+    scene 0drillsargpickupstart0
+    "The box is dusty; it looks familiar but it is alien to me.\nAs I deliberate on this, a clicking sound, and after a moment the room goes quiet."
+    "a soft hum emanating from the machine."
+    scene projector_hum_animation 
+    "The box whirls to life, it clicks for a second, and then for only a second there was nothing.\nAnother hitch and there was light."
+    show dim_overlay onlayer dimming_layer
+    "The light in the room dims, the creaking of the chairs stop, and a familiar figure stands directly infront of the light.\nRidged and firm"
+    "the familiar figure stands at attention,"
+    "and another hitch is herd from the box."
+    "The light shines bright as the box shows multiple images of destroyed suburban cities,\nthe images are shown one by one, ending on the statue of libary."
+    "The silence is broken when drill sergeant Jones begins speaking he says"
 
-    Q "I assume you know why you are here..."
-    Q "Hand over the report. Than leave.."
+  #  show drill_sarg_talk at right
+    DRI "Men, these are the facts as I understand them: approximately 5 hours ago a class A event occurred near Ruckersville Virginia."
+    DRI "We promptly sent a Incident Relief Division to investigate the scene and received reports of a rift in the earth opening up\n"
+    DRI "and several sightings of unknown creatures before we lost contact due to power outages."
+    DRI "You will have two jobs: one team's job will be to find out what happened to the team and to terminate every threat,"
+    DRI "and the other team will be in charge of securing a suspected target that caused this mess."
+    DRI "This is not simply a security problem anymore as fellow members of the army and civilians lives are at stake."
+    DRI "I have full confidence in all of you; you are the best unit in the force and I expect you will be ready."
+  #  hide drill_sarg_talk
+
+    "The room remains silent with no one but me moving there eyes from the Sargent as he talks,\nthere is a tense anticipation for what he will say next."
+   # show drill_sarg_talk at right
+    DRI "This box here is a projector, here is of upmost importance, while it may look mundane and normal…"
+    "he takes out the tape and a sound begins playing"
+    DRI "But These tapes it plays are capable of playing sounds at a higher decibel frequency than humans can hear."
+    DRI "These tapes right here do contain image data, but they also contain data that will play sounds at high decibels that are able to plug these rifts."
+    DRI "I am not to well versed in the science behind it, but I am told if this a tape is played at the center of one of these rifts,"
+    DRI "they may close and return to normal.\nTherefore this tape well be designated as a class A important object."
+ #   hide drill_sarg_talk 
+
+    "As I look at the projector I notice a hitch in it. The projector seems to stall for a second before starting up again."
+  #  show drill_sarg_talk at right
+    DRI "We are to deploy to a nearby military base tonight. We won’t close these rifts tonight as we still need a key component to making this technology work."
+    DRI "You will be briefed further on this situation during the beginning of the mission tonight."
+    DRI "You will also receive authorization to classified information.If you are unable to keep a secret please see me.\nThat is all You are hereby dismissed."
+ #   hide drill_sarg_talk
+    show dim_overlay_fadeout
+    hide dim_overlay
+    show light_turning_on_effect 
+
+    "As the lights turn on and the room so does the sound, people start talking amongst themselves some personal start leaving the room."
+    "I feel a slight tap on my shoulder it is from one of my “friends” private Samuel."
+   # show samuel chill at right
+    SAM "Psst hey Benjerman"
+    "he then hands me a sheet of paper"
+    SAM "I was told you would like this it is a report on what happened,\nthere is some stuff in there that I can’t even understand."
+    "I feel the sheet fall on my lap as he places it there."
+  #  hide samuel chill
+
+    "I look up at the projector it hitches again as the drill Sargent messes with the plug trying to unplug it.\nHe moves to back and forth in a wiggling motion but it seems to be stuck."
+    "It eventually pops out and a spark occurs at the outlet and the projector starts heating up and smoking."
+   # show drill_sarg_sad_talk at right
+    DRI "..."
+    "The drill sargent looks visibly conserined and than looks directly at me staring at him."
+    DRI "You, meatbag your just who I need!"
+  #  hide drill_sarg_sad_talk
+    # Assuming Ben stands or moves here, the original `hide ben sitting` makes sense.
+    # If `satgescene9` already shows Ben, we might not need to explicitly show him again unless his pose changes.
+    show ben neutral at left # Or keep hidden if the scenes dictate his visibility
+
+    "I arrive at his location he looks down at me with a scowl."
+  #  show drill_sarg_talk at right
+    DRI "This projector is broken, I am not sure how it broke and it looks like your not doing anything of importance\ntherefore your in charge of fixing it"
+    "I look at him semi annoyed, he looks back"
+    DRI "do you understand what you need to do?"
+    BEN "yes sir!"
+    DRI "sound off like you got a pair"
+    BEN "SIR YES SIR"
+    DRI "good you are dismissed."
+ #   hide drill_sarg_talk
+
+    "As I turn around I notice two people sitting in there seats,\nprehaps I should talk to one of them and ask them for help."
     menu:
-        "Hand Over The Report":
-            scene bg mayormeeting
-            $ inventory.remove("Report 001")
-            Q "Thank you."
-            Q "That is all, you are dismissed."
-            Q "..."
-            Q2"..."
-            Q "Is there something else you need?"
-            Q2 "....actually..." 
-            jump bootcampinsideprojectorroomstart 
-        "Refuse to hand over item":
-            "You look down at the report.."
-            $ open_html("004", last_label)
-            "You feel like your we browser opened..."
-            Q "I see..."
-            Q "I don't think you understand the rules of this place."
-            Q2 "..."
-            Q "Hand it over!"
-            Q2 "..."
-            Q "Gaurds! Get over here!"
-            $ inventory.remove("Report 001")
-            jump bootcampinsideprojectorroomstart 
-label bootcampinsideprojectorroomstart:
-    scene bootcampinsideprojectorroomstartm
-    $ set_room_temperature (72)
-    $ rng = random.randint(1,100)
-    $ relationships["Samuel"]["met"] = True
-    $ inventory.append("radio")   
-    $ inventory.append("Spoon")    
-    if rng < 50:
-        play music marchingon volume 0.1
-    else:
-        play music boot_camp volume 0.5
-
-    show ben sitting at left with dissolve # Changed to 'sitting' as he's in a chair
-   # $ quests.append({
-   #     "name": "Go to the projector room and listen to the drill sargent.",
-   #     "description": "I need to report to the drill sargent for a urgent meeting. ",
-   #     "completed": True,     
-   # })
-    $ unlock_book("Stars and Stripes", "books/poopy.txt")
-    "I sit in a crowded room. There are chairs laid out in rows."
-    "A soft hum comes from the projector showing multiple images of destroyed American cities on screen."
-    "The whole room sits in silence as the images are shown one by one."
-
-    "The silence is broken when drill sergeant Jones begins speaking."
-
-    show sadbigsarg at right
-    DRI "These are the stakes"
-    DRI "We either make a world in which all of God's children can live, or to go into the dark"
-    DRI "Approximately 0300 hours ago, an unknown event occurred near Ruckersville, Virginia, causing major power outages throughout the state."
-    DRI "An Incident Relief Division was promptly sent to investigate the problem. Their team reported a several sightings of unknown creatures before we lost contact with them."
-    DRI "We have a estimate of around 200 MIA and 100 dead. We must act swiftly and efficiently."
-    DRI "You will be briefed further on this mission by lieutenant harry during intital takeoff."
-
-    hide sadbigsarg
-
-    "The room remains silent. I feel a slight tap on my shoulder, I sigh suspecting who it is already. My brow lowers as I prepare to deal with him. it is Private Samuel. He is sitting in the seat next to me"
-    "My mind must have tried to forget this fact. He was sitting in his seat with a red book in his lap. The room being too dark to know what was on the cover."
-    "I hear Samuel whisper to me."
-
-    show samuel chill at right # Use the image tag defined
-
-    SAM "Psst, hey Benjamin."
-    SAM "I was told you would like this. It is a report on what happened today, I stole it from the supply main desk."
-    hide samuel chill 
-    "I take the sheet from him and look up as the drill sergeant continues. The room is too dark to read what is on the sheet of paper so I put it in my pocket for later."
-    "I look back at samuel, he looks like he is waiting for something"
-    BEN "Thanks, I will look through the report later."
-    "He smiles and looks back at the drill instructor. It seems like that was enough to satisfy him. I look back at the drill instructor and begin listening to him once more."
-    show sadbigsarg at right
-
-    DRI "In approximately two days, we will begin our operation. You will be airlifted and tasked with the extermination of any and all anomalous entities."
-    DRI "You are hereby dismissed."
-
-    hide sadbigsarg
-
-    scene bootcampinsideprojectorroomstartm
-
-    "As the lights turn on and the room is no longer in darkness, military personnel start leaving the room."
-    "Suddenly, a spark occurs. The projector starts heating up and smoking. The Drill Sargent looks nervous and rushes over to it."
-    DRI "Shit,shit,shit!"
-    "He rushes to unplug the projector. As he unplugs it, the projector stops spinning the whriling sound coming to an end."
-    "He takes out the film from the projector he looks terrified. He looks up at the only standing person left in the room, me."
-
-    show sadsargtalk at right
-
-    DRI "You, meatbag, come over here!"
-
-    "As I walk towards him, he looks down at me with a frown. He is trying to hide his fear, he looks at me with a scowl"
-
-    DRI "This projector is broken. I am not sure how it broke, but it looks like you’re not doing anything of importance. Therefore, you’re in charge of fixing it."
-
-    "I look at him, semi-annoyed. It seems like he is trying to get me to do his dirty work."
-
-    DRI "Do you understand what you need to do?"
-
-    menu:
-        "Yes, sir!":
-            $ emotions["Authority"]["value"] -= 5
-            DRI "Good"
-            "His frown turns into a slight smile. It seems he approves of me not acknowledging what just happened and just going along with what he says." 
-            DRI "You have [rng] hours to fix this! That is when we leave for virginia."
-        "Why do you need to fix this projector?":
-            DRI "This film holds data on the mission you were just briefed on. It was the online onsite version of it."
-            DRI "Another data request can take weeks to process. We are leaving for the mission in [rng] hours"
-
-
-    DRI "You are dismissed."
-   # $ quests.append({
-   #     "name": "Fix the projector",
-   #     "description": "The projector has important information that the drill sargent needs, it is broken and I need to fix it. ",
-   #     "completed": False,     
-   # })
-    "As I turn around, I notice two people sitting in their seats. Perhaps I should talk to one of them and ask them for help."
-    hide sadsargtalk
-    show screen HUD    
-    show screen tutorial_screen
-
-    window hide # FIRST CHOICE
-    $ renpy.pause(hard=True)
-
+        "Talk to the person in the front seat":
+            jump FrontSeat
+        "Talk to the person in the back seat":
+            jump BackSeat
 
 label FrontSeat:
-    show sultan talking at left # Use the image tag
-    window show
-    hide screen HUD
-    "I walk up to the man; he seems like he is distracted with something."
-    "As I peer closer to see what he is doing, I realize he is trying to light a cigar."
-    "I think of keeping quiet for a moment but realize that I can use this as an opportunity to get him to help me fix the projector."
-    "So, I finally speak up and ask, 'What are you doing?"
-
-    SUL "Huh?"
-
-    "He looks up at me with his mouth open and quickly looks down, putting his cigar away."
-    "He looks embarrassed and quickly says, 'Nothing bro, don't worry about it."
-
-    "I smirk."
-
-    BEN "Really, if it is nothing, you wouldn't mind if I checked your pockets, would you?"
-
-    SUL "Look bro, I barely even know you. What do you want, money?"
-
-    "I smirk again; my plan had worked. I continue."
-
-    BEN "Just don’t tell anyone what you saw, okay?"
-
-    SUL "Fine, whatever."
-
-    "I need you to go and help me out with something."
-
-    BEN "What is it, bro?"
-
-    "Do you have any idea how to fix a projector?"
-
-    SUL "Really, bro? You'd rat me out to help with some pet project of yours?"
-
-    "He sighs."
-
-    SUL "Let me take a look, bro."
-
-    "He walks up to the smoking projector and pulls the plug on it. It stops smoking."
-    "He picks the film out and puts it down on the table next to it."
-
-    SUL "You got a screwdriver, bro?"
-
-    BEN "No, I don’t. Why would I carry one with me?"
-
-    SUL "Look, bro, I can't fix this problem without a screwdriver. I’m already doing a lot by helping you out. Can you please just get me a screwdriver, bro? It's the least you can do for me."
-
-    "I deliberate on whether I should just tell him to do it himself. The most logical thing to do was to have him do it for me, so I ask."
-
-    BEN "Can't you just do it? You know how to fix this kind of stuff, right?"
-
-    SUL "No, it's either you get me a screwdriver or I don't fix this thing for you, bro."
-
-    "I roll my eyes and turn towards the exit."
-
-    BEN "So, what is it, bro? Are you leaving or getting the screwdriver?"
-    "As I exit the door, I say, 'I will be back in a few. Don't move from there."
-
-    scene outsideprojector
-
-    "As I walk outside, I feel the cool stale air from the indoor air conditioning."
-    "I smile as the meeting is finally over until I hear someone call my name."
-
-    SAM "Hey, Ben! Check it out!"
-
-    "My smile quickly fades into a frown as I look up to see a face I did not want to see."
-
-    BEN "Hello, Samuel."
-
-    "As I look towards him, my eyes narrow. I notice the book in his hands. It appears to be a picture book."
-    "Not wanting to ask, I continue walking until he calls out to me again."
-
-    SAM "W-wait, check it out!"
-
-    BEN "Uncle Ben is a bit busy right now. Can we play later?"
-
-    SAM "Stop joking around. This book is really cool. It's like a story about this guy that collects items and puts them in a summoning circle, creating a rift in the world, and the worlds start to me-"
-
-    BEN "That sounds great, do you have a screwdriver by any chance?"
-
-    SAM "Ohh, I can finally be useful to you, I see. Just follow me, I know where we can get one!"
-
-    "He runs over to the right."
-
-    "As he runs away, I consider to myself just how I got into this position and if it is really worth following him, as it will undoubtedly lead to nothing."
-    "Looking back into the projector room, I can see the man from earlier standing idly by, staring back at me."
-    "As I look back at him, I realize I never asked for his name."
-    "Shrugging it off, I stand at a crossroads. I can either ignore Samuel and look for someone else or follow him to wherever he decides to go, undoubtedly going on another goose chase leading to nowhere."
-
-    menu:
-        "Follow him":
-            jump keepsamuel
-        "Go on my own":
-            jump abandonsamuel
-label keepsamuel:
-    scene outsideprojectorroomnosamuel
+    scene bootcampinsideprojectorroomstartm # Or appropriate scene
     show ben neutral at left
-    show samuel redbook at right # Use the image tag
+    "Although I much rather do this myself I have no other options,\nI walk up towards the front seat the man is small in stature\nthe only defining trait about him I can notice is his turban."
+    show sultan_talking_pose at right
+    SUL "..."
+    "Regrettably walking up to him he doesn’t notice me I decide to observe what has taken so much of his attention."
+    "As I peer closer at him to find out what he is fiddling with I realize he is trying to light a cigar,\nhe is unable to get the match to light."
+    "I wait another few seconds before questioning him"
+    BEN "What are you doing?"
+    hide sultan_talking_pose
+    show sultan_talk_pose at right
+    SUL "Nothing bro don't worry about it"
+    BEN "You know there is a fire sensor above your seat right?"
+    SUL "Look bro I barely even know you; you don’t talk to anyone and now you decide to talk to me?\nWhat do you want money?"
+    "I wait for him to continue feeling the paper that Samuel gave me crumple in my hand."
+    SUL "Look” He holds out a $10 bill giving it to me “Just don't tell anyone what you saw okay?"
+    BEN "I refuse to take the money instead asking him to help me."
+    BEN "I need you to go and help me out with something."
+    SUL "What is it bro?"
+    BEN "Do you have any idea on how to fix a projector?"
+    SUL "P-Projector? You mean that thing the sarg was showing off bro you broke it?”"
+    "He gets up quickly and begins packing up his stuff"
+    SUL "N-no no I wouldn’t know anything about the projector."
+    "He wips has bag around and puts it on his back. He begins to walk out"
+    BEN "Wait! Listen to me"
+    "he continues to walk out before I run up to him and place a hand on his shoulder."
+    BEN "We are both on the same side here it’s the drill sergeants fault listen."
+    "A quiet spark is heard only for a moment and smoke comes out from in front of the man\nhe stops and takes a deep breath and says"
+    SUL "I would stay away from that projector but If you can’t fix it yourself\nI would ask Samuel for advice. He seems to follow you around anyway for some reason."
+    "He walks out of the room."
+    hide sultan_talk_pose
 
-    "As I deliberate, I feel a tug on my arm." # Samuel is shown, maybe add expression?
-    SAM "Don't worry, it will be fun!"
-    scene storageroom 
-    show ben idle at left
-    show samuel redbook at right  
-    "Before I can respond, I'm forcibly pulled down the hallway. He finally stops and lets go of my arm."
-    "I put my hand on my arm and look at where he twisted it, then look up."
-    "I see him jumping up and down, pointing to an electric door. To the right of it is a keypad with letters and numbers."
-    "He puts on a big grin and starts inputting a passcode."
+    "As I walks up to the projector I look at the pulled out plug and the electrical residue next to the outlet,\nI pick up the film the projector left on the desk and look at it"
+    "there is crossed out text on it AAXA SCP-A01 I put the film down\nand pick up the projector itself feeling the hard and bumpy texture\nlooking at the back of it there appears to be a panel held in with screws"
+    "as I look at the projector I feel a tap"
+    show drill_sarg_talk at right
+    "the drill Sargent is still standing there staring at me,\nI think to myself how long could he have been there waiting before asking him for a screwdriver."
+    DRI "I have a very important meeting to attend to, once I am back the mission will begin.\nId recommend looking for it yourself,"
+    DRI "you need a specialty screwdriver for this and I am not too sure were we keep them.\nWhy don’t you go ask the people at the main desk maybe they can help."
+    hide drill_sarg_talk
+    hide ben neutral
 
-    "As he starts typing, I hear a loud buzz and the light above the keypad turns red."
-    "He laughs a bit and enters it again—another buzz. He tries again, it buzzes again."
-    "He continues this for two more tries before I have enough."
-
-    BEN "Are you sure the screwdriver is in there?"
-    SAM "There was a screwdriver in there, I am sure of it. The door was open before—that's how I got this book." # Samuel is shown, maybe add expression?
-    # Consider `show samuel sameulnormal at right` if he looks normal, or another if frustrated/sad
-    "Before I can ask about him reading a picture book, he shoves it in my face."
-    scene bookfullscreen1
-    "I realize that while the cover looked like a picture book, there are words inside."
-    "I grab it from his hands as he weakly tries to hold onto it."
-
-    SAM "Give me that, hey!"
-    "As he tries to grab it back from me, I take a look at the book."
-    BEN "Did you rip out a page? Did you damage this book?"
-    SAM "No, of course not! I found it in the storage room like this, I swear."
-    scene bookfullscreen1
-
-    "Unable to tell if he’s lying or not, I flip through the rest of the book, seeing crude writings and pictures, with text describing a fictional event."
-    BEN "Is this a fan fiction? What are you, thirteen?"
-    scene storageroom # Back to the room
-    show ben neutral at left
-    show samuel sameulnormal at right # Use the image tag
-
-    "Before he answers my question, I interrupt him again."
-    BEN "You know what, never mind, I don’t need to know or want to know." # Ben is shown
-    
-    "He’s about to cry."
-    SAM "Just stay here while I figure out the passcode to that door."
-    
-    "I don’t wait for a response; instead, I begin to walk away."
-    "I find myself alone once again at a crossroads in the hallway, unsure of where to go."
-    "As I’m walking, I consider going to get a bite to eat but decide against it. I continue down the hallway until I reach one of the main desks."
-
-    scene apple
-    show ben neutral at left
-
-    "As I approach the main desk, I smell a murky scent in the air. My eyes tear up as I approach the two shadowy figures."
-
-    BEN "You wouldn’t happen to have a screwdriver, would you?"
-
-    "They both look at each other and nod silently in slow motion. One of them speaks up in a raspy, old voice."
-    Q2 "There should be a screwdriver in the storage closet, but you need a password to enter it."
-
-    "My eyes narrow."
-    BEN "You wouldn’t happen to have a password, would you?" # Ben is shown
-    
-    "He stares at me blankly, like I just asked something shocking."
-    Q2 "No... I do not. This may be the main desk of this building, but our building is not equipped with the modern amenities the other buildings have. This building is the oldest in the camp."
-    hide ben
-    "As I walk past him, I head to the right, noticing the maintenance hallway. Maybe there’s a screwdriver in here."
-
-    scene bg staircase # Changed scene, need to show Ben again if he's visible
-    show ben idle at left
-
-    "I quickly search around the hallway, only finding empty storage containers."
-    "I see a stairway behind an opened door, and as I approach it, I hear someone running toward me at fast speed."
-    "I quickly spin around to see Samuel, book in hand. Standing there with that stupid smile he always puts on."
-    "The red book in his hands looking at it.  I see the bright and cheery image in front of a sun shining, it's image contrasted with the bleak reality I am living in."
-    
-    show samuel redbook at right # Use the image tag
-
-    "I try my best to blend in with the environment, but with me being the only other person here, I sigh and prepare to find out what he wants. I think to myself the sooner I talk to him the faster he will leave"
-    SAM "What do you want? Didn’t I tell you to wait there?"
-    "He looks at me with a sad face." # samuel redbook is shown, maybe change expression if available?
-    SAM "I wanted to show you this."
-    "He pulls out the book he was holding and opens it, and something falls out."
-    "I bend down and pick up the slip of paper."
-    $ open_html("003", last_label)                    
-    "I rip up the note."
-    SAM "H-hey, why did you do that?"
-    "He tries to grab the scraps of paper."
-    BEN "It said to discard it after we read it, so..." # Ben is shown
-    "I shrug."
-    SAM "That note looked new! Like it was put in the notebook not too long ago."
-
-    "He picks up the scraps of paper and looks like he’s about to cry again." # Samuel is shown
-    BEN "You sure are sensitive."
-
-    "I sigh and ask him to look for a screwdriver in this room, since he’s here."
-    scene bg storewaystairwellfixed
-
-    "I bend down and pick up the green container on the floor. As I try to lift it up, I realize it’s too heavy. As I try to sit it upright, I hear an annoying sound in my ear."
-    
-    SAM "Hey, what made you join the force?"
-    
-    "I drop the box I’m working on, and it almost crushes my leg. before I am able to stablize it"
-    $ emotions["Confidence"]["value"] -= 5    
-    $ emotions["Pride"]["value"] -= 5    
-
-    "I look over and back up a bit. Samuel is standing there with that big, stupid smile of his."
-    BEN "What made you ask that? Can you help me out here?" # Ben is shown (idle)
-
-    SAM "I was just curious, that’s all."
-    "A moment of silence fills the room. As he rushes over to grab the other side of the box and help me place it down, I try to think of something to say, but I can’t think of anything."
-    "I feel my face heating up as the box finally rests on the floor and finally say..."
-    
-    BEN "I joined for myself, that’s all." # Ben is shown (idle)
-    # Samuel is also present helping, maybe show him too? `show samuel sameulnormal at right`?
-    SAM "Really? That’s boring!"
-    "He sticks out his tounge as I try to open the locked box."
-    SAM "Let me help you out."
-    "He starts clawing at the sides of the container. He grabs a pen out of his pocket and starts nudging it in between the boxs opening."
-    BEN "H-hey, let go of that, you’re going to bre-"
-    "I rush to grab his hand before it is too late.The container pops open, dust flying out all over the room."
-    "As the dust clears, I frown, looking down at the container.It looks like a makeup kit and a female soldier uniform.It seems they are storing uniforms of soldiers here not screwdrivers."
-
-    scene mirrorstorage
-    $ inventory.append("Broken Hand Mirror")   
-
-    "I stare into the mirror seeing a blank face stare back at me. I have worked my way up to this position, I should be proud. I should be happy but my face says otherwise."
-    "As I put down the mirror. I look back at samuel he is staring at the container he has a somber experession, he looked like he was reminiscing on something from the past that has long been forgotten. At least that is what I thought." 
-    show ben neutral at left
-    show samuel redbook at right # Use the image tag
-    "A moment of silence fills the room. I try to think of something to say, but I can’t think of anything."
-    "I put the mirror back in the box and close the container."
-    
-    BEN "Can you help me put this back?" # Ben is shown
-    SAM "S-Sure.."
-    "He grabs the other end of the box. He helps me place it down where it was before." # Samuel is shown
-    BEN "Come on, there might be something upstairs."
-    "He regains his smile and runs to catch up behind me as I walk up the stairs."
-
-    scene bg militaryentrance
-    show ben idle at left
-
-    "As I step upstairs, I feel the temperature drop, but I don’t mind it."
-    
-    "I glance at the sign on the wall and walk to the left. I feel him yank my arm."
-    scene bg maindeskentrance
-    show ben neutral at left
-
-    show samuel redbook at right # Use the image tag
-    # Samuel yanking arm, maybe a more active pose like 'samuel sholder' if appropriate?
-    SAM "H-hey, where do you think you’re going? You can’t just walk away without telling me!"
-
-    "As I walked up to the main desk, I saw a note on the table."
-    "It read: 'Out to lunch. If nessary, use key."
-    SAM "Come on we can just buy a screwdriver at the store, there is not a toolbox back their. It will just waste time."
-    menu:
-        "Use key":
-            if rng > 35:   
-                "I look down at my watch 10:41 AM. They must be out for an early lunch. I look down at the table and notice a guest list."
-                "The list is populated with names none of which I recognize. Except for one. J.J R Jones, the drill instructor, looking at the sheet he is placed an order for item #65912 (A blue toolbox)."
-            "I open the gate and pick up the key on the table, I slot the key into the keyhole quickly. Looking back I see samuel looking back at me disapprovingly. I enter the room."
-            BEN "There might be a toolbox back here, you never know. I am just checking" # Ben is shown (neutral)
-            "I enter the backroom and look around, there are file cabinets, each labled with people’s names. I shrug there dosen't seem to be a screwdriver here. As I am leaving I notice a folder on the ground labled Erika."
-            "I pick it up and a coin falls out, picking it up I check the folder for more. As I flip through the pages in the foldera statsfing sound is made as I pull a page out"
-            if rng < 20:   
-                "MEDICAL RECORDS:"
-                "NAME: {s}Erika{/s} Emma"
-                "AGE: 28"
-                "HEIGHT: 5'5"
-                "WEIGHT: 98"
-                "SEX: Female"
-                "Eye: Blue"
-                "Prescriptions: Gabapentin,Amlodipine,Omeprazole,(F)Amnestic,Prednisone"
-            else:
-                "DEBRIEF:"
-                "DATE 2XXX/XX/XX"
-                "NAME: Emma Smith"
-                "AGE: 28"
-                "CAUSE OF DEATH: Suicide"
-                "REPORT:The subject was found lifeless while conducting duties in ██████. Agent ██████████ discovered the body at 20:41 with several lacerations to there Carpal region. █████ will be given to family and friends of the victim or on request from onsite personnel."
-                "No further investigation will be required."
-            "I stare at the page realizing what I am doing. I quickly put the folder back into the shelf. I shouldn't be looking at dead people's stuff I should be focusing on the screwdriver.My thoughts are intrupted by a voice."
-    SAM "We can just go to the military store area to get one, you shouldn't be going into random rooms looking for tools."
-    "I feel a hand touch my back as I walk past him, but I make it downstairs."
-    
-    scene bootcampinsideprojectorroomstartm
-    "I reach the projector room with Samuel following close behind after a few minutes of walking."
-    "The automatic door opens, revealing that the person I told to wait there is no longer there."
-    "Thinking back, I never even asked his name, not that it was important anyway."
-    "I look at the unplugged projector on the table. I unscrew the film from the projector and put it on the table."
-    "Looking to Samuel, I think to myself maybe he isn’t the best person to help me fix this. I press on either way."
-    menu:
-        "Ask Samuel for help":
-            "Samuel looks at me and smiles."
-            SAM "Sure, I’ll help. I’ve done this before."
-            "He runs over next to me and grabs the screwdriver from my hand."
-            "Samuel unscrews the film, takes it out, and puts it on the table. He then unscrews the back of the projector, letting it fall onto the table."
-            "I sit back in the chair and watch him as he works. Before I realize it, I doze off."
-            "When I wake up, I see the projector is fixed, and Samuel is sitting on a chair reading his book."
-            "I honestly didn’t expect him to know how to fix a projector, but I won’t question it."
-            "I look at my watch and realize that I need to get ready to move out."
-            "I wake Samuel up. He looks visibly shaken." # Maybe show Samuel here? `show samuel chill at right`?
-            SAM "H-huh?"
-            "He talks in a groggy voice and looks up at me."
-            BEN "We’re going."
-            # "I say as I start walking out of the room. Samuel follows me as we leave the building." # Replaced with jump
-            return
-        "Start removing the projector film (Intelligence roll 40 chance)":
-            $ intelligence_level = stats["intelligence"]["level"]
-            $ sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-            $ base_chance = 30 
-            $ skill_level = stats["intelligence"]["level"]
-            $ total_bonuses = calculate_total_bonus("intelligence", sorted_emotions)
-            call screen roll_screen(base_chance, skill_level, "intelligence", total_bonuses)
-            "I kneel down while Samuel sits nearby, reading his picture book. I carefully inspect the projector."
-            
-            menu:
-                "Look at the front of the projector" if _return == True:
-                    "I look at the front of the projector. The film is slotted into the projector and being held by a screw."
-                    "The film seems like it is still intact and can still be used."
-                    "I carefully unscrew the film and place it on the table next to the projector."
-                    "With the film removed, I move onto the back of the projector."
-                    "I begin to work on the back of the projector..."
-                    "Hours later..."
-                    "I finish my work and look up from my project only to learn that samuel is no where to be found."
-                    "I should show this to the drill instructor anyway I think to myself as I rise from my seat."
-                    "I do some streches from sitting down so long and head out the door alone to show the sargent my work..."
-                    jump mission_briefing # Jump to the next part
-
-                "Look at the back of the projector" if not _return == True:
-                    "I look at the back of the projector. There are four screws holding it in place."
-                    "I sit the projector on its side and begin to unscrew the screws."
-                    "As I start unscrewing the second screw, Samuel runs over and grabs the projector, sitting it upright."
-                    "There’s concern on his face as he says—"
-                    SAM "You almost damaged the film. You have to be careful with this."
-                    "He begins to help me take the film out of the projector, and we both work on fixing it together."
-                    $ add_experience("intelligence", 20)
-                    "After two hours, we manage to fix the projector. Samuel seems happy with it."
-                    "He then begins to clean everything up and, with a smile, says—"
-                    SAM "Let’s go show the Sergeant this!"
-                    "After he cleans up the table, I follow him upstairs and out of the building."
-                    jump mission_briefing # Jump to the next part
-
-label abandonsamuel:
-    "s"
+    jump OutsideAfterScrewdriverAdvice
 
 label BackSeat:
-    # show person_back idle at left # Character 'person_back' is not defined. Commenting out or replace.
-    hide screen HUD
+    scene bootcampinsideprojectorroomstartm
+    show ben neutral at left
+    "I head towards the backseat, the person in the backseat seems to have something over there head,\nit looks like a paper bag."
+    show bagman_default at right
+    BAG "..."
+    "There is a brief moment of hesitancy before I recoil once\nthan I tap the tall man with the bagged head on his shoulder."
+    "He turns around shocked revealing there to be a crudely cut out face on the bag."
+    BAG "..."
+    "I couldn’t tell the emotion on his face but I could feel it.\nI could feel the heat coming out of his mask. I can hear his heavy breathing,"
+    "the bag motioning in and out slowly and rhythmically.\nI took a slight step back but than he no it spoke up,\nthe bag made a slight ruffling sound"
+    "and a gruff and heavy voice came out of what was constraining it."
+    BAG "yes c-can I he-help you"
+    "the man voice cracks I with an ear pinching tone, there is a slight squeak in his tone."
+    "I do a silent sigh of relief at him in the eyes"
+    BEN "The projector is broken and the sarge wanted me to fix it.\nDo you have any advice or knowledge on how to fix this."
+    "I wait my response until he speaks up"
+    BAG "y-you will need a specialty screwdriver and t-to be careful that thing is dangerous…."
+    "He takes another deep breath but not as deep as before he continues on with"
+    BAG "I-if I were you I wouldn’t even touch that thing, I-…"
+    "He deliberates on his words for a moment; as he does the feeling of unease returns from before\nthe air becomes thicker and the bag on his head becomes more animated he continues on"
+    BAG "I can’t say any more…. I-I have to go."
+    "He quickly continues packing up his supplies and rushes out, I don’t stop him."
+    hide bagman_default
 
-    # Add dialogue and interaction for the person in the back seat
-    "You decide to talk to the person in the back seat."
+    "With that advice I decide that I shouldn’t touch the projector\nand I should look for the screwdriver instead as I am leaving\nI hear the drill Sargent call out to me."
+    "I realize he is still standing. He is observing me,\nI think to myself how long could he have been there waiting\nbefore asking him for the specialized screwdriver."
+    show drill_sarg_talk at right
+    DRI "I have a very important meeting to attend to, once I am back the mission will begin.\nId recommend looking for it yourself,"
+    DRI "Why don’t you go ask the people at the main desk maybe they can help."
+    hide drill_sarg_talk # Corrected from drill_s_talk
+    hide ben neutral
+
+    jump OutsideAfterScrewdriverAdvice
+
+label OutsideAfterScrewdriverAdvice:
+    scene bg_outside_projector_room
+    show ben neutral at center
+    "Having no other choice I walk outside."
+    "As I walked outside I felt the cool stale air from the indoor air conditioner,\nI smile as the meeting is finally over."
+    "I feel the drill sargent rush past me as he heads to his meeting.\nI watch him run off to the left in a hurry from waiting for me for this long"
+    "until I look to the right seeing someone I recgonize.\nMy smile quickly fades into a frown as I look up to see a face I did not want to see."
+    "It is Samuel, I think to myself if it is really worth it talking to him."
+    show samuel_redbook at right
+    "It could lead me into more trouble than its worth I finally decide"
+    menu:
+        "follow him":
+            jump keepsamuel
+        "go on my own":
+            jump abandonsamuel
+
+label keepsamuel:
+    scene bg_outside_projector_room_no_samuel
+    hide ben neutral
+    show ben neutral at left
+    show samuel_redbook at right
+    "As I contemplate on my life choices, I finally decide I should go up to him.\nI approach him as he seems to be reading a book."
+    "I glance at the book he is reading it is a red book with a strange symbol on the front of it,\nit appears to be put in the middle of other shapes making a sun shape."
+    "There is text on the book, I don’t understand what it means\nbut it is another language perhaps italian it reads “Nitimur in vetitum”."
+    "I start to have second thoughts of my decision to talk to him\nas I am certain Samuel can’t read Italian. I decide to speak up anyway."
+    "I clear my throat and clearly say"
+    BEN "Can you help me with something?"
+    SAM "This isn’t about another girl is it."
+    BEN "What are you talking about?"
+    SAM "Oh don’t worry I won’t tell anyone ill help you out."
+    "He quickly puts his book in his spare hand and asks"
+    SAM "So what is the problem."
+    BEN "I need to fix the projector from the meeting we just had."
+    SAM "..."
+    BEN "It apparently broke down and the sarg blamed it on me."
+    SAM "Did you actually not break it, this isn’t like last time is it?"
+    BEN "Last time something broke wasn’t my fault either, you just got to trust me on this."
+    SAM "Fine but I am leading this time"
+    hide samuel_redbook
+    hide ben neutral
+    scene bg_storage_room
+    show ben_idle at left
+    show samuel_normal_pose at right
+    "I am forcably pulled down the hallway until he stops and lets go of my arm.\nI feel a slight pain as he twisted my arm when grabbing it.\nLooking back up I see him approaching a electric door."
+    SAM "all spare parts and supplies should be in here"
+    "He approaches a keypad next to the door and starts inputting in a passcode.\nAs he starts typing I hear a loud buzz and a red light appears above the keypad."
+    "He laughs a bit and enters the code again another buzz but this time it opens."
+    "I follow him inside the storage room, it is pitch black inside the room\nbut with a click the light turns on."
+    "A single fluorescent light is shining down lighting up the whole room\nmy attention is drawn to the center of the room there is a box with a paper note attached to it."
+    "However I am quickly distracted as it seems Samuel has other ideas.\nI follow him as he starts opening up draws presumably looking for the screwdriver."
+    "He is going all over the room making a mess he bumps into me\nand a loud crash is heard as boxes fall ontop of us."
+    "I try to get up but he is too heavy, I annoyingly shout"
+    BEN "Your making a mess can you stop!"
+    "He pushes the boxes off of him and looks down at me his face slightly red he says"
+    SAM "I-I took it too far, I just got excited I haven’t done something this fun in a while.\nI was too forceful I am sorry."
+    "He offers me his hand and I accept it as he helps me up."
+    BEN "y-yeah why don’t you check out that box over there and I will clean this place."
+    "I start to pick up the boxes from the floor and put them back into place,\nluckily most of them were empty."
+    "I hear a slight rip from behind me but i ignore it, I hear him walk towards me and say"
+    SAM "yeah there was nothing in here but a stupid red pen and this."
+    "I place the box down were it was before and I see him holding I note\nthe text on the note reads “Property of DARPA”."
+    BEN "well this was a failure."
+    "He closes the door and re-enables the lock as we both leave"
+    SAM "Maybe we can check out the main desk, they might have a screwdriver"
+    "I reluctantly agree and follow him to the main desk."
+    hide samuel_normal_pose
+    hide ben_idle
+
+    scene bg_main_desk_area
+    show ben_neutral at left
+    show samuel_normal_pose at right
+    "As I approach the main desk I can smell a murky smell in the air,\nmy eyes tear up as I approach the two shadowy figures."
+    "Looking down at the floor it seems there is a wet floor sign\nand a weird liquid substance on the floor."
+    "I recently head towards the two shadowy figures until I can see them in plain view there true form."
+    "The two shadowy figures are cardboard cutouts with a speaker and microphone attached to it.\nA advanced drive through so workers can sit inside in nice cool air conditioning\nlazing around while also take orders."
+    "I am startled as I hear a fuzzy voice come out from one of the figures speakers."
+    Q2 "What do you wAnT, mAk- it qu-ck."
+    BEN "YOU WOULDN”T HAPPEN TO KNOW WERE A SCREWDRIVER IS WOULD YOU?\nONE TO REPEAR THE PROJECTOR."
+    "The cardboard cutouts remain motionless but a response is heard"
+    Q2 "Y-u don- have to scream, what projector?"
+    "I explain to the cutouts the whole story in my normal voice, they eventually understand and say"
+    Q2 "No I do not, This may be the main desk of this building but our building is not ready and equipped\nwith many of the modern amenities the other buildings have.”"
+    "Me and Samuel turn around and he suggests we check upstairs next,\nwe begin walking , I continue to listen to the sound of the speaker as we walk farther away"
+    Q2 "This building is the oldest in the camp.\nWe would have to go through dozens of folders and bi--------"
+    "The sound fades out as we continue onwards we reach the maintenance hallway,\nSamuel suggests we take a detour in there to check if a screwdriver is there\nin the maintenance hall, having no real other leads I agree and follow him inside"
+
+    scene bg_storage_stairwell_fixed
+    show ben_idle at left
+    show samuel_book_pose at right
+    "I quickly search around the hallway only finding empty storage containers."
+    "I see a stairway to upstairs I see it is blocked by a green container,\nit seems like It feel from the shelf it was one as I approach it to pick it up,"
+    "I hear Samuel heading towards me, I quickly spin around to see samual book in one hand and paper in the other."
+    SAM "Did you find something interesting?"
+    "he looks at me and proudly presents it"
+    SAM "check this out"
+    "he hands me a paper, it seems to be a note of some kind."
+    SAM "It was on the main desk I was able to snatch it."
+    BEN "how didn’t they notice?"
+    SAM "I was able to tell they were too far to do anything and they couldn’t actually see anything\nfrom those cardboard cutouts. If the sarg were to see that liquid on the floor he would lose his shit."
+    "Well either way if they saw it or not I read the paper"
+    BEN "Please discard and shread this message after reading this.\nThe only way I am able to access these files at work is with a FTP setup,"
+    BEN "connecting to this address is 136.228.116.222 through one of the computers\nshould redirect to the main server.\nOnly use this for file transfer once the worm is on the system you can power down."
+    BEN "Well at least it is something"
+    "I say as I bend down and pick up the green container on the floor,\nAs I try to lift it up I realize it is too heavy,\nI decide the best option is to sit it upright I hear a loud sound in my ear"
+    SAM "Hey, what made you join the force?"
+    "I drop the box and it almost crushes my leg.\nI look over and back up a bit, samuel is standing there aloof."
+    BEN "Be careful will you, this thing is heavy?"
+    SAM "I was just curious thats all."
+    "A moment of sclince fills the room I try to think of something to say\nbut I can't think of anything... I feel my face heating up as I remember something and I finally say"
+    BEN "I joined for myself thats all."
+    SAM "Really that's boring"
+    "he walks over to me as I continue trying to open the box."
+    SAM "Let me help you out"
+    "he starts grabbing at the sides of the container."
+    BEN "H-hey let go of remember what I said befor-"
+    "the container pops open dust flying out all over the room."
+    "As the dust clears I frown looking down at the container it looks like an old computer is inside it,\nThere is a makeup kit inside the box along with a female soldier uniform."
+    "I pick up the mackeup kit and inspect I see a broken hand mirror inside."
+    $ inventory.append("Broken Hand Mirror")
+    "I pick it up and stare back at myself for a good few seconds.\nI sigh"
+    BEN "I told you to be careful. Your breaking other peoples stuff, look what you did to this mirror!"
+    "I yell showing him the broken mirror.\nThe room goes silent as I put the mirror in my pocket."
+    "I begin walking upstairs, I hear Samuel quickly follow behind me,\nI think to myself about the mirror I can't fix something that is broken,\neven if I could nothing would change anyway."
+    hide ben_idle
+    hide samuel_book_pose
+
+    scene bg_military_entrance
+    show ben_neutral at center
+    "as I step upstairs I feel the cool AC and an exit to the sweaty basement\nI feel the tempature drop and the wind hit my face. I don't give it a second thought though."
+    "I glance at the sign on the wall there are two ways to go left and right.\nReading the signs one says armory to the left and the other says loading bay to the right."
+    "I start walking to the right but I just remembered something.\nI need to pick up my new uniform and weapons for the mission."
+    "If the mission is starting tonight I should probably pick them up soon\nas processing should take around an hour."
+    "However if I go now I may not have enough time to fix the projector\nas fixing it seems like an impossible task already\nand I already spent a long time just looking for a stupid screwdriver."
+    "I need to decide what is more important the sergeants order or my own safety"
+    menu:
+        "Get Army Uniform":
+            jump getuniformwithsamuel
+        "Go get screwdriver":
+            jump getscrewdriverwithsamuel
+
+label getuniformwithsamuel:
+    scene bg_military_entrance
+    show ben_neutral at left
+    show samuel_normal_pose at right
+    BEN "Safety always comes first I think to myself as I turn around heading towards the supply depo."
+    "I hear Samuel quickly follow behind me as he starts trying to make conversation."
+    SAM "You know the two guys that run the stands where we are headed right?\nI spoke to them this morning they were kind of depressed.\nThe sarg has been calling them heady and army,"
+    SAM "it seems it caught on with some of the recruits.\nI would try to keep it easy on them."
+    "I mentally take a note of what he says as we pass by a door that takes my attention\nit has a paper that has the text COMPUTER LAB drawn onto it."
+    "The text is slopply written and in blank sharpie marker ink.\nThe paper is ripped a part of it torn off and on the floor."
+    "It also seems like someone or something dented the door.\nThe door is dented enough to see a small crater where the impact was\nit was about as big as my head."
+    "I see that Samuel is getting farther from me and I rush ahead to catch up to him,\nhe seems to notice that I was looking at the door and asks"
+    SAM "Do you want to check it out? I think we still have time."
+    BEN "No, duty is more important. Maybe if we ever have down time after this\nwe can go check it out together."
+    SAM "Your loss."
+    "and we both continue. There is a maintenance door that leads into a damp garage area."
+
+    scene bg_elevator
+    show ben_neutral at left
+    show samuel_normal_pose at right
+
+    "The room is pretty empty aside from two stands setup opposite to an elevator.\nThe room is cold and dark only illuminated by the lights of the elevator and stands."
+    "The two people stand there staring into nothingness the sound of a cheerful tune coming from the stand on the left."
+    "The stand on the left labeled weapon stand has a bill board on it with the text “Todays menu”\nand a list of guns ranging from small pistols to large machine guns I can only dream of using."
+    "The person manning the stand stands flamboyantly a unmoving smile, his eyes beat red in medieval knight armor,\nits shine contrasting the painted on pastel background behind him."
+    "He seems to be breathing in and out waiting patiently for the next person to arrive at his stand.\nHis most notable feature being his hands."
+    "His hands seem to unusually contort at the wrists and his hands are stuck in twisted positions\nalmost like his hands have no bones at all."
+    "I feel a slight tap on my shoulder I choose to remain focused on what lay before me\nlooking to the right there is at least some semblance of normalcy\nas I see a hooded man in all red robes."
+    "The stand looks normal enough until I took a closer look first the red hood masking his face,\nthere is something perduring out of his face.\nIt is way too big to be a simple bump there has to be something more."
+    "Second what’s behind him, its not a pastel wallpaper but products.\nHe has many products behind him some seemingly unrelated to armor.\nThere are some strange devices I am unable to recognize."
+    "Questions pass through my mind like were did he get these from?\nwhy did he choose to display them so publicly?"
+    "Finally that music, it is slow and methodical yet cheery.\nIt is being played from a old stereo, the tone is almost hypnotic\nwith how slow and droning the loop is."
+    "I feel a tap on my shoulder and see Samuel he looks concerned"
+    SAM "Are you alright? You have been staring into space for a few minuets ,\nI can order the armor if your scared."
+    BEN "No, I am fine. I was just a bit spaced out."
+    SAM "You sure, maybe we should go back?"
+    "I ignore his question and decide which stand I should approach."
+    hide samuel_normal_pose
+    show knight default at center
+    KNIGHT "..."
+    "As I approach the man he seems to grow. His shadow looming over me, he has turned into a giant.\nhis armor shining in the low light of the room, his smile getting wider, a slight mumble coming from it."
+    "I was not sure how a face can even look like this he was no man he was a monster."
+    "I feel another tap and finally give in looking behind me\nsamuel put his hands on my shoulder almost as a comforting motion to tell me its going to be okay."
+    show samuel_sholder_pose at right
+    "I take a deep breath and begin the conversation"
+    BEN "I am here to place an order in for a new uniform"
+    "its face doesn’t move he stands there eyes unblinking almost like he is judging me,\nasking me “why did you come here”."
+    "I almost take a step back but Samuel walks in front of me and loudly states"
+    SAM "my friend is here to pick up a new gun!."
+    "As I realized my mistake from earlier I notice Its eyeballs move quickly homing in on Samuel\nalmost like they are locking on to a new target."
+    "I prepare for impact before I see the monster come to life its bright smile turns into a frown,\nhis eyes slowly start blinking and his hands, his broken hands move up to his face and pull something out."
+    "It is small by I see and hear it quite clearly, a pair of earphones\nthe volume so loud I can make out it was playing some k-pop music."
+    KNIGHT "What was that you said again."
+    "The façade has vanished this was no monster, it was a man a broken tired man."
+    "Samuel repeats his question and the man replies in a now defeated still raspy, monotone voice with"
+    KNIGHT "I will put in a order for you it should be done before your mission starts."
+    "He flips a small switch and a tube comes down from the ceiling."
+    KNIGHT "So what kind of weapon do you want to use?"
+    menu choice_of_weapons:
+        "Pistol":
+            $ player_weapon_choice = "Pistol"
+            jump process_weapon_choice
+        "Rifle":
+            $ player_weapon_choice = "Rifle"
+            jump process_weapon_choice
+        "Shotgun":
+            $ player_weapon_choice = "Shotgun"
+            jump process_weapon_choice
+        "Grenade Launcher (Dream Big)":
+            $ player_weapon_choice = "Grenade Launcher"
+            jump process_weapon_choice
+
+label process_weapon_choice:
+    KNIGHT "Good choice, I wouldn’t personally go for that one but oh well."
+    "He places the paper back in the tube and flicks a switch.\nI watch as the paper quickly goes up into the unknown."
+    KNIGHT "Anything else?"
+    BEN "..."
+    "he than grabs his headphones and puts them back in his ears."
+    hide knight default
+    hide samuel_sholder_pose
+    show ben_neutral at left
+    show samuel_normal_pose at right
+
+    "Perhaps I was overthinking everything and this would go more smoothly than I have previously thought,\nas we walk over to the next stand I look over to Samuel and he gives me the thumbs up."
+    "We than head over to the next stand [right stand]"
+    show red_hood default at center
+    RED_HOOD "..."
+    "I take a deep breath as I approach the stand, the hooded man seems to notice me\nhis head moves up and he says in a low voice"
+    RED_HOOD "Hello you two, you must be benjamin right?\nToday’s reading said you would come."
+    BEN "Who told you I would come?"
+    RED_HOOD "No matter, I have the order you were about to place ready."
+    "He hands me a new uniform the right one."
+    $ inventory.append("New Uniform")
+    SAM "Alright, lets get you out of that uniform, lets head to the bathroom."
+    BEN "I can’t accept this, what just happened is just too convenient.\nI have an urge a pulse even I need to figure out how this happened no matter the cost."
+    BEN "hold up a second"
+    "I put my hand up to Samuel as I face the man I say"
+    BEN "How the hell did you know what I was going to order!"
+    RED_HOOD "You best not seek knowledge that you are unprepared to learn about\nfor the truth is far worse than what you should know."
+    SAM "..."
+    BEN "Cut the bullshit, who told you?"
+    RED_HOOD "..."
+    BEN "Tell me! Tell me now!"
+    "and sighs he lifts his hood up a tiny amount revealing for only a second\na single horn sticking out of his head before he puts the robe back down."
+    RED_HOOD "Both of you mustn’t come back here for I have revealed some of my inner self."
+    "we both walk backwards my uniform in hand until he are a safe enough distance from him."
+    SAM "we will talk about this later."
+    hide red_hood default
+    hide samuel_normal_pose
+    hide ben_neutral
+
+    scene bg_main_desk_area
+    show ben_neutral at center
+    "Me and Samuel head to the bathroom.\nI tell Samuel to wait outside as I enter the bathroom and begin to undress."
+    "First my shirt comes off than my pants fall down, I grab the new uniform feeling how it was perfectly,\nI feel as the stiff fabric stretches with my skin as I pull my new pants up"
+    "the pants almost being too big for me if it wasn’t for the belt holding them in place,\nI think about how dirty this uniform will get after the mission\nhow this may be the only one time I see it clean and in prefect condition."
+    "I feel the shirt slip on next as I slide it down my muscular body\nlooking in the mirror I see myself and hype myself up for the mission to come."
+    "I feel the polyester touch across my body as it rigidly comes into place.\nNext comes on the shoes they are heavy put reliable\nI than grab my helmet putting it on my head"
+    "seeing the pointy metal come out of the top I think to myself it may be able to be used as a tool."
+    "I than take one last look at myself in the mirror and leave the changing room."
+    hide ben_neutral
+
+    scene bg_elevator
+    show drill_sarg_talk at center
+    show samuel_normal_pose at right
+    "As I leave I see the drill Sargent talking to Samuel outside he looks disappointed"
+    DRI "So you were unable to fix this old thing?\nWell I hope you find a mechanic during the mission because we are getting ready to leave the base."
+    DRI "Follow me outside you two maggots we are already late as is."
+    "His frown worsens"
+    "He looks to Samuel and chuckles"
+    DRI "I know you two like chatting so I am separating you into different squads.\nThis mission is important and I wouldn’t want you to screw this up.\nYou will follow me do you understand"
+    BEN "sir yes sir!"
+    SAM "sir yes sir!"
+    "and begin to follow him outside as the garage door opens up lighting up the room\nwe see a line of soldiers waiting outside all rigid in form waiting for there orders."
+    "We both head into our respective squads…"
+    jump outsidewithuniform
+
+label getscrewdriverwithsamuel:
+    scene bg_military_entrance
+    show ben_neutral at left
+    show samuel_redbook at right
+    BEN "Contemplating my options I figure that I might as well start this pointless search for my screwdriver,\nI try to forget about the screwdriver."
+    "I head to the right as me and Samuel walk to the right he begins to start some small talk"
+    SAM "that book from earlier –"
+    BEN "Yeah don’t worry about it, I won’t tell anyone you read picture books."
+    SAM "Hey! Its not a picture book."
+    "He moves the book back into both hands and begins reading"
+    SAM "There exists two states in this world, the is and isn’t."
+    BEN "I already told you, I won’t tell anyone you don’t need to make this worse than it already is"
+    SAM "Once the lost artifacts are bought into one place…"
+    "I move my hand and close the book myself as we walk and say"
+    BEN "look man, I know that story is probably great and all but we have bigger problems we need to solve.\nLike getting that screwdriver!"
+    SAM "This has to be connected to the mission, those scenes on the projector\nthere similar to what is written in this book."
+    "I dismiss his claim and we both continue onwards towards a giant window."
+
+    scene bg_city_freedom
+    "We both stop a bit and admire the outside, The window reveals open roads going into other buildings\nthat look smaller from here than they actually are."
+    "We can see trucks and military cars driving on the paved cement.\nWe watch as two people in a jeep make hand motions talking to each other\nthere car driving off into other facilities and the unknown."
+    "We can see the calm sky seeing the morning sun come up over the horizon\nthe clouds shapes are uniform."
+    "We are at peace until the ground starts shaking, looking up the clouds disperse and open\na fleet of osprey aircraft come whirling in and head towards the front of the building we are in."
+    "We both can see and feel the aircraft fly above us disrupting the peace."
+    "I hear someone stand, looking behind me I see the turban man from earlier getting up from his seat."
+    hide ben_neutral
+    hide samuel_redbook
+    show sultan_talking_pose at center
+    RAM "You never got my name did you?"
+    "Looking at him with his lit cigar in his mouth he says staring at me with tired eyes"
+    RAM "You can call me the ram."
+    "He takes another puff of his cigar."
+    show ben_neutral at left
+    show samuel_normal_pose at right
+    "Me and Samuel stare at him for a few seconds processing that odd sounding name\nbefore he looks at my hands and looks back up at me and says"
+    RAM "So you really are going to fix that projector bro?"
+    "He gives me a side eye before sitting down again"
+    RAM "I dealt with something similar on a previous mission."
+    "Me and Samuel decide to sit down and listen to his story, he continues"
+    RAM "I was in charge of protecting a audio device, it would play a simple lullaby\nit was meant to calm someone known as the giant .\nMy squad was a team of four, but we lost one during the mission."
+    RAM "The mission started off poorly. We were all ill equipped.\nMe and red hood were in charge of recon while the knight and private p\nwere supposed to play that damn device."
+    SAM "what happened to the other two people"
+    RAM "That is their story to tell not mine."
+    RAM "The damn thing ran out of battery” His face scrunches up and his anger builds\n“The main fucking device meant to save us ran on double a batteries"
+    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as he says"
+    RAM "This place is a joke. I wouldn’t trust that projector for a second."
+    BEN "We were given orders to fix this projector and we will fulfill them"
+    RAM "..."
+    "I watch as the smoke cloud rises from his cigar it slowly rising up and disappearing into the air.\nHe shakes his head"
+    RAM "This is why I stayed in the military, to prevent people like you from dying"
+    "he sighs looking defeated"
+    RAM "This stress has been getting to me recently that this mission may be another failure,\nthat we may not come back alive again."
+    SAM "We won’t let that happen."
+    RAM "I almost started a small fire in the storage room."
+    "Me and samuel look at each other we both have been their earlier today\nand didn’t see him there he continues"
+    RAM "I was smoking a cigar and I tossed it on the floor carelessly\nI was going to let it stay their but once I heard you two trying the combination to the storage room;\nI stomped it out and picked it back up quickly. Luckly, you got the code wrong at first."
+    "I look at Samuel he is slightly embarrassed, ram notices this but does not say anything"
+    RAM "I was able to sneak out of the room but I felt really guilty after about what I have done.\nI don’t know what would have happened if I let it go."
+    RAM "I wasn’t in a good mental state earlier, after this smoke break I cooled off.\nHere hold out your hands"
+    "he says as he swings his bag over and goes through it.”\nI hold out my hands as he asked and he pulls something out of has backpack\nand puts it in my hands he holds it tightly he whispers to me"
+    RAM "Thanks for listening to me bro. This saved me once before maybe it can save you."
+    "and he releases it from his hand and runs off."
+    hide sultan_talking_pose
+
+    "Looking down I see a screwdriver in my hand It seems to have an irregular shape\nit looked like it had two screwdriver heads bolted into it.\nThey were both labeled with white text saying “single” and “double” on it."
+    $ inventory.append("Special Screwdriver")
+    "I look at samuel and he gives me the thumbs up and we both grin."
+    SAM "Lets head back and fix that projector, we wouldn’t want to keep the sargent waiting would we?"
+    "We both lined up with each other as we did many time before\nand I give him the signal to start counting he started counting down from three\nand than we sprinted back to the projector room."
+    "He was in the lead till we reached the staircase, he almost feel and tripped over his own shoelace\nand I caught his hand and helped him back up saying"
+    BEN "Be careful, if we go too fast we can get into trouble."
+    "We both walk slowly down the stairs and start the race back up again after we leave the previous room\nas we reach the projector room we catch our breach I say in between my breaths"
+    BEN "I think….I won."
+    SAM "Not…a….chance..."
+    hide ben_neutral
+    hide samuel_normal_pose
+
+    scene bootcampinsideprojectorroomstartm
+    show ben_idle at left
+    show samuel_normal_pose at right
+    "We both agree that this was a tie and we head over to the projector after some time,\nI look at the projector as a whole seeing both films in there proper places"
+    "I read the labels on the big tape reading the label it says AAXA SCP-A01 on the right gear\nand AAXA SCP-A02 on the left."
+    BEN "I ask Samuel about these"
+    SAM "I have no idea, maybe that is the manufacturing label or something?"
+    "looking down I see the back of the projector there are four nuts.\nI look at the single screwdrivers in my hand and get to work."
+    "I use the screwdriver head labeled single, the first screw comes out fine\nand than the second and the third until the back finally plops out onto the floor."
+    "Looking inside the device I see many gears and knobs some of them labeled.\nAlso a strange compartment requiring two screws to be removed."
+    "These screws were attached to each other, I have never seen anything like this before,\ntheir oblique angels making it hard to find out what to do."
+    "I ask samuel what this is he looks at it confused than asks me for my screwdriver,\nI hand it over it him and he picks it up."
+    "He thinks for a bit than moves the screwdriver head into place\nso the one labeled “double” is in line with the one labeled “single” and presses it in."
+    "As he presses it in there is a moment of silence before it properly clicks\nthe satisfying sound of the click in my ears brightens my mood a bit as he begins to turn it."
+    "Two of the screws pop out at once it seems like they were meant for this specific screwdriver."
+    "I switch the screwdriver back to the single mode and I unscrew the last screw\nthe final piece coming out revealing what looks to be a singular burnt out light bulb."
+    "I begin to unscrew it but I feel a large shock as I pull my hand back\nI notice a small prick in my hand, I pull what looks like a small piece of red glass out"
+    "it seems to be a glass shard as I start to bleed.\nI than watch as the lightbulb suddenly turns on as if it was not broken at all\nit shining a bright red color."
+    "Me and Samuel look at each other as he is holding the unplugged power cord to the projector confused”."
+    "The tapes start spinning and it makes a loud screeching sound\nenough for everyone in the base to hear."
+    "Me and Samuel cover our ears, the sound still blasting through it.\nI watch as samuel quickly goes over and plugs the projector in and the sound stops."
+    "A red light coming from the projector shows on the wall revealing text on a blue background\nit has a title that reads“ The unstable darkness” reading the text below"
+    "“There exists many artifacts in this world lost to time.\nSome are secured and contained while others remain lost or stolen to time."
+    "One of these affects the two states in this world, the is and isn’t.\nCombining both into one making fiction into reality, making the false into the true.”"
+    "I look at the screen staring at it for a few seconds before I hear I click and a screech come from the projector\nas the projector light turns white and the slide changes to the next slide\nrevealing what was in the slideshow from earlier today"
+    "I pick up the screwdriver and pocked it while responding"
+    BEN "Hey I was reading that!"
+    "Samuel is about to respond when we hear footsteps behind us\nlooking back we see the drill Sargent walk into the room smiling"
+    hide ben_idle
+    hide samuel_normal_pose
+    show drill_sarg_very_happy at center
+    DRI "Well you too really did an exceptional job."
+    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    DRI "Your just in time too, we are loading up and preparing to start the mission,\nlets move out you two!."
+    BEN "Sir yes sir!"
+    SAM "Sir yes sir!"
+    "I grunt as I feel a weight put onto my hand as he plops the projector into my now empty hands\nand we follow behind him"
+    jump outsidewithoutuniform
+
+label abandonsamuel:
+    scene bg_outside_projector_room
+    show ben_neutral at center
+    "I look to the left of the door seeing Samuel standing there reading a book,\nI pay less attention to him as I head towards the first place I think a screwdriver would be\nthe storage room."
+    scene bg_storage_room
+    show ben_neutral at center
+    "As I approach the storage room I notice a keypad next to the door\nI head towards the door and examine the keypad."
+    "It has letters on it instead of numbers it seems I am spoused to enter a passphrase."
+    "I quickly look to my left and look to my right and enter a random passphrase I thing in my head\n“Butts2012” after a few seconds of nothingness a buzz and a light red glow appear."
+    "I stand there staring at the keypad watching the light fade back into place\nI laugh a bit to myself realizing that my journey ended as fast as it started."
+    "I am startled as I hear someone walk up to me a soldier must have overheard me laughing."
+    "Looking closer they seem familiar, I realize that they were in the meeting from before,\nit was the person sitting in the front seat."
+    show sultan_talking_pose at right
+    RAM "(if not met yet He reaches his hand out to me “want a cig bro?”\nI am caught off guard by this and instantly deny him)"
+    RAM "So what are you laughing about bro?"
+    "I watch as the smoke comes out of the lit cigar making little clouds go up into the sky\nand I respond with"
+    BEN "I am [still] (if talked before) looking for a specialty screwdriver\ndo you have any idea were one would be?"
+    "He takes the cigar out of his mouth and walks up to the locked door,\nI watch him enter the passcode with ease almost like he has done this many times before"
+    "I follow him inside the storage room and he walks of to a storage draw\nand slides it open revealing what must be a dozen screwdrivers."
+    BEN "I thank him and head back to the projector room to grab the projector to fix,\nonce I come back projector in hand I notice he is still standing in there"
+    "using the closet as a place to hide his smoking habits from the public.\nI look at the projector as a whole seeing both films in there proper places\nI read the labels on the big tape reading the label"
+    "it says AAXA SCP-A01 on the right gear and AAXA SCP-A02 on the left\nlooking down I see the back of the projector there are four nuts."
+    "I look at the screwdrivers laid out before me and get to work picking up the screwdriver that fits,\nthe first screw comes out fine and than the second and the third"
+    "until the back finally plops out onto the floor.\nLooking inside the device I see many gears and knobs some of them labeled.\nAlso a strange compartment requiring two screws to be removed."
+    "These screws were attached to each other, I have never seen anything like this before,\ntheir oblique angels making it hard to find out what screwdriver was needed."
+    "After going through each screwdriver one by one I was unable to find out what was needed."
+    "As I look at the gears trying to find out what was wrong I hear a flick\nalmost like someone is tossing something and than a burst sound."
+    "Looking behind me I see a bright light and than feel a intense heat,\nthe cardboard boxes caught fire!"
+    RAM "It wasn’t me bro, I don’t know how this could have happened."
+    "He then begins to walk out of the room as the fire spreads not bothering to look back."
+    hide sultan_talking_pose
+    "The fire spreads from box to box as if it was a chorus singing a song,\nsome big boxes some small boxes the room was quickly getting hotter\nthe white smoke turned to black smoke and the fire soon engulfed the room."
+    "I rush towards the projector and pick it up.\nI quickly run out of the room behind the man,\nI grab onto his shoulder before the adrenaline wears of and my hand slips"
+    "I have to place the heavy projector back down.\nI kneel down and place it down, I am out of breath…\nI look up at him as he casually lights his next cigar."
+    show sultan_talking_pose at right
+    "The world spins around me as I hear beeping and screaming,\nthe smoke creeping out of the storage cabinet into the main hall."
+    "I hear a slight creak and feel as it starts raining.\nWith the last bit of my energy I stand up in a turtle position\nand cover the projector with my body"
+    "making sure it does not get soaked as I hear the chaos around me,\nI hear footsteps and screaming and feel the intense heat hit my back as the fire spread,\nI start to wince from the pain"
+    "and decide it is best that I should just close my eyes\nand open them back up when this is all over,\nso I do I revert inwards thinking about my life decisions that bought me here."
+    BEN "Maybe if I chose Samuel this wouldn’t have happened.\nMaybe I should have never joined the army.\nMaybe if I took action earlier she-."
+    BEN "I stop myself no, it is my duty to complete this task, this mission.\nI chose to serve this country no one else did, no one else would.\nI take a deep breath and prepare to protect this projector with my life."
+    "The few minutes felt like a blur to me, I feel as if my instincts have kicked in\nand I am unable to move, I feel my legs quiver and the water drip down my shirt."
+    "I stayed in that position making sure the projector didn’t get wet like my life depended on it,\nuntil my legs finally gave in and I fell onto the floor avoiding the projector."
+    "I lay there motionless for many more minuets as I catch my breath,\nI look up at the ceiling the sprinklers turning off\nand than looking straight ahead at the man that caused all of this."
+    "As I regain my energy I sit back up and stand up I slap the cigar out of his hands,\nI step on it no I stomp on it as hard as I can putting out the bud until it is fully out."
+    hide sultan_talking_pose
+    "Looking around I notice a crowd of at least 5 people has gathered around us\nundoubtedly coming here due to the fire."
+    "I ignore them though and return to the projector,\nit seems like the back piece of the projector was still in the room from when I took it off."
+    "However aside from some burn marks on the front the projector seems fine,\nI look inside the room I was just in most of the floor is flooded,\nthere are various tools and trinkets floating in the water and some ash"
+    "the back plate of the projector is nowhere in site\nif I wanted to get it back on id have to search the room for it."
+    "There are two people in fire retardant suits in the room assessing the damages\nthey don’t look particularly happy about it\nand I am sure ill see them again once they see the camera footage of how this happened."
+    show sultan_talk_pose at right
+    RAM "Well bro, if I were you id get your clothes replaced\nand get your weapons the mission starts tonight after all."
+    "I think to myself if this is really the best course of action,\nshould I really listen to the man who almost broke my projector\nand caused this whole debacle in the first place"
+    "or should I go get my uniform so I am at least ready for the mission to begin\nor should I just try to fix this mess I am already and focus on fixing the projector."
+    menu:
+        "Get Army Uniform":
+            jump getuniformwithoutsamuel
+        "WIP": # This was "Go fix projector"
+            jump fixprojectoralone
+
+label fixprojectoralone:
+    "WIP" # Placeholder as requested
+    # Assuming this path eventually leads to needing a uniform or resolving the projector situation
+    # For now, as per original structure, it might lead to a similar outcome as getuniformwithoutsamuel
+    jump getuniformwithoutsamuel # Adjust if the story for this path is distinct
+
+label getuniformwithoutsamuel:
+    scene bg_storage_room # Or appropriate scene after fire/decision
+    show ben_neutral at center # Ben is likely soaked
+    BEN "I need to get a new uniform and my weapon." # This was part of the thought process before menu
+    "I pick up the soaked projector carefully trying not to cut myself on the broken part\nand glance overat the man who caused this (if he's still around)." # Sultan may or may not be present
+    "My goal was not to fix this projector it was get a new uniform.\nI think back to passing by samuel if I could have gotten him to carry this projector for me."
+    "I decide the best course of action is to ask the main desk."
+
+    scene bg_main_desk_area
+    show ben_neutral at center # Carrying projector
+    "As I walk to the main desk I find two cardboard cutouts of people placed lazily manning the stand.\nWalking up to the desk I step in a puddle of water getting my already soaked shoes more wet,"
+    "slightly annoyed I put the projector on the table with a plunk\nand static starts coming from the cutouts."
+    BEN "Hello? Is anyone there."
+    "More static plays from the cutouts, already annoyed I call out"
+    BEN "HELLO!?"
+    "and receive no response looking closer at the cutouts\nI realize there are wires attached to them leading into a backroom."
+    "I decide to follow them I go around the desk and open the backroom door\nto find a empty lounge room."
+    "The state of it is not the best there is a single couch a mini fridge and a old tv playing static.\nThe walls were peeling off and there was a ton of empty soda cans on the floor."
+    "Looking around the room further I notice the wire leads up to a single microphone\nlaid out on the couch covered by books and empty plastic snack bags."
+    "I pick up the microphone and speak into it hearing my voice from the other room\nI realize that this microphone is connected to a speak,\nit seems they set up this system so they can man the front desk while lounging around."
+    "I look a book that I picked up it was labeled\n“One hundred and one ways to survive a class k scenario”."
+    "I humored the book opening it up but was surprised to see a single page stappled into the book\nlocking the other pages out."
+    "The page looks like it was written by someone rather than typed out\nthe plain list had detailed instructions on how to use a device called the music nox\nit described a device that would be able to calm any anomaly into submission."
+    "In the book there was big red text written in marker seemingly after the fact\nsaying “MAKE SURE TO BRING SPARE BATTERYS” with the bottom text crossed out."
+    "This having no relevant information to the current mission I close the book\nand place it back where it was before back onto the pile."
+    "I head back out of the room that bringing me no closer to getting my uniform\nI pick back up the projector it feeling more heavy than before,"
+    "as I pick it up I think I hear a small clicking sound\nbut upon putting it back down and examining it to see if it is broken\nit seems that it was just my imagination."
+    "I decide to head to the right to the elevator,\nthe elevator has only a single button and it glows a faint yellow hue."
+
+    scene bg_elevator
+    show ben_neutral at left # Carrying projector
+    show ema default at right # Girl at elevator
+    "As I arrive I notice a girl waiting at the elevator\nshe looks skinny in figure and is wearing a standard female military uniform\nshe had a pistol on at her side."
+    "Her hair was long and dirty covering most of her face making her eyes hidden.\nAs I wondered who exactally she was."
+    "The elevator opens and she walks inside I quickly follow behind her\nalmost missing the door closing."
+    "The elevator is cramped and sweaty the old thing makes a screeching sound as it closed,\nthe only light from the elevator being a single led bar in the ceiling,"
+    "there were two buttons labeled with images, one of a up arrow and the other a down arrow.\nShe pressed the up arrow already and with a small hitch the elevator starts moving up."
+    "We stand there in silence for a few seconds before she breaks the silence\nher voice is smooth and melodic."
+    EMA "You look like you were hit by truck"
+    BEN "Yeah, I get that a lot."
+    EMA "Your pretty funny you know that. Here you can take this."
+    "She handed me a small candy. It was wrapped in red wrapping paper\nand it was circular shaped."
+    $ inventory.append("Red Candy")
+    "The elevator dinged open revealing a parking garage."
+    hide ema default
+    "The garage was mainly empty aside from two stands to the left\nthere was someone dressed as a knight and to the right someone was dressed in a red hood."
+    "Both of these people made me uneasy, as I go to examine them further\nI hear the same voice from before behind me"
+    show ema default at right
+    EMA "I wouldn’t worry too much about these two, they have been through a lot."
+    "She walks towards the man in armor. I follow closely behind her,\nshe talks to the man in armor."
+    hide ema default
+    show knight default at center
+    "His armor shines in the light almost too bright\nits shine contrasting the painted on pastel background behind him."
+    "He is active in conversation engaging with the girl from before\nhe hands her a pack of cigars and pistol ammunition."
+    "Refocusing back on him his most notable feature being his hands.\nHis hands seem to unusually contort at the wrists\nand his hands are stuck in twisted positions"
+    "almost like his hands have no bones at all.\nHe uses one hand to push the other hand back into place\nand they snap together like lego pieces."
+    "The girl takes the stuff on the table and he waves goodbye to her."
+    BEN "I would like to order a weapon for today’s deployment"
+    KNIGHT "What was that you said again."
+    BEN "I repeat his question"
+    KNIGHT "I will put in a order for you it should be done before your mission starts."
+    "He flips a small switch and a tube comes down from the ceiling.\nHe takes out a small paper and asks"
+    KNIGHT "So what kind of weapon do you want to use?"
+    menu choice_of_weapons_alone2: # Adjusted menu name for uniqueness
+        "Pistol  ":
+            $ player_weapon_choice = "Pistol"
+            jump process_weapon_choice_alone2 # Jump to unique label
+        "Rifle  ":
+            $ player_weapon_choice = "Rifle"
+            jump process_weapon_choice_alone2
+        "Shotgun  ":
+            $ player_weapon_choice = "Shotgun"
+            jump process_weapon_choice_alone2
+
+label process_weapon_choice_alone2: # Unique label
+    KNIGHT "Good choice, I wouldn’t personally go for that one but oh well."
+    "He places the paper back in the tube and flicks a switch.\nI watch as the paper quickly goes up into the unknown."
+    KNIGHT "Anything else?"
+    BEN "..."
+    "he than grabs something from his pocked, he puts it in his ear\nupon further inspection I realize it is headphones.\nHe seems to go back into his own world as his eyes glaze over\nand the music starts playing in his hear."
+    hide knight default
+    "I look to the right and see that the lady also has moved onto that stand,\nsomething seems wrong with the man at the stand."
+    show red_hood default at center
+    show ema default at left
+    "He is in a red hood but there is something perduring out of his face.\nI begin to panic in thought a bit but I remember what the girl from earlier told me,\nshe did not want me to think too much about it so I will take her advice."
+    "I take a deep breath and I wait in line behind her."
+    "I see the hooded man turn around revealing the back of his garments\nhis hood hides his face from full view he grabs an object from a shelf in his stand\nand asks the girl"
+    RED_HOOD "Would you like today’s fortune?"
+    EMA "..."
+    RED_HOOD "Todays fortune foretells some come complications,\nyou best stay in that computer room of yours.."
+    "She seemingly ignores him and walks off"
+    hide ema default
+    BEN "I would like to put in a order for a new uniform."
+    RED_HOOD "I know, that lady already told me."
+    BEN "How did she know!"
+    RED_HOOD "That is not for me to say, maybe she just had a hunch"
+    "he tells me as he walks into the back of his stand.\nI stand there alone in silence he eventually comes back\nwith a folded up freshly ironed uniform."
+    $ inventory.append("New Uniform")
+    "He places the uniform ontop of the projector I am holding\nadding more weight to the already heavy load I am carrying."
+    "I head with both the projector and uniform in hand to the bathroom."
+    hide red_hood default
+    hide ben_neutral
+
+    scene bg_main_desk_area # Placeholder for bathroom
+    show ben_neutral at center # Changing
+    "I enter an empty stall and put the projector on the floor.\nThe giant machine standing there First my shirt comes off than my pants fall down,\nI grab the new uniform feeling how it was perfectly"
+    "the one from this morning falling on top of the projector.\nI feel as the stiff fabric stretches with my skin as I pull my new pants up\nthe pants almost being too big for me if it wasn’t for the belt holding them in place."
+    "I feel the shirt slip on next as I slide it down my muscular body\nlooking in the mirror I see myself and the broken projector below.\nI reflect on my life choices as I stare at my reflection everything that lead me up to this moment."
+    "I feel the polyester touch across my body as it rigidly comes into place.\nNext comes on the shoes they are heavy put reliable\nI than grab my helmet putting it on my head"
+    "seeing the pointy metal come out of the top I think to myself it may be able to be used as a tool."
+    "I than take one last look at myself in the mirror and leave the changing room."
+    hide ben_neutral
+
+    scene bg_elevator # Back to garage
+    show ben_neutral at center # In new uniform, carrying projector
+    "As I leave the bathroom I see the room still empty no one to by seen,\nI quickly pick up my old uniform and place it on top of the projector,\nI begin walking towards the staging area of the mission."
+    "As I walk out of the room I see the man in the red hood call out to me\nin a still hushed voice although he was shouting."
+    show red_hood default at right
+    "I walk over to him and he offers to hold onto my previous uniform for me."
+    "I think about this and figure It would be best to accept his offer\nhe walks out from behind his stand and takes the folded garment himself\nwithout saying a word and walks into the backroom."
+    hide red_hood default
+    "I stand there for a few seconds before regaining my composure,\nI thank continue on by myself towards the exit door."
+    "Upon arriving outside I see soldiers lined up and I see Samuel talking to the drill Sargent\nI walk up to him"
+    jump outsidewithuniform
+
+label outsidewithuniform:
+    scene bg_landing_zone_generic
+    show ben_neutral at left # In uniform
+    show drill_sarg_talk at center
+    show samuel_normal_pose at right
+    DRI "Everyone is already gathered outside and people are gathering for a very important meeting\nyou will follow me and points will be dedcuted since you are late."
+    BEN "SIR YES SIR"
+    SAM "SIR YES SIR"
+    "and we follow him outside to the landing zone.\nThere are 5 ospery ships outside and soldiers lined up in rows."
+    "I quickly head towards my platoon and stand in position.\nAs i stand at the landing zone as a osprey lands,\nI look to the left to see samuel smiling and starting at the ospery,"
+    "looking right I see the sargent standing firm looking determined.\nThe drill sargent speaks pointing to me"
+    DRI "Dirtbag, you may have proven yourself in fixing that projector\nbut this will be the real test."
+    "The wind from the ospery causes me to put my hands up to cover my eyes from the sheer force of it."
+    DRI "This mission may be the last one you go on."
+    DRI "I will be staying here, it is your problem now"
+    "walking off."
+    hide drill_sarg_talk
+    hide samuel_normal_pose
+    "As he leaves I look back to the center the osprey a sargent walks downs\nthe retractable stairs sizing up everyone."
+    show lt_stern at center
+    LT "We have a serious sitution on our hands."
+    LT "The LZ will be hot by the time of arrival 30 mikes.\nOnce you reach the landing zone you will secure it and evacuate any non combatince\nas you match your to point alpha."
+    LT "Point alpha is a residential complex were your main target designated as the nest.\nIs there any questions?"
+    LT "Good, *points to benjerman* make sure you bring that projector,\nit is essechial it gets dilvered to the nest"
+    BEN "Yes sir!"
+    "The drill sargent directs us all onto multiple opserys\nme and samuel are split up for the first time in awhile."
+    "I almost start to worry about but than I calm\nI don't really care how he holds up on his own\nI sit down on my seat it feels nice and coushiny."
+    hide ben_neutral
+    hide lt_stern
+    scene bg_osprey_interior_generic
+    show ben_sitting at left
+    "The first time I have sat down since the inital meeting.\nThe lutenent jumps onto the ship i feel it shake a bit.\nI feel a tap on my sholder and look to my right."
+    show bagman_default at center
+    "I get startled as I see someone with a bag on there head sitting next to me."
+    BAG "y-you forgot your weapon a-and your uniform"
+    BEN "Huh?"
+    "he turns around hiding his already hidden face with his hands."
+    BAG "..."
+    BEN "Why the hell are you wearing a bag of your head and not a helmet.\nTake that off,"
+    "I reach for his bag and he slaps my hand saying"
+    BAG "Don't touch that."
+    "I figure it is best to not continue my advances to unmask him."
+    LT "Is there a problem soldier."
+    BEN "Yes sir! This projector is still broken sir!"
+    LT "Well shit! You better hope their is a mechanic at the LZ."
+    BEN "What if there isn’t?"
+    LT "Well that is just too bad you will have to repair it yourself in a live fire zone,\ngood luck maggot."
+    "I feel heat in my lap looking down I see the projector is oddly warm.\nAs I look down at the projector on my lap I notice a small part of it moving\nas the lutenent speaks up"
+    LT "We have a very important mission on our hands,\nmultiple undislosed beams of energy have began etruding from the earth.\nThese beams seems to be eminating enrgy capable of blocking out radio and microwaves"
+    LT "and have been classfied as a cognitohazard.\nYou will be provided protective glasses and gear cabable of blocking out most of the harmful effects.”"
+    "As he talks I put my hand trying to stop the small part from moving,\nI pull back instinctively as I feel a cut on my finger,\nit seems the part that was moving was sharp as he continues."
+    LT "There are multiple power outages and unkowns when we arrive near the landing zone."
+    "A loud screech is heard from the projector and a red light is projected out of it."
+    "The lieutenant runs over to me grabbing the screeching projector.\nHe says something to me but the sound is way too loud for me to make out what he is saying."
+    "He quickly brings the projector into the front of the osprey\nand the sound is muffled but still clear behind the door\nafter a few minuets a loud spark is heard and the sound stops."
+    "He walks back into the room side eyeing me and says"
+    LT "Well it seems like you DID fix the projector.\nMaybe you are not as useless as you claim to be.\nToo bad the spark plug is burnt out."
+    LT "The operation will be designated as operation flashpoint\nthis operation will come in three phases our batalltion has been designated as delta 9 or DT9 for short."
+    LT "We will be working in collaberation with another batalltion designated Nu-7.\nDoing a radiowave anylisis we were able to determine the central location of the main energy sources."
+    BAG "W-what was that."
+    "His voice is so low I almost did not notice him, nevertheless I answer with"
+    BEN "I will tell you later"
+    LT "Our main priortiy is to capture and secure the suspected perpetrator of this incident.\nLooking at your tactical map we will enter from the side windows on the second floor"
+    LT "while team delta will enter through the side and main entrances.\nAs you will be in two groups of three you will recommended to form a echelon right formation\nbut if the situation calls for it you may break formation."
+    LT "I and the other teams lutenent will stand gaurd outside while you breach and clear the rooms.\nIt will be mandatory during this section to wear the protective gear provided to you,\nthere is no telling what can await you inside that house."
+    "I try to focus on something else to calm this madness\nI look to my side for my sidearm and realize, I never got any weapon."
+    "I think about if I should tell this to the lutient\nbut I already caused so much trouble for him already."
+    "As I deliberate on if I should my thought is interrupted as he says"
+    LT "Our targets details are classfied however it is imperative that we capture the target alive\nas he is the key to solving all of this.\nFor any other unautherized personal a shoot on sight policy"
+    LT "has been vetted and put in place by the ethics commite.\nOther organizations will be working closely with us on this mission\nso the policy is only autherized within 30ft of the targets location."
+    LT "I can not stress the importance of capturing the target alive,\nYour secondary objectives are securing important personal and eliminating all unkown threats in the area."
+    LT "The other phases of the plan will be relayed to you once the main objective is complete,\ndo I have any questions?"
+    "I look down on my empty lap and look back up,\nI see bagman give me a quick glance than look back up at the lieutenant."
+    "He looks at me and chuckles he says"
+    LT "You will get the projector and sidearm back don’t worry,\nI will add some straps to it so you can wear it on your back.."
+    "The Osprey flies on..."
     return
 
-label mission_briefing:
-    # Assuming the projector is fixed and Ben is with Samuel (or alone if Samuel left in the intelligence roll path)
-    scene bootcampinsideprojectorroomstartm
-    show ben idle at left
-    # Show Samuel if he's supposed to be here
-    if "samuel" in renpy.get_showing_tags(): # Check if Samuel was shown before the jump
-        show samuel redbook at right
-        SAM "Alright,"
-        "Samuel says, picking up the fixed projector."
-        SAM "Should we get going? We need to get ge-"
-    else:
-        "I pick up the fixed projector, ready to report back."
-
-    # Drill Sergeant enters
-    play sound "door_open.ogg"
-    show sadsargtalk at center with moveinright
-    DRI "What the hell are you still doing here, maggots?"
-    if "samuel" in renpy.get_showing_tags():
-        DRI "Did you fix the projector?"
-    else:
-        DRI "Did {i}you{/i} fix the projector?"
-
-    BEN "Sir, we just-"
-    DRI " Everyone is already gathered outside! People are gathering for a very important meeting!"
-    DRI "You will follow me, and points will be deducted since you are late!"
-
-    BEN "SIR YES SIR!"
-    if "samuel" in renpy.get_showing_tags():
-        SAM "SIR YES SIR!"
-        hide samuel redbook
-
-    hide ben idle
-    hide sadsargtalk
-    # Transition outside
-    scene bg landing_zone
-    # Narrate movement
-    "We follow him outside to the landing zone. There are five Osprey ships outside, rotors kicking up dust, and soldiers lined up in rows."
-    "I quickly head towards my platoon and stand in position."
-    show ben idle at center
-    play sound "osprey_nearby.ogg" loop volume 0.6
-
-    "As I stand at the landing zone, an Osprey lands nearby, the downdraft buffeting us."
-    # play sound "osprey_landing.ogg"
-    "I look to the left to see Samuel smiling and staring at the Osprey."
-    # show samuel chill at left
-    "Looking right, I see the Sergeant standing firm, looking determined."
-    show sadsargtalk at right
-
-    DRI " Dirtbag! You may have proven yourself fixing that projector, but this will be the real test."
-    "The wind from the Osprey causes me to put my hands up to cover my eyes from the sheer force of it."
-
+label outsidewithoutuniform:
+    scene bg_landing_zone_generic
+    show ben_neutral at left
+    show drill_sarg_talk at center
+    DRI "Everyone is already gathered outside and people are gathering for a very important meeting\nyou will follow me and points will be dedcuted since you are late."
+    BEN "SIR YES SIR"
+    "and we follow him outside to the landing zone.\nThere are 5 ospery ships outside and soldiers lined up in rows."
+    "I quickly head towards my platoon and stand in position.\nAs i stand at the landing zone as a osprey lands,\nI look to the left to see samuel smiling and starting at the ospery,"
+    "looking right I see the sargent standing firm looking determined.\nThe drill sargent speaks pointing to me"
+    DRI "Dirtbag, you may have proven yourself in fixing that projector\nbut this will be the real test."
+    "The wind from the ospery causes me to put my hands up to cover my eyes from the sheer force of it."
     DRI "This mission may be the last one you go on."
-    DRI " I will be staying here. It is your problem now."
-    hide sadsargtalk with moveoutright
-
-    "As he leaves, I look back to the center. A Lieutenant walks down the retractable stairs of the Osprey, sizing everyone up."
-    show lt stern at center # Use a stern pose if available
-
-    LT "We have a serious situation on our hands."
-    LT "The LZ will be hot by the time of arrival. Thirty mikes. Once you reach the landing zone, you will secure it and evacuate any non-combatants as you match your way to Point Alpha."
-    LT "Point Alpha is a residential complex where your main target, designated 'The Nest', is located."
-    LT "Is there any questions?"
-    pause 1.0
-    LT "Good." 
-    LT " Make sure you bring that projector. It is essential it gets delivered to The Nest."
-    BEN "Yes, sir!"
-
-    # Boarding the Osprey
-    hide ben idle
-    # hide samuel chill
-    hide lt stern
-    scene bg osprey_interior
-    play sound "osprey_interior_hum.ogg" loop volume 0.7
-    stop sound
-
-    "The Lieutenant directs us all onto multiple Ospreys. Samuel and I are split up for the first time in a while."
-    "I almost start to worry about him, but then I calm myself. I don't really care how he holds up on his own."
-    "I sit down on my seat; it feels nice and cushiony. The first time I have sat down since the initial meeting."
-    show ben sitting at left
-
-    "The Lieutenant jumps onto the ship; I feel it shake a bit."
-    show lt stern at right
-
-    "I feel a tap on my shoulder and look to my right."
-    show bag sitting at center
-    BEN " What the hell?"
-    BAG "Y-you forgot your weapon... a-and your uniform."
+    DRI "I will be staying here, it is your problem now"
+    "walking off."
+    hide drill_sarg_talk
+    "As he leaves I look back to the center the osprey a sargent walks downs\nthe retractable stairs sizing up everyone."
+    show lt_stern at center
+    LT "We have a serious sitution on our hands."
+    LT "The LZ will be hot by the time of arrival 30 mikes.\nOnce you reach the landing zone you will secure it and evacuate any non combatince\nas you match your to point alpha."
+    LT "Point alpha is a residential complex were your main target designated as the nest.\nIs there any questions?"
+    LT "Good, *points to benjerman* make sure you bring that projector,\nit is essechial it gets dilvered to the nest"
+    BEN "Yes sir!"
+    "The drill sargent directs us all onto multiple opserys\nme and samuel are split up for the first time in awhile."
+    "I almost start to worry about but than I calm\nI don't really care how he holds up on his own\nI sit down on my seat it feels nice and coushiny."
+    hide ben_neutral
+    hide lt_stern
+    scene bg_osprey_interior_generic
+    show ben_sitting at left
+    "The first time I have sat down since the inital meeting.\nThe lutenent jumps onto the ship i feel it shake a bit.\nI feel a tap on my sholder and look to my right."
+    show bagman_default at center
+    "I get startled as I see someone with a bag on there head sitting next to me."
+    BAG "y-you forgot your weapon a-and your uniform"
     BEN "Huh?"
-    "He turns away, hiding his already hidden face with his hands."
-    BEN " Why the hell are you wearing a bag on your head and not a helmet? Take that off!"
-    # Player reaches for the bag
-    "I reach for his bag..."
-    play sound "slap.ogg"
-    BAG "Don't touch that!"
-    BEN " Best not to push it..."
-
-    LT "Is there a problem, soldier?"
-    BEN "Yes sir! I do not have my weapon or my uniform!"
-    LT " We are behind schedule already! You will have to make do with what you have!"
-    BEN "But I have nothing!"
-    LT "Well, that is just too bad! You will have to suck it up!"
-    "I feel someone put something heavy on my lap. Looking down, I see a pistol."
+    "he turns around hiding his already hidden face with his hands."
+    BEN "Why the hell are you wearing a bag of your head and not a helmet.\nTake that off,"
+    "I reach for his bag and he slaps my hand saying"
+    BAG "Don't touch that."
+    "I figure it is best to not continue my advances to unmask him."
+    LT "Is there a problem soldier."
+    BEN "Yes sir! I do not have my weapon or my uniform."
+    LT "We are behind schedule already so you will have to make due with what you have."
+    BEN "But i have nothing!"
+    LT "Well that is just too bad you will have to suck it up!\nI will read out your orders too."
+    LT "Do you understand maggot!"
+    "I feel someone put something on my lap lap looking down I see a pistol."
     $ inventory.append("Pistol")
-    $ renpy.notify("Pistol added to inventory.")
-    LT "I will read out your orders too. Do you understand, maggot?!"
-    BEN " SIR YES SIR!"
+    LT "I said DO YOU UNDERSTAND MAGGOT."
+    BEN "SIR YES SIR."
+    "As I look down at the gun on my lap the lutenent speaks up"
+    LT "We have a very important mission on our hands,\nmultiple undislosed beams of energy have began etruding from the earth.\nThese beams seems to be eminating enrgy capable of blocking out radio and microwaves"
+    LT "and have been classfied as a cognitohazard.\nYou will be provided protective glasses and gear cabable of blocking out most of the harmful effects.”"
+    "As he talks I hold the weapon in my lap feeling the tightness of the grip,\nfeeling each bump and indent on the gun.\nI move my hand to the release as he continues."
+    LT "There are multiple power outages and unkowns when we arrive near the landing zone.\nThe operation will be designated as operation flashpoint\nthis operation will come in three phases our batalltion has been designated as delta 9 or DT9 for short."
+    LT "We will be working in collaberation with another batalltion designated Nu-7.\nDoing a radiowave anylisis we were able to determine the central location of the main energy sources."
+    "The magazine falls out of the gun onto my lap I pick it up and look inside\nseeing all the bullets that will eventually be used in this gun.\nI slowly slot the magazine back into the gun."
+    LT "Our main priortiy is to capture and secure the suspected perpetrator of this incident.\nLooking at your tactical map we will enter from the side windows on the second floor"
+    LT "while team delta will enter through the side and main entrances.\nAs you will be in two groups of three you will recommended to form a echelon right formation\nbut if the situation calls for it you may break formation."
+    LT "I and the other teams lutenent will stand gaurd outside while you breach and clear the rooms.\nIt will be mandatory during this section to wear the protective gear provided to you,\nthere is no telling what can await you inside that house."
+    "I move my hand upwards slowly and rhythmically feeling the stock\nand eventually the whole cylinder of the gun, there are many guns like this here but this one is mine.\nI cock back the gun slowly. as he says"
+    LT "Our targets details are classfied however it is imperative that we capture the target alive\nas he is the key to solving all of this.\nFor any other unautherized personal a shoot on sight policy"
+    LT "has been vetted and put in place by the ethics commite.\nOther organizations will be working closely with us on this mission\nso the policy is only autherized within 30ft of the targets location."
+    LT "I can not stress the importance of capturing the target alive,\nYour secondary objectives are securing important personal and eliminating all unkown threats in the area."
+    LT "The other phases of the plan will be relayed to you once the main objective is complete,\ndo I have any questions?"
+    "I leave my gun on my lap and look back up,\nI see bagman give me a quick glance than look back up at the lieutenant.\nEveryone looking at the lieutenant"
+    "The journey continues..."
+    return
+label example_intelligence_check:
+    $ base_chance = 30
+    $ skill_level = stats["intelligence"]["level"]
+    $ skill_name = "intelligence"
+    $ total_bonuses = 5 # Example bonus
 
-    "As I look down at the gun on my lap, the Lieutenant speaks up."
-    LT "We have a very important mission on our hands. Multiple undisclosed beams of energy have begun extruding from the earth. These beams seem to be emanating energy capable of blocking out radio and microwaves and have been classified as a cognitohazard."
-    LT "You will be provided protective glasses and gear capable of blocking out most of the harmful effects.”"
+    "You attempt a difficult task requiring sharp wits."
+    call screen roll_screen(base_chance, skill_level, skill_name, total_bonuses)
 
-    "As he talks, I hold the weapon in my lap, feeling the tightness of the grip, feeling each bump and indent on the gun."
-    "I move my hand to the release as he continues."
-
-    LT "There are multiple power outages and unknowns when we arrive near the landing zone. The operation will be designated as Operation Flashpoint. This operation will come in three phases. Our battalion has been designated as Delta 9, or DT9 for short."
-    LT "We will be working in collaboration with another battalion designated Nu-7. Doing a radiowave analysis, we were able to determine the central location of the main energy sources.”"
-
-    "The magazine falls out of the gun onto my lap."
-    play sound "pistol_mag_out.ogg"
-    "I pick it up and look inside, seeing all the bullets that will eventually be used in this gun."
-    "I slowly slot the magazine back into the gun."
-    play sound "pistol_mag_in.ogg"
-
-    LT "Our main priority is to capture and secure the suspected perpetrator of this incident. Looking at your tactical map, we will enter from the side windows on the second floor while Team Delta will enter through the side and main entrances."
-    LT "As you will be in two groups of three, you are recommended to form an echelon right formation, but if the situation calls for it, you may break formation."
-    LT "I and the other team's Lieutenant will stand guard outside while you breach and clear the rooms. It will be mandatory during this section to wear the protective gear provided to you. There is no telling what can await you inside that house.”"
-
-    "I move my hand upwards slowly and rhythmically, feeling the stock and eventually the whole cylinder of the gun. There are many guns like this here, but this one is mine."
-    "I cock back the gun slowly."
-    play sound "pistol_cock.ogg"
-
-    LT "Our target's details are classified; however, it is imperative that we capture the target alive, as he is the key to solving all of this."
-    LT "For any other unauthorized personnel, a shoot-on-sight policy has been vetted and put in place by the ethics committee. Other organizations will be working closely with us on this mission, so the policy is only authorized within 30ft of the target's location."
-    LT "I cannot stress the importance of capturing the target alive. Your secondary objectives are securing important personnel and eliminating all unknown threats in the area."
-    LT "The other phases of the plan will be relayed to you once the main objective is complete. Do I have any questions?"
-
-    "I leave my gun on my lap and look back up. I see Bagman give me a quick glance, then look back up at the Lieutenant. Everyone is looking at the Lieutenant."
-
-    # The story pauses here, waiting for the next event
-    pause 2.0
-    # Maybe jump to the next label
-    "The Osprey hums onward, carrying us towards the unknown."
-
+    $ roll_success = _return # The roll_screen will return True for success, False for failure
+    if roll_success:
+        "Your intelligence (and maybe that minigame!) helped you succeed!"
+    else:
+        "Despite your efforts, you couldn't quite figure it out."
     return

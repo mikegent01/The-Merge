@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 2225: expected end of line
-    stop sound "osprey_nearby.ogg"
-               ^
+File "game/scripts/HUD.rpy", line 7: 'xysize' is not a keyword argument or valid child of the screen statement.
+    xysize (config.screen_width, config.screen_height)
+          ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon May  5 19:49:15 2025
+Tue Jun 10 19:01:16 2025

@@ -1,3 +1,9 @@
+screen stagecurtians():
+    add "images/bg/overlay/floor.png" size (config.screen_width, config.screen_height)
+   # add "images/bg/overlay/background.png" size (config.screen_width, config.screen_height)
+    add "images/bg/overlay/stage.png" size (config.screen_width, config.screen_height)
+ 
+
 screen HUD():
     key ["j", "J"] action Show("journal_screen")
     
@@ -380,5 +386,3 @@ screen journal_screen():
 
                         else:
                             text "No audio tapes found yet." size 20 align (0.5, 0)
-
-
