@@ -1,82 +1,68 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-While loading <renpy.display.im.Image object ('images/bg/Starting_Room/3/drillsargpickupstart12.png') at 0x00000000095b6730>:
-  File "game/script.rpy", line 1865, in script
-    "And the sweat of the soldiers who just got back from training."
-OSError: Couldn't find file 'images/bg/Starting_Room/3/drillsargpickupstart12.png'.
+While running game code:
+  File "game/script.rpy", line 2003, in script
+    $ renpy.pause(hard=True)
+  File "game/script.rpy", line 2003, in <module>
+    $ renpy.pause(hard=True)
+  File "game/scripts/talk.rpy", line 1, in execute
+    screen speak_to_people():
+  File "game/scripts/talk.rpy", line 1, in execute
+    screen speak_to_people():
+  File "game/scripts/talk.rpy", line 4, in execute
+    if last_label == "start":
+  File "game/scripts/talk.rpy", line 9, in execute
+    imagebutton:
+Exception: Imagebutton does not have a idle image. (auto='images/icons/talk_icon_%s.png').
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 1865, in script
-    "And the sweat of the soldiers who just got back from training."
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 2557, in execute
-    Say.execute(self)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 615, in execute
-    renpy.exports.say(who, what, *args, **kwargs)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1493, in say
-    who(what, *args, **kwargs)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1394, in __call__
-    self.do_display(who, what, cb_args=self.cb_args, dtt=dtt, **display_args)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 1045, in do_display
-    display_say(who,
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\character.py", line 741, in display_say
-    rv = renpy.ui.interact(mouse='say', type=type, roll_forward=roll_forward)
+  File "game/script.rpy", line 2003, in script
+    $ renpy.pause(hard=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 2003, in <module>
+    $ renpy.pause(hard=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1661, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2165, in interact
     repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2818, in interact_core
-    self.draw_screen(root_widget, fullscreen_video, (not fullscreen_video) or video_frame_drawn)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 1352, in draw_screen
-    surftree = renpy.display.render.render_screen(
-  File "render.pyx", line 486, in renpy.display.render.render_screen
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\layout.py", line 900, in render
-    surf = render(child, width, height, cst, cat)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\transform.py", line 957, in render
-    return RenderTransform(self).render(width, height, st, at)
-  File "accelerator.pyx", line 978, in renpy.display.accelerator.RenderTransform.render
-  File "accelerator.pyx", line 413, in renpy.display.accelerator.RenderTransform.render_child
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\image.py", line 513, in render
-    return wrap_render(self.target, width, height, st, at)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\image.py", line 316, in wrap_render
-    rend = render(child, w, h, st, at)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\transform.py", line 957, in render
-    return RenderTransform(self).render(width, height, st, at)
-  File "accelerator.pyx", line 978, in renpy.display.accelerator.RenderTransform.render
-  File "accelerator.pyx", line 413, in renpy.display.accelerator.RenderTransform.render_child
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\anim.py", line 398, in render
-    im = renpy.display.render.render(image, width, height, t, at)
-  File "render.pyx", line 170, in renpy.display.render.render
-  File "render.pyx", line 260, in renpy.display.render.render
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 626, in render
-    return cache.get(self, render=True)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 309, in get
-    surf = image.load()
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 761, in load
-    raise e
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\im.py", line 711, in load
-    filelike = renpy.loader.load(self.filename, directory="images")
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\loader.py", line 672, in load
-    raise IOError("Couldn't find file '%s'." % name)
-OSError: Couldn't find file 'images/bg/Starting_Room/3/drillsargpickupstart12.png'.
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\displayable.py", line 431, in visit_all
+    d.visit_all(callback, seen)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\core.py", line 2687, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/talk.rpy", line 1, in execute
+    screen speak_to_people():
+  File "game/scripts/talk.rpy", line 1, in execute
+    screen speak_to_people():
+  File "game/scripts/talk.rpy", line 4, in execute
+    if last_label == "start":
+  File "game/scripts/talk.rpy", line 9, in execute
+    imagebutton:
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 950, in _imagebutton
+    idle = choice(idle, idle_image, "idle", required=True)
+  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 944, in choice
+    raise Exception("Imagebutton does not have a %s image. (auto=%r)." % (name, auto))
+Exception: Imagebutton does not have a idle image. (auto='images/icons/talk_icon_%s.png').
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Tue Jun 10 16:54:51 2025
+Tue Jun 10 20:26:48 2025

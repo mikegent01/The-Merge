@@ -2533,14 +2533,483 @@ label abandonsamuel:
     menu:
         "Get Army Uniform":
             jump getuniformwithoutsamuel
-        "WIP": # This was "Go fix projector"
+        "Go get screwdriver": # This was "Go fix projector"
             jump fixprojectoralone
+label getuniformwithsamuel_alt:
+    scene bg_military_entrance
+    show ben_neutral at left
+    show samuel_normal_pose at right
+    BEN "Safety always comes first I think to myself\nas I turn around heading towards the supply depo."
+    "I hear Samuel quickly follow behind me as he starts trying to make conversation."
+    SAM "You know the two guys that run the stands where we are headed right?\nI spoke to them this morning they were kind of depressed."
+    SAM "The sarg has been calling them heady and army,\nit seems it caught on with some of the recruits.\nI would try to keep it easy on them."
+    "I mentally take a note of what he says as we pass by a door that takes my attention\nit has a paper that has the text COMPUTER LAB drawn onto it."
+    "The text is slopply written and in blank sharpie marker ink.\nThe paper is ripped a part of it torn off and on the floor."
+    "It also seems like someone or something dented the door.\nThe door is dented enough to see a small crater where the impact was\nit was about as big as my head."
+    "I see that Samuel is getting farther from me and I rush ahead to catch up to him,\nhe seems to notice that I was looking at the door and asks"
+    SAM "Do you want to check it out? I think we still have time."
+    BEN "No, duty is more important.\nMaybe if we ever have down time after this we can go check it out together."
+    SAM "Your loss."
+    "and we both continue.\nThere is a maintenance door that leads into a damp garage area."
 
-label fixprojectoralone:
-    "WIP" # Placeholder as requested
-    # Assuming this path eventually leads to needing a uniform or resolving the projector situation
-    # For now, as per original structure, it might lead to a similar outcome as getuniformwithoutsamuel
-    jump getuniformwithoutsamuel # Adjust if the story for this path is distinct
+    scene bg_elevator
+    show ben_neutral at left
+    show samuel_normal_pose at right
+
+    "The room is pretty empty aside from two stands setup opposite to an elevator.\nThe room is cold and dark only illuminated by the lights of the elevator and stands."
+    "The two people stand there staring into nothingness\nthe sound of a cheerful tune coming from the stand on the left."
+    "The stand on the left labeled weapon stand has a bill board on it\nwith the text “Todays menu” and a list of guns\nranging from small pistols to large machine guns I can only dream of using."
+    "The person manning the stand stands flamboyantly a unmoving smile,\nhis eyes beat red in medieval knight armor,\nits shine contrasting the painted on pastel background behind him."
+    "He seems to be breathing in and out waiting patiently for the next person to arrive at his stand.\nHis most notable feature being his hands."
+    "His hands seem to unusually contort at the wrists\nand his hands are stuck in twisted positions almost like his hands have no bones at all."
+    "I feel a slight tap on my shoulder I choose to remain focused on what lay before me\nlooking to the right there is at least some semblance of normalcy\nas I see a hooded man in all red robes."
+    "The stand looks normal enough until I took a closer look first the red hood masking his face,\nthere is something perduring out of his face.\nIt is way too big to be a simple bump there has to be something more."
+    "Second what’s behind him, its not a pastel wallpaper but products.\nHe has many products behind him some seemingly unrelated to armor.\nThere are some strange devices I am unable to recognize."
+    "Questions pass through my mind like were did he get these from?\nwhy did he choose to display them so publicly?"
+    "Finally that music, it is slow and methodical yet cheery.\nIt is being played from a old stereo, the tone is almost hypnotic\nwith how slow and droning the loop is."
+    "I feel a tap on my shoulder and see Samuel he looks concerned"
+    SAM "Are you alright?\nYou have been staring into space for a few minuets ,\nI can order the armor if your scared."
+    BEN "No, I am fine. I was just a bit spaced out."
+    SAM "You sure, maybe we should go back?"
+    "I ignore his question and decide which stand I should approach."
+    hide samuel_normal_pose
+    show knight default at center
+    KNIGHT "..."
+    "As I approach the man he seems to grow.\nHis shadow looming over me, he has turned into a giant.\nHis armor shining in the low light of the room,"
+    "his smile getting wider, a slight mumble coming from it.\nI was not sure how a face can even look like this he was no man he was a monster."
+    "I feel another tap and finally give in looking behind me\nsamuel put his hands on my shoulder\nalmost as a comforting motion to tell me its going to be okay."
+    show samuel_sholder_pose at right
+    "I take a deep breath and begin the conversation"
+    BEN "I am here to place an order in for a new uniform"
+    "its face doesn’t move he stands there eyes unblinking\nalmost like he is judging me, asking me “why did you come here”."
+    "I almost take a step back but Samuel walks in front of me and loudly states"
+    SAM "my friend is here to pick up a new gun!."
+    "As I realized my mistake from earlier I notice Its eyeballs move quickly\nhoming in on Samuel almost like they are locking on to a new target."
+    "I prepare for impact before I see the monster come to life\nits bright smile turns into a frown, his eyes slowly start blinking and his hands,"
+    "his broken hands move up to his face and pull something out.\nIt is small by I see and hear it quite clearly, a pair of earphones\nthe volume so loud I can make out it was playing some k-pop music."
+    KNIGHT "What was that you said again."
+    "The façade has vanished this was no monster, it was a man a broken tired man."
+    "Samuel repeats his question and the man replies\nin a now defeated still raspy, monotone voice with"
+    KNIGHT "I will put in a order for you\nit should be done before your mission starts."
+    "He flips a small switch and a tube comes down from the ceiling."
+    KNIGHT "So what kind of weapon do you want to use?"
+    menu choice_of_weapons_alt: 
+        "Pistol":
+            $ player_weapon_choice = "Pistol"
+            jump process_weapon_choice # This label was already used, ensure okay or make unique
+        "Rifle":
+            $ player_weapon_choice = "Rifle"
+            jump process_weapon_choice
+        "Shotgun":
+            $ player_weapon_choice = "Shotgun"
+            jump process_weapon_choice
+        "Grenade Launcher (Dream Big)":
+            $ player_weapon_choice = "Grenade Launcher"
+            jump process_weapon_choice
+
+label process_weapon_choice_alt: 
+    KNIGHT "Good choice, I wouldn’t personally go for that one but oh well."
+    "He places the paper back in the tube and flicks a switch.\nI watch as the paper quickly goes up into the unknown."
+    KNIGHT "Anything else?"
+    BEN "..."
+    "he than grabs his headphones and puts them back in his ears."
+    hide knight default
+    hide samuel_sholder_pose
+    show ben_neutral at left
+    show samuel_normal_pose at right
+
+    "Perhaps I was overthinking everything and this would go more smoothly\nthan I have previously thought, as we walk over to the next stand\nI look over to Samuel and he gives me the thumbs up."
+    "We than head over to the next stand [right stand]"
+    show red_hood default at center
+    RED_HOOD "..."
+    "I take a deep breath as I approach the stand, the hooded man seems to notice me\nhis head moves up and he says in a low voice"
+    RED_HOOD "Hello you two, you must be benjamin right?\nToday’s reading said you would come."
+    BEN "Who told you I would come?"
+    RED_HOOD "No matter, I have the order you were about to place ready."
+    "He hands me a new uniform the right one."
+    $ inventory.append("New Uniform")
+    SAM "Alright, lets get you out of that uniform, lets head to the bathroom."
+    BEN "I can’t accept this, what just happened is just too convenient.\nI have an urge a pulse even I need to figure out how this happened no matter the cost."
+    BEN "hold up a second"
+    "I put my hand up to Samuel as I face the man I say"
+    BEN "How the hell did you know what I was going to order!"
+    RED_HOOD "You best not seek knowledge that you are unprepared to learn about\nfor the truth is far worse than what you should know."
+    SAM "..."
+    BEN "Cut the bullshit, who told you?"
+    RED_HOOD "..."
+    BEN "Tell me! Tell me now!"
+    "and sighs he lifts his hood up a tiny amount revealing for only a second\na single horn sticking out of his head before he puts the robe back down."
+    RED_HOOD "Both of you mustn’t come back here for I have revealed some of my inner self."
+    "we both walk backwards my uniform in hand until he are a safe enough distance from him."
+    SAM "we will talk about this later."
+    hide red_hood default
+    hide samuel_normal_pose
+    hide ben_neutral
+
+    scene bg_main_desk_area # Placeholder for bathroom
+    show ben_neutral at center # Changing
+    "Me and Samuel head to the bathroom.\nI tell Samuel to wait outside as I enter the bathroom and begin to undress."
+    "First my shirt comes off than my pants fall down, I grab the new uniform feeling how it was perfectly,\nI feel as the stiff fabric stretches with my skin as I pull my new pants up"
+    "the pants almost being too big for me if it wasn’t for the belt holding them in place,\nI think about how dirty this uniform will get after the mission\nhow this may be the only one time I see it clean and in prefect condition."
+    "I feel the shirt slip on next as I slide it down my muscular body\nlooking in the mirror I see myself and hype myself up for the mission to come."
+    "I feel the polyester touch across my body as it rigidly comes into place.\nNext comes on the shoes they are heavy put reliable\nI than grab my helmet putting it on my head"
+    "seeing the pointy metal come out of the top I think to myself it may be able to be used as a tool."
+    "I than take one last look at myself in the mirror and leave the changing room."
+    hide ben_neutral
+
+    scene bg_elevator # Back to garage
+    show drill_sarg_talk at center
+    show samuel_normal_pose at right
+    "As I leave I see the drill Sargent talking to Samuel outside he looks disappointed"
+    DRI "So you were unable to fix this old thing?\nWell I hope you find a mechanic during the mission because we are getting ready to leave the base."
+    DRI "Follow me outside you two maggots we are already late as is."
+    "His frown worsens"
+    "He looks to Samuel and chuckles"
+    DRI "I know you two like chatting so I am separating you into different squads.\nThis mission is important and I wouldn’t want you to screw this up.\nYou will follow me do you understand"
+    BEN "sir yes sir!"
+    SAM "sir yes sir!"
+    "and begin to follow him outside as the garage door opens up lighting up the room\nwe see a line of soldiers waiting outside all rigid in form waiting for there orders."
+    "We both head into our respective squads…"
+    jump outsidewithuniform
+
+label getscrewdriverwithsamuel_alt:
+    scene bg_military_entrance
+    show ben_neutral at left
+    show samuel_redbook at right
+    BEN "Contemplating my options I figure that I might as well start this pointless search for my screwdriver,\nI try to forget about the screwdriver."
+    "I head to the right as me and Samuel walk to the right he begins to start some small talk"
+    SAM "that book from earlier –"
+    BEN "Yeah don’t worry about it, I won’t tell anyone you read picture books."
+    SAM "Hey! Its not a picture book."
+    "He moves the book back into both hands and begins reading"
+    SAM "There exists two states in this world, the is and isn’t."
+    BEN "I already told you, I won’t tell anyone you don’t need to make this worse than it already is"
+    SAM "Once the lost artifacts are bought into one place…"
+    "I move my hand and close the book myself as we walk and say"
+    BEN "look man, I know that story is probably great and all but we have bigger problems we need to solve.\nLike getting that screwdriver!"
+    SAM "This has to be connected to the mission, those scenes on the projector\nthere similar to what is written in this book."
+    "I dismiss his claim and we both continue onwards towards a giant window."
+
+    scene bg_city_freedom
+    "We both stop a bit and admire the outside, The window reveals open roads going into other buildings\nthat look smaller from here than they actually are."
+    "We can see trucks and military cars driving on the paved cement.\nWe watch as two people in a jeep make hand motions talking to each other\nthere car driving off into other facilities and the unknown."
+    "We can see the calm sky seeing the morning sun come up over the horizon\nthe clouds shapes are uniform."
+    "We are at peace until the ground starts shaking, looking up the clouds disperse and open\na fleet of osprey aircraft come whirling in and head towards the front of the building we are in."
+    "We both can see and feel the aircraft fly above us disrupting the peace."
+    "I hear someone stand, looking behind me I see the turban man from earlier getting up from his seat."
+    hide ben_neutral
+    hide samuel_redbook
+    show sultan_talking_pose at center
+    RAM "You never got my name did you?"
+    "Looking at him with his lit cigar in his mouth he says staring at me with tired eyes"
+    RAM "You can call me the ram."
+    "He takes another puff of his cigar."
+    show ben_neutral at left
+    show samuel_normal_pose at right
+    "Me and Samuel stare at him for a few seconds processing that odd sounding name\nbefore he looks at my hands and looks back up at me and says"
+    RAM "So you really are going to fix that projector bro?"
+    "He gives me a side eye before sitting down again"
+    RAM "I dealt with something similar on a previous mission."
+    "Me and Samuel decide to sit down and listen to his story, he continues"
+    RAM "I was in charge of protecting a audio device, it would play a simple lullaby\nit was meant to calm someone known as the giant .\nMy squad was a team of four, but we lost one during the mission."
+    RAM "The mission started off poorly. We were all ill equipped.\nMe and red hood were in charge of recon while the knight and private p\nwere supposed to play that damn device."
+    SAM "what happened to the other two people"
+    RAM "That is their story to tell not mine."
+    RAM "The damn thing ran out of battery” His face scrunches up and his anger builds\n“The main fucking device meant to save us ran on double a batteries"
+    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as he says"
+    RAM "This place is a joke. I wouldn’t trust that projector for a second."
+    BEN "We were given orders to fix this projector and we will fulfill them"
+    RAM "..."
+    "I watch as the smoke cloud rises from his cigar it slowly rising up and disappearing into the air.\nHe shakes his head"
+    RAM "This is why I stayed in the military, to prevent people like you from dying"
+    "he sighs looking defeated"
+    RAM "This stress has been getting to me recently that this mission may be another failure,\nthat we may not come back alive again."
+    SAM "We won’t let that happen."
+    RAM "I almost started a small fire in the storage room."
+    "Me and samuel look at each other we both have been their earlier today\nand didn’t see him there he continues"
+    RAM "I was smoking a cigar and I tossed it on the floor carelessly\nI was going to let it stay their but once I heard you two trying the combination to the storage room;\nI stomped it out and picked it back up quickly. Luckly, you got the code wrong at first."
+    "I look at Samuel he is slightly embarrassed, ram notices this but does not say anything"
+    RAM "I was able to sneak out of the room but I felt really guilty after about what I have done.\nI don’t know what would have happened if I let it go."
+    RAM "I wasn’t in a good mental state earlier, after this smoke break I cooled off.\nHere hold out your hands"
+    "he says as he swings his bag over and goes through it.”\nI hold out my hands as he asked and he pulls something out of has backpack\nand puts it in my hands he holds it tightly he whispers to me"
+    RAM "Thanks for listening to me bro. This saved me once before maybe it can save you."
+    "and he releases it from his hand and runs off."
+    hide sultan_talking_pose
+
+    "Looking down I see a screwdriver in my hand It seems to have an irregular shape\nit looked like it had two screwdriver heads bolted into it.\nThey were both labeled with white text saying “single” and “double” on it."
+    $ inventory.append("Special Screwdriver")
+    "I look at samuel and he gives me the thumbs up and we both grin."
+    SAM "Lets head back and fix that projector, we wouldn’t want to keep the sargent waiting would we?"
+    "We both lined up with each other as we did many time before\nand I give him the signal to start counting he started counting down from three\nand than we sprinted back to the projector room."
+    "He was in the lead till we reached the staircase, he almost feel and tripped over his own shoelace\nand I caught his hand and helped him back up saying"
+    BEN "Be careful, if we go too fast we can get into trouble."
+    "We both walk slowly down the stairs and start the race back up again after we leave the previous room\nas we reach the projector room we catch our breach I say in between my breaths"
+    BEN "I think….I won."
+    SAM "Not…a….chance..."
+    hide ben_neutral
+    hide samuel_normal_pose
+
+    scene bootcampinsideprojectorroomstartm
+    show ben_idle at left
+    show samuel_normal_pose at right
+    "We both agree that this was a tie and we head over to the projector after some time,\nI look at the projector as a whole seeing both films in there proper places"
+    "I read the labels on the big tape reading the label it says AAXA SCP-A01 on the right gear\nand AAXA SCP-A02 on the left."
+    BEN "I ask Samuel about these"
+    SAM "I have no idea, maybe that is the manufacturing label or something?"
+    "looking down I see the back of the projector there are four nuts.\nI look at the single screwdrivers in my hand and get to work."
+    "I use the screwdriver head labeled single, the first screw comes out fine\nand than the second and the third until the back finally plops out onto the floor."
+    "Looking inside the device I see many gears and knobs some of them labeled.\nAlso a strange compartment requiring two screws to be removed."
+    "These screws were attached to each other, I have never seen anything like this before,\ntheir oblique angels making it hard to find out what to do."
+    "I ask samuel what this is he looks at it confused than asks me for my screwdriver,\nI hand it over it him and he picks it up."
+    "He thinks for a bit than moves the screwdriver head into place\nso the one labeled “double” is in line with the one labeled “single” and presses it in."
+    "As he presses it in there is a moment of silence before it properly clicks\nthe satisfying sound of the click in my ears brightens my mood a bit as he begins to turn it."
+    "Two of the screws pop out at once it seems like they were meant for this specific screwdriver."
+    "I switch the screwdriver back to the single mode and I unscrew the last screw\nthe final piece coming out revealing what looks to be a singular burnt out light bulb."
+    "I begin to unscrew it but I feel a large shock as I pull my hand back\nI notice a small prick in my hand, I pull what looks like a small piece of red glass out"
+    "it seems to be a glass shard as I start to bleed.\nI than watch as the lightbulb suddenly turns on as if it was not broken at all\nit shining a bright red color."
+    "Me and Samuel look at each other as he is holding the unplugged power cord to the projector confused”."
+    "The tapes start spinning and it makes a loud screeching sound\nenough for everyone in the base to hear."
+    "Me and Samuel cover our ears, the sound still blasting through it.\nI watch as samuel quickly goes over and plugs the projector in and the sound stops."
+    "A red light coming from the projector shows on the wall revealing text on a blue background\nit has a title that reads“ The unstable darkness” reading the text below"
+    "“There exists many artifacts in this world lost to time.\nSome are secured and contained while others remain lost or stolen to time."
+    "One of these affects the two states in this world, the is and isn’t.\nCombining both into one making fiction into reality, making the false into the true.”"
+    "I look at the screen staring at it for a few seconds before I hear I click and a screech come from the projector\nas the projector light turns white and the slide changes to the next slide\nrevealing what was in the slideshow from earlier today"
+    "I pick up the screwdriver and pocked it while responding"
+    BEN "Hey I was reading that!"
+    "Samuel is about to respond when we hear footsteps behind us\nlooking back we see the drill Sargent walk into the room smiling"
+    hide ben_idle
+    hide samuel_normal_pose
+    show drill_sarg_very_happy at center
+    DRI "Well you too really did an exceptional job."
+    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    DRI "Your just in time too, we are loading up and preparing to start the mission,\nlets move out you two!."
+    BEN "Sir yes sir!"
+    SAM "Sir yes sir!"
+    "I grunt as I feel a weight put onto my hand as he plops the projector into my now empty hands\nand we follow behind him"
+    jump outsidewithoutuniform
+
+label abandonsamuel_alt:
+    scene bg_outside_projector_room
+    show ben_neutral at center
+    "I look to the left of the door seeing Samuel standing there reading a book,\nI pay less attention to him as I head towards the first place I think a screwdriver would be\nthe storage room."
+    scene bg_storage_room
+    show ben_neutral at center
+    "As I approach the storage room I notice a keypad next to the door\nI head towards the door and examine the keypad."
+    "It has letters on it instead of numbers it seems I am spoused to enter a passphrase."
+    "I quickly look to my left and look to my right and enter a random passphrase I thing in my head\n“Butts2012” after a few seconds of nothingness a buzz and a light red glow appear."
+    "I stand there staring at the keypad watching the light fade back into place\nI laugh a bit to myself realizing that my journey ended as fast as it started."
+    "I am startled as I hear someone walk up to me a soldier must have overheard me laughing."
+    "Looking closer they seem familiar, I realize that they were in the meeting from before,\nit was the person sitting in the front seat."
+    show sultan_talking_pose at right
+    RAM "(if not met yet He reaches his hand out to me “want a cig bro?”\nI am caught off guard by this and instantly deny him)"
+    RAM "So what are you laughing about bro?"
+    "I watch as the smoke comes out of the lit cigar making little clouds go up into the sky\nand I respond with"
+    BEN "I am [still] (if talked before) looking for a specialty screwdriver\ndo you have any idea were one would be?"
+    "He takes the cigar out of his mouth and walks up to the locked door,\nI watch him enter the passcode with ease almost like he has done this many times before"
+    "I follow him inside the storage room and he walks of to a storage draw\nand slides it open revealing what must be a dozen screwdrivers."
+    BEN "I thank him and head back to the projector room to grab the projector to fix,\nonce I come back projector in hand I notice he is still standing in there"
+    "using the closet as a place to hide his smoking habits from the public.\nI look at the projector as a whole seeing both films in there proper places\nI read the labels on the big tape reading the label"
+    "it says AAXA SCP-A01 on the right gear and AAXA SCP-A02 on the left\nlooking down I see the back of the projector there are four nuts."
+    "I look at the screwdrivers laid out before me and get to work picking up the screwdriver that fits,\nthe first screw comes out fine and than the second and the third"
+    "until the back finally plops out onto the floor.\nLooking inside the device I see many gears and knobs some of them labeled.\nAlso a strange compartment requiring two screws to be removed."
+    "These screws were attached to each other, I have never seen anything like this before,\ntheir oblique angels making it hard to find out what screwdriver was needed."
+    "After going through each screwdriver one by one I was unable to find out what was needed."
+    "As I look at the gears trying to find out what was wrong I hear a flick\nalmost like someone is tossing something and than a burst sound."
+    "Looking behind me I see a bright light and than feel a intense heat,\nthe cardboard boxes caught fire!"
+    RAM "It wasn’t me bro, I don’t know how this could have happened."
+    "He then begins to walk out of the room as the fire spreads not bothering to look back."
+    hide sultan_talking_pose
+    "The fire spreads from box to box as if it was a chorus singing a song,\nsome big boxes some small boxes the room was quickly getting hotter\nthe white smoke turned to black smoke and the fire soon engulfed the room."
+    "I rush towards the projector and pick it up.\nI quickly run out of the room behind the man,\nI grab onto his shoulder before the adrenaline wears of and my hand slips"
+    "I have to place the heavy projector back down.\nI kneel down and place it down, I am out of breath…\nI look up at him as he casually lights his next cigar."
+    show sultan_talking_pose at right
+    "The world spins around me as I hear beeping and screaming,\nthe smoke creeping out of the storage cabinet into the main hall."
+    "I hear a slight creak and feel as it starts raining.\nWith the last bit of my energy I stand up in a turtle position\nand cover the projector with my body"
+    "making sure it does not get soaked as I hear the chaos around me,\nI hear footsteps and screaming and feel the intense heat hit my back as the fire spread,\nI start to wince from the pain"
+    "and decide it is best that I should just close my eyes\nand open them back up when this is all over,\nso I do I revert inwards thinking about my life decisions that bought me here."
+    BEN "Maybe if I chose Samuel this wouldn’t have happened.\nMaybe I should have never joined the army.\nMaybe if I took action earlier she-."
+    BEN "I stop myself no, it is my duty to complete this task, this mission.\nI chose to serve this country no one else did, no one else would.\nI take a deep breath and prepare to protect this projector with my life."
+    "The few minutes felt like a blur to me, I feel as if my instincts have kicked in\nand I am unable to move, I feel my legs quiver and the water drip down my shirt."
+    "I stayed in that position making sure the projector didn’t get wet like my life depended on it,\nuntil my legs finally gave in and I fell onto the floor avoiding the projector."
+    "I lay there motionless for many more minuets as I catch my breath,\nI look up at the ceiling the sprinklers turning off\nand than looking straight ahead at the man that caused all of this."
+    "As I regain my energy I sit back up and stand up I slap the cigar out of his hands,\nI step on it no I stomp on it as hard as I can putting out the bud until it is fully out."
+    hide sultan_talking_pose
+    "Looking around I notice a crowd of at least 5 people has gathered around us\nundoubtedly coming here due to the fire."
+    "I ignore them though and return to the projector,\nit seems like the back piece of the projector was still in the room from when I took it off."
+    "However aside from some burn marks on the front the projector seems fine,\nI look inside the room I was just in most of the floor is flooded,\nthere are various tools and trinkets floating in the water and some ash"
+    "the back plate of the projector is nowhere in site\nif I wanted to get it back on id have to search the room for it."
+    "There are two people in fire retardant suits in the room assessing the damages\nthey don’t look particularly happy about it\nand I am sure ill see them again once they see the camera footage of how this happened."
+    show sultan_talk_pose at right
+    RAM "Well bro, if I were you id get your clothes replaced\nand get your weapons the mission starts tonight after all."
+    "I think to myself if this is really the best course of action,\nshould I really listen to the man who almost broke my projector\nand caused this whole debacle in the first place"
+    "or should I go get my uniform so I am at least ready for the mission to begin\nor should I just try to fix this mess I am already and focus on fixing the projector."
+    menu:
+        "Get Army Uniform":
+            jump getuniformwithoutsamuel
+        "Go fix projector": 
+            jump fixprojectoralone_alt
+
+label fixprojectoralone_alt:
+    scene bg_storage_room 
+    show ben_neutral at center # Soaked, possibly holding projector
+    BEN "I decide to stick with my main mission."
+    BEN "Even though my clothes are soaked I need to fix this projector."
+    "I take a deep breath and start focusing.\nI start by doing a damage assessment on the projector."
+    "The front lens seems to be damaged while the back piece is missing,\nmost likely destroyed from the fire."
+    "The internal parts seem damp, there is possible water damage done to this."
+    "The normal screws I took out from earlier are also missing."
+    "I need to go back into the storage room to search for the missing parts."
+    "I mentally take note of all that is missing and prepare to return to the storage room."
+    "I get up from my kneeling stature and I am met with a man in a firefighters uniform\nstaring at me sternly."
+    show q3_firefighter_stern at right # Assuming Q3 is firefighter character, need pose
+    Q3 "So you’re the sergeants lap dog huh?\nI heard a lot about you."
+    "I stare back at him thinking of what I should say next."
+    Q3 "You caused a lot of trouble here you know that?" # Laughing, mocking
+    BEN "What are you talking about?"
+    Q3 "You were in that room when the fire started right?\nYou could have stopped it but you chose to protect that thing."
+    "He points to the projector."
+    BEN "This is an important piece of military equipment, it is vital to the mission." # Annoyed
+    Q3 "You crayon eaters are always too focused on your damn mission!\nPeople could have died in this fire, do you understand that?" # Annoyed
+    "I simply stare back at him confused on what he is talking about\nhe scoffs at me and mumbles something while walking off."
+    hide q3_firefighter_stern
+
+    "I decide to begin my assessment if it is safe enough to enter back into the room\nto try to recover the missing screws and backplate."
+    "I walk past some people and look into the room.\nThe room has another firefighter in it he looks tired he is holding a bucket."
+    "There is some puddles and a lot of burn marks and sut on the floor\nit looks safe enough to enter."
+    "I walk into the entrance of the room my already wet shoes making a squishing sound\ncausing the firefighters to notice me."
+    show q3_firefighter_tired at right # Tired firefighter pose
+    Q3 "Listen I know you went through a lot this morning\nbut you can’t walk around like that."
+    Q3 "I am getting off shift soon so follow me."
+    "He puts the bucket he is holding on the floor and walks out of the room\nguiding me to follow him."
+    hide q3_firefighter_tired
+    "I obliged picking up the projector and following him past the storage room door\ninto what seems to be a maintenance hallway"
+    "my shoes making the same squishing sound as we both walked in silence."
+    "Going through a door I see many rectangular storage devices\nand a stairway to upstairs I see it is blocked by a green container."
+    "The firefighter taps on one of the storage devices\nand it effortlessly opens revealing civilian clothing."
+    show q3_firefighter_default at right # Default firefighter pose
+    Q3 "Take them." # Implied from "tosses them... telling me to take them"
+    "He takes off his firefighter shoes and tosses them to me."
+    "I put down the projector and I take off my wet shoes\nand slip into his shoes, them feeling warm and used."
+    "It felt kind of gross wearing someone else’s clothes\nbut It did feel better than what I was wearing before."
+    "As the man picks up the full rectangular storage container I tell him"
+    BEN "thank you"
+    Q3 "Try not to get these dirty too okay?"
+    "as he walks upstairs with his civilian clothes."
+    hide q3_firefighter_default
+
+    "I pick up my projector and head back to the storage room."
+    scene bg_storage_room # Back in the burnt storage room
+    show ben_neutral at left
+    "As I arrive I can see the crowd has thinned only a few people remain\nthe smoking man he is standing in front of the burnt down room smoking a new cigar."
+    show sultan_talking_pose at right # Assuming SUL is the smoking man
+    "I walk past him and confront him yet again"
+    BEN "Do you have any remorse?"
+    "He takes out the cigar from his mouth and waits a bit\nbefore blowing another puff until he finally says"
+    SUL "Yeah a bit, my mistake man.."
+    "I walk past him and enter the room telling him that he has problems."
+    hide sultan_talking_pose
+    "As I enter the room I head to wear I originally had put the projector\nfinding the spot were it was before strangely dry."
+    "I look my around the room and find 3 of the 4 screws I unscrewed\npicking them up and putting them in my pocket."
+    "I begin to pick up some of the burnt boxes\nthe bottom of them spilling out there contents making the floor an even bigger mess."
+    "Realizing that this was a mistake I put the burnt boxes back down\nand I picked up the mess they made."
+    "I check near the trash can were the fire started\nand find a burnt out cigar soaked in water and something next to it."
+    "I am confused why this screwdriver would be here though but I don’t question it."
+    "After some more time and box moving I eventually find the back plate\nit took a lot of damage from the initial fire\nand it seems like it is unrecoverable."
+    "I leave the backplate on the floor, I am careless as I put it down\nand I hear it fall and hit the floor."
+    "I notice a hidden trap door on the floor where it fell,\nit seems the fire damage burnt off its hinge and opened up this trap door\nrevealing a ladder going deeper into the facility."
+    "I decide to investigate this trap door as it could have more clues.\nI leave the projector upstairs and begin my decent into the underground."
+
+    scene black # Or a dark basement scene
+    "As I travel down the ladder I notice how the light slowly dims\nuntil it is pitch black."
+    "I think to myself as I descend down into the darkness\nthat this was probably a bad idea."
+    "And that I can climb back up before it gets too dark\nbut my exploratory instincts kick in and I continue to descend."
+    "I eventually reach the bottom of the ladder\nthe room pitch black and I can only navigate the room by my other senses."
+    "I begin to feel around the walls of this room\nand I start moving to the right of the ladder I hit another wall more concrete."
+    "Moving to the right again I feel more concrete and glass\nI am careful around the glass as I feel around the section I feel is jagged and sharp\nalmost like the glass is broken."
+    "There is some sort of dry liquid on the glass it is rough and crumbly.\nIf I had a light I would be able to tell what it is."
+    "Moving more across the wall I reach the left side of the room\nfeeling around there is a door on it is a stappled piece of paper."
+    "I rip the paper off of the door and put it in my pocket\nI also feel something hit my foot, it hurts a bit from walking into it\nbut I bend down and put it in my pocket."
+    "I continue following the wall until I reach the ladder again.\nI decide it is time to climb back up."
+
+    scene bg_storage_room # Back to storage room, light returns
+    show ben_neutral at center
+    "Climbing back up I reflect on what I just did\nthinking it was probably not the best idea to go into a pitch dark room\nwithout telling anyone."
+    "But nevertheless the light gets brighter and brighter until I can see again.\nI examine what I put in my pocket first the tool."
+    "The tool looks like a screwdriver.\nI pick up the screwdriver from my pocket and examine it closer."
+    "Looking at it the screwdriver looks weird.\nIt appears to be a duel headed screwdriver,"
+    "this screwdriver having an irregular shape it looked like it had two screwdriver heads bolted into it.\nThey were both labeled with white text saying “single” and “double” on it."
+    "I decided to put it in my backpack perhaps this was the screwdriver I was looking for."
+    $ inventory.append("Special Screwdriver") # Assuming this is the same screwdriver
+    "I check the paper I take out the crumpled paper from my pocket and read it over\nI find it is a timetable log."
+    "It seems like they were doing some experimentation in the laboratory\nand it seems the experiments were failures."
+    "There were many things labeled from testing medical injections\nto testing new equipment I have never even heard of."
+    "All of the equipment listed had a monkeys paw effect to it.\nOne piece of equipment I noticed in particular looked like futuristic power suits"
+    "that were able to withstand 2 metric tons of weight being pressed against it\nbut when the user tried to take it off after sustaining damage\nthere skin would peel off with the suit."
+    "The more damage the more skin peels off.\nAnother thing of note from the papers were that those three letters appeared again\nbut there was different numbers after them SCP."
+    "I think to myself there must be a connection somewhere to these three letters,\nperhaps it has something to do with these experiments."
+    "I pocket the paper thinking that it may be important for later."
+    "I decide to head back to the main room to try to repair the projector."
+    hide ben_neutral
+
+    scene bootcampinsideprojectorroomstartm # Or current projector room scene
+    show ben_neutral at left # Ben brings projector
+    "I pick up the projector and head into the projector room\nI see that the room is vacant aside from a person with a bag on there head sitting there."
+    show bagman_default at right
+    "He stares at me and than stares at the projector.\nThe bagman walks up to me and says"
+    BAG "I-I will help you…\nI don’t want another incident happening."
+    "I lay the projector down and the bagman comes over to me\nI ask before we start"
+    BEN "How can I trust you to not break this thing?"
+    BAG "I-I was a lead researcher…" # Hesitates
+    BEN "You were? What happened."
+    BAG "Before my dismissal I –" # Stops himself
+    BAG "Lets just fix this, here I will help you."
+    "I look at the projector as a whole seeing both films in there proper places\nI read the labels on the big tape reading the label it says AAXA SCP-A01 on the right gear\nand AAXA SCP-A02 on the left."
+    "I ask the bag headed man about these and he perks up responds with"
+    BAG "They are those tapes object class and designation.\nAAXA means it is class c and A01 stands for the first month and day."
+    BAG "You don’t have to worry about them just know\nthe higher the class the more dangerous the object is."
+    "His speech is noticeably less shuddery and more clear\nit seems he is very interested in this topic."
+    "Looking down I see the back of the projector the plate is on the table were I placed it\nthere are three nuts on the floor."
+    "The bagman walks over to me and guides my hand to a component of the projector\nanother panel that is screwed in\nI look at the single screwdrivers in my hand and get to work."
+    "I use the screwdriver head labeled single, the first screw comes out fine\nand than the second and the third until the part finally plops out onto the floor."
+    "He continues while he helps me work"
+    BAG "Each department has their own official designation of these objects\nmany of them produce anomalous properties."
+    BAG "The foundation is trying to standardize these classifications\nbut the dod likes there own way of doing things."
+    "Looking inside the device I see many gears and knobs some of them labeled.\nAlso a strange compartment requiring two screws to be removed."
+    "These screws were attached to each other, I have never seen anything like this before,\ntheir oblique angels making it hard to find out what to do."
+    "I ask bagman what this is he looks at it than asks me for my screwdriver,\nI hand it over it him and he picks it up."
+    "He than moves the screwdriver head into place\nso the one labeled “double” is in line with the one labeled “single” and presses it in."
+    "As he presses it he continues"
+    BAG "These are only given scientists and important people,\nthey are used to keep normal people from accessing this projector."
+    BAG "I don’t even think the sarg knows these are required.\nThey are designed specifically of this SCP."
+    "before it properly clicks the satisfying sound of the click in my ears brightens my mood a bit\nas he begins to turn it."
+    "Two of the screws pop out at once it seems like they were meant for this specific screwdriver.\nHe switches the screwdriver back to the single mode"
+    "and he begins to unscrew the last screw the final piece coming out\nrevealing what looks to be a singular burnt out light bulb."
+    BAG "This bulb is dangerous watch this"
+    "he began to unscrew it but a shock sound is heard and he pulled his hand back\nI notice a small prick in his hand were he held it,"
+    "he pulled out what looks like a small piece of red glass out of his hand\nhe starts to bleed and puts his hand in his mouth."
+    "I than watch as the lightbulb suddenly turns on as if it was not broken at all\nit shining a bright red color."
+    "Me and bagman look at each other before he tells me to cover my ears.\nThe tapes start spinning and it makes a loud screeching sound\nenough for everyone in the base to hear."
+    "The sound still blasting through it.\nI watch as bagman says something and quickly goes over and plugs the projector in\nand the sound stops the screwdriver falling on the floor."
+    "A red light coming from the projector shows on the wall revealing text on a blue background\nit has a title that reads “The unstable darkness” reading the text below"
+    "“There exists many artifacts in this world lost to time.\nSome are secured and contained while others remain lost or stolen to time."
+    "One of these affects the two states in this world, the is and isn’t.\nCombining both into one making fiction into reality, making the false into the true.”"
+    "I look at the screen staring at it for a few seconds before I hear I click and a screech come from the projector\nas the projector light turns white and the slide changes to the next slide\nrevealing what was in the slideshow from earlier today"
+    "I pick up the screwdriver and pocked it while responding"
+    BEN "Hey I was reading that!"
+    "Bagman is about to respond when we hear footsteps behind us\nlooking back we see the drill Sargent walk into the room smiling"
+    hide ben_neutral
+    hide bagman_default
+    show drill_sarg_very_happy at center
+    DRI "Well you two really did an exceptional job."
+    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    DRI "Your just in time too, we are loading up and preparing to start the mission,\nlets move out you two!."
+    BEN "Sir yes sir!"
+    "while he returns to becoming a stuttering mess bagman’s face beat red." # This refers to Bagman
+    "I grunt as I feel a weight put onto my hand as he plops the projector into my now empty hands\nhe tells bagman to go on ahead that he wants to talk to me in private,"
+    "bagman quickly runs out of the room and after a few seconds the sargent tells me"
+    DRI "If I were you, I would stay away from him.\nHe may be smart but he is dangerous\nhe caused a lot of issues for my department in the past."
+    "I think to myself what this could mean while following him out into the outside…"
+    jump getuniformwithsamuel_alt # Adjusted to point to the renamed duplicate
 
 label getuniformwithoutsamuel:
     scene bg_storage_room # Or appropriate scene after fire/decision

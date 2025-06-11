@@ -1,46 +1,90 @@
 screen dynamic_text_screen():
-    frame:
-        xalign 0.5
-        yalign 0.5
-        padding (20, 20)
-       
-        vbox:
-            spacing 10
-           
-            if last_label == "bootcampinsideprojectorroomstart":
-                text "I am inside of a projector room."
-                
-                # Adding direction buttons for the projector room
-                hbox:
-                    spacing 15
-                    textbutton "Look at the projector." action [Hide("dynamic_text_screen"), Show("north_search_dialogue")]
-                    textbutton "Look at the exit door." action [Hide("dynamic_text_screen"), Show("south_search_dialogue")]
-                    textbutton "Look at the people sitting down." action [Hide("dynamic_text_screen"), Show("east_search_dialogue")]
-                    textbutton "Look at the wall" action [Hide("dynamic_text_screen"), Show("west_search_dialogue")]
-                    textbutton "Look at the projector" action [Hide("dynamic_text_screen"), Show("center_search_dialogue")]
-                
-            elif last_label == "home_scene":
+    modal True # Prevents interaction with underlying screens, good for this mode
+
+    if last_label == "start":
+        # --- Clickable icons for "look" actions ---
+        # Note: Adjust xpos, ypos, and icon paths as needed.
+
+        # Look at the projector (on table)
+        imagebutton:
+            idle "images/inventory/inventory_hud/magna.png"
+            hover "images/inventory/inventory_hud/magna_hover.png"
+            focus_mask True
+            xpos 300 ypos 200 # Placeholder: Adjust to projector's position
+            action [Hide("dynamic_text_screen"), Show("north_search_dialogue")]
+            tooltip "Look at the projector"
+
+        # Look at the exit door
+        imagebutton:
+            idle "images/inventory/inventory_hud/magna.png"
+            hover "images/inventory/inventory_hud/magna_hover.png"
+            focus_mask True
+            xpos 700 ypos 500 # Placeholder: Adjust to door's position
+            action [Hide("dynamic_text_screen"), Show("south_search_dialogue")]
+            tooltip "Look at the exit door"
+
+        # Look at the people sitting down
+        imagebutton:
+            idle "images/inventory/inventory_hud/magna.png"
+            hover "images/inventory/inventory_hud/magna_hover.png"
+            focus_mask True
+            xpos 900 ypos 300 # Placeholder: Adjust to people's position
+            action [Hide("dynamic_text_screen"), Show("east_search_dialogue")]
+            tooltip "Look at the people"
+
+        # Look at the wall
+        imagebutton:
+            idle "images/inventory/inventory_hud/magna.png"
+            hover "images/inventory/inventory_hud/magna_hover.png"
+            focus_mask True
+            xpos 100 ypos 300 # Placeholder: Adjust to wall's position
+            action [Hide("dynamic_text_screen"), Show("west_search_dialogue")]
+            tooltip "Look at the wall"
+
+        # Look at the ceiling projector
+        imagebutton:
+            idle "images/inventory/inventory_hud/magna.png"
+            hover "images/inventory/inventory_hud/magna_hover.png"
+            focus_mask True
+            xpos 500 ypos 50 # Placeholder: Adjust to ceiling projector's position
+            action [Hide("dynamic_text_screen"), Show("center_search_dialogue")]
+            tooltip "Look at the ceiling projector"
+
+        textbutton "Cancel Look Mode" action Hide("dynamic_text_screen") xalign 0.5 yalign 0.95
+
+    elif last_label == "home_scene": # Example of how other labels would work (original structure)
+        frame:
+            xalign 0.5 yalign 0.5 padding (20, 20)
+            vbox:
+                spacing 10
                 text "You're back at home. It's quiet and peaceful."
-                # Add home-specific options here
                 hbox:
                     spacing 15
                     textbutton "Kitchen" action [Hide("dynamic_text_screen"), Show("kitchen_dialogue")]
                     textbutton "Bedroom" action [Hide("dynamic_text_screen"), Show("bedroom_dialogue")]
                     textbutton "Living Room" action [Hide("dynamic_text_screen"), Show("living_room_dialogue")]
-                
-            elif last_label == "park_scene":
+                textbutton "Close" action Hide("dynamic_text_screen")
+
+    elif last_label == "park_scene": # Example
+        frame:
+            xalign 0.5 yalign 0.5 padding (20, 20)
+            vbox:
+                spacing 10
                 text "You're at the park. Birds are chirping in the distance."
-                # Add park-specific options here
                 hbox:
                     spacing 15
                     textbutton "Pond" action [Hide("dynamic_text_screen"), Show("pond_dialogue")]
                     textbutton "Playground" action [Hide("dynamic_text_screen"), Show("playground_dialogue")]
                     textbutton "Path" action [Hide("dynamic_text_screen"), Show("path_dialogue")]
-                
-            else:
-                text "You're on your journey. Where to next?"
-               
-            textbutton "Close" action Hide("dynamic_text_screen")
+                textbutton "Close" action Hide("dynamic_text_screen")
+    else:
+        # Fallback for other labels or if no specific UI is defined for "look"
+        frame:
+            xalign 0.5 yalign 0.5 padding (20, 20)
+            vbox:
+                text "You look around."
+                textbutton "Close" action Hide("dynamic_text_screen")
+
 # North search dialogue
 screen north_search_dialogue():
     frame:

@@ -2,9 +2,11 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 185: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
-    "images/bg/Starting_Room/5/projector_on1.png" pause 0.5
-                                                        ^
+The label getuniformwithsamuel is defined twice, at File "game/script.rpy", line 2225:
+label getuniformwithsamuel:
+and File "game/script.rpy", line 2538:
+label getuniformwithsamuel:
+
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Tue Jun 10 19:11:09 2025
+Wed Jun 11 16:54:41 2025
