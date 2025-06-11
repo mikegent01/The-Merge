@@ -1,6 +1,6 @@
 
 
-screen projector_room_people():
+screen speak_to_people():
     frame:
         xalign 0.5
         yalign 0.5

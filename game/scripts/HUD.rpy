@@ -27,7 +27,7 @@ screen HUD():
         yalign 1.0
         idle "images/inventory/inventory_hud/speechbubble.png"
         hover "images/inventory/inventory_hud/speechbubble_hover.png"
-        action Show("projector_room_people")
+        action Show("speak_to_people")
         padding (10, 10, 10, 10)        
     imagebutton:
         xalign 0.755

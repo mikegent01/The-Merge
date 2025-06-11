@@ -123,8 +123,7 @@ image anistagescene:
     xysize (config.screen_width, config.screen_height)
 
 image projector_hum_animation:
-    xysize (config.screen_width, config.screen_height) # Applied to the whole ATL block
-    # Part 1: Initial sequence (plays once)
+    xysize (config.screen_width, config.screen_height) 
     "images/bg/Starting_Room/5/projector_on1.png"
     pause 0.5
     "images/bg/Starting_Room/5/projector_on2.png"
@@ -139,41 +138,36 @@ image projector_hum_animation:
     pause 0.5
     "images/bg/Starting_Room/5/projector_on7.png"
     pause 0.5
-    # Part 2: Looping animation
     Animation(
         "images/bg/Starting_Room/5/projector_on8.png", 0.5,
         "images/bg/Starting_Room/5/projector_on9.png", 0.5,
         "images/bg/Starting_Room/5/projector_on10.png", 0.5,
         "images/bg/Starting_Room/5/projector_on11.png", 0.5,
         "images/bg/Starting_Room/5/projector_on12.png", 0.5,
-        "images/bg/Starting_Room/5/projector_on13.png", 0.5,
-        "images/bg/Starting_Room/5/projector_on12.png", 0.5,  # Was projector_on14.png
-        "images/bg/Starting_Room/5/projector_on13.png", 0.5,  # Was projector_on15.png
-        "images/bg/Starting_Room/5/projector_on12.png", 0.5,  # Was projector_on16.png
-        "images/bg/Starting_Room/5/projector_on13.png", 0.5,  # Was projector_on17.png
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5, 
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5, 
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5, 
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5, 
+        "images/bg/Starting_Room/5/projector_on13.png", 0.5, 
         "images/bg/Starting_Room/5/projector_on18.png", 0.5,
-        "images/bg/Starting_Room/5/projector_on12.png", 0.5   # Was projector_on19.png
+        "images/bg/Starting_Room/5/projector_on12.png", 0.5  
     )
 image dim_overlay:
     xysize (config.screen_width, config.screen_height)
-    Solid("#000000") # Start with a solid black color
-    alpha 0.0       # Start fully transparent
-    linear 1.0 alpha 0.6 # Fade to 60% opacity (equivalent to #00000099) over 1 second
+    Solid("#000000") 
+    alpha 0.0      
+    linear 1.0 alpha 0.6 
 
 image light_turning_on_effect:
-    Solid("#FFFFFF") # White color
+    Solid("#FFFFFF") 
     alpha 0.0
     xysize (config.screen_width, config.screen_height)
-    # Quick ramp up to a bright flash
-    linear 0.05 alpha 1.0 # Flash to full white opacity
-    # Hold flash briefly
-    pause 0.05 # Shorter hold
-    Solid("#ffffff00")
-image dim_overlay_fadeout:
-    xysize (config.screen_width, config.screen_height)
-    Solid("#000000")
-    alpha 0.6
-    linear 1.0 alpha 0.0  
+    linear 0.05 alpha 0.6 
+    pause 0.1
+    linear 0.2 alpha 0.0
+
+
+
 # Chara
 define BAG = Character("Bagman",color="#b66c12")
 define BAL = Character("Baldi")
@@ -295,11 +289,9 @@ init python:
     import os    
     if 'dimming_layer' not in config.layers:
         try:
-            # Insert 'dimming_layer' right after 'master'
             master_index = config.layers.index('master')
             config.layers.insert(master_index + 1, 'dimming_layer')
         except ValueError:
-            # Fallback if 'master' isn't found (shouldn't happen in default Ren'Py)
             config.layers.append('dimming_layer')
 
     def get_filtered_item_count(filter_type):
@@ -1973,40 +1965,29 @@ label start:
     DRI "These tapes right here do contain image data, but they also contain data that will play sounds at high decibels that are able to plug these rifts."
     DRI "I am not to well versed in the science behind it, but I am told if this a tape is played at the center of one of these rifts,"
     DRI "they may close and return to normal.\nTherefore this tape well be designated as a class A important object."
- #   hide drill_sarg_talk 
 
     "As I look at the projector I notice a hitch in it. The projector seems to stall for a second before starting up again."
-  #  show drill_sarg_talk at right
     DRI "We are to deploy to a nearby military base tonight. We won’t close these rifts tonight as we still need a key component to making this technology work."
     DRI "You will be briefed further on this situation during the beginning of the mission tonight."
     DRI "You will also receive authorization to classified information.If you are unable to keep a secret please see me.\nThat is all You are hereby dismissed."
- #   hide drill_sarg_talk
-    show dim_overlay_fadeout
-    hide dim_overlay
+    hide dim_overlay onlayer dimming_layer 
     show light_turning_on_effect 
 
     "As the lights turn on and the room so does the sound, people start talking amongst themselves some personal start leaving the room."
     "I feel a slight tap on my shoulder it is from one of my “friends” private Samuel."
-   # show samuel chill at right
     SAM "Psst hey Benjerman"
     "he then hands me a sheet of paper"
     SAM "I was told you would like this it is a report on what happened,\nthere is some stuff in there that I can’t even understand."
     "I feel the sheet fall on my lap as he places it there."
-  #  hide samuel chill
 
-    "I look up at the projector it hitches again as the drill Sargent messes with the plug trying to unplug it.\nHe moves to back and forth in a wiggling motion but it seems to be stuck."
+    "I look up at the projector it hitches again as the drill Sargent messes with the plug trying to unplug it."
+    "He moves to back and forth in a wiggling motion but it seems to be stuck."
     "It eventually pops out and a spark occurs at the outlet and the projector starts heating up and smoking."
-   # show drill_sarg_sad_talk at right
     DRI "..."
     "The drill sargent looks visibly conserined and than looks directly at me staring at him."
     DRI "You, meatbag your just who I need!"
-  #  hide drill_sarg_sad_talk
-    # Assuming Ben stands or moves here, the original `hide ben sitting` makes sense.
-    # If `satgescene9` already shows Ben, we might not need to explicitly show him again unless his pose changes.
-    show ben neutral at left # Or keep hidden if the scenes dictate his visibility
 
     "I arrive at his location he looks down at me with a scowl."
-  #  show drill_sarg_talk at right
     DRI "This projector is broken, I am not sure how it broke and it looks like your not doing anything of importance\ntherefore your in charge of fixing it"
     "I look at him semi annoyed, he looks back"
     DRI "do you understand what you need to do?"
@@ -2014,14 +1995,12 @@ label start:
     DRI "sound off like you got a pair"
     BEN "SIR YES SIR"
     DRI "good you are dismissed."
- #   hide drill_sarg_talk
 
     "As I turn around I notice two people sitting in there seats,\nprehaps I should talk to one of them and ask them for help."
-    menu:
-        "Talk to the person in the front seat":
-            jump FrontSeat
-        "Talk to the person in the back seat":
-            jump BackSeat
+    show screen HUD
+    show screen tutorial_screen
+    window hide 
+    $ renpy.pause(hard=True)
 
 label FrontSeat:
     scene bootcampinsideprojectorroomstartm # Or appropriate scene
