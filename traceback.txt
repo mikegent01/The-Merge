@@ -1,30 +1,32 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 2003, in script
+  File "game/script.rpy", line 2015, in script
     $ renpy.pause(hard=True)
-  File "game/script.rpy", line 2003, in <module>
+  File "game/script.rpy", line 2015, in <module>
     $ renpy.pause(hard=True)
-  File "game/scripts/talk.rpy", line 1, in execute
-    screen speak_to_people():
-  File "game/scripts/talk.rpy", line 1, in execute
-    screen speak_to_people():
-  File "game/scripts/talk.rpy", line 4, in execute
-    if last_label == "start":
-  File "game/scripts/talk.rpy", line 9, in execute
-    imagebutton:
-Exception: Imagebutton does not have a idle image. (auto='images/icons/talk_icon_%s.png').
+  File "game/scripts/HUD.rpy", line 7, in execute
+    screen HUD():
+  File "game/scripts/HUD.rpy", line 7, in execute
+    screen HUD():
+  File "game/scripts/HUD.rpy", line 32, in execute
+    timer 0.02 repeat True action If(
+  File "game/scripts/HUD.rpy", line 32, in keywords
+    timer 0.02 repeat True action If(
+  File "game/scripts/HUD.rpy", line 34, in <module>
+    Function(update_ben_position_variable), # Call a Python function to update variable
+NameError: name 'update_ben_position_variable' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 2003, in script
+  File "game/script.rpy", line 2015, in script
     $ renpy.pause(hard=True)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\ast.py", line 823, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 2003, in <module>
+  File "game/script.rpy", line 2015, in <module>
     $ renpy.pause(hard=True)
   File "D:\renpy\renpy-8.0.1-sdk\renpy\exports.py", line 1661, in pause
     rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
@@ -48,21 +50,19 @@ Full traceback:
     self.update()
   File "D:\renpy\renpy-8.0.1-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-  File "game/scripts/talk.rpy", line 1, in execute
-    screen speak_to_people():
-  File "game/scripts/talk.rpy", line 1, in execute
-    screen speak_to_people():
-  File "game/scripts/talk.rpy", line 4, in execute
-    if last_label == "start":
-  File "game/scripts/talk.rpy", line 9, in execute
-    imagebutton:
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 950, in _imagebutton
-    idle = choice(idle, idle_image, "idle", required=True)
-  File "D:\renpy\renpy-8.0.1-sdk\renpy\ui.py", line 944, in choice
-    raise Exception("Imagebutton does not have a %s image. (auto=%r)." % (name, auto))
-Exception: Imagebutton does not have a idle image. (auto='images/icons/talk_icon_%s.png').
+  File "game/scripts/HUD.rpy", line 7, in execute
+    screen HUD():
+  File "game/scripts/HUD.rpy", line 7, in execute
+    screen HUD():
+  File "game/scripts/HUD.rpy", line 32, in execute
+    timer 0.02 repeat True action If(
+  File "game/scripts/HUD.rpy", line 32, in keywords
+    timer 0.02 repeat True action If(
+  File "game/scripts/HUD.rpy", line 34, in <module>
+    Function(update_ben_position_variable), # Call a Python function to update variable
+NameError: name 'update_ben_position_variable' is not defined
 
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Tue Jun 10 20:26:48 2025
+Fri Jun 13 12:15:40 2025
