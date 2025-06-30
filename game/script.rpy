@@ -1,5 +1,6 @@
 ﻿# name of the character.
 #extra
+default preferences.text_cps = 30 
 default rng = random.randint(1,100)
 default menu_initialized = False
 transform half_size: 
@@ -18,6 +19,25 @@ image ani1_background:
         "images/bg/Starting_Room/2/satgescene9.png", 99999999.1 # Holds on the last frame
     )
     xysize (config.screen_width, config.screen_height)
+
+default benx = 100
+default beny = 240
+default minbeny = 240
+default maxbeny = 400
+default benwalani = 0
+screen checkKey(): # thanks PeKj you saved me a headache 
+    key "repeat_K_RIGHT" action [SetVariable("benx",benx+25), Jump("walk")]
+    key "repeat_K_LEFT" action [SetVariable("benx",benx-25), Jump("walk")]
+    key "K_SPACE" action [SetVariable("beny",beny-25), Jump("walk")]
+
+label walk:
+    show bwalkidle:
+        xpos benx
+        ypos beny
+    jump loop
+label loop:
+    $ renpy.pause(hard=True)
+    jump loop
 
 image drillsargpickup:
     xysize (config.screen_width, config.screen_height)
@@ -277,6 +297,11 @@ default highlight_position = (-1, -1)
 $ quest_filter = "all"
 $ selected_quest = None
 init python:
+    # To add a sound effect for each letter, like in Undertale,
+    # uncomment the line below and make sure you have a sound file
+    # at the specified path.
+    # config.say_vbs_sound = "audio/sfx/text_sound.ogg"
+
     import webbrowser
     import random   
     import time      
@@ -1999,6 +2024,7 @@ label start:
     "As I turn around I notice two people sitting in there seats, prehaps I should talk to one of them and ask them for help."
     show screen HUD
     show screen tutorial_screen
+    show screen checkKey    
     window hide 
     $ renpy.pause(hard=True)
 

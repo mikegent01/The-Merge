@@ -2,11 +2,9 @@
 errors listed below, and try again.
 
 
-The label getuniformwithsamuel is defined twice, at File "game/script.rpy", line 2225:
-label getuniformwithsamuel:
-and File "game/script.rpy", line 2538:
-label getuniformwithsamuel:
-
+File "game/script.rpy", line 41: expected statement.
+    elif beny < maxbeny:
+              ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Wed Jun 11 16:54:41 2025
+Mon Jun 30 11:57:02 2025
