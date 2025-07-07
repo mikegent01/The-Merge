@@ -44,10 +44,16 @@ screen HUD():
         action Show("dynamic_text_screen")
         padding (10, 10, 10, 10)                   
         #oomfie
-    text "Benjamin":
+    text "Benjamin [benx], [beny]":
         xalign 0.31
         yalign 0.81
         size 30
+        color "#59ff00"
+        outlines [(2, "#000000", 0, 0)]
+    text "Mouse: [renpy.get_mouse_pos()]":
+        xalign 0.31
+        yalign 0.84
+        size 20
         color "#59ff00"
         outlines [(2, "#000000", 0, 0)]
     # Health Icon - Right side

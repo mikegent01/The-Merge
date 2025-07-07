@@ -1,7 +1,7 @@
 screen speak_to_people():
     modal True # Prevents interaction with underlying screens
 
-    if last_label == "start":
+    if last_label == "start" or test_room == 0:
         # --- Clickable icons for "talk" actions ---
         # Note: Adjust xpos, ypos, and icon paths as needed.
 
@@ -10,7 +10,7 @@ screen speak_to_people():
             idle "images/inventory/inventory_hud/speechbubble.png"
             hover "images/inventory/inventory_hud/speechbubble_hover.png"
             focus_mask True
-            xpos 850 ypos 250 # Placeholder: Adjust to front seat person's position
+            xpos 350 ypos 350 # Placeholder: Adjust to front seat person's position
             action [Hide("speak_to_people"), Jump("FrontSeat")]
             tooltip "Talk to person in front"
 
@@ -19,7 +19,7 @@ screen speak_to_people():
             idle "images/inventory/inventory_hud/speechbubble.png"
             hover "images/inventory/inventory_hud/speechbubble_hover.png"
             focus_mask True
-            xpos 850 ypos 350 # Placeholder: Adjust to back seat person's position
+            xpos 10 ypos 350 # Placeholder: Adjust to back seat person's position
             action [Hide("speak_to_people"), Jump("BackSeat")]
             tooltip "Talk to person in back"
 

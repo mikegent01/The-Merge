@@ -20,25 +20,59 @@ image ani1_background:
     )
     xysize (config.screen_width, config.screen_height)
 
+
+default test_room = 0
 default benx = 100
-default beny = 240
-default minbeny = 240
-default maxbeny = 400
-default benwalani = 0
-screen checkKey(): # thanks PeKj you saved me a headache 
-    key "repeat_K_RIGHT" action [SetVariable("benx",benx+25), Jump("walk")]
-    key "repeat_K_LEFT" action [SetVariable("benx",benx-25), Jump("walk")]
-    key "K_SPACE" action [SetVariable("beny",beny-25), Jump("walk")]
+default beny = 450
+default minbeny = 450
+default maxbeny = 5000
+default walk_frame = 4
+default facing_left = False
+default jumping = False
+default jump_velocity = 0
+default gravity = 2
+default jump_strength = -15
+
+screen checkKey():
+    key "repeat_K_RIGHT" action [SetVariable("benx", benx+25), SetVariable("facing_left", False), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
+    key "repeat_K_LEFT" action [SetVariable("benx", benx-25), SetVariable("facing_left", True), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
+    key "keyup_K_RIGHT" action [SetVariable("walk_frame", 4), Jump("walk")]
+    key "keyup_K_LEFT" action [SetVariable("walk_frame", 4), Jump("walk")]
+    key "K_SPACE" action [If(beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)]), Jump("walk")]
 
 label walk:
-    show bwalkidle:
-        xpos benx
-        ypos beny
-    jump loop
-label loop:
-    $ renpy.pause(hard=True)
+    if facing_left:
+        show smolbenwalk:
+            xpos benx
+            ypos beny
+            xzoom -1.0
+    else:
+        show smolbenwalk:
+            xpos benx
+            ypos beny
+            xzoom 1.0
     jump loop
 
+label loop:
+    # Apply gravity and jumping physics
+    if jumping:
+        $ beny += jump_velocity
+        $ jump_velocity += gravity
+        
+        # Check if landed
+        if beny >= minbeny:
+            $ beny = minbeny
+            $ jumping = False
+            $ walk_frame = 4
+            $ jump_velocity = 0
+    # if this isnt uncommented that might be bad 
+    $ beny = max(min(beny, maxbeny), 0)
+    
+    $ renpy.pause(0.1, hard=True)
+    jump loop
+
+image smolbenwalk:
+    "images/char/Benjerman/walk/smolbenwalk[walk_frame + 1].png"
 image drillsargpickup:
     xysize (config.screen_width, config.screen_height)
     "images/bg/Starting_Room/3/drillsargpickupstart1.png"
@@ -297,15 +331,11 @@ default highlight_position = (-1, -1)
 $ quest_filter = "all"
 $ selected_quest = None
 init python:
-    # To add a sound effect for each letter, like in Undertale,
-    # uncomment the line below and make sure you have a sound file
-    # at the specified path.
-    # config.say_vbs_sound = "audio/sfx/text_sound.ogg"
-
     import webbrowser
     import random   
     import time      
     import hashlib
+    import pygame
     import threading   
     import urllib
     import urllib.parse # Make sure this is imported

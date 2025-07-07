@@ -1,15 +1,15 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 42, in script
-    $ SetVariable("beny",beny-25)
+  File "game/script.rpy", line 56, in script
+    label loop:
 Exception: Possible infinite loop.
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/script.rpy", line 42, in script
-    $ SetVariable("beny",beny-25)
+  File "game/script.rpy", line 56, in script
+    label loop:
   File "D:\renpy\renpy-8.0.1-sdk\renpy\execution.py", line 61, in check_infinite_loop
     raise Exception("Possible infinite loop.")
 Exception: Possible infinite loop.
@@ -17,4 +17,4 @@ Exception: Possible infinite loop.
 Windows-10-10.0.26100 AMD64
 Ren'Py 8.2.1.24030407
 The Merge 1.0
-Mon Jun 30 11:56:45 2025
+Mon Jul  7 12:22:05 2025
