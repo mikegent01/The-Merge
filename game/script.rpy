@@ -32,7 +32,6 @@ default jumping = False
 default jump_velocity = 0
 default gravity = 2
 default jump_strength = -15
-
 screen checkKey():
     key "repeat_K_RIGHT" action [SetVariable("benx", benx+25), SetVariable("facing_left", False), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
     key "repeat_K_LEFT" action [SetVariable("benx", benx-25), SetVariable("facing_left", True), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
@@ -51,7 +50,7 @@ label walk:
             xpos benx
             ypos beny
             xzoom 1.0
-    jump loop
+  #  jump loop
 
 label loop:
     # Apply gravity and jumping physics
@@ -69,7 +68,7 @@ label loop:
     $ beny = max(min(beny, maxbeny), 0)
     
     $ renpy.pause(0.1, hard=True)
-    jump loop
+#    jump loop
 
 image smolbenwalk:
     "images/char/Benjerman/walk/smolbenwalk[walk_frame + 1].png"
@@ -220,17 +219,19 @@ image light_turning_on_effect:
     pause 0.1
     linear 0.2 alpha 0.0
 
-
-
+#######chara images 
+image side ben = "images/inventory/inventory_hud/head.png"
+image side sarg = "images/char/head/sarg_head.png"
+image side sam = "images/char/head/sam_head.png"
 # Chara
 define BAG = Character("Bagman",color="#b66c12")
 define BAL = Character("Baldi")
-define BEN = Character("Benjamin")
+define BEN = Character("Benjamin", image = "ben")
 define BON = Character("Bonehead")
 define DAV = Character("David")
 define DEE = Character("Deerik")
 define DOM = Character("Domonic")
-define DRI = Character("Drill Sarg",color="#12a3b6")
+define DRI = Character("Drill Sarg",color="#12a3b6", image = "sarg")
 define JES = Character("Jesus")
 define MAR = Character("Marc")
 default selected_item = None
@@ -242,7 +243,7 @@ define MYS = Character("Mystery Man")
 define PLA = Character("Placeholder")
 define PRE = Character("President")
 define LT = Character("Lieutenant", color="#c4a74a") # Added Lieutenant
-define SAM = Character("Samuel",color="#b66c1261")
+define SAM = Character("Samuel",color="#b66c1261", image = "sam")
 define SIM = Character("Sim")
 define SUL = Character("Sultan",color="#aeadb7")
 define ZUN = Character("Zundamon",color="#B9D08B")
@@ -1441,21 +1442,14 @@ init python:
         else:
             print("[Web Server Control] Server not running or already stopped.")
 
-    # --- Ren'Py Integration ---
-    # Start the server automatically
     start_web_server()
 
-    # Register the stop function to be called when Ren'Py quits
+
     config.quit_action = stop_web_server
 
-    # --- Function to Open HTML Files ---
-    # --- Function to Open HTML Files ---
+
     def open_html(filename_no_ext, last_label=None):
-        """
-        Opens the specified HTML file (without extension) from the 'htmls' directory
-        in the default web browser. Includes the '/game/htmls/' prefix in the URL.
-        Passes the last Ren'Py label as a query parameter.
-        """
+
         if _web_server_instance is None or not _web_server_instance.is_alive():
              print("[Open HTML Error] Web server is not running. Cannot open HTML.")
              renpy.notify("Internal web server is not running.")
@@ -1973,14 +1967,14 @@ label start:
     play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 # Assuming 'boot_camp' is the correct filename
     scene ani1_background with None
     show screen stagecurtians
-
     BEN "I can only feel excitement, as I finally go to sit down."
     scene satgescene9 with None
     BEN "We are going on a real mission, no more training, no more drills. I finally can put my skills to good use."
-    BEN "I have accepted my fate long before I woke up this morning knowing what this job entailed, and I intend to make this mission a success by myself."
+    BEN "I have accepted my fate long before I woke up this morning knowing what this job entailed"
+    BEN "and I intend to make this mission a success by myself."
     scene ani2_background with None
-    "I sit down on a wooden chair." 
-    "The material feeling cheap and hallow, the chair creaking with every movement. I pay attention to the sounds around me, people around me muttering and talking."
+    "I sit down on a wooden chair."
+    "people around me muttering and talking."
     "The dampness from the old moldy brick walls."
     scene drillsargpickup with None
     "And the sweat of the soldiers who just got back from training."
@@ -1989,17 +1983,21 @@ label start:
     "The soldiers all sit in rows of chairs, laid out in a linear sequence, ridged but not sturdy."
     "The room is packed with soldiers and people."
     scene anistagescene
-    "A thud sound is made from the front of the room. A metallic box item is placed on the table, the box having a single lens at the front of it and two films atop of it."
+    "A thud sound is made from the front of the room. A metallic box item is placed on the table"
+    "the box having a single lens at the front of it and two films atop of it."
     scene 0drillsargpickupstart0
-    "The box is dusty; it looks familiar but it is alien to me. As I deliberate on this, a clicking sound, and after a moment the room goes quiet."
+    "The box is dusty; it looks familiar but it is alien to me. As I deliberate on this"
+    "a clicking sound plays, and after a moment the room goes quiet."
     "a soft hum emanating from the machine."
     scene projector_hum_animation 
     "The box whirls to life, it clicks for a second, and then for only a second there was nothing. Another hitch and there was light."
     show dim_overlay onlayer dimming_layer
-    "The light in the room dims, the creaking of the chairs stop, and a familiar figure stands directly infront of the light. Ridged and firm"
+    "The light in the room dims, the creaking of the chairs stop" 
+    "a familiar figure stands directly infront of the light. Ridged and firm"
     "the familiar figure stands at attention,"
     "and another hitch is herd from the box."
-    "The light shines bright as the box shows multiple images of destroyed suburban cities, the images are shown one by one, ending on the statue of libary."
+    "The light shines bright as the box shows multiple images of destroyed suburban cities" 
+    "the images are shown one by one, ending on the statue of libary."
     "The silence is broken when drill sergeant Jones begins speaking he says"
 
   #  show drill_sarg_talk at right
@@ -2012,23 +2010,29 @@ label start:
     DRI "I have full confidence in all of you; you are the best unit in the force and I expect you will be ready."
   #  hide drill_sarg_talk
 
-    "The room remains silent with no one but me moving there eyes from the Sargent as he talks, there is a tense anticipation for what he will say next."
+    "The room remains silent with no one but me moving there eyes from the Sargent as he talks" 
+    "there is a tense anticipation for what he will say next."
    # show drill_sarg_talk at right
     DRI "This box here is a projector, here is of upmost importance, while it may look mundane and normal…"
     "he takes out the tape and a sound begins playing"
     DRI "But These tapes it plays are capable of playing sounds at a higher decibel frequency than humans can hear."
-    DRI "These tapes right here do contain image data, but they also contain data that will play sounds at high decibels that are able to plug these rifts."
+    DRI "These tapes right here do contain image data, but they also contain data that will play sounds at high decibels" 
+    "that are able to plug these rifts."
     DRI "I am not to well versed in the science behind it, but I am told if this a tape is played at the center of one of these rifts,"
     DRI "they may close and return to normal. Therefore this tape well be designated as a class A important object."
 
-    "As I look at the projector I notice a hitch in it. The projector seems to stall for a second before starting up again."
-    DRI "We are to deploy to a nearby military base tonight. We won’t close these rifts tonight as we still need a key component to making this technology work."
+    "As I look at the projector I notice a hitch in it."
+    "The projector seems to stall for a second before starting up again."
+    DRI "We are to deploy to a nearby military base tonight. We won’t close these rifts tonight"
+    "as we still need a key component to making this technology work."
     DRI "You will be briefed further on this situation during the beginning of the mission tonight."
-    DRI "You will also receive authorization to classified information.If you are unable to keep a secret please see me. That is all You are hereby dismissed."
+    DRI "You will also receive authorization to classified information.If you are unable to keep a secret please see me." 
+    "That is all You are hereby dismissed."
     hide dim_overlay onlayer dimming_layer 
     show light_turning_on_effect 
 
-    "As the lights turn on and the room so does the sound, people start talking amongst themselves some personal start leaving the room."
+    "As the lights turn on and the room so does the sound, people start talking amongst themselves"
+    "some personal start leaving the room."
     "I feel a slight tap on my shoulder it is from one of my “friends” private Samuel."
     SAM "Psst hey Benjerman"
     "he then hands me a sheet of paper"
@@ -2043,7 +2047,8 @@ label start:
     DRI "You, meatbag your just who I need!"
 
     "I arrive at his location he looks down at me with a scowl."
-    DRI "This projector is broken, I am not sure how it broke and it looks like your not doing anything of importance therefore your in charge of fixing it"
+    DRI "This projector is broken, I am not sure how it broke and it looks like your not doing anything of importance" 
+    "therefore your in charge of fixing it"
     "I look at him semi annoyed, he looks back"
     DRI "do you understand what you need to do?"
     BEN "yes sir!"
@@ -2054,11 +2059,20 @@ label start:
     "As I turn around I notice two people sitting in there seats, prehaps I should talk to one of them and ask them for help."
     show screen HUD
     show screen tutorial_screen
-    show screen checkKey    
+    show screen checkKey   
+    show smolbenwalk:
+        xpos benx
+        ypos beny
+        xzoom -1.0
+
     window hide 
     $ renpy.pause(hard=True)
 
 label FrontSeat:
+    hide screen HUD
+    hide screen tutorial_screen
+    hide screen checkKey    
+    window hide     
     scene bootcampinsideprojectorroomstartm # Or appropriate scene
     show ben neutral at left
     "Although I much rather do this myself I have no other options, I walk up towards the front seat the man is small in stature the only defining trait about him I can notice is his turban."
@@ -2104,6 +2118,9 @@ label FrontSeat:
     jump OutsideAfterScrewdriverAdvice
 
 label BackSeat:
+    hide screen HUD
+    hide screen tutorial_screen
+    hide screen checkKey    
     scene bootcampinsideprojectorroomstartm
     show ben neutral at left
     "I head towards the backseat, the person in the backseat seems to have something over there head, it looks like a paper bag."

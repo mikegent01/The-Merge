@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/HUD.rpy", line 54: Line is indented, but the preceding text statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
+File "game/script.rpy", line 224: Line is indented, but the preceding image statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
     xalign 0.31
     ^
 
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon Jul  7 12:16:08 2025
+Mon Jul  7 18:03:05 2025
