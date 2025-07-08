@@ -23,6 +23,8 @@ image ani1_background:
 
 default test_room = 0
 default benx = 100
+default minbenx = -50
+default maxbenx = 1300
 default beny = 450
 default minbeny = 450
 default maxbeny = 5000
@@ -50,25 +52,22 @@ label walk:
             xpos benx
             ypos beny
             xzoom 1.0
-  #  jump loop
+    jump loop
 
 label loop:
-    # Apply gravity and jumping physics
     if jumping:
         $ beny += jump_velocity
         $ jump_velocity += gravity
-        
-        # Check if landed
         if beny >= minbeny:
             $ beny = minbeny
             $ jumping = False
             $ walk_frame = 4
             $ jump_velocity = 0
-    # if this isnt uncommented that might be bad 
     $ beny = max(min(beny, maxbeny), 0)
+    $ benx = max(min(benx, maxbenx), minbenx)
     
     $ renpy.pause(0.1, hard=True)
-#    jump loop
+    jump loop
 
 image smolbenwalk:
     "images/char/Benjerman/walk/smolbenwalk[walk_frame + 1].png"
@@ -1687,6 +1686,11 @@ init python:
             "weight": 2,
             "description": "A military grade radio used for communication. Is only able to communicate with military units and HQ."
         },
+        "Classified Mission Sheet": {
+            "type": "tool",
+            "weight": 2,
+            "description": "A sheet I should not have given to me by a friend."
+        },        
         "First aid kit": {
             "type": "consumable",
             "weight": 1,
@@ -1886,6 +1890,8 @@ init python:
                 renpy.sound.play("audio/radio/radio02.mp3")
         elif item == "Laser range finder":
             renpy.notify("Nothing to measure here.")
+        elif item == "Classified Mission Sheet":
+            open_html("001", last_label)
         elif item == "MG41":
             if last_label == "laboratory":
                 renpy.notify("It is not nice to use weapons in the laboratory.")
@@ -1964,6 +1970,9 @@ label minigame:
     return
 label start:
     $ set_room_temperature(72)
+    $ add_item("Classified Mission Sheet")
+    $ inventory.append("Classified Mission Sheet")
+    $ inventory.append("radio")
     play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 # Assuming 'boot_camp' is the correct filename
     scene ani1_background with None
     show screen stagecurtians
@@ -1988,7 +1997,7 @@ label start:
     scene 0drillsargpickupstart0
     "The box is dusty; it looks familiar but it is alien to me. As I deliberate on this"
     "a clicking sound plays, and after a moment the room goes quiet."
-    "a soft hum emanating from the machine."
+    "a soft hum starts emanating from the machine."
     scene projector_hum_animation 
     "The box whirls to life, it clicks for a second, and then for only a second there was nothing. Another hitch and there was light."
     show dim_overlay onlayer dimming_layer
@@ -1997,8 +2006,8 @@ label start:
     "the familiar figure stands at attention,"
     "and another hitch is herd from the box."
     "The light shines bright as the box shows multiple images of destroyed suburban cities" 
-    "the images are shown one by one, ending on the statue of libary."
-    "The silence is broken when drill sergeant Jones begins speaking he says"
+    "the images are shown one by one, ending on the statue of liberty."
+    "The silence is broken when drill sergeant Jones begins speaking "
 
   #  show drill_sarg_talk at right
     DRI "Men, these are the facts as I understand them: approximately 5 hours ago a class A event occurred near Ruckersville Virginia."
@@ -2018,8 +2027,8 @@ label start:
     DRI "But These tapes it plays are capable of playing sounds at a higher decibel frequency than humans can hear."
     DRI "These tapes right here do contain image data, but they also contain data that will play sounds at high decibels" 
     "that are able to plug these rifts."
-    DRI "I am not to well versed in the science behind it, but I am told if this a tape is played at the center of one of these rifts,"
-    DRI "they may close and return to normal. Therefore this tape well be designated as a class A important object."
+    DRI "I am not to well versed in the science behind it, but I am told if this tape is played at the center of one of these rifts,"
+    DRI "they may close and return to normal. Therefore this tape will be designated as a class A important object."
 
     "As I look at the projector I notice a hitch in it."
     "The projector seems to stall for a second before starting up again."
@@ -2040,10 +2049,10 @@ label start:
     "I feel the sheet fall on my lap as he places it there."
 
     "I look up at the projector it hitches again as the drill Sargent messes with the plug trying to unplug it."
-    "He moves to back and forth in a wiggling motion but it seems to be stuck."
+    "He moves it back and forth in a wiggling motion but it seems to be stuck."
     "It eventually pops out and a spark occurs at the outlet and the projector starts heating up and smoking."
     DRI "..."
-    "The drill sargent looks visibly conserined and than looks directly at me staring at him."
+    "The drill sargent looks visibly concerned and than looks directly at me staring at him."
     DRI "You, meatbag your just who I need!"
 
     "I arrive at his location he looks down at me with a scowl."
@@ -2072,7 +2081,7 @@ label FrontSeat:
     hide screen HUD
     hide screen tutorial_screen
     hide screen checkKey    
-    window hide     
+    window show     
     scene bootcampinsideprojectorroomstartm # Or appropriate scene
     show ben neutral at left
     "Although I much rather do this myself I have no other options, I walk up towards the front seat the man is small in stature the only defining trait about him I can notice is his turban."
@@ -2121,6 +2130,7 @@ label BackSeat:
     hide screen HUD
     hide screen tutorial_screen
     hide screen checkKey    
+    window show    
     scene bootcampinsideprojectorroomstartm
     show ben neutral at left
     "I head towards the backseat, the person in the backseat seems to have something over there head, it looks like a paper bag."
@@ -2208,7 +2218,7 @@ label keepsamuel:
     "He is going all over the room making a mess he bumps into me and a loud crash is heard as boxes fall ontop of us."
     "I try to get up but he is too heavy, I annoyingly shout"
     BEN "Your making a mess can you stop!"
-    "He pushes the boxes off of him and looks down at me his face slightly red he says"
+    "He pushes the boxes off of him and looks down at me his face slightly red "
     SAM "I-I took it too far, I just got excited I haven’t done something this fun in a while. I was too forceful I am sorry."
     "He offers me his hand and I accept it as he helps me up."
     BEN "y-yeah why don’t you check out that box over there and I will clean this place."
@@ -2303,7 +2313,7 @@ label getuniformwithsamuel:
     "I hear Samuel quickly follow behind me as he starts trying to make conversation."
     SAM "You know the two guys that run the stands where we are headed right? I spoke to them this morning they were kind of depressed. The sarg has been calling them heady and army,"
     SAM "it seems it caught on with some of the recruits. I would try to keep it easy on them."
-    "I mentally take a note of what he says as we pass by a door that takes my attention it has a paper that has the text COMPUTER LAB drawn onto it."
+    "I mentally take a note of what  as we pass by a door that takes my attention it has a paper that has the text COMPUTER LAB drawn onto it."
     "The text is slopply written and in blank sharpie marker ink. The paper is ripped a part of it torn off and on the floor."
     "It also seems like someone or something dented the door. The door is dented enough to see a small crater where the impact was it was about as big as my head."
     "I see that Samuel is getting farther from me and I rush ahead to catch up to him, he seems to notice that I was looking at the door and asks"
@@ -2382,7 +2392,7 @@ label process_weapon_choice:
     "We than head over to the next stand [right stand]"
     show red_hood default at center
     RED_HOOD "..."
-    "I take a deep breath as I approach the stand, the hooded man seems to notice me his head moves up and he says in a low voice"
+    "I take a deep breath as I approach the stand, the hooded man seems to notice me his head moves up and  in a low voice"
     RED_HOOD "Hello you two, you must be benjamin right? Today’s reading said you would come."
     BEN "Who told you I would come?"
     RED_HOOD "No matter, I have the order you were about to place ready."
@@ -2461,7 +2471,7 @@ label getscrewdriverwithsamuel:
     hide samuel_redbook
     show sultan_talking_pose at center
     RAM "You never got my name did you?"
-    "Looking at him with his lit cigar in his mouth he says staring at me with tired eyes"
+    "Looking at him with his lit cigar in his mouth  staring at me with tired eyes"
     RAM "You can call me the ram."
     "He takes another puff of his cigar."
     show ben_neutral at left
@@ -2476,7 +2486,7 @@ label getscrewdriverwithsamuel:
     SAM "what happened to the other two people"
     RAM "That is their story to tell not mine."
     RAM "The damn thing ran out of battery” His face scrunches up and his anger builds “The main fucking device meant to save us ran on double a batteries"
-    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as he says"
+    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as "
     RAM "This place is a joke. I wouldn’t trust that projector for a second."
     BEN "We were given orders to fix this projector and we will fulfill them"
     RAM "..."
@@ -2491,7 +2501,7 @@ label getscrewdriverwithsamuel:
     "I look at Samuel he is slightly embarrassed, ram notices this but does not say anything"
     RAM "I was able to sneak out of the room but I felt really guilty after about what I have done. I don’t know what would have happened if I let it go."
     RAM "I wasn’t in a good mental state earlier, after this smoke break I cooled off. Here hold out your hands"
-    "he says as he swings his bag over and goes through it.” I hold out my hands as he asked and he pulls something out of has backpack and puts it in my hands he holds it tightly he whispers to me"
+    " as he swings his bag over and goes through it.” I hold out my hands as he asked and he pulls something out of has backpack and puts it in my hands he holds it tightly he whispers to me"
     RAM "Thanks for listening to me bro. This saved me once before maybe it can save you."
     "and he releases it from his hand and runs off."
     hide sultan_talking_pose
@@ -2541,7 +2551,7 @@ label getscrewdriverwithsamuel:
     hide samuel_normal_pose
     show drill_sarg_very_happy at center
     DRI "Well you too really did an exceptional job."
-    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    "He walks up to the projector and unplugs it picking it up as he does, "
     DRI "Your just in time too, we are loading up and preparing to start the mission, lets move out you two!."
     BEN "Sir yes sir!"
     SAM "Sir yes sir!"
@@ -2616,7 +2626,7 @@ label getuniformwithsamuel_alt:
     "I hear Samuel quickly follow behind me as he starts trying to make conversation."
     SAM "You know the two guys that run the stands where we are headed right? I spoke to them this morning they were kind of depressed."
     SAM "The sarg has been calling them heady and army, it seems it caught on with some of the recruits. I would try to keep it easy on them."
-    "I mentally take a note of what he says as we pass by a door that takes my attention it has a paper that has the text COMPUTER LAB drawn onto it."
+    "I mentally take a note of what  as we pass by a door that takes my attention it has a paper that has the text COMPUTER LAB drawn onto it."
     "The text is slopply written and in blank sharpie marker ink. The paper is ripped a part of it torn off and on the floor."
     "It also seems like someone or something dented the door. The door is dented enough to see a small crater where the impact was it was about as big as my head."
     "I see that Samuel is getting farther from me and I rush ahead to catch up to him, he seems to notice that I was looking at the door and asks"
@@ -2695,7 +2705,7 @@ label process_weapon_choice_alt:
     "We than head over to the next stand [right stand]"
     show red_hood default at center
     RED_HOOD "..."
-    "I take a deep breath as I approach the stand, the hooded man seems to notice me his head moves up and he says in a low voice"
+    "I take a deep breath as I approach the stand, the hooded man seems to notice me his head moves up and  in a low voice"
     RED_HOOD "Hello you two, you must be benjamin right? Today’s reading said you would come."
     BEN "Who told you I would come?"
     RED_HOOD "No matter, I have the order you were about to place ready."
@@ -2774,7 +2784,7 @@ label getscrewdriverwithsamuel_alt:
     hide samuel_redbook
     show sultan_talking_pose at center
     RAM "You never got my name did you?"
-    "Looking at him with his lit cigar in his mouth he says staring at me with tired eyes"
+    "Looking at him with his lit cigar in his mouth  staring at me with tired eyes"
     RAM "You can call me the ram."
     "He takes another puff of his cigar."
     show ben_neutral at left
@@ -2789,7 +2799,7 @@ label getscrewdriverwithsamuel_alt:
     SAM "what happened to the other two people"
     RAM "That is their story to tell not mine."
     RAM "The damn thing ran out of battery” His face scrunches up and his anger builds “The main fucking device meant to save us ran on double a batteries"
-    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as he says"
+    "he coughs cigar smoke coming out of his mouth he seems to be less tense than before as "
     RAM "This place is a joke. I wouldn’t trust that projector for a second."
     BEN "We were given orders to fix this projector and we will fulfill them"
     RAM "..."
@@ -2804,7 +2814,7 @@ label getscrewdriverwithsamuel_alt:
     "I look at Samuel he is slightly embarrassed, ram notices this but does not say anything"
     RAM "I was able to sneak out of the room but I felt really guilty after about what I have done. I don’t know what would have happened if I let it go."
     RAM "I wasn’t in a good mental state earlier, after this smoke break I cooled off. Here hold out your hands"
-    "he says as he swings his bag over and goes through it.” I hold out my hands as he asked and he pulls something out of has backpack and puts it in my hands he holds it tightly he whispers to me"
+    " as he swings his bag over and goes through it.” I hold out my hands as he asked and he pulls something out of has backpack and puts it in my hands he holds it tightly he whispers to me"
     RAM "Thanks for listening to me bro. This saved me once before maybe it can save you."
     "and he releases it from his hand and runs off."
     hide sultan_talking_pose
@@ -2854,7 +2864,7 @@ label getscrewdriverwithsamuel_alt:
     hide samuel_normal_pose
     show drill_sarg_very_happy at center
     DRI "Well you too really did an exceptional job."
-    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    "He walks up to the projector and unplugs it picking it up as he does, "
     DRI "Your just in time too, we are loading up and preparing to start the mission, lets move out you two!."
     BEN "Sir yes sir!"
     SAM "Sir yes sir!"
@@ -3074,7 +3084,7 @@ label fixprojectoralone_alt:
     hide bagman_default
     show drill_sarg_very_happy at center
     DRI "Well you two really did an exceptional job."
-    "He walks up to the projector and unplugs it picking it up as he does, he says"
+    "He walks up to the projector and unplugs it picking it up as he does, "
     DRI "Your just in time too, we are loading up and preparing to start the mission, lets move out you two!."
     BEN "Sir yes sir!"
     "while he returns to becoming a stuttering mess bagman’s face beat red." # This refers to Bagman
@@ -3262,7 +3272,7 @@ label outsidewithuniform:
     "As he talks I put my hand trying to stop the small part from moving, I pull back instinctively as I feel a cut on my finger, it seems the part that was moving was sharp as he continues."
     LT "There are multiple power outages and unkowns when we arrive near the landing zone."
     "A loud screech is heard from the projector and a red light is projected out of it."
-    "The lieutenant runs over to me grabbing the screeching projector. He says something to me but the sound is way too loud for me to make out what he is saying."
+    "The lieutenant runs over to me grabbing the screeching projector.  something to me but the sound is way too loud for me to make out what he is saying."
     "He quickly brings the projector into the front of the osprey and the sound is muffled but still clear behind the door after a few minuets a loud spark is heard and the sound stops."
     "He walks back into the room side eyeing me and says"
     LT "Well it seems like you DID fix the projector. Maybe you are not as useless as you claim to be. Too bad the spark plug is burnt out."
@@ -3276,13 +3286,13 @@ label outsidewithuniform:
     LT "I and the other teams lutenent will stand gaurd outside while you breach and clear the rooms. It will be mandatory during this section to wear the protective gear provided to you, there is no telling what can await you inside that house."
     "I try to focus on something else to calm this madness I look to my side for my sidearm and realize, I never got any weapon."
     "I think about if I should tell this to the lutient but I already caused so much trouble for him already."
-    "As I deliberate on if I should my thought is interrupted as he says"
+    "As I deliberate on if I should my thought is interrupted as "
     LT "Our targets details are classfied however it is imperative that we capture the target alive as he is the key to solving all of this. For any other unautherized personal a shoot on sight policy"
     LT "has been vetted and put in place by the ethics commite. Other organizations will be working closely with us on this mission so the policy is only autherized within 30ft of the targets location."
     LT "I can not stress the importance of capturing the target alive, Your secondary objectives are securing important personal and eliminating all unkown threats in the area."
     LT "The other phases of the plan will be relayed to you once the main objective is complete, do I have any questions?"
     "I look down on my empty lap and look back up, I see bagman give me a quick glance than look back up at the lieutenant."
-    "He looks at me and chuckles he says"
+    "He looks at me and chuckles "
     LT "You will get the projector and sidearm back don’t worry, I will add some straps to it so you can wear it on your back.."
     "The Osprey flies on..."
     return
@@ -3345,7 +3355,7 @@ label outsidewithoutuniform:
     LT "Our main priortiy is to capture and secure the suspected perpetrator of this incident. Looking at your tactical map we will enter from the side windows on the second floor"
     LT "while team delta will enter through the side and main entrances. As you will be in two groups of three you will recommended to form a echelon right formation but if the situation calls for it you may break formation."
     LT "I and the other teams lutenent will stand gaurd outside while you breach and clear the rooms. It will be mandatory during this section to wear the protective gear provided to you, there is no telling what can await you inside that house."
-    "I move my hand upwards slowly and rhythmically feeling the stock and eventually the whole cylinder of the gun, there are many guns like this here but this one is mine. I cock back the gun slowly. as he says"
+    "I move my hand upwards slowly and rhythmically feeling the stock and eventually the whole cylinder of the gun, there are many guns like this here but this one is mine. I cock back the gun slowly. as "
     LT "Our targets details are classfied however it is imperative that we capture the target alive as he is the key to solving all of this. For any other unautherized personal a shoot on sight policy"
     LT "has been vetted and put in place by the ethics commite. Other organizations will be working closely with us on this mission so the policy is only autherized within 30ft of the targets location."
     LT "I can not stress the importance of capturing the target alive, Your secondary objectives are securing important personal and eliminating all unkown threats in the area."
