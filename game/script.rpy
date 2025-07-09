@@ -1,31 +1,129 @@
-﻿# name of the character.
-#extra
-default preferences.text_cps = 30 
-default rng = random.randint(1,100)
-default menu_initialized = False
-transform half_size: 
-    zoom 0.5 
+﻿########################
 
-image ani1_background:
-    Animation(
-        "images/bg/Starting_Room/2/satgescene1.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene2.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene3.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene4.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene5.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene6.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene7.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene8.png", 0.1,
-        "images/bg/Starting_Room/2/satgescene9.png", 99999999.1 # Holds on the last frame
-    )
+#  _________ __                 __    ________   _____  ___________.__.__          
+# /   _____//  |______ ________/  |_  \_____  \_/ ____\ \_   _____/|__|  |   ____  
+# \_____  \\   __\__  \\_  __ \   __\  /   |   \   __\   |    __)  |  |  | _/ __ \ 
+# /        \|  |  / __ \|  | \/|  |   /    |    \  |     |     \   |  |  |_\  ___/ 
+#/_______  /|__| (____  /__|   |__|   \_______  /__|     \___  /   |__|____/\___  >
+#        \/           \/                      \/             \/                 \/ 
+
+########################
+default test_room = 0 # this var is debug mode
+default preferences.text_cps = 30  # this controls text speed
+default rng = random.randint(1,100) # this is used to have random events happen it will be initalized once
+default head_item = None  # Item equipped on the head
+default body_item = None  # Item equipped on the body
+default left_hand_item = None  # Item equipped in the left hand
+default right_hand_item = None  # Item equipped in the right hand
+default left_leg_item = None  # Item equipped on the left leg
+default right_leg_item = None  # Item equipped on the right legdefault left_arm_item = None
+default right_arm_item = None
+default hud_visible = True  # Start with the HUD visible
+default slot_count = 1
+default minigame_active = False
+default minigame_time = 10
+default minigame_problem = ""
+default minigame_answer = 0
+default minigame_bonus = 0
+default player_answer = ""
+default base_chance = 30  
+default total_bonuses = 0  
+default nice = 0
+default mean = 0
+default selected_category = "soft"  # Initial selection
+default title_screen_set = ""
+
+default selected_tab = "Body"
+default current_mode = "construction"
+default mixing_progress = 0
+default mix_start_time = 0
+default stirring_tool = None
+default stirring_progress = 0
+default stirring_complete = False
+default last_mouse_pos = (0, 0)
+default stirring_direction = None
+default stirring_count = 0
+########################
+#________                          __    ___________                   .__          __                 
+#\_____  \  __ __   ____   _______/  |_  \__    ___/___   _____ ______ |  | _____ _/  |_  ____   ______
+# /  / \  \|  |  \_/ __ \ /  ___/\   __\   |    |_/ __ \ /     \\____ \|  | \__  \\   __\/ __ \ /  ___/
+#/   \_/.  \  |  /\  ___/ \___ \  |  |     |    |\  ___/|  Y Y  \  |_> >  |__/ __ \|  | \  ___/ \___ \ 
+#\_____\ \_/____/  \___  >____  > |__|     |____| \___  >__|_|  /   __/|____(____  /__|  \___  >____  >
+#       \__>           \/     \/                      \/      \/|__|             \/          \/     \/ 
+########################
+#templates will go here to be used in game
+#default quests = [ #this was retarded so i made it an array
+ #  {
+ #      "name": "New Uniform Quest",
+ #      "description": "Go to the front desk to order a new uniform.",
+ #      "completed": False,
+ #      "condition": "uniform_ordered"
+ #  },
+ #  {
+ #      "name": "Projector Quest",
+ #      "description": "Get a new projector and bring it to the projector room.",
+ #      "completed": False,
+ #      "condition": "projector_obtained"
+ #  }
+#]
+########################
+#   _____                                    
+#  /  _  \___________________  ___.__. ______
+# /  /_\  \_  __ \_  __ \__  \<   |  |/  ___/
+#/    |    \  | \/|  | \// __ \\___  |\___ \ 
+#\____|__  /__|   |__|  (____  / ____/____  >
+#        \/                  \/\/         \/                 
+########################
+default emotions = {
+    "Authenticity": {"value": 50, "bonus": {"speech": 5, "luck": -2,"mental_resilience": -6,"pain_tolerance": -5}},
+    "Authority": {"value": 60, "bonus": {"strength": 6, "intelligence": -5}},
+    "Composure": {"value": 20, "bonus": {"speech": 5, "strength": 3, "intelligence": -3, "pain_tolerancEe": 3}},
+    "Confidence": {"value": 15, "bonus": {"speech": -3,"intelligence": -4, "mental_resilience": 4}},
+    "Dignity": {"value": 60, "bonus": {"speech": 5, "mental_resilience": 3, "luck": -2}},
+    "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6,"pain_tolerance": 5}},
+}
+default soft_skills = ["speech","intelligence","luck","pain_tolerance","mental_resilience" ]
+default hard_skills = [ "strength","medical" , "speed"]
+default intelligence_values = [0, 0, 0, 0, 0]
+default collected_tapes = []
+default unlocked_books = []
+default missions = {"active": [], "completed": []}
+default journal_entries = []
+default mixing_steps = ["top", "right", "bottom", "left"]
+########################
+#  _________                                    ___________ _____  _____              __          
+# /   _____/ ___________   ____   ____   ____   \_   _____// ____\/ ____\____   _____/  |_  ______
+# \_____  \_/ ___\_  __ \_/ __ \_/ __ \ /    \   |    __)_\   __\\   __\/ __ \_/ ___\   __\/  ___/
+# /        \  \___|  | \/\  ___/\  ___/|   |  \  |        \|  |   |  | \  ___/\  \___|  |  \___ \ 
+#/_______  /\___  >__|    \___  >\___  >___|  / /_______  /|__|   |__|  \___  >\___  >__| /____  >
+#        \/     \/            \/     \/     \/          \/                  \/     \/          \/                   
+########################
+
+image dim_overlay:
     xysize (config.screen_width, config.screen_height)
+    Solid("#000000") 
+    alpha 0.0      
+    linear 1.0 alpha 0.6 
 
+image light_turning_on_effect:
+    Solid("#FFFFFF") 
+    alpha 0.0
+    xysize (config.screen_width, config.screen_height)
+    linear 0.05 alpha 0.6 
+    pause 0.1
+    linear 0.2 alpha 0.0
 
-default test_room = 0
-default benx = 100
-default minbenx = -50
-default maxbenx = 1300
-default beny = 450
+########################                                             
+#  /     \   _______  __ ____   _____   ____   _____/  |_ 
+# /  \ /  \ /  _ \  \/ // __ \ /     \_/ __ \ /    \   __\
+#/    Y    (  <_> )   /\  ___/|  Y Y  \  ___/|   |  \  |  
+#\____|__  /\____/ \_/  \___  >__|_|  /\___  >___|  /__|  
+#        \/                 \/      \/     \/     \/      
+########################
+default benx = 150 
+default minbenx = -50 
+default maxbenx = 1300 
+default beny = 450 
 default minbeny = 450
 default maxbeny = 5000
 default walk_frame = 4
@@ -67,7 +165,29 @@ label loop:
     $ benx = max(min(benx, maxbenx), minbenx)
     
     $ renpy.pause(0.1, hard=True)
-    jump loop
+    jump loop # these jump loop cause a loop so if they are commented it is so i can safely reload the code
+########################
+#__________                __                                          .___      
+#\______   \_____    ____ |  | __  ___________  ____  __ __  ____    __| _/______
+# |    |  _/\__  \ _/ ___\|  |/ / / ___\_  __ \/  _ \|  |  \/    \  / __ |/  ___/
+# |    |   \ / __ \\  \___|    < / /_/  >  | \(  <_> )  |  /   |  \/ /_/ |\___ \ 
+# |______  /(____  /\___  >__|_ \\___  /|__|   \____/|____/|___|  /\____ /____  >
+#        \/      \/     \/     \/_____/                         \/      \/    \/ 
+########################
+
+image ani1_background:
+    Animation(
+        "images/bg/Starting_Room/2/satgescene1.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene2.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene3.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene4.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene5.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene6.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene7.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene8.png", 0.1,
+        "images/bg/Starting_Room/2/satgescene9.png", 99999999.1 # Holds on the last frame (not always needed)
+    )
+    xysize (config.screen_width, config.screen_height) # always needed to upscale image to frame
 
 image smolbenwalk:
     "images/char/Benjerman/walk/smolbenwalk[walk_frame + 1].png"
@@ -95,13 +215,24 @@ image drillsargpickup:
     pause 0.1
     "images/bg/Starting_Room/3/drillsargpickupstart11.png"
     pause 0.1
-    "images/bg/Starting_Room/3/drillsargpickupstart11.png" # Duplicate frame
+    "images/bg/Starting_Room/3/drillsargpickupstart11.png" 
     pause 0.1
     "images/bg/Starting_Room/3/drillsargpickupstart13.png"
-    # This frame will hold indefinitely as it's the last in the ATL block
 
-# Removed malformed image definition that was here,
-# as its content is now part of ani2_background's loop.
+
+image empty_stage_animation:
+    Animation(
+        "images/bg/Starting_Room/empty/emptystage1.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage2.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage3.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage4.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage5.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage6.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage7.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage8.png", 0.1,
+        "images/bg/Starting_Room/empty/emptystage9.png", 99999.0 
+    )
+    xysize (config.screen_width, config.screen_height)
 
 
 
@@ -119,31 +250,29 @@ image satgescene9:
 
 image ani2_background:
     xysize (config.screen_width, config.screen_height)
-    # Part 1: Initial sequence (plays once)
-    "images/bg/Starting_Room/1/ani2stagescene1.png" # Hesitates
+    "images/bg/Starting_Room/1/ani2stagescene1.png"
     pause 0.4
-    "images/bg/Starting_Room/1/ani2stagescene2.png" # Hesitates
+    "images/bg/Starting_Room/1/ani2stagescene2.png" 
     pause 0.4
-    "images/bg/Starting_Room/1/ani2stagescene1.png" # Loop once - Hesitates
+    "images/bg/Starting_Room/1/ani2stagescene1.png"
     pause 0.4
-    "images/bg/Starting_Room/1/ani2stagescene2.png" # Loop once - Hesitates
+    "images/bg/Starting_Room/1/ani2stagescene2.png"
     pause 0.4
-    "images/bg/Starting_Room/1/ani2stagescene3.png" # Normal speed
+    "images/bg/Starting_Room/1/ani2stagescene3.png" 
     pause 0.1
-    "images/bg/Starting_Room/1/ani2stagescene4.png" # Normal speed
+    "images/bg/Starting_Room/1/ani2stagescene4.png" 
     pause 0.1
-    "images/bg/Starting_Room/1/ani2stagescene5.png" # Takes step
+    "images/bg/Starting_Room/1/ani2stagescene5.png"
     pause 0.2
-    "images/bg/Starting_Room/1/ani2stagescene6.png" # Jumps onto chair part 1
+    "images/bg/Starting_Room/1/ani2stagescene6.png" 
     pause 0.15
-    "images/bg/Starting_Room/1/ani2stagescene7.png" # Jumps onto chair part 2 / lands
+    "images/bg/Starting_Room/1/ani2stagescene7.png" 
     pause 0.25
-    "images/bg/Starting_Room/1/ani2stagescene8.png" # Moves hand
+    "images/bg/Starting_Room/1/ani2stagescene8.png" 
     pause 0.3
-    "images/bg/Starting_Room/1/ani2stagescene9.png" # Settles into chair (plays briefly)
+    "images/bg/Starting_Room/1/ani2stagescene9.png" 
     pause 0.1
 
-    # Part 2: Looping idle animation
     Animation(
         "images/bg/Starting_Room/3/3_sitting/sittinganistagescene3.png", 5.8,
         "images/bg/Starting_Room/3/3_sitting/sittinganistagescene4.png", 0.1,
@@ -155,7 +284,7 @@ image ani2_background:
         "images/bg/Starting_Room/3/3_sitting/sittinganistagescene3.png", 5.8,
         "images/bg/Starting_Room/3/3_sitting/sittinganistagescene13.png", 0.1,
         "images/bg/Starting_Room/3/3_sitting/sittinganistagescene14.png", 0.1,
-        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene15.png", 0.1  # Last frame of the loop
+        "images/bg/Starting_Room/3/3_sitting/sittinganistagescene15.png", 0.1  
     )
 
 image anistagescene:
@@ -170,7 +299,7 @@ image anistagescene:
         "images/bg/Starting_Room/4/0drillsargpickupstart8.png", 0.3,
         "images/bg/Starting_Room/4/0drillsargpickupstart9.png", 0.3,
         "images/bg/Starting_Room/4/0drillsargpickupstart10.png", 0.3,
-        "images/bg/Starting_Room/4/0drillsargpickupstart0.png", 99999.0  # Hold on this frame
+        "images/bg/Starting_Room/4/0drillsargpickupstart0.png", 99999.0  
     )
     xysize (config.screen_width, config.screen_height)
 
@@ -204,25 +333,28 @@ image projector_hum_animation:
         "images/bg/Starting_Room/5/projector_on18.png", 0.5,
         "images/bg/Starting_Room/5/projector_on12.png", 0.5  
     )
-image dim_overlay:
-    xysize (config.screen_width, config.screen_height)
-    Solid("#000000") 
-    alpha 0.0      
-    linear 1.0 alpha 0.6 
 
-image light_turning_on_effect:
-    Solid("#FFFFFF") 
-    alpha 0.0
-    xysize (config.screen_width, config.screen_height)
-    linear 0.05 alpha 0.6 
-    pause 0.1
-    linear 0.2 alpha 0.0
+########################
+#       .__                          .__                       .___ .__                                      
+#  ____ |  |__ _____ ____________    |  |__   ____ _____     __| _/ |__| _____ _____     ____   ____   ______
+#_/ ___\|  |  \\__  \\_  __ \__  \   |  |  \_/ __ \\__  \   / __ |  |  |/     \\__  \   / ___\_/ __ \ /  ___/
+#\  \___|   Y  \/ __ \|  | \// __ \_ |   Y  \  ___/ / __ \_/ /_/ |  |  |  Y Y  \/ __ \_/ /_/  >  ___/ \___ \ 
+# \___  >___|  (____  /__|  (____  / |___|  /\___  >____  /\____ |  |__|__|_|  (____  /\___  / \___  >____  >
+#     \/     \/     \/           \/       \/     \/     \/      \/           \/     \//_____/      \/     \/ 
+########################
 
-#######chara images 
 image side ben = "images/inventory/inventory_hud/head.png"
 image side sarg = "images/char/head/sarg_head.png"
 image side sam = "images/char/head/sam_head.png"
-# Chara
+########################
+#       .__                              .___      _____.__                      
+#  ____ |  |__ _____ ____________      __| _/_____/ ____\__| ____   ____   ______
+#_/ ___\|  |  \\__  \\_  __ \__  \    / __ |/ __ \   __\|  |/    \_/ __ \ /  ___/
+#\  \___|   Y  \/ __ \|  | \// __ \_ / /_/ \  ___/|  |  |  |   |  \  ___/ \___ \ 
+# \___  >___|  (____  /__|  (____  / \____ |\___  >__|  |__|___|  /\___  >____  >
+#     \/     \/     \/           \/       \/    \/              \/     \/     \/ 
+########################
+
 define BAG = Character("Bagman",color="#b66c12")
 define BAL = Character("Baldi")
 define BEN = Character("Benjamin", image = "ben")
@@ -246,90 +378,22 @@ define SAM = Character("Samuel",color="#b66c1261", image = "sam")
 define SIM = Character("Sim")
 define SUL = Character("Sultan",color="#aeadb7")
 define ZUN = Character("Zundamon",color="#B9D08B")
+#default 
 define Q = Character ("?????",color="#0000FF")
 define Q2 = Character ("?????",color="#8fe406ff")
 define Q3 = Character ("??????",color="#14a122")
 define Q4 = Character ("???????",color="#97239e")
 define k =Character("Keemstar",color="#0000FF")
 define co = Character("Commanding Officer Miller",color="#0000FF")
-default head_item = None  # Item equipped on the head
-default body_item = None  # Item equipped on the body
-default left_hand_item = None  # Item equipped in the left hand
-default right_hand_item = None  # Item equipped in the right hand
-default left_leg_item = None  # Item equipped on the left leg
-default right_leg_item = None  # Item equipped on the right legdefault left_arm_item = None
-default right_arm_item = None
-default hud_visible = True  # Start with the HUD visible
-default slot_count = 1
-default roll = 0
-default intelligence_values = [0, 0, 0, 0, 0]
-default rolltf = 0
-default collected_tapes = []
 
-#Quests
-#default quests = [ #this was retarded so i made it an array
- #  {
- #      "name": "New Uniform Quest",
- #      "description": "Go to the front desk to order a new uniform.",
- #      "completed": False,
- #      "condition": "uniform_ordered"
- #  },
- #  {
- #      "name": "Projector Quest",
- #      "description": "Get a new projector and bring it to the projector room.",
- #      "completed": False,
- #      "condition": "projector_obtained"
- #  }
-#]
-default minigame_active = False
-default minigame_time = 10
-default minigame_problem = ""
-default minigame_answer = 0
-default minigame_bonus = 0
-default player_answer = ""
-default base_chance = 30  
-default total_bonuses = 0  
-default nice = 0
-default mean = 0
-default soft_skills = ["speech","intelligence","luck","pain_tolerance","mental_resilience" ]
-default hard_skills = [ "strength","medical" , "speed"]
-default selected_category = "soft"  # Initial selection
-default title_screen_set = ""
-#
-default emotions = {
-    "Authenticity": {"value": 50, "bonus": {"speech": 5, "luck": -2,"mental_resilience": -6,"pain_tolerance": -5}},
-    "Authority": {"value": 60, "bonus": {"strength": 6, "intelligence": -5}},
-    "Composure": {"value": 20, "bonus": {"speech": 5, "strength": 3, "intelligence": -3, "pain_tolerancEe": 3}},
-    "Confidence": {"value": 15, "bonus": {"speech": -3,"intelligence": -4, "mental_resilience": 4}},
-    "Dignity": {"value": 60, "bonus": {"speech": 5, "mental_resilience": 3, "luck": -2}},
-    "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6,"pain_tolerance": 5}},
-}
-# The game starts here.RR
-default npc_name = "???"         # The default NPC name
-default npc_mood = "Normal"      # The default NPC mood
-default npc_attitude = "Neutral" # The default NPC attitude
-default selected_tab = "Boobs"
-default current_mode = "construction"
-default mixing_progress = 0
-default amount_input = 0
-default mix_start_time = 0
-default mixing_steps = ["top", "right", "bottom", "left"]
-default stirring_tool = None
-default stirring_progress = 0
-default stirring_complete = False
-default last_mouse_pos = (0, 0)
-default stirring_direction = None
-default stirring_count = 0#pytrhon
-default expanded_entry = None    
-default current_journal_section = "quests"
-default selected_entry = None
-default unlocked_books = []
-default missions = {"active": [], "completed": []}
-default journal_entries = []
-default personal_notes_text = ""
-default highlight_position = (-1, -1)
-$ quest_filter = "all"
-$ selected_quest = None
+########################
+#__________          __  .__                   
+#\______   \___.__._/  |_|  |__   ____   ____  
+# |     ___<   |  |\   __\  |  \ /  _ \ /    \ 
+# |    |    \___  | |  | |   Y  (  <_> )   |  \
+# |____|    / ____| |__| |___|  /\____/|___|  /
+#           \/                \/            \/ 
+########################
 init python:
     import webbrowser
     import random   
@@ -338,7 +402,7 @@ init python:
     import pygame
     import threading   
     import urllib
-    import urllib.parse # Make sure this is imported
+    import urllib.parse
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
     import os    
@@ -348,35 +412,6 @@ init python:
             config.layers.insert(master_index + 1, 'dimming_layer')
         except ValueError:
             config.layers.append('dimming_layer')
-
-    def get_filtered_item_count(filter_type):
-        """
-        Returns the count of items matching the specified filter type.
-        
-        Args:
-            filter_type (str): The type of items to count ('all', 'weapon', 'armor', 'consumable', etc.)
-            
-        Returns:
-            int: Number of items matching the filter
-        """
-        count = 0
-        
-        # Assuming you have a inventory list or similar structure
-        for item in inventory:
-            if filter_type == "all" or get_item_type(item) == filter_type:
-                count += 1
-                
-        return count
-    
-    def get_max_slots():
-        """
-        Returns the maximum number of inventory slots available to the player.
-        
-        Returns:
-            int: Maximum inventory slots
-        """
-        # You can make this dynamic based on player upgrades or stats
-        return 50  # Default value, adjust as needed
     
     def get_filtered_item_at_index(index, filter_type):
         """
@@ -1654,7 +1689,7 @@ init python:
         stats[stat_name]["current_xp"] += amount
         if stats[stat_name]["current_xp"] >= stats[stat_name]["max_xp"]:
             stats[stat_name]["current_xp"] = stats[stat_name]["max_xp"] # Cap XP at max if it exceeds
-# Define the items dictionary
+# Define the items dictionary YOU NEED TO ADD A ITEM HERE FOR ITEMS TO WORK!!! default types = consumable all', 'weapon', 'armor', 'consumable' although putting anything else wont break code..
     items = {
         "MG41": {
             "type": "weapon",
@@ -2066,16 +2101,18 @@ label start:
     DRI "good you are dismissed."
 
     "As I turn around I notice two people sitting in there seats, prehaps I should talk to one of them and ask them for help."
-    show screen HUD
-    show screen tutorial_screen
-    show screen checkKey   
-    show smolbenwalk:
-        xpos benx
-        ypos beny
-        xzoom -1.0
+    label intreactivesection01:
+        scene empty_stage_animation with None
+        show screen HUD
+        show screen tutorial_screen
+        show screen checkKey   
+        show smolbenwalk:
+            xpos benx
+            ypos beny
+            xzoom -1.0
 
-    window hide 
-    $ renpy.pause(hard=True)
+        window hide 
+        $ renpy.pause(hard=True)
 
 label FrontSeat:
     hide screen HUD

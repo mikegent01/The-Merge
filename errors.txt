@@ -2,9 +2,13 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 224: Line is indented, but the preceding image statement statement does not expect a block. Please check this line's indentation. You may have forgotten a colon (:).
-    xalign 0.31
+File "game/script.rpy", line 41: expected statement.
+    \_   _____// ____\/ ____\____   _____/  |_  ______
     ^
 
+File "game/script.rpy", line 44: expected statement.
+    /_______  /|__|   |__|  \_m1_script___  >\_m1_script___  >__| /____  >
+              ^
+
 Ren'Py Version: Ren'Py 8.2.1.24030407
-Mon Jul  7 18:03:05 2025
+Tue Jul  8 23:07:45 2025

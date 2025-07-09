@@ -1,7 +1,7 @@
 screen dynamic_text_screen():
     modal True # Prevents interaction with underlying screens, good for this mode
 
-    if last_label == "start" or test_room == 0:
+    if last_label == "intreactivesection01" or test_room == 0:
         if abs(benx - 80) <= 600:
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"

@@ -1,7 +1,7 @@
 screen speak_to_people():
     modal True # Prevents interaction with underlying screens
 
-    if last_label == "start" or test_room == 0:
+    if last_label == "intreactivesection01" or test_room == 0:
         # --- Clickable icons for "talk" actions ---
         # Note: Adjust xpos, ypos, and icon paths as needed.
 
