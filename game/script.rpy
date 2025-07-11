@@ -1,13 +1,4 @@
-﻿########################
-
-#  _________ __                 __    ________   _____  ___________.__.__          
-# /   _____//  |______ ________/  |_  \_____  \_/ ____\ \_   _____/|__|  |   ____  
-# \_____  \\   __\__  \\_  __ \   __\  /   |   \   __\   |    __)  |  |  | _/ __ \ 
-# /        \|  |  / __ \|  | \/|  |   /    |    \  |     |     \   |  |  |_\  ___/ 
-#/_______  /|__| (____  /__|   |__|   \_______  /__|     \___  /   |__|____/\___  >
-#        \/           \/                      \/             \/                 \/ 
-
-########################
+# start of file
 default test_room = 0 # this var is debug mode
 default preferences.text_cps = 30  # this controls text speed
 default rng = random.randint(1,100) # this is used to have random events happen it will be initalized once
@@ -32,7 +23,6 @@ default nice = 0
 default mean = 0
 default selected_category = "soft"  # Initial selection
 default title_screen_set = ""
-
 default selected_tab = "Body"
 default current_mode = "construction"
 default mixing_progress = 0
@@ -43,14 +33,7 @@ default stirring_complete = False
 default last_mouse_pos = (0, 0)
 default stirring_direction = None
 default stirring_count = 0
-########################
-#________                          __    ___________                   .__          __                 
-#\_____  \  __ __   ____   _______/  |_  \__    ___/___   _____ ______ |  | _____ _/  |_  ____   ______
-# /  / \  \|  |  \_/ __ \ /  ___/\   __\   |    |_/ __ \ /     \\____ \|  | \__  \\   __\/ __ \ /  ___/
-#/   \_/.  \  |  /\  ___/ \___ \  |  |     |    |\  ___/|  Y Y  \  |_> >  |__/ __ \|  | \  ___/ \___ \ 
-#\_____\ \_/____/  \___  >____  > |__|     |____| \___  >__|_|  /   __/|____(____  /__|  \___  >____  >
-#       \__>           \/     \/                      \/      \/|__|             \/          \/     \/ 
-########################
+#Quest Templates
 #templates will go here to be used in game
 #default quests = [ #this was retarded so i made it an array
  #  {
@@ -59,21 +42,8 @@ default stirring_count = 0
  #      "completed": False,
  #      "condition": "uniform_ordered"
  #  },
- #  {
- #      "name": "Projector Quest",
- #      "description": "Get a new projector and bring it to the projector room.",
- #      "completed": False,
- #      "condition": "projector_obtained"
- #  }
 #]
-########################
-#   _____                                    
-#  /  _  \___________________  ___.__. ______
-# /  /_\  \_  __ \_  __ \__  \<   |  |/  ___/
-#/    |    \  | \/|  | \// __ \\___  |\___ \ 
-#\____|__  /__|   |__|  (____  / ____/____  >
-#        \/                  \/\/         \/                 
-########################
+#Array's
 default emotions = {
     "Authenticity": {"value": 50, "bonus": {"speech": 5, "luck": -2,"mental_resilience": -6,"pain_tolerance": -5}},
     "Authority": {"value": 60, "bonus": {"strength": 6, "intelligence": -5}},
@@ -90,14 +60,7 @@ default unlocked_books = []
 default missions = {"active": [], "completed": []}
 default journal_entries = []
 default mixing_steps = ["top", "right", "bottom", "left"]
-########################
-#  _________                                    ___________ _____  _____              __          
-# /   _____/ ___________   ____   ____   ____   \_   _____// ____\/ ____\____   _____/  |_  ______
-# \_____  \_/ ___\_  __ \_/ __ \_/ __ \ /    \   |    __)_\   __\\   __\/ __ \_/ ___\   __\/  ___/
-# /        \  \___|  | \/\  ___/\  ___/|   |  \  |        \|  |   |  | \  ___/\  \___|  |  \___ \ 
-#/_______  /\___  >__|    \___  >\___  >___|  / /_______  /|__|   |__|  \___  >\___  >__| /____  >
-#        \/     \/            \/     \/     \/          \/                  \/     \/          \/                   
-########################
+#starting effects
 
 image dim_overlay:
     xysize (config.screen_width, config.screen_height)
@@ -113,13 +76,7 @@ image light_turning_on_effect:
     pause 0.1
     linear 0.2 alpha 0.0
 
-########################                                             
-#  /     \   _______  __ ____   _____   ____   _____/  |_ 
-# /  \ /  \ /  _ \  \/ // __ \ /     \_/ __ \ /    \   __\
-#/    Y    (  <_> )   /\  ___/|  Y Y  \  ___/|   |  \  |  
-#\____|__  /\____/ \_/  \___  >__|_|  /\___  >___|  /__|  
-#        \/                 \/      \/     \/     \/      
-########################
+#movement
 default benx = 150 
 default minbenx = -50 
 default maxbenx = 1300 
@@ -133,8 +90,8 @@ default jump_velocity = 0
 default gravity = 2
 default jump_strength = -15
 screen checkKey():
-    key "repeat_K_RIGHT" action [SetVariable("benx", benx+25), SetVariable("facing_left", False), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
-    key "repeat_K_LEFT" action [SetVariable("benx", benx-25), SetVariable("facing_left", True), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
+    key "repeat_K_RIGHT" action [SetVariable("benx", benx+10), SetVariable("facing_left", False), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
+    key "repeat_K_LEFT" action [SetVariable("benx", benx-10), SetVariable("facing_left", True), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
     key "keyup_K_RIGHT" action [SetVariable("walk_frame", 4), Jump("walk")]
     key "keyup_K_LEFT" action [SetVariable("walk_frame", 4), Jump("walk")]
     key "K_SPACE" action [If(beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)]), Jump("walk")]
@@ -150,7 +107,7 @@ label walk:
             xpos benx
             ypos beny
             xzoom 1.0
-    jump loop
+  #  jump loop
 
 label loop:
     if jumping:
@@ -165,15 +122,8 @@ label loop:
     $ benx = max(min(benx, maxbenx), minbenx)
     
     $ renpy.pause(0.1, hard=True)
-    jump loop # these jump loop cause a loop so if they are commented it is so i can safely reload the code
-########################
-#__________                __                                          .___      
-#\______   \_____    ____ |  | __  ___________  ____  __ __  ____    __| _/______
-# |    |  _/\__  \ _/ ___\|  |/ / / ___\_  __ \/  _ \|  |  \/    \  / __ |/  ___/
-# |    |   \ / __ \\  \___|    < / /_/  >  | \(  <_> )  |  /   |  \/ /_/ |\___ \ 
-# |______  /(____  /\___  >__|_ \\___  /|__|   \____/|____/|___|  /\____ /____  >
-#        \/      \/     \/     \/_____/                         \/      \/    \/ 
-########################
+  #  jump loop # these jump loop cause a loop so if they are commented it is so i can safely reload the code
+#backgrounds
 
 image ani1_background:
     Animation(
@@ -334,26 +284,12 @@ image projector_hum_animation:
         "images/bg/Starting_Room/5/projector_on12.png", 0.5  
     )
 
-########################
-#       .__                          .__                       .___ .__                                      
-#  ____ |  |__ _____ ____________    |  |__   ____ _____     __| _/ |__| _____ _____     ____   ____   ______
-#_/ ___\|  |  \\__  \\_  __ \__  \   |  |  \_/ __ \\__  \   / __ |  |  |/     \\__  \   / ___\_/ __ \ /  ___/
-#\  \___|   Y  \/ __ \|  | \// __ \_ |   Y  \  ___/ / __ \_/ /_/ |  |  |  Y Y  \/ __ \_/ /_/  >  ___/ \___ \ 
-# \___  >___|  (____  /__|  (____  / |___|  /\___  >____  /\____ |  |__|__|_|  (____  /\___  / \___  >____  >
-#     \/     \/     \/           \/       \/     \/     \/      \/           \/     \//_____/      \/     \/ 
-########################
+#chara head images
 
 image side ben = "images/inventory/inventory_hud/head.png"
 image side sarg = "images/char/head/sarg_head.png"
 image side sam = "images/char/head/sam_head.png"
-########################
-#       .__                              .___      _____.__                      
-#  ____ |  |__ _____ ____________      __| _/_____/ ____\__| ____   ____   ______
-#_/ ___\|  |  \\__  \\_  __ \__  \    / __ |/ __ \   __\|  |/    \_/ __ \ /  ___/
-#\  \___|   Y  \/ __ \|  | \// __ \_ / /_/ \  ___/|  |  |  |   |  \  ___/ \___ \ 
-# \___  >___|  (____  /__|  (____  / \____ |\___  >__|  |__|___|  /\___  >____  >
-#     \/     \/     \/           \/       \/    \/              \/     \/     \/ 
-########################
+#chara defines
 
 define BAG = Character("Bagman",color="#b66c12")
 define BAL = Character("Baldi")
@@ -386,291 +322,118 @@ define Q4 = Character ("???????",color="#97239e")
 define k =Character("Keemstar",color="#0000FF")
 define co = Character("Commanding Officer Miller",color="#0000FF")
 
-########################
-#__________          __  .__                   
-#\______   \___.__._/  |_|  |__   ____   ____  
-# |     ___<   |  |\   __\  |  \ /  _ \ /    \ 
-# |    |    \___  | |  | |   Y  (  <_> )   |  \
-# |____|    / ____| |__| |___|  /\____/|___|  /
-#           \/                \/            \/ 
-########################
+#Pythons
 init python:
+    # ==============================================================================
+    # 1. IMPORTS & INITIAL CONFIGURATION
+    # ==============================================================================
     import webbrowser
-    import random   
-    import time      
+    import random
+    import time
     import hashlib
     import pygame
-    import threading   
+    import threading
     import urllib
     import urllib.parse
     from http.server import SimpleHTTPRequestHandler
     from socketserver import TCPServer
-    import os    
+    import os
+    import sys
+
+    # Add a custom layer for dimming effects if it doesn't exist
     if 'dimming_layer' not in config.layers:
         try:
             master_index = config.layers.index('master')
             config.layers.insert(master_index + 1, 'dimming_layer')
         except ValueError:
             config.layers.append('dimming_layer')
-    
-    def get_filtered_item_at_index(index, filter_type):
-        """
-        Returns the item at the specified index after filtering by type.
-        
-        Args:
-            index (int): The index in the filtered list
-            filter_type (str): The type of items to filter ('all', 'weapon', 'armor', 'consumable', etc.)
-            
-        Returns:
-            item object or None: The item at the index or None if no item exists
-        """
-        filtered_items = []
-        
-        # Filter the inventory
-        for item in inventory:
-            if filter_type == "all" or get_item_type(item) == filter_type:
-                filtered_items.append(item)
-        
-        # Return the item at the index if it exists
-        if 0 <= index < len(filtered_items):
-            return filtered_items[index]
-        else:
-            return None    
-    if not hasattr(persistent, 'journal_entries') or persistent.journal_entries is None:
-        persistent.journal_entries = []  # Ensure it's a list    
-    def unlock_book(title, text_file, preview="images/inventory/inventory_hud/default_book.png"):
-        """
-        Unlock a book that can be read in-game.
-        text_file: Path to the text file containing the book content
-        """
-        # Get current game day or use a default
-        current_day = getattr(store, 'day', 1)
-        
-        # Check if the text file exists
-        if renpy.loadable(text_file):
-            new_book = {
-                "title": title, 
-                "text_file": text_file, 
-                "preview": preview, 
-                "date_unlocked": "Day " + str(current_day)
-            }
-            
-            # Check if the book is already unlocked
-            for book in store.unlocked_books:
-                if book["title"] == title:
-                    return  # Book already exists
-                    
-            store.unlocked_books.append(new_book)
-       #     renpy.notify("New book added to your journal: " + title)
-        else:
-            renpy.notify("Error: Book file not found: " + text_file)
-    
-    def load_book_text(text_file):
-        """Load book content from a text file and split into pages"""
-        try:
-            with renpy.file(text_file) as f:
-                content = f.read().decode("utf-8")
-                
-            # Split content into pages (each page is about 250 words)
-            words = content.split()
-            words_per_page = 250
-            pages = []
-            
-            for i in range(0, len(words), words_per_page):
-                page_words = words[i:i + words_per_page]
-                pages.append(" ".join(page_words))
-                
-            return pages
-        except:
-            return ["Error loading book content. The file might be missing or corrupted."]
-    
-    def add_mission(title, description, objectives=None):
-        if objectives is None:
-            objectives = []
-        # Get current game day or use a default
-        current_day = getattr(store, 'day', 1)
-        new_mission = {"title": title, "description": description, "objectives": objectives, "progress": 0, "date_added": "Day " + str(current_day)}
-        
-        # Check if mission already exists
-        for mission in store.missions["active"]:
-            if mission["title"] == title:
-                return  # Mission already exists
-                
-        store.missions["active"].append(new_mission)
-        renpy.notify("New mission added: " + title)
-    
-    def update_mission_progress(title, progress):
-        """Update the progress of a mission (0-100)"""
-        for mission in store.missions["active"]:
-            if mission["title"] == title:
-                mission["progress"] = min(100, max(0, progress))  # Clamp between 0-100
-                if mission["progress"] == 100:
-                    complete_mission(title)
-                return True
-        return False
-    
-    def complete_mission(title):
-        for i, mission in enumerate(store.missions["active"]):
-            if mission["title"] == title:
-                mission["progress"] = 100
-                store.missions["completed"].append(mission)
-                store.missions["active"].pop(i)
-                renpy.notify("Mission completed: " + title)
-                return True
-        return False
-    
-    def add_journal_entry(title, content):
-        # Get current game day or use a default
-        current_day = getattr(store, 'day', 1)
-        entry = {"title": title, "content": content, "date": "Day " + str(current_day)}
-        store.journal_entries.append(entry)
-        renpy.notify("New journal entry added")
-    def add_mission(title, description, objectives=None):
-        if objectives is None:
-            objectives = []
-        # Get current game day or use a default
-        current_day = getattr(store, 'day', 1)
-        new_mission = {"title": title, "description": description, "objectives": objectives, "progress": 0, "date_added": "Day " + str(current_day)}
-        
-        # Check if mission already exists
-        for mission in persistent.missions["active"]:
-            if mission["title"] == title:
-                return  # Mission already exists
-                
-        persistent.missions["active"].append(new_mission)
-        renpy.notify("New mission added: " + title)
-    
-    def complete_mission(title):
-        for i, mission in enumerate(persistent.missions["active"]):
-            if mission["title"] == title:
-                mission["progress"] = 100
-                persistent.missions["completed"].append(mission)
-                persistent.missions["active"].pop(i)
-                renpy.notify("Mission completed: " + title)
-                return True
-        return False
-    
-    def add_journal_entry(title, content):
-        # Get current game day or use a default
-        current_day = getattr(store, 'day', 1)
-        entry = {"title": title, "content": content, "date": "Day " + str(current_day)}
-        persistent.journal_entries.append(entry)
-        renpy.notify("New journal entry added")
+
+    # ==============================================================================
+    # 2. CORE GAME STATE & DATA DEFINITIONS
+    # ==============================================================================
+
+    # --- Character & Game State Variables ---
     minhealth = 0
     maxhealth = 100
-    full_weight = 0
-    total_health = 0
-    total_cleanliness = 0
-    total_temperature = 0
-    current_selected_character = "Ben"
-    current_strength = random.randint(16,20)  
-    max_space = 10 + current_strength     
     current_sanity = 100
-    crafting_items = []
-    selected_items = []
-    mixed_liquids = []    
+    current_strength = random.randint(16, 20)
+    max_space = 10 + current_strength
+    current_space_taken = 0
+    current_selected_character = "Ben"
+    npc_name = None
+    npc_mood = None
+    npc_attitude = None
+    last_label = None
+    hud_visible = True
+    title_screen_set = False
+
+    # --- Inventories & Item Lists ---
     inventory = []
-    left_arm_item = None
-    right_arm_item = None    
-    selected_liquids = []   
     holding_items = ["Tape", "Glue", "Screwdriver"]
     liquid_inventory = [
-        {"name": "Water", "amount": 100},    # 100 units of water
-        {"name": "Ethanol", "amount": 50},   # 50 units of ethanol
-        {"name": "Oil", "amount": 30},       # 30 units of oil
+        {"name": "Water", "amount": 100},
+        {"name": "Ethanol", "amount": 50},
+        {"name": "Oil", "amount": 30},
         {"name": "Glue", "amount": 30}
-    ]   
-    
+    ]
+    container_inventory = [
+        {"name": "Regular Bottle", "capacity": 100, "current_amount": 0, "contents": []},
+        {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},
+    ]
+
+    # --- Crafting & Interaction State ---
+    crafting_items = []
+    selected_items = []
+    selected_item = None
+    selected_holding_item = None
+    selected_liquids = []
+    mixed_liquids = []
+    selected_container = None
+
+    # --- Mixing & Stirring Minigame State ---
+    # Stirring
+    stirring_tool = None
+    stirring_progress = 0
+    stirring_complete = False
+    last_mouse_pos = (0, 0)
+    stirring_direction = None
+    stirring_count = 0
+    # Mixing
+    is_mixing = False
+    mix_start_time = 0
+    mixing_progress = 0
+    current_mixing_step = 0
+    mixing_attempts = 0
+
+    # --- Math Minigame State ---
+    minigame_time = 0
+    minigame_active = False
+    minigame_problem = ""
+    minigame_answer = 0
+    player_answer = ""
+    minigame_bonus = 0
+
+    # --- Equipment Slots ---
+    head_item = None
+    body_item = None
+    left_arm_item = None
+    right_arm_item = None
+    left_hand_item = None
+    right_hand_item = None
+    left_leg_item = None
+    right_leg_item = None
+
+    # --- Character Status ---
     default_status = {
-    "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
-    "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
-    "left_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
-    "right_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
-    "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
-    "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
+        "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
+        "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
+        "left_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
+        "right_arm": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
+        "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
+        "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
     }
 
-    def get_top_emotion_bonuses(emotions):
-        # Sort emotions by value in descending order
-        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-
-        # Get the top emotion
-        top_emotion = sorted_emotions[0][0] if sorted_emotions else None
-
-        # Get the bonuses for the top emotion
-        if top_emotion and top_emotion in emotions:
-            return top_emotion, emotions[top_emotion]["bonus"]
-        else:
-            return None, {}
-    def get_reduced_bonuses(bonuses):
-        reduced_bonuses = {}
-        for stat, bonus in bonuses.items():
-            reduced_bonuses[stat] = bonus // 2  # Reduce bonus by half (integer division)
-        return reduced_bonuses
-    def get_top_emotions(emotions):
-        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-        top_emotions = sorted_emotions[:3]
-        other_emotions = sorted_emotions[3:]
-
-        return top_emotions, other_emotions    
-
-
-    def update_stirring_progress():
-        global stirring_progress, last_mouse_pos, stirring_direction, stirring_count, stirring_complete
-
-        # Get current mouse position
-        current_mouse_pos = renpy.get_mouse_pos()
-
-        # Calculate the direction of movement
-        if last_mouse_pos != (0, 0):
-            dx = current_mouse_pos[0] - last_mouse_pos[0]
-            dy = current_mouse_pos[1] - last_mouse_pos[1]
-
-            # Determine the direction of movement
-            if abs(dx) > abs(dy):
-                if dx > 0:
-                    new_direction = "right"
-                else:
-                    new_direction = "left"
-            else:
-                if dy > 0:
-                    new_direction = "down"
-                else:
-                    new_direction = "up"
-
-            # Check if the direction has changed in a circular pattern
-            if stirring_direction:
-                if (stirring_direction == "right" and new_direction == "down") or \
-                   (stirring_direction == "down" and new_direction == "left") or \
-                   (stirring_direction == "left" and new_direction == "up") or \
-                   (stirring_direction == "up" and new_direction == "right"):
-                    stirring_count += 1
-                    if stirring_count >= 4:  # One full circle
-                        stirring_progress += 10
-                        stirring_count = 0
-                        if stirring_progress >= 100:
-                            stirring_progress = 100
-                            stirring_complete = True
-                            renpy.notify("Stirring complete!")
-                            mix_liquids(selected_container, selected_liquids)
-
-            stirring_direction = new_direction
-
-        # Update the last mouse position
-        last_mouse_pos = current_mouse_pos
-
-# Function to reset stirring progress
-    def reset_stirring():
-        global stirring_tool, stirring_progress, stirring_complete, last_mouse_pos, stirring_direction, stirring_count
-        stirring_tool = None
-        stirring_progress = 0
-        stirring_complete = False
-        last_mouse_pos = (0, 0)
-        stirring_direction = None
-        stirring_count = 0
-    def get_emotion_value(emotions_dict, emotion):
-        return emotions_dict.get(emotion, 0)
-
+    # --- Stats, Skills, and Progression ---
     stats = {
         "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77, "current_value": 10},
         "speech": {"level": 3, "current_xp": 0, "max_xp": 131, "current_value": 14},
@@ -681,1104 +444,469 @@ init python:
         "mental_resilience": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "medical": {"level": 1, "current_xp": 0, "max_xp": 50, "current_value": 10},
         "sanity": {"current_sanity": current_sanity}
-        }    
+    }
+
+    # --- Relationships ---
+    relationships = {
+        "Samuel": {"met": True, "trust": 80, "friendship": 54, "hostility": 10},
+        "Srg.Jones": {"met": True, "trust": 100, "friendship": 0, "hostility": 0}
+    }
+
+    # --- Item & Recipe Data ---
+    items = {
+        "MG41": {"type": "weapon", "weight": 10, "description": "A powerful machine gun. There are many like it but this one is mine."},
+        "Tissue": {"type": "junk", "weight": 2, "description": "A Tissue to wipe away your sorrows.."},
+        "Wet Tissue": {"type": "junk", "weight": 2, "description": "A Wet Tissue...yuck!"},
+        "Laser range finder": {"type": "tool", "weight": 1, "description": "Used to measure the distance from here to a target."},
+        "Compass": {"type": "tool", "weight": 1, "description": "A military grade compass used for navigation."},
+        "radio": {"type": "tool", "weight": 2, "description": "A military grade radio used for communication. Is only able to communicate with military units and HQ."},
+        "Classified Mission Sheet": {"type": "tool", "weight": 2, "description": "A sheet I should not have given to me by a friend."},
+        "First aid kit": {"type": "consumable", "weight": 1, "description": "Used to heal minor injuries."},
+        "Tactical flashlight": {"type": "tool", "weight": 1, "description": "This light can survive explosions and runs on solar battery."},
+        "Water Bottle": {"type": "consumable", "weight": 1, "description": "Used to hold water. Can hold up to 500ml of water...or any other liquid for that matter."},
+        "sissor": {"type": "tool", "weight": 1, "description": "Used to cut things."},
+        "Report 001": {"type": "document", "weight": 300, "description": "A report of something? I don't remember what it is for. It's very important."},
+        "Pistol": {"type": "weapon", "weight": 2, "description": "A standard issue sidearm. Reliable in a pinch."}
+    }
+    medkit_contents = {
+        "Bandage": {"conditions": ["bleeding", "cut"], "healing": 10},
+        "Phenergan": {"conditions": ["nausea"], "healing": 5},
+        "Antibiotics": {"conditions": ["infection"], "healing": 20},
+        "Morphine": {"conditions": [""], "healing": 30},
+        "Water Gel": {"conditions": ["burn"], "healing": 15},
+        "Acetaminophen": {"conditions": [""], "healing": 10},
+        "Diphenhydramine": {"conditions": ["pain"], "healing": 10},
+        "SOFT-T": {"conditions": ["hemorrhage", "fracture","bleeding"], "healing": 10},
+        "Naproxen": {"conditions": ["headache"], "healing": 10}
+    }
+    crafting_recipes = {
+        ("Laser range finder", "Tactical flashlight"): {"result": "Laser Tactical Kit", "holding_item": "Glue"},
+        ("Compass", "radio"): {"result": "Navigation Radio", "holding_item": "Screwdriver"}
+    }
     deconstruction_recipes = {
         "Laser Tactical Kit": ["Laser range finder", "Tactical flashlight", "Glue"],
         "Navigation Radio": ["Compass", "Radio", "Screwdriver"],
         "First Aid Kit": ["Bandage", "Antibiotics", "Acetaminophen", "SOFT-T"],
         "Flashlight": ["Bulb", "Battery", "Reflector"],
         "radio": ["Antenna", "Battery", "Circuit Board"]
-        # Add more items as needed
     }
-    def handle_mixing_click(direction):
-        global current_mixing_step, mixing_attempts
-
-        if direction == mixing_steps[current_mixing_step]:
-            current_mixing_step += 1
-            if current_mixing_step >= len(mixing_steps):
-                current_mixing_step = 0
-                mixing_attempts += 1
-                if mixing_attempts >= 2:
-                    renpy.notify("Mixing complete!")
-                    mix_liquids(selected_container, selected_liquids)
-                    reset_mixing()
-                else:
-                    renpy.notify(f"Step {mixing_attempts + 1}: Continue mixing!")
-        else:
-            renpy.notify("Wrong direction! Start over.")
-            reset_mixing()
-    def perform_roll(base_chance, skill_level, skill_name, total_bonuses):
-        skill_data = stats.get(skill_name, {})
-        skill_value = skill_data.get("current_value", 0)
-        total_chance = base_chance + (skill_level * 5) + skill_value + total_bonuses
-        roll_result = renpy.random.randint(1, 100)
-        # Determine success
-        if roll_result <= total_chance:
-            return True
-        else:
-            return False
-
-    def reset_mixing():
-        global current_mixing_step, mixing_attempts
-        current_mixing_step = 0
-        mixing_attempts = 0    
-    def deconstruct_item(item):
-        global inventory  # Only need inventory for this function
-
-        # Check if the item can be deconstructed
-        if item in deconstruction_recipes:
-            # Get the list of components required for this item
-            components = deconstruction_recipes[item]
-
-            # Add the components back to the inventory
-            for component in components:
-                inventory.append(component)
-
-            # Remove the deconstructed item from the inventory
-            inventory.remove(item)
-
-            # Notify the player of successful deconstruction
-            renpy.notify(f"You deconstructed {item} into: {', '.join(components)}.")
-        else:
-            # Notify the player if the item cannot be deconstructed
-            renpy.notify(f"{item} cannot be deconstructed.")
-
-    def calculate_averages():
-        total_health = 0
-        total_cleanliness = 0
-        total_temperature = 0
-        body_part_count = len(default_status)
-
-        for part, status in default_status.items():
-            total_health += status['health']
-            total_cleanliness += status['cleanliness']
-            total_temperature += status['temperature']
-
-        average_health = round(total_health / body_part_count)
-        average_cleanliness = round(total_cleanliness / body_part_count)
-        average_temperature = round(total_temperature / body_part_count)
-
-        return average_health, average_cleanliness, average_temperature
-    def is_highest_emotion(emotions_dict, emotion):
-
-        if emotion not in emotions_dict:
-            return False  
-        highest_emotion = max(emotions_dict, key=emotions_dict.get)
-        return highest_emotion == emotion
-    def update_emotion_value(emotions_dict, emotion, new_value):
-        if emotion in emotions_dict:
-            emotions_dict[emotion] = new_value
-            return True
-        return False
-    relationships = {
-        "Samuel": {
-            "met": True,
-            "trust": 80,
-            "friendship": 54,
-            "hostility": 10,
-        },
-        "Srg.Jones": {
-            "met": True,
-            "trust": 100,
-            "friendship": 0,
-            "hostility": 0,
-        }
-    }
-# Function to determine relationship description
-    def get_relationship_description(trust, friendship, hostility):
-        if trust > 80 and friendship > 80:
-            return "Best Friend"
-        elif trust > 70 and friendship > 70:
-            return "Close Friend"
-        elif trust > 60 and friendship > 60:
-            return "Good Friend"
-        elif trust > 50 and friendship > 50:
-            return "Trusted Friend"
-        elif friendship > 50 and trust > 30:
-            return "Friend"
-        elif friendship > 50 and trust <= 30:
-            return "Associate"
-        elif trust > 50 and friendship <= 30:
-            return "Trusted Associate"
-        elif hostility > 70:
-            return "Enemy"
-        elif hostility > 50:
-            return "Adversary"
-        elif hostility > 30 and trust <= 30 and friendship <= 30:
-            return "Rival"
-        elif trust > 30 and friendship > 30:
-            return "Neutral Acquaintance"
-        else:
-            return "Stranger"
-    container_inventory = [
-        {"name": "Regular Bottle", "capacity": 100, "current_amount": 0, "contents": []},  # Empty bottle
-        {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},  # Empty bottle
-    ]      
-    selected_holding_item = None
-    selected_container = None       
     liquid_mix_recipes = {
         "Cleaning Solution": {"Water": 90, "Ethanol": 10},
         "Emulsion": {"Oil": 50, "Water": 50},
         "Slime": {"Water": 100, "Glue": 30},
     }
-    def has_level(stat_name, level):
+
+    # --- Title Screen Data ---
+    title_screens = [
+        {"image": "images/bg/Title Screen/Title_Screen.png", "music": ["audio/Music/showtime.mp3"]},
+        {"image": "images/bg/Title Screen/Titlescreen2.png", "music": ["audio/Music/openingact.mp3", "audio/Music/creep.mp3"]},
+        {"image": "images/bg/Title Screen/alternatetitleone.png", "music": ["audio/Music/sock.mp3", "audio/Music/Introsong.wav"]},
+        {"image": "images/bg/Title Screen/detailedtitle.png", "music": ["audio/Music/IntroTheme3.mp3", "audio/Music/IntroTheme1.mp3", "audio/Music/openingactone.mp3"]}
+    ]
+    selected_screen = random.choice(title_screens)
+
+    # --- Initialize Persistent Data ---
+    if not hasattr(persistent, 'journal_entries') or persistent.journal_entries is None:
+        persistent.journal_entries = []
+    if not hasattr(persistent, 'missions') or persistent.missions is None:
+        persistent.missions = {"active": [], "completed": []}
+
+
+    # ==============================================================================
+    # 3. UTILITY & HELPER FUNCTIONS
+    # ==============================================================================
+    def get_item_weight(item):
+        return items.get(item, {}).get("weight", 1)
+
+    def get_item_description(item):
+        return items.get(item, {}).get("description", "No description available.")
+
+    def has_item(item):
+        return item in inventory
+
+    def calculate_averages():
+        body_part_count = len(default_status)
+        if body_part_count == 0: return 0, 0, 0
+        total_health = sum(status['health'] for status in default_status.values())
+        total_cleanliness = sum(status['cleanliness'] for status in default_status.values())
+        total_temperature = sum(status['temperature'] for status in default_status.values())
+        return round(total_health / body_part_count), round(total_cleanliness / body_part_count), round(total_temperature / body_part_count)
+
+    def calculate_total_weight():
+        return sum(get_item_weight(item) for item in inventory)
+
+    def get_remaining_space():
+        return max_space - len(inventory)
+
+    def get_filtered_item_at_index(index, filter_type):
+        filtered_items = [item for item in inventory if filter_type == "all" or items.get(item, {}).get("type") == filter_type]
+        return filtered_items[index] if 0 <= index < len(filtered_items) else None
+
+    # ==============================================================================
+    # 4. CHARACTER STATS & SKILLS FUNCTIONS
+    # ==============================================================================
+    def calculate_stat_value(stat_name, level):
+        # A simple, non-recursive formula for initialization. This sets a baseline value.
+        return level * 4 + random.randint(1, 6)
+
+    def initialize_stats():
+        for stat, data in stats.items():
+            if stat != "sanity":
+                # Pass both stat name and level to the calculation function
+                data["current_value"] = calculate_stat_value(stat, data["level"])
+                data["current_xp"] = 0
+
+    def add_experience(stat_name, amount):
+        if stat_name in stats and "current_xp" in stats[stat_name]:
+            stats[stat_name]["current_xp"] += amount
+            if stats[stat_name]["current_xp"] >= stats[stat_name]["max_xp"]:
+                stats[stat_name]["current_xp"] = stats[stat_name]["max_xp"]
+
+    def level_up(stat_name):
         if stat_name in stats:
-            return stats[stat_name]["level"] == level
-        return False  
+            stats[stat_name]["level"] += 1
+            stats[stat_name]["current_xp"] = 0
+            stats[stat_name]["max_xp"] = round(stats[stat_name]["max_xp"] + random.randint(10, 35))
+            stats[stat_name]["current_value"] += random.randint(1, 8)
 
-    # Crafting Recipes
-    crafting_recipes = {
-        ("Laser range finder", "Tactical flashlight"): {"result": "Laser Tactical Kit", "holding_item": "Glue"},
-        ("Compass", "radio"): {"result": "Navigation Radio", "holding_item": "Screwdriver"}
-    }
-#
-    def is_container_empty():
-        for item in container_inventory:
-            if item["current_amount"] == 0 and not item["contents"]:
-                return True
-            return False
-#
+    def has_level(stat_name, level):
+        return stats[stat_name]["level"] == level if stat_name in stats else False
 
+    def is_stat_higher(stat_name, stat_to_compare, stats_dict):
+        if stat_name in stats_dict:
+            return stats_dict[stat_name]["current_value"] > stat_to_compare
+        raise ValueError(f"Stat '{stat_name}' not found in stats.")
 
-#
+    def perform_roll(base_chance, skill_level, skill_name, total_bonuses):
+        skill_value = stats.get(skill_name, {}).get("current_value", 0)
+        total_chance = base_chance + (skill_level * 5) + skill_value + total_bonuses
+        return renpy.random.randint(1, 100) <= total_chance
+
+    # --- Stat Setters (for debug/dev) ---
+    def set_level(stat_name, new_level):
+        if stat_name in stats:
+            stats[stat_name]["level"] = new_level
+
+    def set_current_value(stat_name, attribute_name, new_value):
+        if stat_name in stats and attribute_name in stats[stat_name]:
+            stats[stat_name][attribute_name] = new_value
+
+    def set_max_xp(stat_name, new_max_xp):
+        if stat_name in stats and "max_xp" in stats[stat_name]:
+            stats[stat_name]["max_xp"] = new_max_xp
+
+    # ==============================================================================
+    # 5. EMOTION SYSTEM FUNCTIONS
+    # ==============================================================================
+    def get_emotion_value(emotions_dict, emotion):
+        return emotions_dict.get(emotion, {"value": 0})["value"]
+
+    def update_emotion_value(emotions_dict, emotion, new_value):
+        if emotion in emotions_dict:
+            emotions_dict[emotion]["value"] = new_value
+            return True
+        return False
+
+    def get_top_emotions(emotions):
+        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
+        return sorted_emotions[:3], sorted_emotions[3:]
+
+    def get_top_emotion_bonuses(emotions):
+        sorted_emotions = sorted(emotions.items(), key=lambda x: x[1]["value"], reverse=True)
+        top_emotion_name = sorted_emotions[0][0] if sorted_emotions else None
+        return top_emotion_name, emotions.get(top_emotion_name, {}).get("bonus", {})
+
+    def get_reduced_bonuses(bonuses):
+        return {stat: bonus // 2 for stat, bonus in bonuses.items()}
+
+    def calculate_total_bonus(skill, sorted_emotions):
+        total_bonus = 0
+        if not sorted_emotions: return 0
+
+        # Main bonus from top emotion
+        top_emotion_data = sorted_emotions[0][1]
+        total_bonus += top_emotion_data.get("bonus", {}).get(skill, 0)
+
+        # Reduced bonus from second and third emotions
+        for _, data in sorted_emotions[1:3]:
+            reduced_bonus = get_reduced_bonuses(data.get("bonus", {})).get(skill, 0)
+            total_bonus += reduced_bonus
+        return total_bonus
+
+    def is_highest_emotion(emotions_dict, emotion):
+        if not emotion in emotions_dict: return False
+        highest_emotion = max(emotions_dict, key=lambda k: emotions_dict[k]["value"])
+        return highest_emotion == emotion
+
+    # ==============================================================================
+    # 6. HEALTH & BODY STATUS FUNCTIONS
+    # ==============================================================================
+    def update_status(default, new):
+        for key, value in new.items():
+            if key in default:
+                default[key] = value
+
+    def add_health(part, amount):
+        if part in default_status:
+            default_status[part]["health"] = min(default_status[part]["health"] + amount, maxhealth)
+            renpy.notify(f"{part.replace('_', ' ').capitalize()} health restored by {amount} points.")
+
+    def remove_health(part, amount):
+        if part in default_status:
+            modify_cleanliness(part, -1)
+            default_status[part]["health"] = max(default_status[part]["health"] - amount, minhealth)
+            if default_status[part]["health"] == 0 and part == "head":
+                renpy.jump("gameover")
+
+    def add_condition(part, new_condition):
+        global maxhealth
+        if part in default_status and new_condition not in default_status[part]["conditions"]:
+            default_status[part]["conditions"].append(new_condition)
+            maxhealth = max(0, maxhealth - 10)
+            remove_health(part, 10)
+
+    def remove_condition(part, condition):
+        global maxhealth
+        if part in default_status and condition in default_status[part]["conditions"]:
+            default_status[part]["conditions"].remove(condition)
+            maxhealth = min(100, maxhealth + 10)
+            add_health(part, 10)
+
+    def has_condition(part, condition):
+        return condition in default_status.get(part, {}).get("conditions", [])
+
+    def modify_cleanliness(part, amount):
+        if part in default_status:
+            default_status[part]['cleanliness'] = max(0, min(100, default_status[part]['cleanliness'] + amount))
+            check_cleanliness_and_adjust_temp(part)
+
+    def check_cleanliness_and_adjust_temp(part):
+        cleanliness = default_status[part]['cleanliness']
+        if cleanliness > 90: default_status[part]['temperature'] -= 2
+        elif cleanliness > 75: default_status[part]['temperature'] -= 1
+        elif cleanliness < 50: default_status[part]['temperature'] += 1
+        elif cleanliness < 25: default_status[part]['temperature'] += 2
+
+    def check_temperature(part):
+        temp = default_status[part]['temperature']
+        if temp > 90: add_condition(part, "overheating")
+        elif temp < 45: add_condition(part, "hypothermia")
+        else:
+            if has_condition(part, "overheating"): remove_condition(part, "overheating")
+            if has_condition(part, "hypothermia"): remove_condition(part, "hypothermia")
+
+    def set_room_temperature(room_temp):
+        for part in default_status:
+            variation = random.uniform(-3, 3)
+            if part == "body": variation += random.uniform(7, 12)
+            if part == "head": variation += random.uniform(3, 7)
+            default_status[part]['temperature'] = round(room_temp + variation)
+
+    def use_medkit_item(part, item):
+        global medkit_contents, maxhealth
+        if item not in medkit_contents:
+            renpy.notify(f"You don't have {item.capitalize()} in your medkit!")
+            return
+
+        healing_info = medkit_contents[item]
+        for condition in healing_info.get("conditions", []):
+            if has_condition(part, condition):
+                remove_condition(part, condition)
+
+        add_health(part, healing_info.get("healing", 0))
+        del medkit_contents[item]
+        renpy.notify(f"Used {item.capitalize()} on {part.replace('_', ' ')}. It was fully used.")
+
+    def add_item_to_medkit(item_name, healing_info):
+        medkit_contents[item_name] = healing_info
+        renpy.notify(f"{item_name.capitalize()} has been added to your medkit!")
+
+    # ==============================================================================
+    # 7. INVENTORY & ITEM MANAGEMENT FUNCTIONS
+    # ==============================================================================
+    def add_item(item_name):
+        global inventory
+        if item_name not in items:
+            return f"Item '{item_name}' does not exist."
+        if len(inventory) >= max_space:
+            return "Inventory is full. Cannot add more items."
+        inventory.append(item_name)
+        return f"Added '{item_name}' to the inventory."
+
+    def remove_item(item):
+        global selected_item, inventory
+        if item in inventory: inventory.remove(item)
+        if item == selected_item: selected_item = None
+        renpy.restart_interaction()
+
+    def update_inventory(item, action):
+        item_weight = get_item_weight(item)
+        global current_space_taken
+        if action == "add":
+            if len(inventory) >= max_space or calculate_total_weight() + item_weight > current_strength:
+                prompt_for_removal("Your backpack is full or too heavy. Remove an item.")
+                return False
+            inventory.append(item)
+            current_space_taken += item_weight
+        elif action == "remove" and item in inventory:
+            inventory.remove(item)
+            current_space_taken -= item_weight
+        return True
+
+    def prompt_for_removal(message):
+        renpy.notify(message)
+        renpy.call_in_new_context("prompt_remove_item")
+
+    # --- Equipment Functions ---
+    def equip_item(item, slot):
+        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+        if item not in inventory:
+            renpy.notify("Item not found in inventory.")
+            return
+
+        # Simplified slot handling
+        slot_map = {
+            "head": "head_item", "body": "body_item",
+            "left_hand": "left_hand_item", "right_hand": "right_hand_item",
+            "left_leg": "left_leg_item", "right_leg": "right_leg_item"
+        }
+        if slot in slot_map:
+            slot_var_name = slot_map[slot]
+            current_item = globals()[slot_var_name]
+            if current_item: inventory.append(current_item) # Unequip current item
+            globals()[slot_var_name] = item
+            inventory.remove(item)
+            renpy.notify(f"Equipped {item} to {slot} slot.")
+        else:
+            renpy.notify(f"Cannot equip {item} in {slot} slot.")
+
+    def unequip_item(slot):
+        slot_map = {
+            "head": "head_item", "body": "body_item",
+            "left_hand": "left_hand_item", "right_hand": "right_hand_item",
+            "left_leg": "left_leg_item", "right_leg": "right_leg_item"
+        }
+        if slot in slot_map:
+            slot_var_name = slot_map[slot]
+            if globals()[slot_var_name]:
+                item_to_unequip = globals()[slot_var_name]
+                inventory.append(item_to_unequip)
+                globals()[slot_var_name] = None
+                renpy.notify(f"Unequipped item from {slot} slot.")
+            else:
+                renpy.notify(f"No item to unequip from {slot} slot.")
+        else:
+            renpy.notify("Invalid slot.")
+
+    def discard_item(slot):
+        slot_map = {
+            "head": "head_item", "body": "body_item",
+            "left_hand": "left_hand_item", "right_hand": "right_hand_item",
+            "left_leg": "left_leg_item", "right_leg": "right_leg_item"
+        }
+        if slot in slot_map:
+            slot_var_name = slot_map[slot]
+            if globals()[slot_var_name]:
+                item_to_discard = globals()[slot_var_name]
+                globals()[slot_var_name] = None
+                renpy.notify(f"Discarded {item_to_discard} from {slot} slot.")
+            else:
+                renpy.notify(f"No item to discard from {slot} slot.")
+        else:
+            renpy.notify("Invalid slot.")
+
+    # --- Item Usage Handler ---
+    def use_item(item):
+        global inventory, last_label
+        if item == "First aid kit":
+            if "First aid kit" in inventory: inventory.remove("First aid kit")
+            renpy.show_screen("heal_menu")
+        elif item == "Tissue":
+            if "Tissue" in inventory: inventory.remove("Tissue")
+            add_item("Wet Tissue")
+            renpy.notify("You blow your nose.")
+        elif item == "Wet Tissue":
+            if "Wet Tissue" in inventory: inventory.remove("Wet Tissue")
+            renpy.notify("You place the wet tissue on the floor carefully.")
+        elif item == "radio":
+            renpy.notify("*Listening to radio...*")
+            renpy.sound.play("audio/radio/radio.wav")
+            open_html("006", last_label)
+        elif item == "Classified Mission Sheet":
+            open_html("001", last_label)
+        else:
+            renpy.notify("You can't use that right now.")
+
+    # ==============================================================================
+    # 8. CRAFTING & DECONSTRUCTION FUNCTIONS
+    # ==============================================================================
     def add_crafting_item(item):
         if len(crafting_items) < 2:
             crafting_items.append(item)
             renpy.notify(f"{item} added to crafting box.")
         else:
             renpy.notify("You can only combine two items.")
-#    
-    def check_all_containers_for_liquid(liquid_name):
-        found = False  # Flag to indicate if the liquid was found
-        for container in container_inventory:
-            # Check if the container has any contents
-            if container["contents"]:
-                for content in container["contents"]:
-                    if content["name"] == liquid_name:
-                        renpy.notify(f"{container['name']} contains {liquid_name} ({content['amount']} ml).")
-                        found = True
-                        # Specific check for cleaning solution
-                        if liquid_name == "Cleaning Solution":
-                            renpy.notify("Clean in the console.")
-            else:
-                renpy.notify(f"{container['name']} is empty.")
-
-        # If the liquid was not found in any container
-        if not found:
-            renpy.notify(f"No containers contain {liquid_name}.")
-
-#
 
     def remove_crafting_item(item):
         if item in crafting_items:
             crafting_items.remove(item)
             renpy.notify(f"{item} removed from crafting box.")
-#
-    def drop_item(item):
-        global crafting_items
-        if len(crafting_items) < 2:  # Allow only two items to be dropped
-            crafting_items.append(item)
-            renpy.notify(f"{item} added to crafting box.")
-        else:
-            renpy.notify("You can only craft with two items.")
-#
-    def remove_item(item):
-        global selected_item
-        if item in inventory:  # Assuming 'inventory' is your list of items
-            inventory.remove(item)
-        if item == selected_item:  # Clear the selected item if it's the one being removed
-            selected_item = None
-        renpy.restart_interaction()  # Refresh the screen to reflect changes
 
-#
     def select_item(item):
-        if item not in selected_items and len(selected_items) < 10:  # Allow only two selections
+        if item not in selected_items and len(selected_items) < 2: # Limit to 2 for combining
             selected_items.append(item)
-#
-    def add_liquid(liquid_name):
-        for liquid in liquids:
-            if liquid["name"].lower() == liquid_name.lower():
-                liquid["amount"] += 10  # Change this value as needed
-                renpy.notify(f"You added 10 {liquid_name}.")
-                return
-        renpy.notify(f"{liquid_name} not found.")
-#
-# Function to pour liquid from one container to another or the ground
-    def pour_liquid(source_container, target_container):
-        if source_container["contents"]:
-            content = source_container["contents"][0]  # Assuming only one type of liquid per bottle
-            if target_container:
-                if target_container["current_amount"] + content["amount"] <= target_container["capacity"]:
-                    target_container["contents"].append({"name": content["name"], "amount": content["amount"]})
-                    target_container["current_amount"] += content["amount"]
-                    source_container["contents"].remove(content)
-                    source_container["current_amount"] -= content["amount"]
-                    renpy.notify(f"Poured {content['name']} from {source_container['name']} to {target_container['name']}.")
-                else:
-                    renpy.notify("Not enough space in the target container!")
-            else:
-                # Pour to ground
-                source_container["contents"].remove(content)
-                source_container["current_amount"] -= content["amount"]
-                renpy.notify(f"Poured {content['name']} from {source_container['name']} to the ground.")
-
-    def drain_liquid(container):
-        if container["contents"]:
-            for content in container["contents"][:]:  # Iterate over a copy of the list
-                content["amount"] = max(0, content["amount"] - 10)
-                container["current_amount"] = max(0, container["current_amount"] - 10)
-                if content["amount"] <= 0:
-                    container["contents"].remove(content)
-                    renpy.notify(f"Removed {content['name']} from {container['name']}.")
-            renpy.notify("Drained 10 ml of each liquid from the bottle.")
-#
-    def remove_holding_item(holding_item):
-        global holding_items, selected_holding_item  # Ensure global access to holding_items
-
-        # Only remove if the holding_item is the selected one
-        if holding_item == selected_holding_item and holding_item in holding_items:
-            holding_items.remove(holding_item)  # Remove the item from the holding items list
-            renpy.notify(f"You have removed {holding_item} from holding items.")
-            selected_holding_item = None  # Clear selection after removal
-        else:
-            renpy.notify("You need to select an item to remove.")
-    def adjust_liquid_amount(liquid_name, adjustment):
-        # Find the liquid in the player's available liquids inventory
-        for liquid in liquids:
-            if liquid["name"] == liquid_name:
-                new_amount = liquid["amount"] + adjustment
-    
-                # Ensure the new amount doesn't exceed available or go below 0
-                if adjustment > 0:
-                    if new_amount > liquid["amount"]:
-                        new_amount = liquid["amount"]  # Limit to available amount
-                elif adjustment < 0:
-                    if new_amount < 0:
-                        new_amount = 0  # Prevent negative amounts
-    
-                # Update the selected amount in `selected_liquids`
-                for selected in selected_liquids:
-                    if selected["name"] == liquid_name:
-                        selected["amount"] = min(new_amount, liquid["amount"])
-                        break
-                else:
-                    # If liquid is not yet selected, add it with the new amount
-                    if new_amount > 0:
-                        selected_liquids.append({"name": liquid_name, "amount": new_amount})
-    
-                # Update the player's inventory with the new available amount
-                liquid["amount"] = max(liquid["amount"] - adjustment, 0)
-                break
-    
-    def check_mix_recipe(container):
-        # Get the contents of the container
-        contents = container["contents"]
-
-        # Create a dictionary to store the amounts of each liquid in the container
-        container_liquids = {}
-        for content in contents:
-            container_liquids[content["name"]] = content["amount"]
-
-        # Compare the container's contents with each recipe
-        for recipe_name, recipe_ingredients in liquid_mix_recipes.items():
-            match = True
-            for ingredient, amount in recipe_ingredients.items():
-                if ingredient not in container_liquids or container_liquids[ingredient] < amount:
-                    match = False
-                    break
-            if match:
-                return recipe_name  # Return the name of the matching recipe
-            
-        return None  # No matching recipe found
-    def initialize_stats():
-        for stat in stats:
-            if stat != "sanity":
-                stats[stat]["current_value"] = calculate_stat_value(stats[stat]["level"])
-                stats[stat]["current_xp"] = calculate_stat_value(stats[stat]["level"])
-
-    def calculate_stat_value(level):
-        for stat in stats:
-            return level * random.randint(1, 4) + random.randint(1, 4) + stats[stat]["current_value"] 
-
-    initialize_stats()
-    def handle_mixing_motion():
-        global mixing_progress, is_mixing, mix_start_time
-        if is_mixing:
-            # Increase mixing progress based on time
-            mixing_progress += renpy.random.randint(1, 3)
-            if mixing_progress >= 100:
-                mixing_progress = 100
-                is_mixing = False
-                renpy.notify("Mixing complete!")
-                # Perform the actual mixing logic here
-                mix_liquids(selected_container, selected_liquids)
-        return    
-    def mix_liquids(container, liquids):
-        # Check if the container's contents match a recipe
-        recipe_name = check_mix_recipe(container)
-        if recipe_name:
-            # Perform the mixing logic
-            renpy.notify(f"Successfully created {recipe_name}!")
-
-            # Clear the container's contents and add the new mixture
-            container["contents"] = [{"name": recipe_name, "amount": sum(content["amount"] for content in container["contents"])}]
-            container["current_amount"] = sum(content["amount"] for content in container["contents"])
-        else:
-            renpy.notify("No valid recipe found for the current mixture.")
-            drain_liquid(selected_container)
-            selected_container["contents"] = [{"name": "Sludge", "amount": selected_container["current_amount"]}]
-
-# Function to add liquid to the selected bottle
-    def add_liquid_to_selected(liquid):
-        if selected_container:
-            amount = 10  # Fixed amount to add
-            if selected_container["current_amount"] + amount <= selected_container["capacity"]:
-                if amount <= liquid["amount"]:
-                    # Check if the liquid already exists in the container
-                    found = False
-                    for content in selected_container["contents"]:
-                        if content["name"] == liquid["name"]:
-                            content["amount"] += amount
-                            found = True
-                            break
-                    if not found:
-                        selected_container["contents"].append({"name": liquid["name"], "amount": amount})
-
-                    selected_container["current_amount"] += amount
-                    liquid["amount"] -= amount
-                    renpy.notify(f"Added {amount} ml of {liquid['name']} to {selected_container['name']}.")
-                else:
-                    renpy.notify("Not enough liquid available!")
-            else:
-                renpy.notify("Not enough space in the container!")
-    def add_liquid_to_mixture(liquid_name, amount):
-        amount = int(amount)
-        if amount <= 0:
-            renpy.notify("Please enter a valid amount.")
-            return
-
-        for liquid in liquids:
-            if liquid["name"] == liquid_name and liquid["amount"] >= amount:
-                selected_liquids.append({"name": liquid["name"], "amount": amount})
-                renpy.notify(f"Added {amount} of {liquid_name} to the mixture.")
-                return
-
-        renpy.notify("Not enough liquid or invalid amount.")
 
     def combine_items():
-        global crafting_items, selected_items, liquid_inventory  # Include liquid_inventory
-    
-        # Check if exactly two items are selected
+        global selected_items, inventory, liquid_inventory
         if len(selected_items) != 2:
             renpy.notify("You need exactly two items to combine.")
             return
-        
-        item_tuple = tuple(sorted(selected_items))  # Sort to match recipe keys
-        print(f"Combining items: {item_tuple}")  # Debugging: print the item_tuple
-    
+
+        item_tuple = tuple(sorted(selected_items))
         if item_tuple in crafting_recipes:
-            holding_item = crafting_recipes[item_tuple]["holding_item"]
-            print(f"Holding item: {holding_item}")  # Debugging: print the holding item
-    
-            # Check if glue is being used as the holding item
+            recipe = crafting_recipes[item_tuple]
+            holding_item = recipe["holding_item"]
+
+            # Check for holding item (e.g., Glue, Screwdriver)
             if holding_item == "Glue":
-                # Ensure that glue is in inventory if it is required
-                glue_amount = next((liquid["amount"] for liquid in liquid_inventory if liquid["name"] == "Glue"), 0)
-    
-                if glue_amount > 0:
-                    new_item = crafting_recipes[item_tuple]["result"]
-                    inventory.append(new_item)  # Add new item to inventory
-    
-                    # Remove items from inventory that were used in crafting
-                    for item in selected_items:
-                        inventory.remove(item)  # Remove the used items
-    
-                    # Decrease glue amount without removing it unless it's empty
-                    for liquid in liquid_inventory:
-                        if liquid["name"] == "Glue":
-                            liquid["amount"] -= 10  # Decrease glue amount by 10 (or the required amount)
-                            if liquid["amount"] <= 0:
-                                inventory.remove("Glue")  # Remove glue from inventory if amount is zero
-                                renpy.notify("You have used your last Glue.")
-                            break
-    
-                    renpy.notify(f"You crafted: {new_item} using Glue.")
-                    selected_items.clear()  # Clear selected items after successful crafting
-                else:
+                glue_available = any(liquid["name"] == "Glue" and liquid["amount"] > 0 for liquid in liquid_inventory)
+                if not glue_available:
                     renpy.notify("You need Glue to hold the items together.")
-            else:
-                # If glue is not the holding item
-                if holding_item in inventory:
-                    new_item = crafting_recipes[item_tuple]["result"]
-                    inventory.append(new_item)  # Add new item to inventory
-    
-                    # Remove items from inventory that were used in crafting
-                    for item in selected_items:
-                        inventory.remove(item)  # Remove the used items
-    
-                    renpy.notify(f"You crafted: {new_item} using {holding_item}.")
-                    selected_items.clear()  # Clear selected items after successful crafting
-                else:
-                    renpy.notify(f"You need {holding_item} to hold the items together.")
-        else:
-            renpy.notify("These items cannot be combined.")
-            print(f"Item tuple {item_tuple} not found in crafting recipes.")  # Debugging: recipe not found
-    
-#
-    def get_liquid_amount(liquid_name):
-        for liquid in liquids:
-            if liquid["name"].lower() == liquid_name.lower():
-                return liquid["amount"]
-        return 0
-
-    # Function to use a specific amount of liquid
-    def use_liquid(liquid_name, amount):
-        for liquid in liquids:
-            if liquid["name"].lower() == liquid_name.lower():
-                if liquid["amount"] >= amount:
-                    liquid["amount"] -= amount
-                    return True
-                else:
-                    return False  # Not enough liquid
-        return False  # Liquid not found
-
-#
-    def select_holding_item(item):
-        global holding_item
-        holding_item = item
-        renpy.notify(f"You selected {item} as the holding item.")
-    def remove_item_by_name(inventory, item_name):
-        inventory[:] = [item for item in inventory if item.get("name") != item_name]
-
-   
-    def update_status(default, new):
-        for key in new:
-            if key in default:
-                default[key] = new[key]    
-    medkit_contents = {
-        "Bandage": {"conditions": ["bleeding", "cut"], "healing": 10},
-        "Phenergan": {"conditions": ["nausea"], "healing": 5},
-        "Antibiotics": {"conditions": ["infection"], "healing": 20},
-        "Morphine": {"conditions": [""], "healing": 30}, 
-        "Water Gel": {"conditions": ["burn"], "healing": 15},
-        "Acetaminophen": {"conditions": [""], "healing": 10},
-        "Diphenhydramine": {"conditions": ["pain"], "healing": 10},
-        "SOFT-T": {"conditions": ["hemorrhage", "fracture","bleeding"], "healing": 10},
-        "Naproxen": {"conditions": ["headache"], "healing": 10}
-
-    }
-
-    def level_up(stat_name):
-        if stat_name in stats:
-            stats[stat_name]["level"] += 1
-
-            stats[stat_name]["current_xp"] = 0
-            stats[stat_name]["max_xp"] = round(stats[stat_name]["max_xp"] + random.randint(10, 35) ) 
-            stats[stat_name]["current_value"] += random.randint(1, 8)
-    def set_random_title_screen():
-        global title_screen_set  
-
-        if not title_screen_set:
-            title_screen_set = True  
-            play_title_screen_music(selected_screen)
-            return selected_screen["image"]
-        else:
-            return selected_screen["image"]
-    def play_title_screen_music(selected_screen):
-        global title_screen_set  
-
-        if title_screen_set:
-            return  
-        if selected_screen["music"]:
-            selected_music = random.choice(selected_screen["music"])
-            renpy.music.play(selected_music, loop=True)
-
-        if selected_screen.get("fade_out"):
-            renpy.pause(2)  
-            renpy.hide(selected_screen["image"], transition=dissolve)
-
-    def check_temperature(part):
-        temp = default_status[part]['temperature']
-        if temp > 90:
-            default_status[part]['status'] = "overheated"
-            add_condition(part, "overheating")
-        elif temp < 45:
-            default_status[part]['status'] = "hypothermia"
-            add_condition(part, "hypothermia")
-        else:
-            default_status[part]['status'] = "fine"
-            if "overheating" in default_status[part]['conditions']:
-                default_status[part]['conditions'].remove("overheating")
-            if "hypothermia" in default_status[part]['conditions']:
-                default_status[part]['conditions'].remove("hypothermia")
-    def check_cleanliness_and_adjust_temp(part):
-        cleanliness = default_status[part]['cleanliness']
-
-        if cleanliness > 90:
-            default_status[part]['temperature'] -= 2  # Clean parts may be cooler
-        elif cleanliness > 75:
-            default_status[part]['temperature'] -= 1
-        elif cleanliness < 50:
-            default_status[part]['temperature'] += 1  # Dirty parts may be warmer
-        elif cleanliness < 25:
-            default_status[part]['temperature'] += 2
-
-    def modify_cleanliness(part, amount):
-        global default_status
-        default_status[part]['cleanliness'] += amount
-
-        default_status[part]['cleanliness'] = max(0, min(100, default_status[part]['cleanliness']))
-
-        check_cleanliness_and_adjust_temp(part)
-
-    title_screens = [
-        {
-            "image": "images/bg/Title Screen/Title_Screen.png",
-            "music": ["audio/Music/showtime.mp3"]
-        },
-        {
-            "image": "images/bg/Title Screen/Titlescreen2.png",
-            "music": ["audio/Music/openingact.mp3", "audio/Music/creep.mp3"]
-        },
-        {
-            "image": "images/bg/Title Screen/alternatetitleone.png",
-            "music": ["audio/Music/sock.mp3", "audio/Music/Introsong.wav"]
-        },
-        {
-            "image": "images/bg/Title Screen/detailedtitle.png",
-            "music": ["audio/Music/IntroTheme3.mp3", "audio/Music/IntroTheme1.mp3", "audio/Music/openingactone.mp3"]
-        }
-    ]
-#
-    selected_screen = random.choice(title_screens)      
-    def is_stat_higher(stat_name, stat_to_compare, stats):
-        if stat_name in stats:
-            current_value = stats[stat_name]["current_value"] 
-            return current_value > stat_to_compare 
-        else:
-            raise ValueError(f"Stat '{stat_name}' not found in stats.")
-
-#
-    def set_npc(name, mood, attitude):
-        global npc_name, npc_mood, npc_attitude
-        npc_name = name
-        npc_mood = mood
-        npc_attitude = attitude
-    def add_condition(part, new_condition):
-        global default_status
-        global maxhealth
-        maxhealth = maxhealth - 10
-        remove_health(part, 10)
-        if part in default_status:
-            if new_condition not in default_status[part]["conditions"]:
-                default_status[part]["conditions"].append(new_condition)        
-    def remove_health(part, amount):
-
-        global default_status
-        if part in default_status:
-            default_status[part]["health"] = max(default_status[part]["health"] - amount, minhealth)
-
-            if default_status[part]["health"] == 0 and part == "head":
-                renpy.jump("gameover")  
-    def set_level(stat_name, new_level):
-        if stat_name in stats:
-            stats[stat_name]["level"] = new_level
-            print(f"{stat_name.capitalize()} level set to {new_level}")
-        else:
-            print(f"Stat {stat_name} does not exist.")
-
-    # Function to set the current XP of a specific stat
-    def set_current_value(stat_name, attribute_name, new_value):
-        if stat_name in stats:
-            if attribute_name in stats[stat_name]:
-                stats[stat_name][attribute_name] = new_value
-                print(f"{stat_name.capitalize()}: {attribute_name} set to {new_value}")
-            else:
-                print(f"Attribute {attribute_name} does not exist in {stat_name}.")
-        else:
-            print(f"Stat {stat_name} does not exist.")
-
-
-    # Function to set the max XP of a specific stat
-    def set_max_xp(stat_name, new_max_xp):
-        if stat_name in stats and "max_xp" in stats[stat_name]:
-            stats[stat_name]["max_xp"] = new_max_xp
-            print(f"{stat_name.capitalize()} max XP set to {new_max_xp}")
-        else:
-            print(f"Stat {stat_name} does not exist or cannot have max XP.")
-
-    def remove_condition(part, condition):
-        global default_status
-        global maxhealth
-        maxhealth = maxhealth + 10
-        add_health(part, 10)
-
-        if part in default_status:
-            default_status[part]["conditions"] = [c for c in default_status[part]["conditions"] if c != condition]
-    def remove_health(part, amount):
-        global default_status
-        modify_cleanliness(part, -1)
-        if part in default_status:
-            default_status[part]["health"] = max(default_status[part]["health"] - amount, minhealth)
-    def has_condition(part, condition):
-        global default_status
-        if part in default_status:
-            return condition in default_status[part]["conditions"]
-        return False
-    def add_health(part, amount):
-        global default_status
-        global maxhealth
-        maxhealth = maxhealth  
-        if part in default_status:
-            default_status[part]["health"] = min(default_status[part]["health"] + amount, maxhealth)
-        renpy.notify(f"{part.replace('_', ' ').capitalize()} health restored by {amount} points.")
-    WEBSERVER_PORT = 3000
-    PORT = 3000
-    # Construct the absolute path to the htmls directory
-    HTML_SERVE_DIR = os.path.abspath(os.path.join(renpy.config.gamedir, "htmls"))
-
-    # --- Sanity Check ---
-    if not os.path.isdir(HTML_SERVE_DIR):
-        print(f"[Web Server Error] HTML directory not found or is not a directory: {HTML_SERVE_DIR}")
-        # Optionally, raise an error or notify the user
-        # raise Exception(f"Required HTML directory not found: {HTML_SERVE_DIR}")
-    else:
-        print(f"[Web Server] Serving files from: {HTML_SERVE_DIR}")
-
-    # --- Custom Request Handler ---
-    class RenpyHTTPRequestHandler(SimpleHTTPRequestHandler):
-        # Override the base class directory to our specific HTML_SERVE_DIR
-        # This simplifies path handling significantly. The server will *only*
-        # look for files within this directory.
-        def __init__(self, *args, **kwargs):
-            # Python 3.7+ way to change directory for the handler
-            if sys.version_info >= (3, 7):
-                 kwargs['directory'] = HTML_SERVE_DIR
-            super().__init__(*args, **kwargs)
-            # Python 3.6 fallback (less common now)
-            # if sys.version_info < (3, 7):
-            #    self.directory = HTML_SERVE_DIR # Note: This might need adjustment for 3.6
-
-        # --- Security & Functionality Enhancements ---
-        def translate_path(self, path):
-            """
-            Translate a URL path to a filesystem path within HTML_SERVE_DIR.
-            Includes security checks.
-            """
-            # Decode URL encoding (e.g., %20 -> space)
-            path = path.split('?', 1)[0]  # Remove query string
-            path = path.split('#', 1)[0]  # Remove fragment
-            decoded_path = urllib.parse.unquote(path)
-
-            # --- Path Cleaning & Security ---
-            # Make the path relative by removing leading slashes
-            relative_path = decoded_path.lstrip('/')
-            # Normalize the path (collapses .., handles separators)
-            safe_relative_path = os.path.normpath(relative_path)
-
-            # **Crucial Security Check**: Prevent escaping the HTML_SERVE_DIR
-            # After normalization, the path should not start with '..' or be absolute
-            if safe_relative_path.startswith('..') or os.path.isabs(safe_relative_path):
-                print(f"[Web Server Security] Blocked potentially unsafe path: {path}")
-                # Return a path deliberately outside the serve dir or non-existent
-                # This will likely lead to a 404 naturally by the base handler.
-                # We return just the 'unsafe' part to let the base handler fail.
-                return "ACCESS_DENIED_INVALID_PATH" # Or just an empty string ""
-
-            # Join the *base serving directory* with the safe relative path
-            full_path = os.path.join(HTML_SERVE_DIR, safe_relative_path)
-
-            # --- Debugging (Uncomment to see path translation) ---
-            # print(f"[Web Server Debug] Request Path: {path}")
-            # print(f"[Web Server Debug] Decoded Path: {decoded_path}")
-            # print(f"[Web Server Debug] Safe Relative Path: {safe_relative_path}")
-            # print(f"[Web Server Debug] Calculated Full Path: {full_path}")
-            # print(f"[Web Server Debug] Full Path Exists: {os.path.exists(full_path)}")
-            # ---
-
-            # Return the calculated *absolute* filesystem path
-            # The base SimpleHTTPRequestHandler expects this.
-            return full_path
-
-
-
-        def log_message(self, format, *args):
-            """Optional: Suppress logging to console."""
-            # Comment out the next line to see default HTTP request logs
-            pass
-
-    # --- Web Server Thread ---
-    class WebServerThread(threading.Thread):
-        def __init__(self, port):
-            super().__init__()
-            self.daemon = True  # Allows Ren'Py to exit even if this thread is running
-            self.port = port
-            self.server = None
-            self._stop_event = threading.Event()
-
-        def run(self):
-            # Check again if the directory exists right before starting
-            if not os.path.isdir(HTML_SERVE_DIR):
-                print(f"[Web Server Thread Error] HTML directory gone or invalid before start: {HTML_SERVE_DIR}")
+                    return
+            elif holding_item not in inventory:
+                renpy.notify(f"You need {holding_item} to hold the items together.")
                 return
 
-            try:
-                # Create the server, binding to localhost only on the specified port, using our custom handler
-                self.server = TCPServer(("localhost", self.port), RenpyHTTPRequestHandler)
-                print(f"[Web Server Thread] Server starting on http://localhost:{self.port}")
-                # Start serving requests until stop() is called
-                self.server.serve_forever()
-                # This line is reached after shutdown() is called
-                print("[Web Server Thread] Server stopped.")
+            # Craft the item
+            new_item = recipe["result"]
+            inventory.append(new_item)
+            for item in selected_items: inventory.remove(item)
 
-            except OSError as e:
-                print(f"[Web Server Thread Error] Failed to start server on port {self.port}: {e}")
-                print(f"[Web Server Thread Error] Is another application (or game instance) already using port {self.port}?")
-                renpy.notify(f"Error: Could not start internal web server on port {self.port}. Port possibly in use.")
-            except Exception as e:
-                print(f"[Web Server Thread Error] An unexpected error occurred: {e}")
+            if holding_item == "Glue":
+                for liquid in liquid_inventory:
+                    if liquid["name"] == "Glue":
+                        liquid["amount"] -= 10
+                        if liquid["amount"] <= 0: liquid_inventory.remove(liquid)
+                        break
 
-        def stop(self):
-            if self.server:
-                print("[Web Server Thread] Shutting down server...")
-                # Shutdown the server loop (must be called from a different thread)
-                self.server.shutdown()
-                # Close the server socket
-                self.server.server_close()
-                self.server = None # Clear the reference
-                print("[Web Server Thread] Server shutdown complete.")
-
-    # --- Global Server Instance & Control Functions ---
-    _web_server_instance = None
-
-    def start_web_server():
-        global _web_server_instance
-        if _web_server_instance is None or not _web_server_instance.is_alive():
-            if os.path.isdir(HTML_SERVE_DIR): # Only start if dir is valid
-                print("[Web Server Control] Starting web server...")
-                _web_server_instance = WebServerThread(WEBSERVER_PORT)
-                _web_server_instance.start()
-            else:
-                print(f"[Web Server Control] Cannot start server, HTML directory is invalid: {HTML_SERVE_DIR}")
-                renpy.notify(f"Error: Cannot start web server. HTML folder missing or invalid.")
+            renpy.notify(f"You crafted: {new_item} using {holding_item}.")
+            selected_items.clear()
         else:
-            print("[Web Server Control] Server already running.")
+            renpy.notify("These items cannot be combined.")
 
-    def stop_web_server():
-        global _web_server_instance
-        if _web_server_instance and _web_server_instance.is_alive():
-            print("[Web Server Control] Stopping web server...")
-            _web_server_instance.stop()
-            _web_server_instance.join(timeout=2.0) # Wait briefly for thread to finish
-            if _web_server_instance.is_alive():
-                print("[Web Server Control Warning] Server thread did not stop cleanly.")
-            _web_server_instance = None
+    def deconstruct_item(item):
+        global inventory
+        if item in deconstruction_recipes and item in inventory:
+            components = deconstruction_recipes[item]
+            for component in components: inventory.append(component)
+            inventory.remove(item)
+            renpy.notify(f"You deconstructed {item} into: {', '.join(components)}.")
         else:
-            print("[Web Server Control] Server not running or already stopped.")
+            renpy.notify(f"{item} cannot be deconstructed or is not in inventory.")
 
-    start_web_server()
-
-
-    config.quit_action = stop_web_server
-
-
-    def open_html(filename_no_ext, last_label=None):
-
-        if _web_server_instance is None or not _web_server_instance.is_alive():
-             print("[Open HTML Error] Web server is not running. Cannot open HTML.")
-             renpy.notify("Internal web server is not running.")
-             return
-
-        # We *construct* the URL to *include* /game/htmls/ because that's what
-        # the browser will request. The server handler will then map it correctly.
-        # VVVVV THIS LINE IS NOW CORRECT VVVVV
-        base_url = f"http://localhost:{WEBSERVER_PORT}/{filename_no_ext}.html" # Use WEBSERVER_PORT
-
-        query_params = {}
-        if last_label:
-            query_params['lastLabel'] = last_label
-
-        # Add query parameters if any
-        if query_params:
-            encoded_params = urllib.parse.urlencode(query_params)
-            full_url = f"{base_url}?{encoded_params}"
-        else:
-            full_url = base_url
-
-        print(f"[Open HTML] Opening URL: {full_url}")
-        try:
-            success = webbrowser.open(full_url)
-            if not success:
-                print("[Open HTML Warning] webbrowser.open() reported failure. Is a browser available?")
-                renpy.notify("Could not open web browser.")
-        except Exception as e:
-            print(f"[Open HTML Error] Failed to open browser: {e}")
-            renpy.notify(f"Error opening browser: {e}")
-
-    def open_html(name, label_value):
-        """Opens the specified HTML file, including /game/htmls/ in the URL."""
-        safe_label = urllib.parse.quote(label_value if label_value else "Unknown")
-        # Construct the URL *with* /game/htmls/ included
-        url = f"http://localhost:{PORT}/{name}.html?lastLabel={safe_label}"
-        print(f"Opening URL: {url}") # Debugging output
-        webbrowser.open(url)
-
-
-    def has_item(item):
-        return item in inventory
-    def has_stirring_tool(tool):
-        return tool in inventory    
-    def add_item(item_name):
-        """
-        Add an item to the inventory if there is space and the item exists in the items dictionary.
-        """
-        global inventory, max_space
-
-        # Check if the item exists in the items dictionary
-        if item_name not in items:
-            return f"Item '{item_name}' does not exist."
-
-        # Check if there is space in the inventory
-        if len(inventory) >= max_space:
-            return "Inventory is full. Cannot add more items."
-
-        # Add the item to the inventory
-        inventory.append(item_name)
-        return f"Added '{item_name}' to the inventory."
-    def add_item_to_medkit(item_name, healing_info):
-
-        global medkit_contents
-
-        # Add the item to the medkit with its healing properties
-        medkit_contents[item_name] = healing_info
-
-        # Notify the player that the item was added
-        renpy.notify(f"{item_name.capitalize()} has been added to your medkit!")
-
-    def use_medkit_item(part, item):
-
-        global default_status, medkit_contents , maxhealth
-
-        # Check if the item exists in the medkit
-        if item not in medkit_contents:
-            renpy.notify(f"You don't have {item.capitalize()} in the medkit!")
-            return
-
-        # Get the item's healing info (conditions it heals and health recovery)
-        healing_info = medkit_contents.get(item, {})
-        conditions_to_heal = healing_info.get("conditions", [])
-        health_recovery = healing_info.get("healing")
-
-        # Heal specific conditions if they exist on this part
-        for condition in conditions_to_heal:
-            if condition in default_status[part]["conditions"]:
-                default_status[part]["conditions"].remove(condition)
-                if maxhealth < 100:
-                    maxhealth = maxhealth + 10
-        # Heal health for the part
-        add_health(part, health_recovery)
-        del medkit_contents[item]
-
-        # Notify the player of the healing action
-        renpy.notify(f"Used {item.capitalize()} on {part.replace('_', ' ')} and it was fuuly used...")
-
-
-    current_space_taken = 0  # Tracks the total weight of items in the inventory
-    def start_minigame():
-        global minigame_time, minigame_active, minigame_problem, minigame_answer, player_answer
-        minigame_time = 10  # 10 seconds for the mini-game
-        minigame_active = True
-        minigame_problem, minigame_answer = generate_problem()
-        player_answer = ""  # Reset player's answer
-
-
-    def check_minigame_answer():
-        global minigame_active, minigame_bonus, minigame_problem, minigame_answer, player_answer
-
-        # Debug: Print the player's answer
-        print(f"Player's answer: {player_answer}")
-
-        # Check if the player's answer is correct
-        if player_answer.isdigit() and int(player_answer) == minigame_answer:
-            minigame_bonus += 1
-            renpy.notify("Correct! Well done.")  # Notify the player
-        else:
-            minigame_bonus -= 1
-            renpy.notify(f"The correct answer was {minigame_answer}.")  # Notify the player
-
-        # Generate a new problem
-        minigame_problem, minigame_answer = generate_problem()
-        player_answer = ""  # Reset player's answer
-
-
-
-    def generate_problem():
-        problem_types = ["addition", "multiplication"]
-        problem_type = random.choice(problem_types)
-        num1 = random.randint(1, 10)
-        num2 = random.randint(1, 10)
-
-        if problem_type == "addition":
-            problem = f"{num1} + {num2}"
-            answer = num1 + num2
-        elif problem_type == "multiplication":
-            problem = f"{num1} * {num2}"
-            answer = num1 * num2
-
-        return problem, answer  # Return both the problem and the answer
-    def calculate_total_weight():
-        """Calculate the total weight of items in the inventory."""
-        total_weight = sum(get_item_weight(item) for item in inventory)
-        return total_weight
-    def get_remaining_space():
-        return max_space - len(inventory) 
-    def ToggleScreenVisibility():
-        global hud_visible
-        hud_visible = not hud_visible  # Toggle between True and False
-
-    def prompt_for_removal(message):
-        """Prompt the player to remove an item."""
-        renpy.notify(message)
-        renpy.call_innew_context("prompt_remove_item")  # Call a new screen to handle item removal
-
-    def calculate_total_bonus(skill, sorted_emotions):
-        total_bonus = 0
-
-        top_emotion = sorted_emotions[0][0] if sorted_emotions else None
-
-        if top_emotion:
-            main_emotion_data = sorted_emotions[0][1]
-            if skill in main_emotion_data["bonus"]:
-                total_bonus += main_emotion_data["bonus"][skill]
-
-        for emotion, data in sorted_emotions[1:2]:
-            if skill in data["bonus"]:
-                reduced_bonus = get_reduced_bonuses(data["bonus"]).get(skill, 0)
-                total_bonus += reduced_bonus
-
-        return total_bonus
-
-    def update_inventory(item, action):
-        """Update the inventory based on adding or removing items."""
-        item_weight = get_item_weight(item)
-        global current_space_taken
-
-        if action == "add":
-            if len(inventory) >= max_space:
-                prompt_for_removal("Your backpack is full. You need to remove an item before adding more.")
-                return False
-
-            if calculate_total_weight() + item_weight > current_strength:
-                prompt_for_removal("You cannot carry more weight. You need to remove an item before adding more.")
-                return False
-
-            inventory.append(item)
-            current_space_taken += item_weight  # Add the weight of the item
-        elif action == "remove":
-            if item in inventory:
-                inventory.remove(item)
-                current_space_taken -= item_weight  # Subtract the weight of the item
-        return True
-
-    def label_callback(name, abnormal):
-        store.last_label = name
-    config.label_callback = label_callback
-
-# Example of gaining experience (you can adjust this function based on game events)
-    def add_experience(stat_name, amount):
-        stats[stat_name]["current_xp"] += amount
-        if stats[stat_name]["current_xp"] >= stats[stat_name]["max_xp"]:
-            stats[stat_name]["current_xp"] = stats[stat_name]["max_xp"] # Cap XP at max if it exceeds
-# Define the items dictionary YOU NEED TO ADD A ITEM HERE FOR ITEMS TO WORK!!! default types = consumable all', 'weapon', 'armor', 'consumable' although putting anything else wont break code..
-    items = {
-        "MG41": {
-            "type": "weapon",
-            "weight": 10,
-            "description": "A powerful machine gun. There are many like it but this one is mine."
-        },
-        "Tissue": {
-            "type": "junk",
-            "weight": 2,
-            "description": "A Tissue to wipe away your sorrows.."
-        },     
-        "Wet Tissue": {
-            "type": "junk",
-            "weight": 2,
-            "description": "A Wet Tissue...yuck!"
-        },                   
-        "Laser range finder": {
-            "type": "tool",
-            "weight": 1,
-            "description": "Used to measure the distance from here to a target."
-        },
-        "Compass": {
-            "type": "tool",
-            "weight": 1,
-            "description": "A military grade compass used for navigation."
-        },
-        "radio": {
-            "type": "tool",
-            "weight": 2,
-            "description": "A military grade radio used for communication. Is only able to communicate with military units and HQ."
-        },
-        "Classified Mission Sheet": {
-            "type": "tool",
-            "weight": 2,
-            "description": "A sheet I should not have given to me by a friend."
-        },        
-        "First aid kit": {
-            "type": "consumable",
-            "weight": 1,
-            "description": "Used to heal minor injuries."
-        },
-        "Tactical flashlight": {
-            "type": "tool",
-            "weight": 1,
-            "description": "This light can survive explosions and runs on solar battery."
-        },
-        "Water Bottle": {
-            "type": "consumable",
-            "weight": 1,
-            "description": "Used to hold water. Can hold up to 500ml of water...or any other liquid for that matter."
-        },
-        "sissor": {
-            "type": "tool",
-            "weight": 1,
-            "description": "Used to cut things."
-        },
-        "Report 001": {
-            "type": "document",
-            "weight": 300,
-            "description": "A report of something? I don't remember what it is for. It's very important."
-        },
-        "Pistol": { # Added Pistol
-            "type": "weapon",
-            "weight": 2,
-            "description": "A standard issue sidearm. Reliable in a pinch."
-        }
-    }
-    def get_item_weight(item):
-        """Return the weight of an item."""
-        if item in items:
-            return items[item]["weight"]
-        return 1  # Default weight if item not found
-    def get_item_description(item):
-        """Return the description of an item."""
-        if item in items:
-            return items[item]["description"]
-        return "No description available."  # Default description if item not found
-    def set_room_temperature(room_temp):
-        for part, attributes in default_status.items():
-            if part == "body":
-                temperature_variation = random.uniform(0, 2)  
-                default_status[part]['temperature'] = round(room_temp + 10 + temperature_variation)  
-            elif part == "head":
-                temperature_variation = random.uniform(-2, 2) 
-                default_status[part]['temperature'] = round(room_temp + 5 + temperature_variation)
-            else:
-                temperature_variation = random.uniform(-3, 3)  
-                default_status[part]['temperature'] = round(room_temp + temperature_variation)
-
+    # ==============================================================================
+    # 9. LIQUID & CONTAINER FUNCTIONS
+    # ==============================================================================
     def add_liquid(liquid_name, amount):
         for liquid in liquid_inventory:
             if liquid["name"] == liquid_name:
@@ -1788,197 +916,333 @@ init python:
     def remove_liquid(liquid_name, amount):
         for liquid in liquid_inventory:
             if liquid["name"] == liquid_name:
-                if liquid["amount"] >= amount:  
-                    liquid["amount"] -= amount
+                if liquid["amount"] >= amount: liquid["amount"] -= amount
+                else: renpy.notify("Not enough liquid available.")
+                break
+
+    def add_liquid_to_selected(liquid):
+        if not selected_container: return
+        amount = 10
+        if selected_container["current_amount"] + amount > selected_container["capacity"]:
+            renpy.notify("Not enough space in the container!")
+            return
+        if amount > liquid["amount"]:
+            renpy.notify("Not enough liquid available!")
+            return
+
+        found = False
+        for content in selected_container["contents"]:
+            if content["name"] == liquid["name"]:
+                content["amount"] += amount
+                found = True
+                break
+        if not found:
+            selected_container["contents"].append({"name": liquid["name"], "amount": amount})
+
+        selected_container["current_amount"] += amount
+        liquid["amount"] -= amount
+        renpy.notify(f"Added {amount} ml of {liquid['name']} to {selected_container['name']}.")
+
+    def mix_liquids(container, liquids):
+        recipe_name = check_mix_recipe(container)
+        if recipe_name:
+            total_volume = sum(c["amount"] for c in container["contents"])
+            container["contents"] = [{"name": recipe_name, "amount": total_volume}]
+            container["current_amount"] = total_volume
+            renpy.notify(f"Successfully created {recipe_name}!")
+        else:
+            renpy.notify("No valid recipe found. The mixture turned into sludge.")
+            container["contents"] = [{"name": "Sludge", "amount": container["current_amount"]}]
+
+    def check_mix_recipe(container):
+        container_liquids = {c["name"]: c["amount"] for c in container["contents"]}
+        for recipe_name, recipe_ingredients in liquid_mix_recipes.items():
+            if all(ingredient in container_liquids and container_liquids[ingredient] >= amount for ingredient, amount in recipe_ingredients.items()):
+                return recipe_name
+        return None
+
+    def drain_liquid(container):
+        if container["contents"]:
+            container["contents"].clear()
+            container["current_amount"] = 0
+            renpy.notify(f"Drained all liquid from the {container['name']}.")
+
+    def pour_liquid(source_container, target_container):
+        if source_container["contents"]:
+            # Simplified: Pour all contents
+            total_pour_amount = source_container["current_amount"]
+            if target_container:
+                if target_container["current_amount"] + total_pour_amount <= target_container["capacity"]:
+                    # Basic mixing: just add lists. A real system would be more complex.
+                    target_container["contents"].extend(source_container["contents"])
+                    target_container["current_amount"] += total_pour_amount
+                    source_container["contents"].clear()
+                    source_container["current_amount"] = 0
+                    renpy.notify(f"Poured contents from {source_container['name']} to {target_container['name']}.")
                 else:
-                    renpy.notify("Not enough liquid available.")
-                break         
-    def equip_item(item, slot):
-        """Equip an item to the specified body slot."""
-        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+                    renpy.notify("Not enough space in the target container!")
+            else: # Pour to ground
+                source_container["contents"].clear()
+                source_container["current_amount"] = 0
+                renpy.notify(f"Poured contents from {source_container['name']} to the ground.")
 
-        # Check if the item is in the inventory
-        if item not in inventory:
-            renpy.notify("Item not found in inventory.")
-            return
+    # ==============================================================================
+    # 10. JOURNAL, MISSIONS & BOOKS FUNCTIONS
+    # ==============================================================================
+    def add_mission(title, description, objectives=None):
+        if objectives is None: objectives = []
+        current_day = getattr(store, 'day', 1)
+        if any(m["title"] == title for m in persistent.missions["active"]): return
 
-        # Get item type from the item data
-        item_type = items[item]["type"]
+        new_mission = {"title": title, "description": description, "objectives": objectives, "progress": 0, "date_added": f"Day {current_day}"}
+        persistent.missions["active"].append(new_mission)
+        renpy.notify("New mission added: " + title)
 
-        # Check if the item can be equipped in the selected slot
-        if slot == "head" and item_type == "head":
-            if head_item:
-                inventory.append(head_item)  # Unequip current head item
-            head_item = item
-        elif slot == "body" and item_type == "body":
-            if body_item:
-                inventory.append(body_item)  # Unequip current body item
-            body_item = item
-        elif slot == "left_hand" or item_type == "weapon"  or item_type == "tool":
-            if left_hand_item:
-                inventory.append(left_hand_item)  # Unequip current left hand item
-            left_hand_item = item
-        elif slot == "right_hand" or item_type == "weapon" or item_type == "tool":
-            if right_hand_item:
-                inventory.append(right_hand_item)  # Unequip current right hand item
-            right_hand_item = item
-        elif slot == "left_leg" and item_type == "legs":
-            if left_leg_item:
-                inventory.append(left_leg_item)  # Unequip current left leg item
-            left_leg_item = item
-        elif slot == "right_leg" and item_type == "legs":
-            if right_leg_item:
-                inventory.append(right_leg_item)  # Unequip current right leg item
-            right_leg_item = item
+    def update_mission_progress(title, progress):
+        for mission in persistent.missions["active"]:
+            if mission["title"] == title:
+                mission["progress"] = min(100, max(0, progress))
+                if mission["progress"] == 100:
+                    complete_mission(title)
+                return True
+        return False
+
+    def complete_mission(title):
+        for i, mission in enumerate(persistent.missions["active"]):
+            if mission["title"] == title:
+                mission["progress"] = 100
+                persistent.missions["completed"].append(mission)
+                persistent.missions["active"].pop(i)
+                renpy.notify("Mission completed: " + title)
+                return True
+        return False
+
+    def add_journal_entry(title, content):
+        current_day = getattr(store, 'day', 1)
+        entry = {"title": title, "content": content, "date": f"Day {current_day}"}
+        persistent.journal_entries.append(entry)
+        renpy.notify("New journal entry added")
+
+    def unlock_book(title, text_file, preview="images/inventory/inventory_hud/default_book.png"):
+        current_day = getattr(store, 'day', 1)
+        if any(b["title"] == title for b in store.unlocked_books): return
+        if renpy.loadable(text_file):
+            new_book = {"title": title, "text_file": text_file, "preview": preview, "date_unlocked": f"Day {current_day}"}
+            store.unlocked_books.append(new_book)
         else:
-            renpy.notify(f"Cannot equip {item} in {slot} slot.")
-            return
+            renpy.notify("Error: Book file not found: " + text_file)
 
-        # Remove the item from the inventory
-        inventory.remove(item)
-        renpy.notify(f"Equipped {item} to {slot} slot.")
-    def unequip_item(slot):
-        """Unequip an item from the specified body slot."""
-        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+    def load_book_text(text_file):
+        try:
+            with renpy.file(text_file) as f:
+                content = f.read().decode("utf-8")
+            words = content.split()
+            return [" ".join(words[i:i + 250]) for i in range(0, len(words), 250)]
+        except:
+            return ["Error loading book content."]
 
-        if slot == "head" and head_item:
-            inventory.append(head_item)
-            head_item = None
-            renpy.notify("Unequipped item from head slot.")
-        elif slot == "body" and body_item:
-            inventory.append(body_item)
-            body_item = None
-            renpy.notify("Unequipped item from body slot.")
-        elif slot == "left_hand" and left_hand_item:
-            inventory.append(left_hand_item)
-            left_hand_item = None
-            renpy.notify("Unequipped item from left hand slot.")
-        elif slot == "right_hand" and right_hand_item:
-            inventory.append(right_hand_item)
-            right_hand_item = None
-            renpy.notify("Unequipped item from right hand slot.")
-        elif slot == "left_leg" and left_leg_item:
-            inventory.append(left_leg_item)
-            left_leg_item = None
-            renpy.notify("Unequipped item from left leg slot.")
-        elif slot == "right_leg" and right_leg_item:
-            inventory.append(right_leg_item)
-            right_leg_item = None
-            renpy.notify("Unequipped item from right leg slot.")
+    # ==============================================================================
+    # 11. RELATIONSHIP & NPC FUNCTIONS
+    # ==============================================================================
+    def get_relationship_description(trust, friendship, hostility):
+        if trust > 80 and friendship > 80: return "Best Friend"
+        if trust > 70 and friendship > 70: return "Close Friend"
+        if trust > 60 and friendship > 60: return "Good Friend"
+        if trust > 50 and friendship > 50: return "Trusted Friend"
+        if friendship > 50: return "Friend"
+        if hostility > 70: return "Enemy"
+        if hostility > 50: return "Adversary"
+        if hostility > 30: return "Rival"
+        if trust > 50: return "Trusted Associate"
+        return "Stranger"
+
+    def set_npc(name, mood, attitude):
+        global npc_name, npc_mood, npc_attitude
+        npc_name, npc_mood, npc_attitude = name, mood, attitude
+
+    # ==============================================================================
+    # 12. MINIGAME FUNCTIONS
+    # ==============================================================================
+    # --- Stirring/Mixing Minigames ---
+    def update_stirring_progress():
+        global stirring_progress, last_mouse_pos, stirring_direction, stirring_count, stirring_complete
+        current_mouse_pos = renpy.get_mouse_pos()
+        if last_mouse_pos != (0, 0):
+            dx = current_mouse_pos[0] - last_mouse_pos[0]; dy = current_mouse_pos[1] - last_mouse_pos[1]
+            if abs(dx) > abs(dy): new_direction = "right" if dx > 0 else "left"
+            else: new_direction = "down" if dy > 0 else "up"
+            if stirring_direction and \
+               ((stirring_direction, new_direction) in [("right", "down"), ("down", "left"), ("left", "up"), ("up", "right")]):
+                stirring_count += 1
+                if stirring_count >= 4:
+                    stirring_progress += 10; stirring_count = 0
+                    if stirring_progress >= 100:
+                        stirring_progress = 100; stirring_complete = True; renpy.notify("Stirring complete!")
+                        mix_liquids(selected_container, selected_liquids)
+            stirring_direction = new_direction
+        last_mouse_pos = current_mouse_pos
+
+    def reset_stirring():
+        global stirring_tool, stirring_progress, stirring_complete, last_mouse_pos, stirring_direction, stirring_count
+        stirring_tool, stirring_progress, stirring_complete = None, 0, False
+        last_mouse_pos, stirring_direction, stirring_count = (0, 0), None, 0
+
+    def handle_mixing_click(direction):
+        global current_mixing_step, mixing_attempts
+        if direction == mixing_steps[current_mixing_step]:
+            current_mixing_step += 1
+            if current_mixing_step >= len(mixing_steps):
+                current_mixing_step = 0; mixing_attempts += 1
+                if mixing_attempts >= 2:
+                    renpy.notify("Mixing complete!"); mix_liquids(selected_container, selected_liquids); reset_mixing()
+                else:
+                    renpy.notify(f"Step {mixing_attempts + 1}: Continue mixing!")
         else:
-            renpy.notify("No item to unequip from this slot.")
-    def discard_item(slot):
-        """Discard an item from the specified body slot."""
-        global head_item, body_item, left_hand_item, right_hand_item, left_leg_item, right_leg_item, inventory
+            renpy.notify("Wrong direction! Start over."); reset_mixing()
 
-        item_to_discard = None
+    def reset_mixing():
+        global current_mixing_step, mixing_attempts
+        current_mixing_step, mixing_attempts = 0, 0
 
-        if slot == "head" and head_item:
-            item_to_discard = head_item
-            head_item = None
-        elif slot == "body" and body_item:
-            item_to_discard = body_item
-            body_item = None
-        elif slot == "left_hand" and left_hand_item:
-            item_to_discard = left_hand_item
-            left_hand_item = None
-        elif slot == "right_hand" and right_hand_item:
-            item_to_discard = right_hand_item
-            right_hand_item = None
-        elif slot == "left_leg" and left_leg_item:
-            item_to_discard = left_leg_item
-            left_leg_item = None
-        elif slot == "right_leg" and right_leg_item:
-            item_to_discard = right_leg_item
-            right_leg_item = None
+    def handle_mixing_motion():
+        global mixing_progress, is_mixing
+        if is_mixing:
+            mixing_progress += renpy.random.randint(1, 3)
+            if mixing_progress >= 100:
+                mixing_progress = 100; is_mixing = False; renpy.notify("Mixing complete!")
+                mix_liquids(selected_container, selected_liquids)
 
-        if item_to_discard:
-            renpy.notify(f"Discarded {item_to_discard} from {slot} slot.")
+    # --- Math Minigame ---
+    def start_minigame():
+        global minigame_time, minigame_active, minigame_problem, minigame_answer, player_answer
+        minigame_time, minigame_active = 10, True
+        minigame_problem, minigame_answer = generate_problem()
+        player_answer = ""
+
+    def check_minigame_answer():
+        global minigame_active, minigame_bonus, player_answer
+        if player_answer.isdigit() and int(player_answer) == minigame_answer:
+            minigame_bonus += 1; renpy.notify("Correct! Well done.")
         else:
-            renpy.notify("No item to discard from this slot.")
-    def use_item(item):
-        """Handle the use of an item from the inventory."""
-        global inventory, last_label
+            minigame_bonus -= 1; renpy.notify(f"The correct answer was {minigame_answer}.")
+        start_minigame() # Next round
 
-        if item == "First aid kit":
-            renpy.show_screen("heal_menu")
-            inventory.remove("First aid kit")
-        elif item == "Cleaning Solution":
-            renpy.notify("Nothing to clean.")
-        elif item == "Oil":
-            renpy.notify("You cover yourself with oil.")
-        elif item == "Tissue":
-            renpy.notify("You blow your nose")
-            remove_item("Tissue")
-            add_item("Wet Tissue")
-        elif item == "Wet Tissue":
-            renpy.notify("You place the wet tissue on the floor carefully.")
-            remove_item("Wet Tissue")
-        elif item == "Tactical flashlight":
-            renpy.notify("This area is not THAT dark, is it?")
-        elif item == "radio":
-            renpy.notify("*Listening to radio...*")
-            renpy.sound.play("audio/radio/radio.wav")
-            open_html("006", last_label) 
-            if last_label == "stairwell" and not visited_stairwell and rng < 50:
-                renpy.notify("*Signal Received Replaying..*")
-                renpy.sound.play("audio/radio/radio02.mp3")
-        elif item == "Laser range finder":
-            renpy.notify("Nothing to measure here.")
-        elif item == "Classified Mission Sheet":
-            open_html("001", last_label)
-        elif item == "MG41":
-            if last_label == "laboratory":
-                renpy.notify("It is not nice to use weapons in the laboratory.")
+    def generate_problem():
+        num1, num2 = random.randint(1, 10), random.randint(1, 10)
+        if random.choice(["add", "mul"]) == "add": return f"{num1} + {num2}", num1 + num2
+        else: return f"{num1} * {num2}", num1 * num2
+
+    # ==============================================================================
+    # 13. UI & SCREEN MANAGEMENT FUNCTIONS
+    # ==============================================================================
+    def ToggleScreenVisibility():
+        global hud_visible
+        hud_visible = not hud_visible
+
+    def label_callback(name, abnormal):
+        store.last_label = name
+    config.label_callback = label_callback
+
+    def set_random_title_screen():
+        global title_screen_set
+        if not title_screen_set:
+            title_screen_set = True
+            play_title_screen_music(selected_screen)
+        return selected_screen["image"]
+
+    def play_title_screen_music(selected_screen):
+        if "music" in selected_screen and selected_screen["music"]:
+            renpy.music.play(random.choice(selected_screen["music"]), loop=True)
+
+    # ==============================================================================
+    # 14. INTERNAL WEB SERVER (for HTML pages)
+    # ==============================================================================
+    WEBSERVER_PORT = 3000
+    HTML_SERVE_DIR = os.path.abspath(os.path.join(renpy.config.gamedir, "htmls"))
+
+    class RenpyHTTPRequestHandler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            kwargs['directory'] = HTML_SERVE_DIR
+            super().__init__(*args, **kwargs)
+
+        def translate_path(self, path):
+            path = path.split('?', 1)[0].split('#', 1)[0]
+            decoded_path = urllib.parse.unquote(path).lstrip('/')
+            safe_relative_path = os.path.normpath(decoded_path)
+            if safe_relative_path.startswith('..') or os.path.isabs(safe_relative_path):
+                return "ACCESS_DENIED_INVALID_PATH"
+            return os.path.join(HTML_SERVE_DIR, safe_relative_path)
+
+        def log_message(self, format, *args):
+            pass # Suppress console logs
+
+    class WebServerThread(threading.Thread):
+        def __init__(self, port):
+            super().__init__(daemon=True)
+            self.port = port
+            self.server = None
+
+        def run(self):
+            if not os.path.isdir(HTML_SERVE_DIR):
+                print(f"[Web Server Error] HTML directory not found: {HTML_SERVE_DIR}")
+                return
+            try:
+                self.server = TCPServer(("localhost", self.port), RenpyHTTPRequestHandler)
+                print(f"[Web Server] Starting on http://localhost:{self.port}")
+                self.server.serve_forever()
+            except OSError as e:
+                print(f"[Web Server Error] Failed to start server on port {self.port}: {e}")
+                renpy.notify(f"Error: Could not start web server on port {self.port}.")
+            except Exception as e:
+                print(f"[Web Server Error] An unexpected error occurred: {e}")
+
+        def stop(self):
+            if self.server:
+                self.server.shutdown()
+                self.server.server_close()
+                self.server = None
+                print("[Web Server] Shutdown complete.")
+
+    _web_server_instance = None
+    def start_web_server():
+        global _web_server_instance
+        if _web_server_instance is None or not _web_server_instance.is_alive():
+            if os.path.isdir(HTML_SERVE_DIR):
+                _web_server_instance = WebServerThread(WEBSERVER_PORT)
+                _web_server_instance.start()
             else:
-                renpy.notify("You probably shouldn't use this here.")
-        elif item == "compass":
-            if last_label == "laboratory":
-                renpy.notify("You use the compass and it spins. It seems like there is some electromagnetic interference here.")
-            elif last_label == "outsideprojectorroom":
-                renpy.notify("The compass points north.")
-            elif last_label == "outsideclosetroom":
-                renpy.notify("The compass points west.")
-            elif last_label == "outsidecaferoom":
-                renpy.notify("The compass points south west.")
-            else:
-                renpy.notify("You use the compass, but it doesn't seem to give any useful information in this place.")           
-#    $ remove_condition(head, concussion)
-#    $ remove_condition(head, Amnesia)    
-#    $ add_condition("head", "concussion")
-#    $ add_condition("head", "minor brain damage")
-#    $ inventory.append("MG41")    
-#    $ inventory.append("compass")
-#    $ inventory.append("Laser range finder")
-#    $ inventory.append("First aid kit")
-#    $ inventory.append("radio")
-#    $ inventory.append("Tactical flashlight")
-#    if is_stat_higher("intelligence", 4, stats):
-#       "Intelligence is higher than 4!"   
-#     $ add_condition ("head", "headache")
-#    $ inventory.append("compass")
-#    $ inventory.append("Laser range finder")
-#    $ inventory.append("First aid kit")
-#    $ inventory.append("radio")
-#    $ inventory.append("Tactical flashlight")
-#    $ inventory.append("MG41")
-#    $ inventory.append("Medical Dictionary")
-#    $ equip_item("body", "Type 07")
-#    $ inventory.append("compass")
-#    $ inventory.append("Laser range finder")
-#    $ inventory.append("First aid kit")
-#    $ inventory.append("radio")
-#    $ inventory.append("Tactical flashlight")
-#    $ inventory.append("MG41")    
-#    $ inventory.append("thermometer")
-   # $ inventory.append("compass")
-   # $ inventory.append("Laser range finder")
-   # $ inventory.append("First aid kit")
-   # $ inventory.append("radio")
-   # $ inventory.append("Tactical flashlight")
-   # $ inventory.append("MG41")    
-   # $ inventory.append("thermometer")
-       
+                renpy.notify("Error: Cannot start web server, HTML folder missing.")
+
+    def stop_web_server():
+        global _web_server_instance
+        if _web_server_instance and _web_server_instance.is_alive():
+            _web_server_instance.stop()
+            _web_server_instance.join(timeout=2.0)
+            _web_server_instance = None
+
+    def open_html(filename_no_ext, last_label=None):
+        if _web_server_instance is None or not _web_server_instance.is_alive():
+             renpy.notify("Internal web server is not running.")
+             return
+
+        base_url = f"http://localhost:{WEBSERVER_PORT}/{filename_no_ext}.html"
+        query_params = {'lastLabel': last_label} if last_label else {}
+        full_url = f"{base_url}?{urllib.parse.urlencode(query_params)}" if query_params else base_url
+
+        try:
+            if not webbrowser.open(full_url):
+                renpy.notify("Could not open web browser.")
+        except Exception as e:
+            renpy.notify(f"Error opening browser: {e}")
+
+    # ==============================================================================
+    # 15. INITIALIZATION CALLS
+    # ==============================================================================
+    # Initialize stats after all functions are defined
+    initialize_stats()
+    # --- Server Lifecycle Management ---
+    start_web_server()
+    config.quit_action = stop_web_server       
 label gameover:
     "You have died..."
     "Why don't you try loading a save..."
@@ -3415,3 +2679,4 @@ label example_intelligence_check:
     else:
         "Despite your efforts, you couldn't quite figure it out."
     return
+#EOF
