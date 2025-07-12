@@ -1,8 +1,24 @@
 {
+{
     "files.exclude": {
         "**/*.rpyc": true,
         "**/*.rpa": true,
         "**/*.rpymc": true,
-        "**/cache/": true
+        "**/cache/": true,
+        "**/saves/": true,
+
+        "**/*.bak": true,
+        "**/renpy_warp_*": true,
+
+        "**/.git/": true,
+        "**/.github/": true,
+
+        "**/*.html": true,
+        "**/log.txt": true,
+        "**/errors.txt": true,
+        "**/traceback.txt": true,
+        "**/progressive_download.txt": true,
+        "**/.vscode/": true
     }
+}
 }
