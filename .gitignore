@@ -1,7 +1,19 @@
-game/cache/
-
-*.save
-
-*.rpyc
+**/cache/
+**/saves/
+**/*.rpyc
+**/*.rpa
+**/*.rpymc
+**/renpy_warp_*.rpe
 
 errors.txt
+log.txt
+traceback.txt
+coverage.xml
+
+**/.vscode/
+**/.DS_Store
+**/Thumbs.db
+
+/*.html
+/*.zip
+/*.exe
