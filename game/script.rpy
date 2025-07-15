@@ -1,32 +1,43 @@
-# start of file
-default test_room = 0 # this var is debug mode
-default preferences.text_cps = 30  # this controls text speed
-default rng = random.randint(1,100) # this is used to have random events happen it will be initalized once
-default head_item = None  # Item equipped on the head
-default body_item = None  # Item equipped on the body
-default left_hand_item = None  # Item equipped in the left hand
-default right_hand_item = None  # Item equipped in the right hand
-default left_leg_item = None  # Item equipped on the left leg
-default right_leg_item = None  # Item equipped on the right legdefault left_arm_item = None
+﻿# --- Start of File ---
+
+# --- System & Debug ---
+default test_room = 0
+default preferences.text_cps = 30
+default rng = random.randint(1, 100)
+
+# --- Player Inventory & Equipment ---
+default head_item = None
+default body_item = None
+default left_hand_item = None
+default right_hand_item = None
+default left_arm_item = None
 default right_arm_item = None
-default hud_visible = True  # Start with the HUD visible
+default left_leg_item = None
+default right_leg_item = None
 default slot_count = 1
+
+# --- UI State Management ---
+default selected_category = "soft"
+default title_screen_set = ""
+default selected_tab = "Body"
+
+
+
+# --- Skill Check & Event System ---
+default base_chance = 30
+default total_bonuses = 0
+
+# --- Minigame - Math Problem ---
 default minigame_active = False
 default minigame_time = 10
 default minigame_problem = ""
 default minigame_answer = 0
 default minigame_bonus = 0
 default player_answer = ""
-default base_chance = 30  
-default total_bonuses = 0  
-default nice = 0
-default mean = 0
-default selected_category = "soft"  # Initial selection
-default title_screen_set = ""
-default selected_tab = "Body"
+
+# --- Minigame - Crafting/Mixing ---
 default current_mode = "construction"
 default mixing_progress = 0
-default mix_start_time = 0
 default stirring_tool = None
 default stirring_progress = 0
 default stirring_complete = False
@@ -187,17 +198,18 @@ image empty_stage_animation:
 
 
 image 0drillsargpickupstart0:
-    "images/bg/Starting_Room/4/0drillsargpickupstart10.png" #projector on table image
-    xysize (config.screen_width, config.screen_height)
+    "images/bg/Starting_Room/4/0drillsargpickupstart10.png" 
 
 image 0drillsargpickupstart:
-    "images/bg/Starting_Room/3/0drillsargpickupstart.png" # empty room image
+    "images/bg/Starting_Room/3/0drillsargpickupstart.png" 
     xysize (config.screen_width, config.screen_height)
 
 image satgescene9:
-    "images/bg/Starting_Room/2/satgescene9.png" #standing next to projector
+    "images/bg/Starting_Room/2/satgescene9.png" 
     xysize (config.screen_width, config.screen_height)
 
+image chair:
+    xysize (config.screen_width, config.screen_height)
 image ani2_background:
     xysize (config.screen_width, config.screen_height)
     "images/bg/Starting_Room/1/ani2stagescene1.png"
@@ -321,7 +333,23 @@ define Q3 = Character ("??????",color="#14a122")
 define Q4 = Character ("???????",color="#97239e")
 define k =Character("Keemstar",color="#0000FF")
 define co = Character("Commanding Officer Miller",color="#0000FF")
-
+# game state FT: pirate software
+default game_state = {
+    "chapter_1": {
+        "projector_room": {
+            "picked_tissue_up": False,
+            "projector": {
+                "projector_status": "broken", 
+                "projector_health": 5, # when 0 game over
+                "projector_backplate": False,
+                "films_in_projector": 2,
+                "screws_in_projector": 7,
+                "duel_screw_attached": False
+            },
+            "viewed_tutorial": False
+        }
+    }
+}
 #Pythons
 init python:
     # ==============================================================================
@@ -352,7 +380,7 @@ init python:
     # 2. CORE GAME STATE & DATA DEFINITIONS
     # ==============================================================================
 
-    # --- Character & Game State Variables ---
+    # --- Var ---
     minhealth = 0
     maxhealth = 100
     current_sanity = 100
@@ -360,11 +388,8 @@ init python:
     max_space = 10 + current_strength
     current_space_taken = 0
     current_selected_character = "Ben"
-    npc_name = None
-    npc_mood = None
-    npc_attitude = None
+    # --- Bool
     last_label = None
-    hud_visible = True
     title_screen_set = False
 
     # --- Inventories & Item Lists ---
@@ -387,7 +412,6 @@ init python:
     selected_item = None
     selected_holding_item = None
     selected_liquids = []
-    mixed_liquids = []
     selected_container = None
 
     # --- Mixing & Stirring Minigame State ---
@@ -400,7 +424,6 @@ init python:
     stirring_count = 0
     # Mixing
     is_mixing = False
-    mix_start_time = 0
     mixing_progress = 0
     current_mixing_step = 0
     mixing_attempts = 0
@@ -1056,9 +1079,7 @@ init python:
         if trust > 50: return "Trusted Associate"
         return "Stranger"
 
-    def set_npc(name, mood, attitude):
-        global npc_name, npc_mood, npc_attitude
-        npc_name, npc_mood, npc_attitude = name, mood, attitude
+
 
     # ==============================================================================
     # 12. MINIGAME FUNCTIONS
@@ -1135,9 +1156,6 @@ init python:
     # ==============================================================================
     # 13. UI & SCREEN MANAGEMENT FUNCTIONS
     # ==============================================================================
-    def ToggleScreenVisibility():
-        global hud_visible
-        hud_visible = not hud_visible
 
     def label_callback(name, abnormal):
         store.last_label = name
@@ -1368,15 +1386,26 @@ label start:
     label intreactivesection01:
         scene empty_stage_animation with None
         show screen HUD
-        show screen tutorial_screen
         show screen checkKey   
         show smolbenwalk:
             xpos benx
             ypos beny
             xzoom -1.0
-
+        if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
+            show screen tutorial_screen
+            $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
         window hide 
+        jump intreactivesection01
         $ renpy.pause(hard=True)
+    label intreactivescreengiveitems01:
+        if not game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
+            $ game_state["chapter_1"]["projector_room"]["picked_tissue_up"] = True
+            scene chair
+            $ add_item ("Tissue")
+            ""
+            jump intreactivesection01
+        if game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
+            jump intreactivesection01
 
 label FrontSeat:
     hide screen HUD
