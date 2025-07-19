@@ -1,19 +1,15 @@
 screen stagecurtians():
     add "images/bg/overlay/floor.png" size (config.screen_width, config.screen_height)
-   # add "images/bg/overlay/background.png" size (config.screen_width, config.screen_height)
+   #add "images/bg/overlay/background.png" size (config.screen_width, config.screen_height)
     add "images/bg/overlay/stage.png" size (config.screen_width, config.screen_height)
  
 
 screen HUD():
     key ["j", "J"] action Show("journal_screen")
-    
-    # Add background overlay image at bottom middle
     add "images/bg/overlay/bg overlay.png":
         xalign 0.5
         yalign 1.0
-       # #zorder 0
     
-    # Backpack Icon - Left side
    # if inventory:
     imagebutton:
         xalign 0.66

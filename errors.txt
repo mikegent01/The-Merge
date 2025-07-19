@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 41: expected statement.
-    \_   _____// ____\/ ____\____   _____/  |_  ______
-    ^
+File "game/script.rpy", line 416: invalid syntax
+    $ config.keymap['screenshot'].remove('s')
+        ^
 
-File "game/script.rpy", line 44: expected statement.
-    /_______  /|__|   |__|  \_m1_script___  >\_m1_script___  >__| /____  >
-              ^
-
-Ren'Py Version: Ren'Py 8.2.1.24030407
-Tue Jul  8 23:07:45 2025
+Ren'Py Version: Ren'Py 8.4.0.25071206
+Sat Jul 19 15:02:58 2025

@@ -237,7 +237,6 @@ style choice_button_text is default:
 ## menus.
 
 screen quick_menu():
-
     ## Ensure this appears on top of other screens.
     zorder 100
 
@@ -245,7 +244,6 @@ screen quick_menu():
 
         hbox:
             style_prefix "quick"
-
             xalign 0.5
             yalign 1.0
 

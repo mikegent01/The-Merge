@@ -1,138 +1,43 @@
-2025-07-14 20:45:58 UTC
-Windows-10-10.0.26100
-Ren'Py 8.2.1.24030407
+2025-07-19 19:47:03 UTC
+Windows-11-10.0.26100-SP0
+Ren'Py 8.4.0.25071206
 
-Early init took 0.05s
-Loading error handling took 0.02s
-Loading script took 0.08s
-Loading save slot metadata took 0.02s
-Loading persistent took 0.00s
+Early init took 33 ms
+Loading error handling took 16 ms
+Loading script took 79 ms
+Loading save slot metadata took 20 ms
+Loading persistent took 0 ms
+Running init code took 36 ms
 [Web Server] Starting on http://localhost:3000
-Running init code took 0.05s
-Loading analysis data took 0.02s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.03s
+Loading analysis data took 5 ms
+Analyze and compile ATL took 1 ms
+Reloading save slot metadata took 9 ms
+Dump and make backups took 22 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 24 ms
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 0.18s
-Cleaning stores took 0.00s
-Init translation took 0.03s
-Build styles took 0.00s
-Load screen analysis took 0.03s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
-Prepare screens took 0.06s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Interface start took 0.05s
+Creating interface object took 188 ms
+Init translation took 0 ms
+Cleaning stores took 0 ms
+Load screen analysis took 19 ms
+Analyze screens took 1 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+Running _start took 0 ms
+Interface start took 241 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
 swap interval: 1 frames
 Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.28'
-Display Info: None
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 15.73s
-Loading error handling took 0.02s
-Loading script took 0.26s
-Loading save slot metadata took 0.02s
-Loading persistent took 0.00s
-[Web Server Error] Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
-Running init code took 0.02s
-Loading analysis data took 0.01s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.05s
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.17s
-Cleaning stores took 0.00s
-Init translation took 0.04s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.06s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.03s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.28'
-Display Info: None
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Resetting cache.
-Early init took 32.69s
-Loading error handling took 0.01s
-Loading script took 0.25s
-Loading save slot metadata took 0.02s
-Loading persistent took 0.00s
-[Web Server Error] Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
-Running init code took 0.02s
-Loading analysis data took 0.02s
-Analyze and compile ATL took 0.00s
-Reloading save slot metadata took 0.02s
-Index archives took 0.00s
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 0.03s
-Cleaning cache took 0.00s
-Making clean stores took 0.00s
-Initial gc took 0.05s
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 0.19s
-Cleaning stores took 0.00s
-Init translation took 0.04s
-Build styles took 0.00s
-Load screen analysis took 0.00s
-Analyze screens took 0.01s
-Save screen analysis took 0.02s
-Prepare screens took 0.06s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.01s
-Running _start took 0.00s
-Interface start took 0.04s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: "b'NVIDIA Corporation'"
-Renderer: b'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: b'4.6.0 NVIDIA 576.28'
-Display Info: None
+Vendor: 'NVIDIA Corporation'
+Renderer: 'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
+Version: '4.6.0 NVIDIA 576.28'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1080, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server

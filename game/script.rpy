@@ -89,53 +89,37 @@ image light_turning_on_effect:
 
 #movement
 default benx = 150 
-default minbenx = -50 
-default maxbenx = 1300 
+default minbenx = 75
+default maxbenx = 1065
 default beny = 450 
 default minbeny = 450
 default maxbeny = 5000
 default walk_frame = 4
 default facing_left = False
 default jumping = False
+default moving_left = False
+default moving_right = False
 default jump_velocity = 0
 default gravity = 2
 default jump_strength = -15
 screen checkKey():
-    key "repeat_K_RIGHT" action [SetVariable("benx", benx+10), SetVariable("facing_left", False), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
-    key "repeat_K_LEFT" action [SetVariable("benx", benx-10), SetVariable("facing_left", True), SetVariable("walk_frame", (walk_frame + 1) % 5), Jump("walk")]
-    key "keyup_K_RIGHT" action [SetVariable("walk_frame", 4), Jump("walk")]
-    key "keyup_K_LEFT" action [SetVariable("walk_frame", 4), Jump("walk")]
-    key "K_SPACE" action [If(beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)]), Jump("walk")]
+  #  key "K_RIGHT" action SetVariable("moving_right", True)
+  #  key "keyup_K_RIGHT" action [SetVariable("moving_right", False), SetVariable("walk_frame", 4)]
+    key "K_d" action SetVariable("moving_right", True)
+    key "keyup_K_d" action [SetVariable("moving_right", False), SetVariable("walk_frame", 4)]        
+  #  key "K_LEFT" action SetVariable("moving_left", True)
+  #  key "keyup_K_LEFT" action [SetVariable("moving_left", False), SetVariable("walk_frame", 4)]
+    key "keyup_K_a" action [SetVariable("moving_left", False), SetVariable("walk_frame", 4)]
+    key "K_a" action SetVariable("moving_left", True)        
+    key "K_SPACE" action If(beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)])   
+screen game_screen():
 
-label walk:
-    if facing_left:
-        show smolbenwalk:
-            xpos benx
-            ypos beny
-            xzoom -1.0
-    else:
-        show smolbenwalk:
-            xpos benx
-            ypos beny
-            xzoom 1.0
-  #  jump loop
-
-label loop:
-    if jumping:
-        $ beny += jump_velocity
-        $ jump_velocity += gravity
-        if beny >= minbeny:
-            $ beny = minbeny
-            $ jumping = False
-            $ walk_frame = 4
-            $ jump_velocity = 0
-    $ beny = max(min(beny, maxbeny), 0)
-    $ benx = max(min(benx, maxbenx), minbenx)
+    image "smolbenwalk":  
+        xpos benx
+        ypos beny
+        xzoom ( -1.0 if facing_left else 1.0 )
     
-    $ renpy.pause(0.1, hard=True)
-  #  jump loop # these jump loop cause a loop so if they are commented it is so i can safely reload the code
-#backgrounds
-
+    timer 0.05 repeat True action Function(update_game)
 image ani1_background:
     Animation(
         "images/bg/Starting_Room/2/satgescene1.png", 0.1,
@@ -199,6 +183,38 @@ image empty_stage_animation:
 
 image 0drillsargpickupstart0:
     "images/bg/Starting_Room/4/0drillsargpickupstart10.png" 
+    xysize (config.screen_width, config.screen_height)
+image burn1drillsargpickup:
+    xysize (config.screen_width, config.screen_height)
+    "images/bg/Starting_Room/7/burn1drillsargpickup1.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup2.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup3.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup4.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup5.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup6.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup7.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup8.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup9.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup10.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup11.png"
+    pause 0.3
+    "images/bg/Starting_Room/7/burn1drillsargpickup12.png"
+    pause 0.3
+    Animation(
+    "images/bg/Starting_Room/7/burn1drillsargpickup13.png", 0.3,
+    "images/bg/Starting_Room/7/burn1drillsargpickup14.png", 0.3
+    )
+    
 
 image 0drillsargpickupstart:
     "images/bg/Starting_Room/3/0drillsargpickupstart.png" 
@@ -335,17 +351,23 @@ define k =Character("Keemstar",color="#0000FF")
 define co = Character("Commanding Officer Miller",color="#0000FF")
 # game state FT: pirate software
 default game_state = {
-    "chapter_1": {
-        "projector_room": {
-            "picked_tissue_up": False,
-            "projector": {
+    "major_items": {
+        "projector": {
                 "projector_status": "broken", 
                 "projector_health": 5, # when 0 game over
                 "projector_backplate": False,
                 "films_in_projector": 2,
+                "projector_durability": 100,
                 "screws_in_projector": 7,
                 "duel_screw_attached": False
-            },
+            }
+    },
+    "rolls": {
+        "roll_results": {}
+    },
+    "chapter_1": {
+        "projector_room": {
+            "picked_tissue_up": False,
             "viewed_tutorial": False
         }
     }
@@ -391,7 +413,13 @@ init python:
     # --- Bool
     last_label = None
     title_screen_set = False
-
+    if 'screenshot' in config.keymap:
+         bindings = config.keymap['screenshot']
+         if 's' in bindings: bindings.remove('s')  # Remove plain 'S'
+         if 'shift_K_s' in bindings: bindings.remove('shift_K_s')  # Remove Shift+S
+         if 'alt_shift_K_s' in bindings: bindings.remove('alt_shift_K_s')  # Remove Alt+Shift+S
+         if 'noshift_K_s' in bindings: bindings.remove('noshift_K_s')  # Remove noshift variant if present
+         if 'alt_K_s' in bindings: bindings.remove('alt_K_s')  # Remove Alt+S if present
     # --- Inventories & Item Lists ---
     inventory = []
     holding_items = ["Tape", "Glue", "Screwdriver"]
@@ -1252,7 +1280,28 @@ init python:
                 renpy.notify("Could not open web browser.")
         except Exception as e:
             renpy.notify(f"Error opening browser: {e}")
-
+    def update_game():
+        global benx, beny, walk_frame, jumping, jump_velocity, facing_left
+        
+        if moving_right and not moving_left:
+            benx += 10  
+            facing_left = False
+            walk_frame = (walk_frame + 1) % 5
+        elif moving_left and not moving_right:
+            benx -= 10
+            facing_left = True
+            walk_frame = (walk_frame + 1) % 5
+        if jumping:
+            beny += jump_velocity
+            jump_velocity += gravity
+            if beny >= minbeny:
+                beny = minbeny
+                jumping = False
+                walk_frame = 4
+                jump_velocity = 0
+        
+        beny = max(min(beny, maxbeny), 0)
+        benx = max(min(benx, maxbenx), minbenx)
     # ==============================================================================
     # 15. INITIALIZATION CALLS
     # ==============================================================================
@@ -1288,7 +1337,6 @@ label minigame:
 label start:
     $ set_room_temperature(72)
     $ add_item("Classified Mission Sheet")
-    $ inventory.append("Classified Mission Sheet")
     $ inventory.append("radio")
     play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 # Assuming 'boot_camp' is the correct filename
     scene ani1_background with None
@@ -1322,8 +1370,9 @@ label start:
     "a familiar figure stands directly infront of the light. Ridged and firm"
     "the familiar figure stands at attention,"
     "and another hitch is herd from the box."
-    "The light shines bright as the box shows multiple images of destroyed suburban cities" 
-    "the images are shown one by one, ending on the statue of liberty."
+    scene burn1drillsargpickup
+    "The light shines bright as the box shows a singular video of a beam." 
+    "A beam with the power to destroy cities..."
     "The silence is broken when drill sergeant Jones begins speaking "
 
   #  show drill_sarg_talk at right
@@ -1383,26 +1432,27 @@ label start:
     DRI "good you are dismissed."
 
     "As I turn around I notice two people sitting in there seats, prehaps I should talk to one of them and ask them for help."
+    if 'projector_success' not in game_state["rolls"]["roll_results"]:
+        $ roll_result = perform_roll(base_chance=20, skill_level=stats['medical']['level'], skill_name='medical', total_bonuses=0)
+        $ game_state["rolls"]["roll_results"]['projector_success'] = roll_result       
+    if 'rajman_intel_success' not in game_state["rolls"]["roll_results"]:
+        $ roll_result = perform_roll(base_chance=40, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
+        $ game_state["rolls"]["roll_results"]['rajman_intel_success'] = roll_result        
+
     label intreactivesection01:
         scene empty_stage_animation with None
+        show screen checkKey  
+        show screen game_screen 
         show screen HUD
-        show screen checkKey   
-        show smolbenwalk:
-            xpos benx
-            ypos beny
-            xzoom -1.0
         if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
             show screen tutorial_screen
             $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
         window hide 
-        jump intreactivesection01
         $ renpy.pause(hard=True)
     label intreactivescreengiveitems01:
         if not game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
             $ game_state["chapter_1"]["projector_room"]["picked_tissue_up"] = True
-            scene chair
             $ add_item ("Tissue")
-            ""
             jump intreactivesection01
         if game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
             jump intreactivesection01

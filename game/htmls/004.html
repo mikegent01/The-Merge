@@ -1,26 +1,103 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classified Document</title> <!-- https://codepen.io/AgnusDei/pen/NWPbOxL --></1>
-    <link rel="stylesheet" href="004.css">
+  <meta charset="UTF-8">
+  <title>Ren'Py Look Object Code Generator</title>
+  <style>
+    body { background: #222; color: #eee; font-family: Arial, sans-serif; }
+    .container { width: 700px; margin: 30px auto; background: #333; padding: 20px; border-radius: 10px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; margin-top: 2px; margin-bottom: 10px; background: #222; color: #eee; border: 1px solid #555; border-radius: 4px; }
+    textarea { height: 60px; }
+    button { background: #444; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; margin-top: 10px;}
+    button:hover { background: #666; }
+    #output { background: #181818; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; white-space: pre; }
+    .small { font-size: 0.9em; color: #aaa; }
+  </style>
 </head>
 <body>
-    <main>
-        <div id="parchment"></div>
-        <div id="contain">
-            <p class="inkTitle">CONFIDENTIAL INFORMATION</p>
-            <p>Zpv owuw uhnbjp ecop zifo K tgodb uiju kpirunbukqp wr bpv, Ncaqu Gdwje, vjg uhspsu ku hlqltiff. K jdyh jowguvljdufe cpf glvdpwgtgg d ojol dgvzhho uig jqxvh boe  okuvlqh qftuqq uhqpsvu. Kw vhfnt vjcw wkfsf ku cq hqjhncvkf vkjgu kp vkh opdbkvqq. L dn opv vqr vxsf xjcv wr gp xjvj vklv jogqtodwlpo. Tjqwog zf sfrqtw wkjt uq vjh dxuiptkvlhv? DJB? Yjq zlom fwgp dholfwf vjkv li xf ugnn wkhn?</p>
-            <p></p>
-        </div>
-    </main>
-    <svg>
-        <filter id="wavy2">
-            <feTurbulence x="0" y="0" baseFrequency="0.02" numOctaves="5" seed="1" />
-            <feDisplacementMap in="SourceGraphic" scale="20" />
-        </filter>
-    </svg>
-    <script src="004.js"></script>
+<div class="container">
+  <h2>Ren'Py Look Object Code Generator</h2>
+  <label>Object Name (for variable/screen): <input id="objName" value="projector"></label>
+  <label>X Position: <input id="objX" type="number" value="650"></label>
+  <label>Y Position: <input id="objY" type="number" value="300"></label>
+  <label>Required Roll? <input id="objRoll" type="number" value="40"></label>
+  <label>Stat to Use (if roll): 
+    <select id="objStat">
+      <option value="intelligence">intelligence</option>
+      <option value="speech">speech</option>
+      <option value="strength">strength</option>
+      <option value="luck">luck</option>
+      <option value="speed">speed</option>
+      <option value="pain_tolerance">pain_tolerance</option>
+      <option value="mental_resilience">mental_resilience</option>
+      <option value="medical">medical</option>
+    </select>
+  </label>
+  <label>Main Text (always shows): <textarea id="objText">You look at the projector screen thinking about the presentation that just played, it is hard to believe that a portal can destroy a whole town like that...</textarea></label>
+  <label>Roll-Gated Text (only if roll succeeds): <textarea id="objRollText"></textarea></label>
+  <button onclick="addObject()">Add Object</button>
+  <button onclick="generateCode()">Generate Ren'Py Code</button>
+  <div class="small">You can add multiple objects, then generate all code at once.</div>
+  <div id="output"></div>
+</div>
+<script>
+let objects = [];
+
+function addObject() {
+  const name = document.getElementById('objName').value.trim();
+  const x = document.getElementById('objX').value.trim();
+  const y = document.getElementById('objY').value.trim();
+  const roll = document.getElementById('objRoll').value.trim();
+  const stat = document.getElementById('objStat').value.trim();
+  const text = document.getElementById('objText').value.trim();
+  const rollText = document.getElementById('objRollText').value.trim();
+
+  if (!name || !x || !y || !text) {
+    alert("Please fill in at least name, x, y, and main text.");
+    return;
+  }
+  objects.push({ name, x, y, roll, stat, text, rollText });
+  document.getElementById('output').innerText = `Added "${name}". You can add more or generate code.`;
+}
+
+function generateCode() {
+  let code = "";
+  objects.forEach(obj => {
+    // Imagebutton for dynamic_text_screen
+    code += `    if abs(benx - 80) <= ${obj.x} or abs(benx + 80) <= ${obj.x}:\n`;
+    code += `        imagebutton:\n`;
+    code += `            idle "images/inventory/inventory_hud/magna.png"\n`;
+    code += `            hover "images/inventory/inventory_hud/magna_hover.png"\n`;
+    code += `            focus_mask True\n`;
+    code += `            xpos ${obj.x} ypos ${obj.y}\n`;
+    code += `            action [Hide("dynamic_text_screen"), Show("${obj.name}_look_s1")]\n\n`;
+
+    // Roll logic (if needed)
+    if (obj.roll && parseInt(obj.roll) > 0) {
+      code += `    if '${obj.name}_success' not in game_state["rolls"]["roll_results"]:\n`;
+      code += `        $ roll_result = perform_roll(base_chance=${obj.roll}, skill_level=stats['${obj.stat}']['level'], skill_name='${obj.stat}', total_bonuses=0)\n`;
+      code += `        $ game_state["rolls"]["roll_results"]['${obj.name}_success'] = roll_result\n\n`;
+    }
+
+    // The look screen
+    code += `screen ${obj.name}_look_s1():\n`;
+    code += `    frame:\n`;
+    code += `        xalign 0.5\n`;
+    code += `        yalign 0.5\n`;
+    code += `        padding (20, 20)\n\n`;
+    code += `        vbox:\n`;
+    code += `            spacing 10\n`;
+    code += `            text "${obj.text.replace(/"/g, '\\"')}"\n`;
+    if (obj.roll && parseInt(obj.roll) > 0 && obj.rollText) {
+      code += `            if game_state["rolls"]["roll_results"].get('${obj.name}_success', True):\n`;
+      code += `                text "${obj.rollText.replace(/"/g, '\\"')}"\n`;
+    }
+    code += `            textbutton "Return" action [Hide("${obj.name}_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]\n\n`;
+  });
+  document.getElementById('output').innerText = code;
+}
+</script>
 </body>
 </html>

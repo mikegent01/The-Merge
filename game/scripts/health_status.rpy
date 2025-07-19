@@ -1,59 +1,141 @@
-
 screen status_screen():
     modal True
     frame:
         xsize 800
-        ysize 600
+        ysize 800
         xalign 0.5
         yalign 0.5
-        background "#111111"
+        background "#0A0A0A"
+        style "rounded_frame"
 
         vbox:
-            spacing 20
-            text "My Health Overview" size 40 xalign 0.5 color "#FFFFFF" bold True
-
-            # Calculate averages
+            spacing 15
             $ average_health, average_cleanliness, average_temperature = calculate_averages()
-
             $ medical_level = stats["medical"]["level"]
             $ can_view_health = is_stat_higher("medical", 100, stats)
             $ can_view_health_small = is_stat_higher("medical", 59, stats)
             $ can_view_hygiene = is_stat_higher("intelligence", 50, stats)
 
-            # Body Parts Status
-            for part in ["head", "body", "left_arm", "right_arm", "left_leg", "right_leg"]:
+            if not can_view_health_small:
+                text "\nMy Health Overview" size 40 xalign 0.5 yalign 0.9 color "#FFFFFF" bold True 
+            elif can_view_health_small or has_item("thermometer"):
+                text "My Health Overview" size 40  color "#FFFFFF" bold True 
+
+
+            fixed:
+                xsize 800
+                ysize 450
+
                 frame:
-                    background "#222222"
+                    xalign 0.5
+                    yalign 0.05
+                    xsize 180
+                    background "#1E1E1E"
                     padding (10, 10)
-                    hbox:
-                        spacing 20
-                        text part.replace("_", " ").capitalize() + ":" size 24 color "#FFFFFF"
-                        if not can_view_health:
-                            textbutton "View Status" action Show("condition_details", part=part) style "inventory_button"
+                    vbox:
+                        add "images/stats_icons/head.png" xalign 0.5 size (40, 40)
+                        text "Head:" size 24 color "#FFFFFF" xalign 0.5
                         if can_view_health:
-                            bar value default_status[part]["health"] range 100 xmaximum 400 ymaximum 25
-                            textbutton "View Status" action Show("condition_details", part=part) style "inventory_button"
-            textbutton "Cancel" action Hide("status_screen") style "inventory_button" xalign 0.5
+                            bar value default_status["head"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="head") style "status_button" xalign 0.5
+
+                frame:
+                    xalign 0.5
+                    yalign 0.5
+                    xsize 180
+                    background "#1E1E1E"
+                    padding (10, 10)
+                    vbox:
+                        add "images/stats_icons/body.png" xalign 0.5 size (40, 40)
+                        text "Body:" size 24 color "#FFFFFF" xalign 0.5
+                        if can_view_health:
+                            bar value default_status["body"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="body") style "status_button" xalign 0.5
+
+                frame:
+                    xalign 0.2
+                    yalign 0.5
+                    xoffset -20
+                    xsize 180
+                    background "#1E1E1E"
+                    padding (10, 10)
+                    vbox:
+                        add "images/stats_icons/left_arm.png" xalign 0.5 size (40, 40)
+                        text "Left Arm:" size 24 color "#FFFFFF" xalign 0.5
+                        if can_view_health:
+                            bar value default_status["left_arm"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="left_arm") style "status_button" xalign 0.5
+
+                frame:
+                    xalign 0.8
+                    yalign 0.5
+                    xoffset 20
+                    xsize 180
+                    background "#1E1E1E"
+                    padding (10, 10)
+                    vbox:
+                        add "images/stats_icons/right_arm.png" xalign 0.5 size (40, 40)
+                        text "Right Arm:" size 24 color "#FFFFFF" xalign 0.5
+                        if can_view_health:
+                            bar value default_status["right_arm"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="right_arm") style "status_button" xalign 0.5
+
+                frame:
+                    xalign 0.3
+                    yalign 0.9
+                    xoffset -40
+                    yoffset 20
+                    xsize 180
+                    background "#1E1E1E"
+                    padding (10, 10)
+                    vbox:
+                        add "images/stats_icons/left_leg.png" xalign 0.5 size (40, 40)
+                        text "Left Leg:" size 24 color "#FFFFFF" xalign 0.5
+                        if can_view_health:
+                            bar value default_status["left_leg"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="left_leg") style "status_button" xalign 0.5
+
+                frame:
+                    xalign 0.7
+                    yalign 0.9
+                    xoffset 40
+                    yoffset 20
+                    xsize 180
+                    background "#1E1E1E"
+                    padding (10, 10)
+                    vbox:
+                        add "images/stats_icons/right_leg.png" xalign 0.5 size (40, 40)
+                        text "Right Leg:" size 24 color "#FFFFFF" xalign 0.5
+                        if can_view_health:
+                            bar value default_status["right_leg"]["health"] range 100 xmaximum 130 ymaximum 20 style "health_bar"
+                        textbutton "View" action Show("condition_details", part="right_leg") style "status_button" xalign 0.5
+
             frame:
-                background "#222222"
-                padding (10, 10)
+                #background "#1E1E1E"
+             #   padding (10, 10)
+              #  xalign 0.5
                 vbox:
                     spacing 10
-                    text "Averages" size 30 xalign 0.5 color "#FFFFFF" bold True
+                    if can_view_health_small or has_item("thermometer"):
+                        text "Averages" size 30 xalign 0.5 color "#FFFFFF" bold True
 
                     if can_view_health_small:
-                        text "Estimated Average Health: [average_health]%" size 24 color "#FFFFFF"
-                        bar value average_health range 100 xmaximum 400 ymaximum 25
+                        text "Est. Avg Health: [average_health]%" size 24 color "#FFFFFF"
+                        bar value average_health range 100 xmaximum 400 ymaximum 20 style "health_bar"
 
-                        text "Average Cleanliness: [average_cleanliness]%" size 24 color "#FFFFFF"
-                        bar value average_cleanliness range 100 xmaximum 400 ymaximum 25
+                        text "Avg Cleanliness: [average_cleanliness]%" size 24 color "#FFFFFF"
+                        bar value average_cleanliness range 100 xmaximum 400 ymaximum 20 style "clean_bar"
 
                     if has_item("thermometer"):
-                        text "Average Temperature: [average_temperature]°F" size 24 color "#FFFFFF"
-                        bar value average_temperature range 100 xmaximum 400 ymaximum 25
+                        text "Avg Temperature: [average_temperature]°F" size 24 color "#FFFFFF"
+                        bar value average_temperature range 100 xmaximum 400 ymaximum 20 style "temp_bar"
+                  #  textbutton "Close" action Hide("status_screen") xalign 0.5 style "close_button"                       
 
-            # Close Button
-            textbutton "Close" action Hide("status_screen") style "inventory_button" xalign 0.5
+            hbox:
+                xalign 0.5
+                spacing 20
+                if not can_view_health_small or not has_item("thermometer"):
+                    textbutton "Close" action Hide("status_screen") style "close_button"
 screen player_stats_screen():
     modal True
     frame:
