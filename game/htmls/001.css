@@ -151,7 +151,7 @@ hr.content-divider {
 /* --- NEW/MODIFIED STYLE FOR ATTACHED IMAGE --- */
 .attached-image {
   display: block; /* Ensure it's a block element for margin auto */
-  max-width: 75%; /* Slightly smaller max-width */
+  max-width: 25%; /* Slightly smaller max-width */
   margin: 25px auto; /* Center it with more vertical space */
   padding: 5px; /* Padding around the image inside the border */
   background-color: #fdfdfd; /* Slightly off-white background like photo paper */
@@ -159,6 +159,8 @@ hr.content-divider {
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.3); /* Drop shadow for depth */
   transform: rotate(-1.5deg); /* Slight rotation */
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effect */
+  width:30%;
+  height: 20%;
 }
 
 /* Optional: Add a subtle hover effect */

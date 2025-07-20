@@ -6,42 +6,50 @@ screen dynamic_text_screen():
         $ podiumx = 1005
         $ rajmanx = 441
         $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
-        if abs(benx - 80) <= projectorx or abs(benx + 80) <= projectorx:
+        if abs(benx - 80) <= projectorx :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
                 focus_mask True
                 xpos projectorx ypos 300 
                 action [Hide("dynamic_text_screen"), Show("projector_look_s1")]      
-        if abs(benx - 80) <= 78 or abs(benx + 80) <= 78:
+        if abs(benx - 80) <= 78 :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
                 focus_mask True
                 xpos 78 ypos 516
                 action [Hide("dynamic_text_screen"), Show("bagman_look_s1")]                
-        if abs(benx - 80) <= 1132 or abs(benx + 80) <= 1132:
+        if abs(benx - 80) <= 1132 :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
                 focus_mask True
                 xpos 1132 ypos 429
                 action [Hide("dynamic_text_screen"), Show("projector_look_s1")]                  
-        if abs(benx - 80) <= podiumx or abs(benx + 80) <= podiumx:
+        if abs(benx - 80) <= podiumx :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
                 focus_mask True
                 xpos podiumx ypos 505 
                 action [Hide("dynamic_text_screen"), Show("podium_look_s1")]
-        if abs(benx - 80) <= seatx or abs(benx + 80) <= seatx:
+        if abs(benx - 80) <= seatx :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
                 focus_mask True
                 xpos seatx ypos 526 
                 action [Hide("dynamic_text_screen"), Show("seat_look_s1")]
-        if abs(benx - 80) <= rajmanx or abs(benx + 80) <= rajmanx:
+
+        if abs(benx - 80) <= 932:
+            imagebutton:
+                idle "images/inventory/inventory_hud/magna.png"
+                hover "images/inventory/inventory_hud/magna_hover.png"
+                focus_mask True
+                xpos 932 ypos 487
+                action [Hide("dynamic_text_screen"), Show("wire_look_s1")]                
+        if abs(benx - 80) <= rajmanx :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"
                 hover "images/inventory/inventory_hud/magna_hover.png"
@@ -54,7 +62,7 @@ screen dynamic_text_screen():
         frame:
             xalign 0.5 yalign 0.5 padding (20, 20)
             vbox:
-                text "You look around."
+                text "I look around."
                 textbutton "Close" action Hide("checkKey")
 
 screen projector_look_s1():
@@ -127,3 +135,13 @@ screen bagman_look_s1():
             text "There is a man with a bag on his head.... I will call him bagman from now on"
             textbutton "Return" action [Hide("bagman_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
 
+screen wire_look_s1():
+    frame:
+        xalign 0.5
+        yalign 0.5
+        padding (20, 20)
+
+        vbox:
+            spacing 10
+            text "The wire is unplugged, it connects the projector screen to the wall"
+            textbutton "Return" action [Hide("wire_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]

@@ -1,49 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1451, in script
+  File "game/script.rpy", line 1499, in script
     $ renpy.pause(hard=True)
-  File "game/script.rpy", line 1451, in <module>
+  File "game/script.rpy", line 1499, in <module>
     $ renpy.pause(hard=True)
       ~~~~~~~~~~~^^^^^^^^^^^
-  File "game/scripts/inventory_screen.rpy", line 252, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 252, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 256, in execute
-    frame:
-  File "game/scripts/inventory_screen.rpy", line 261, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 271, in execute
-    if current_mode == "construction":
-  File "game/scripts/inventory_screen.rpy", line 272, in execute
-    hbox:
-  File "game/scripts/inventory_screen.rpy", line 297, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 300, in execute
-    frame:
-  File "game/scripts/inventory_screen.rpy", line 305, in execute
-    if not selected_items:
-  File "game/scripts/inventory_screen.rpy", line 308, in execute
-    grid 2 1:
-  File "game/scripts/inventory_screen.rpy", line 309, in execute
-    for sel_id in selected_items:
-  File "game/scripts/inventory_screen.rpy", line 311, in execute
-    if sel_details:
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 320, in execute
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
-  File "game/scripts/inventory_screen.rpy", line 320, in keywords
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
-  File "game/scripts/inventory_screen.rpy", line 320, in <module>
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
-NameError: name 'RemoveFromList' is not defined. Did you mean: 'RemoveFromSet'?
+  File "game/script.rpy", line 95, in execute
+    screen checkKey():
+  File "game/script.rpy", line 95, in execute
+    screen checkKey():
+  File "game/script.rpy", line 96, in execute
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+  File "game/script.rpy", line 96, in keywords
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+  File "game/script.rpy", line 96, in <module>
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+                            ^^^^^^^^^^^                                    
+NameError: name 'auto_moving' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "game/script.rpy", line 1451, in script
+  File "game/script.rpy", line 1499, in script
     $ renpy.pause(hard=True)
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
@@ -51,7 +30,7 @@ Traceback (most recent call last):
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 1451, in <module>
+  File "game/script.rpy", line 1499, in <module>
     $ renpy.pause(hard=True)
       ~~~~~~~~~~~^^^^^^^^^^^
   File "renpy/exports/statementexports.py", line 198, in pause
@@ -94,47 +73,26 @@ Traceback (most recent call last):
   File "renpy/display/screen.py", line 715, in update
     self.screen.function(**self.scope)
     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "game/scripts/inventory_screen.rpy", line 252, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 252, in execute
-    screen crafting_screen():
-  File "game/scripts/inventory_screen.rpy", line 256, in execute
-    frame:
-  File "game/scripts/inventory_screen.rpy", line 261, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 271, in execute
-    if current_mode == "construction":
-  File "game/scripts/inventory_screen.rpy", line 272, in execute
-    hbox:
-  File "game/scripts/inventory_screen.rpy", line 297, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 300, in execute
-    frame:
-  File "game/scripts/inventory_screen.rpy", line 305, in execute
-    if not selected_items:
-  File "game/scripts/inventory_screen.rpy", line 308, in execute
-    grid 2 1:
-  File "game/scripts/inventory_screen.rpy", line 309, in execute
-    for sel_id in selected_items:
-  File "game/scripts/inventory_screen.rpy", line 311, in execute
-    if sel_details:
-  File "game/scripts/inventory_screen.rpy", line 312, in execute
-    vbox:
-  File "game/scripts/inventory_screen.rpy", line 320, in execute
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
-  File "game/scripts/inventory_screen.rpy", line 320, in keywords
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
+  File "game/script.rpy", line 95, in execute
+    screen checkKey():
+  File "game/script.rpy", line 95, in execute
+    screen checkKey():
+  File "game/script.rpy", line 96, in execute
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+  File "game/script.rpy", line 96, in keywords
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
   File "renpy/python.py", line 1292, in py_eval
     return py_eval_bytecode(code, globals, locals)
            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
   File "renpy/python.py", line 1285, in py_eval_bytecode
     return eval(bytecode, globals, locals)
            ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/scripts/inventory_screen.rpy", line 320, in <module>
-    textbutton "Remove" action RemoveFromList(selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
-NameError: name 'RemoveFromList' is not defined. Did you mean: 'RemoveFromSet'?
+  File "game/script.rpy", line 96, in <module>
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+                            ^^^^^^^^^^^                                    
+NameError: name 'auto_moving' is not defined
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.0.25071206
 Reflection 1.0
-Sat Jul 19 15:34:52 2025
+Sun Jul 20 13:20:45 2025

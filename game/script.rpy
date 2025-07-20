@@ -44,16 +44,6 @@ default stirring_complete = False
 default last_mouse_pos = (0, 0)
 default stirring_direction = None
 default stirring_count = 0
-#Quest Templates
-#templates will go here to be used in game
-#default quests = [ #this was retarded so i made it an array
- #  {
- #      "name": "New Uniform Quest",
- #      "description": "Go to the front desk to order a new uniform.",
- #      "completed": False,
- #      "condition": "uniform_ordered"
- #  },
-#]
 #Array's
 default emotions = {
     "Authenticity": {"value": 50, "bonus": {"speech": 5, "luck": -2,"mental_resilience": -6,"pain_tolerance": -5}},
@@ -99,19 +89,16 @@ default facing_left = False
 default jumping = False
 default moving_left = False
 default moving_right = False
+default auto_moving = False
 default jump_velocity = 0
 default gravity = 2
 default jump_strength = -15
 screen checkKey():
-  #  key "K_RIGHT" action SetVariable("moving_right", True)
-  #  key "keyup_K_RIGHT" action [SetVariable("moving_right", False), SetVariable("walk_frame", 4)]
-    key "K_d" action SetVariable("moving_right", True)
-    key "keyup_K_d" action [SetVariable("moving_right", False), SetVariable("walk_frame", 4)]        
-  #  key "K_LEFT" action SetVariable("moving_left", True)
-  #  key "keyup_K_LEFT" action [SetVariable("moving_left", False), SetVariable("walk_frame", 4)]
-    key "keyup_K_a" action [SetVariable("moving_left", False), SetVariable("walk_frame", 4)]
-    key "K_a" action SetVariable("moving_left", True)        
-    key "K_SPACE" action If(beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)])   
+    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+    key "keyup_K_d" action If(not auto_moving, [SetVariable("moving_right", False), SetVariable("walk_frame", 4)])        
+    key "keyup_K_a" action If(not auto_moving, [SetVariable("moving_left", False), SetVariable("walk_frame", 4)])
+    key "K_a" action If(not auto_moving, SetVariable("moving_left", True))        
+    key "K_SPACE" action If(not auto_moving and beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)])   
 screen game_screen():
 
     image "smolbenwalk":  
@@ -120,6 +107,7 @@ screen game_screen():
         xzoom ( -1.0 if facing_left else 1.0 )
     
     timer 0.05 repeat True action Function(update_game)
+#Background
 image ani1_background:
     Animation(
         "images/bg/Starting_Room/2/satgescene1.png", 0.1,
@@ -1280,28 +1268,79 @@ init python:
                 renpy.notify("Could not open web browser.")
         except Exception as e:
             renpy.notify(f"Error opening browser: {e}")
+            # movement
     def update_game():
-        global benx, beny, walk_frame, jumping, jump_velocity, facing_left
+        global benx, beny, walk_frame, jumping, jump_velocity, facing_left, auto_moving
         
-        if moving_right and not moving_left:
-            benx += 10  
-            facing_left = False
-            walk_frame = (walk_frame + 1) % 5
-        elif moving_left and not moving_right:
-            benx -= 10
-            facing_left = True
-            walk_frame = (walk_frame + 1) % 5
-        if jumping:
-            beny += jump_velocity
-            jump_velocity += gravity
-            if beny >= minbeny:
-                beny = minbeny
-                jumping = False
-                walk_frame = 4
-                jump_velocity = 0
+        if auto_moving:
+            dx = target_x - benx
+            dy = target_y - beny
+            
+            if abs(dx) <= 10 and abs(dy) <= 10:
+                benx = target_x
+                beny = target_y
+                auto_moving = False
+                walk_frame = 4  # Reset to idle
+                # If above ground after move, initiate fall
+                if beny < minbeny:
+                    jumping = True
+                    jump_velocity = 0
+                return
+            
+            # Move x
+            step_x = 0
+            if dx > 0:
+                step_x = min(10, dx)
+                benx += step_x
+                facing_left = False
+            elif dx < 0:
+                step_x = max(-10, dx)
+                benx += step_x
+                facing_left = True
+            
+            # Move y linearly
+            step_y = 0
+            if dy > 0:
+                step_y = min(10, dy)
+                beny += step_y
+            elif dy < 0:
+                step_y = max(-10, dy)
+                beny += step_y
+            
+            # Animate if moving
+            if step_x != 0 or step_y != 0:
+                walk_frame = (walk_frame + 1) % 5
+        
+        else:
+            # Normal player control
+            if moving_right and not moving_left:
+                benx += 10  
+                facing_left = False
+                walk_frame = (walk_frame + 1) % 5
+            elif moving_left and not moving_right:
+                benx -= 10
+                facing_left = True
+                walk_frame = (walk_frame + 1) % 5
+            if jumping:
+                beny += jump_velocity
+                jump_velocity += gravity
+                if beny >= minbeny:
+                    beny = minbeny
+                    jumping = False
+                    walk_frame = 4
+                    jump_velocity = 0
         
         beny = max(min(beny, maxbeny), 0)
         benx = max(min(benx, maxbenx), minbenx)
+    def move_to_pos(tx, ty):
+        global auto_moving, target_x, target_y, jumping, moving_left, moving_right, jump_velocity
+        target_x = tx
+        target_y = ty
+        auto_moving = True
+        jumping = False
+        jump_velocity = 0
+        moving_left = False
+        moving_right = False        
     # ==============================================================================
     # 15. INITIALIZATION CALLS
     # ==============================================================================
@@ -1338,7 +1377,20 @@ label start:
     $ set_room_temperature(72)
     $ add_item("Classified Mission Sheet")
     $ inventory.append("radio")
-    play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 # Assuming 'boot_camp' is the correct filename
+    play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 
+    $ missions["active"].append({
+        "title": "Repair the projector",
+        "description": "I need to figure out how to repair the projector. The drill sargent ordered me to repair it but I have never fixed anything in my life...",
+        "objectives": ["Find a speciality screwdriver", "Replace the front lens", "Replace the back plate","Test the power supply"], 
+        "progress": 0, 
+    })
+    
+    $ missions["active"].append({
+        "title": "Order a new uniform",
+        "description": "I came in to todays meeting without a proper uniform, I should work on getting a new one. I can try looking at the main desk or I can try to ask around for someone that would have a uniform.",
+        "objectives": ["Talk to the quartermaster at front desk", "Check the supply room", "Go to the military shop"], 
+        "progress": 0,
+    })    
     scene ani1_background with None
     show screen stagecurtians
     BEN "I can only feel excitement, as I finally go to sit down."
@@ -1375,7 +1427,6 @@ label start:
     "A beam with the power to destroy cities..."
     "The silence is broken when drill sergeant Jones begins speaking "
 
-  #  show drill_sarg_talk at right
     DRI "Men, these are the facts as I understand them: approximately 5 hours ago a class A event occurred near Ruckersville Virginia."
     DRI "We promptly sent a Incident Relief Division to investigate the scene and received reports of a rift in the earth opening up "
     DRI "and several sightings of unknown creatures before we lost contact due to power outages."
@@ -1383,11 +1434,9 @@ label start:
     DRI "and the other team will be in charge of securing a suspected target that caused this mess."
     DRI "This is not simply a security problem anymore as fellow members of the army and civilians lives are at stake."
     DRI "I have full confidence in all of you; you are the best unit in the force and I expect you will be ready."
-  #  hide drill_sarg_talk
 
     "The room remains silent with no one but me moving there eyes from the Sargent as he talks" 
     "there is a tense anticipation for what he will say next."
-   # show drill_sarg_talk at right
     DRI "This box here is a projector, here is of upmost importance, while it may look mundane and normal…"
     "he takes out the tape and a sound begins playing"
     DRI "But These tapes it plays are capable of playing sounds at a higher decibel frequency than humans can hear."
@@ -1511,8 +1560,7 @@ label BackSeat:
     hide screen tutorial_screen
     hide screen checkKey    
     window show    
-    scene bootcampinsideprojectorroomstartm
-    show ben neutral at left
+    $ move_to_pos(130,450)
     "I head towards the backseat, the person in the backseat seems to have something over there head, it looks like a paper bag."
     show bagman_default at right
     BAG "..."
