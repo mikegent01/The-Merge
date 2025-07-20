@@ -5,7 +5,6 @@ screen dynamic_text_screen():
         $ seatx = 274
         $ podiumx = 1005
         $ rajmanx = 441
-        $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
         if abs(benx - 80) <= projectorx :
             imagebutton:
                 idle "images/inventory/inventory_hud/magna.png"

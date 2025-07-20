@@ -1,289 +1,600 @@
-2025-07-20 17:19:44 UTC
-Windows-11-10.0.26100-SP0
-Ren'Py 8.4.0.25071206
+2025-07-20 22:45:39 UTC
+Windows-10-10.0.26100
+Ren'Py 8.3.4.24120703
 
-Early init took 39 ms
-Loading error handling took 33 ms
-Loading script took 393 ms
-Loading save slot metadata took 119 ms
-Loading persistent took 0 ms
-Running init code took 67 ms
-[Web Server] Starting on http://localhost:3000
-Loading analysis data took 8 ms
-Analyze and compile ATL took 3 ms
-Reloading save slot metadata took 101 ms
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 29 ms
-Cleaning cache took 0 ms
-Making clean stores took 0 ms
-Initial gc took 22 ms
-DPI scale factor: 1.000000
+Early init took 0.07s
+Loading error handling took 0.02s
+Loading script took 0.25s
+Loading save slot metadata took 0.03s
+Loading persistent took 0.00s
+Running init code took 0.04s
+Loading analysis data took 0.02s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.01s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The-Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.02s
+DPI scale factor: 1.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 170 ms
-Init translation took 1 ms
-Cleaning stores took 0 ms
-Load screen analysis took 7 ms
-Analyze screens took 8 ms
-Save screen analysis took 12 ms
-Save pyanalysis took 4 ms
-Save bytecode took 17 ms
-Running _start took 2 ms
-Interface start took 259 ms
+Creating interface object took 0.17s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.07s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.03s
+Running _start took 0.00s
+Interface start took 0.13s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
+primary display bounds: (0, 0, 2560, 1600)
 swap interval: 1 frames
 Windowed mode.
-Vendor: 'NVIDIA Corporation'
-Renderer: 'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: '4.6.0 NVIDIA 576.28'
-Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1080, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
 
 Full traceback:
-  File "game/script.rpy", line 1485, in script
-    show screen game_screen
-  File "renpy/ast.py", line 2231, in execute
-    self.call("execute")
-    ~~~~~~~~~^^^^^^^^^^^
-  File "renpy/ast.py", line 2195, in call
-    return renpy.statements.call(method, parsed, *args, **kwargs)
-           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/statements.py", line 379, in call
-    return method(parsed, *args, **kwargs)
-           ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/common/000statements.rpy", line 665, in execute_show_screen
-    renpy.show_screen(name, *args, **kwargs)
-    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/screen.py", line 1355, in show_screen
-    raise ScreenNotFound(name[0])
-renpy.display.screen.ScreenNotFound: Screen 'game_screen' is not known. Did you mean: 'minigame_screen'?
-
-While running game code:
-  File "game/script.rpy", line 1485, in script
-    show screen game_screen
-renpy.display.screen.ScreenNotFound: Screen 'game_screen' is not known. Did you mean: 'minigame_screen'?
-Resetting cache.
-Early init took 8 ms
-Loading error handling took 14 ms
-Loading script took 274 ms
-Loading save slot metadata took 12 ms
-Loading persistent took 0 ms
-[Web Server Error] Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
-Running init code took 23 ms
-Loading analysis data took 4 ms
-Analyze and compile ATL took 2 ms
-Reloading save slot metadata took 9 ms
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 25 ms
-Cleaning cache took 0 ms
-Making clean stores took 0 ms
-Initial gc took 32 ms
-DPI scale factor: 1.000000
-nvdrs: Loaded, about to disable thread optimizations.
-nvdrs: Disabled thread optimizations.
-Creating interface object took 154 ms
-Init translation took 1 ms
-Cleaning stores took 0 ms
-Load screen analysis took 0 ms
-Analyze screens took 9 ms
-Save screen analysis took 11 ms
-Save pyanalysis took 4 ms
-Save bytecode took 1 ms
-Running _start took 1 ms
-Interface start took 220 ms
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: 'NVIDIA Corporation'
-Renderer: 'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: '4.6.0 NVIDIA 576.28'
-Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1080, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-
-Full traceback:
-  File "game/script.rpy", line 1499, in script
+  File "game/script.rpy", line 160, in script
     $ renpy.pause(hard=True)
-  File "renpy/ast.py", line 1187, in execute
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ast.py", line 827, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/python.py", line 1260, in py_exec_bytecode
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 1499, in <module>
+  File "game/script.rpy", line 160, in <module>
     $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-  File "renpy/exports/statementexports.py", line 198, in pause
-    rv = renpy.ui.interact(mouse="pause", type="pause", roll_forward=roll_forward, pause=delay, pause_modal=modal)
-         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/ui.py", line 304, in interact
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\exports\statementexports.py", line 194, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/core.py", line 2216, in interact
-    repeat, rv = self.interact_core(
-                 ~~~~~~~~~~~~~~~~~~^
-        preloads=preloads,
-        ^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        **kwargs,
-        ^^^^^^^^^
-    )  # type: ignore
-    ^                
-  File "renpy/display/core.py", line 2754, in interact_core
-    root_widget.visit_all(lambda d: d.per_interact())
-    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/screen.py", line 503, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 480, in visit_all
     callback(self)
-    ~~~~~~~~^^^^^^
-  File "renpy/display/core.py", line 2754, in <lambda>
-    root_widget.visit_all(lambda d: d.per_interact())
-                                    ~~~~~~~~~~~~~~^^ 
-  File "renpy/display/screen.py", line 514, in per_interact
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 491, in per_interact
     self.update()
-    ~~~~~~~~~~~^^
-  File "renpy/display/screen.py", line 715, in update
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 96, in execute
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in keywords
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "renpy/python.py", line 1292, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/python.py", line 1285, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 96, in <module>
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-                            ^^^^^^^^^^^                                    
-NameError: name 'auto_moving' is not defined
+  File "game/scripts/screens/look.rpy", line 1, in execute
+    screen dynamic_text_screen():
+  File "game/scripts/screens/look.rpy", line 1, in execute
+    screen dynamic_text_screen():
+  File "game/scripts/screens/look.rpy", line 3, in execute
+    if last_label == "intreactivesection01" or test_room == 0:
+  File "game/scripts/screens/look.rpy", line 8, in execute
+    $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
+  File "game/scripts/screens/look.rpy", line 8, in <module>
+    $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
+NameError: name 'perform_roll' is not defined
 
 While running game code:
-  File "game/script.rpy", line 1499, in script
+  File "game/script.rpy", line 160, in script
     $ renpy.pause(hard=True)
-  File "game/script.rpy", line 1499, in <module>
+  File "game/script.rpy", line 160, in <module>
     $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 96, in execute
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in keywords
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in <module>
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-                            ^^^^^^^^^^^                                    
-NameError: name 'auto_moving' is not defined
+  File "game/scripts/screens/look.rpy", line 1, in execute
+    screen dynamic_text_screen():
+  File "game/scripts/screens/look.rpy", line 1, in execute
+    screen dynamic_text_screen():
+  File "game/scripts/screens/look.rpy", line 3, in execute
+    if last_label == "intreactivesection01" or test_room == 0:
+  File "game/scripts/screens/look.rpy", line 8, in execute
+    $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
+  File "game/scripts/screens/look.rpy", line 8, in <module>
+    $ rajroll = perform_roll(base_chance=41, skill_level=stats['intelligence']['level'], skill_name='intelligence', total_bonuses=0)
+NameError: name 'perform_roll' is not defined
 Resetting cache.
-Early init took 7 ms
-Loading error handling took 8 ms
-Loading script took 278 ms
-Loading save slot metadata took 13 ms
-Loading persistent took 0 ms
-[Web Server Error] Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
-Running init code took 23 ms
-Loading analysis data took 5 ms
-Analyze and compile ATL took 3 ms
-Reloading save slot metadata took 9 ms
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 24 ms
-Cleaning cache took 0 ms
-Making clean stores took 1 ms
-Initial gc took 33 ms
-DPI scale factor: 1.000000
+Early init took 74.09s
+Loading error handling took 0.02s
+Loading script took 0.11s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.02s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.02s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The-Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 156 ms
-Init translation took 0 ms
-Cleaning stores took 0 ms
-Load screen analysis took 0 ms
-Analyze screens took 9 ms
-Save screen analysis took 12 ms
-Save pyanalysis took 5 ms
-Save bytecode took 1 ms
-Running _start took 1 ms
-Interface start took 241 ms
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.08s
+Save pyanalysis. took 0.02s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.06s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
+primary display bounds: (0, 0, 2560, 1600)
 swap interval: 1 frames
 Windowed mode.
-Vendor: 'NVIDIA Corporation'
-Renderer: 'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: '4.6.0 NVIDIA 576.28'
-Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1080, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
 Resetting cache.
-Early init took 8 ms
-Loading error handling took 7 ms
-Loading script took 248 ms
-Loading save slot metadata took 14 ms
-Loading persistent took 0 ms
-[Web Server Error] Failed to start server on port 3000: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
-Running init code took 23 ms
-Loading analysis data took 6 ms
-Analyze and compile ATL took 2 ms
-Reloading save slot metadata took 9 ms
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The Merge':
-Dump and make backups took 24 ms
-Cleaning cache took 0 ms
-Making clean stores took 1 ms
-Initial gc took 40 ms
-DPI scale factor: 1.000000
+Early init took 93.79s
+Loading error handling took 0.01s
+Loading script took 0.24s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.02s
+Loading analysis data took 0.02s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.02s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The-Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.05s
+DPI scale factor: 1.500000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 162 ms
-Init translation took 0 ms
-Cleaning stores took 0 ms
-Load screen analysis took 0 ms
-Analyze screens took 9 ms
-Save screen analysis took 12 ms
-Save pyanalysis took 0 ms
-Save bytecode took 1 ms
-Running _start took 0 ms
-Interface start took 225 ms
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.07s
+Save pyanalysis. took 0.00s
+Save bytecode. took 0.01s
+Running _start took 0.00s
+Interface start took 0.06s
 
 Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
+primary display bounds: (0, 0, 2560, 1600)
 swap interval: 1 frames
 Windowed mode.
-Vendor: 'NVIDIA Corporation'
-Renderer: 'NVIDIA GeForce RTX 3060 Ti/PCIe/SSE2'
-Version: '4.6.0 NVIDIA 576.28'
-Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1920, 'current_h': 1080, 'refresh_rate': 60, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
 Maximum texture size: 4096x4096
+Cleaning stores took 0.00s
+Init translation took 0.00s
+Build styles took 0.00s
+Load screen analysis took 0.03s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+Cleaning stores took 0.00s
+Init translation took 0.00s
+Build styles took 0.00s
+Load screen analysis took 0.03s
+Analyze screens took 0.00s
+Prepare screens took 0.00s
+Running _start took 0.00s
+
+Full traceback:
+  File "game/script.rpy", line 160, in script
+    $ renpy.pause(hard=True)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ast.py", line 827, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 160, in <module>
+    $ renpy.pause(hard=True)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\exports\statementexports.py", line 194, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory():
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory():
+  File "game/scripts/screens/inventory_screen.rpy", line 27, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 33, in execute
+    hbox: # Main layout: Inventory Grid | Details/Equipped
+  File "game/scripts/screens/inventory_screen.rpy", line 37, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 38, in execute
+    frame: # Frame around the grid section
+  File "game/scripts/screens/inventory_screen.rpy", line 43, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 46, in execute
+    python:
+  File "game/scripts/screens/inventory_screen.rpy", line 47, in <module>
+    _inv_weight = calculate_total_weight()
+NameError: name 'calculate_total_weight' is not defined
+
+While running game code:
+  File "game/script.rpy", line 160, in script
+    $ renpy.pause(hard=True)
+  File "game/script.rpy", line 160, in <module>
+    $ renpy.pause(hard=True)
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory():
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory():
+  File "game/scripts/screens/inventory_screen.rpy", line 27, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 33, in execute
+    hbox: # Main layout: Inventory Grid | Details/Equipped
+  File "game/scripts/screens/inventory_screen.rpy", line 37, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 38, in execute
+    frame: # Frame around the grid section
+  File "game/scripts/screens/inventory_screen.rpy", line 43, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 46, in execute
+    python:
+  File "game/scripts/screens/inventory_screen.rpy", line 47, in <module>
+    _inv_weight = calculate_total_weight()
+NameError: name 'calculate_total_weight' is not defined
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 257.83s
+Loading error handling took 0.01s
+Loading script took 0.11s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+
+File "game/scripts/screens/inventory_screen.rpy", line 143: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 193: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 218: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 276: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 322: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.27s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 321.14s
+Loading error handling took 0.01s
+Loading script took 0.11s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+
+File "game/scripts/screens/inventory_screen.rpy", line 145: end of line expected.
+    else: text item_id size 14 xalign 0.5 yalign 0.5
+          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 194: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 219: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 277: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 323: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.22s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 322.15s
+Loading error handling took 0.02s
+Loading script took 0.10s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+
+File "game/scripts/screens/inventory_screen.rpy", line 145: end of line expected.
+    else: text item_id size 14 xalign 0.5 yalign 0.5
+          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 194: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 219: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 277: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 323: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.24s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 344.42s
+Loading error handling took 0.01s
+Loading script took 0.11s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+
+File "game/scripts/screens/inventory_screen.rpy", line 143: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 194: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 219: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 277: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 323: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.24s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 345.04s
+Loading error handling took 0.01s
+Loading script took 0.10s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+
+File "game/scripts/screens/inventory_screen.rpy", line 143: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 194: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 219: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 277: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 323: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Interface start took 0.23s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+Resetting cache.
+Early init took 637.23s
+Loading error handling took 0.01s
+Loading script took 0.13s
+Loading save slot metadata took 0.02s
+Loading persistent took 0.00s
+Running init code took 0.07s
+Loading analysis data took 0.02s
+Analyze and compile ATL took 0.00s
+Reloading save slot metadata took 0.02s
+Index archives took 0.00s
+Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\The-Merge':
+Dump and make backups took 0.03s
+Cleaning cache took 0.00s
+Making clean stores took 0.00s
+Initial gc took 0.04s
+DPI scale factor: 1.500000
+nvdrs: Loaded, about to disable thread optimizations.
+nvdrs: Disabled thread optimizations.
+Creating interface object took 0.15s
+Cleaning stores took 0.00s
+Init translation took 0.03s
+Build styles took 0.00s
+Load screen analysis took 0.00s
+Analyze screens took 0.01s
+Save screen analysis took 0.02s
+Prepare screens took 0.09s
+Save pyanalysis. took 0.02s
+Save bytecode. took 0.02s
+Running _start took 0.00s
+Interface start took 0.18s
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 2560, 1600)
+swap interval: 1 frames
+Windowed mode.
+Vendor: "b'NVIDIA Corporation'"
+Renderer: b'NVIDIA GeForce RTX 4060 Laptop GPU/PCIe/SSE2'
+Version: b'4.6.0 NVIDIA 566.24'
+Display Info: None
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
+Screen sizes: virtual=(1280, 755) physical=(2560, 1494) drawable=(2560, 1494)
+Maximum texture size: 4096x4096
+
+Full traceback:
+  File "game/script.rpy", line 160, in script
+    $ renpy.pause(hard=True)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ast.py", line 827, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\python.py", line 1178, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/script.rpy", line 160, in <module>
+    $ renpy.pause(hard=True)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\exports\statementexports.py", line 194, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ui.py", line 301, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
+    d.visit_all(callback, seen)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 480, in visit_all
+    callback(self)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 491, in per_interact
+    self.update()
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 697, in update
+    self.screen.function(**self.scope)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\parameter.py", line 455, in apply_arguments
+    return parameters.apply(args or (), kwargs or {}, ignore_errors)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\parameter.py", line 307, in apply
+    raise TypeError(msg) # from None
+TypeError: missing a required argument: 'player_obj'
+
+While running game code:
+  File "game/script.rpy", line 160, in script
+    $ renpy.pause(hard=True)
+  File "game/script.rpy", line 160, in <module>
+    $ renpy.pause(hard=True)
+TypeError: missing a required argument: 'player_obj'

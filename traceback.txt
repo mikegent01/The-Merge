@@ -1,98 +1,52 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 1499, in script
+  File "game/script.rpy", line 160, in script
     $ renpy.pause(hard=True)
-  File "game/script.rpy", line 1499, in <module>
+  File "game/script.rpy", line 160, in <module>
     $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 96, in execute
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in keywords
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in <module>
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-                            ^^^^^^^^^^^                                    
-NameError: name 'auto_moving' is not defined
+TypeError: missing a required argument: 'player_obj'
 
 -- Full Traceback ------------------------------------------------------------
 
-Traceback (most recent call last):
-  File "game/script.rpy", line 1499, in script
+Full traceback:
+  File "game/script.rpy", line 160, in script
     $ renpy.pause(hard=True)
-  File "renpy/ast.py", line 1187, in execute
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ast.py", line 827, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/python.py", line 1260, in py_exec_bytecode
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\python.py", line 1178, in py_exec_bytecode
     exec(bytecode, globals, locals)
-    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 1499, in <module>
+  File "game/script.rpy", line 160, in <module>
     $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-  File "renpy/exports/statementexports.py", line 198, in pause
-    rv = renpy.ui.interact(mouse="pause", type="pause", roll_forward=roll_forward, pause=delay, pause_modal=modal)
-         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/ui.py", line 304, in interact
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\exports\statementexports.py", line 194, in pause
+    rv = renpy.ui.interact(mouse='pause', type='pause', roll_forward=roll_forward, pause=delay, pause_modal=modal)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\ui.py", line 301, in interact
     rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/core.py", line 2216, in interact
-    repeat, rv = self.interact_core(
-                 ~~~~~~~~~~~~~~~~~~^
-        preloads=preloads,
-        ^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-        **kwargs,
-        ^^^^^^^^^
-    )  # type: ignore
-    ^                
-  File "renpy/display/core.py", line 2754, in interact_core
-    root_widget.visit_all(lambda d: d.per_interact())
-    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2215, in interact
+    repeat, rv = self.interact_core(preloads=preloads, trans_pause=trans_pause, pause=pause, pause_start=pause_start, pause_modal=pause_modal, **kwargs) # type: ignore
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in interact_core
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/displayable.py", line 432, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\displayable.py", line 434, in visit_all
     d.visit_all(callback, seen)
-    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
-  File "renpy/display/screen.py", line 503, in visit_all
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 480, in visit_all
     callback(self)
-    ~~~~~~~~^^^^^^
-  File "renpy/display/core.py", line 2754, in <lambda>
-    root_widget.visit_all(lambda d: d.per_interact())
-                                    ~~~~~~~~~~~~~~^^ 
-  File "renpy/display/screen.py", line 514, in per_interact
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\core.py", line 2745, in <lambda>
+    root_widget.visit_all(lambda d : d.per_interact())
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 491, in per_interact
     self.update()
-    ~~~~~~~~~~~^^
-  File "renpy/display/screen.py", line 715, in update
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\display\screen.py", line 697, in update
     self.screen.function(**self.scope)
-    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 95, in execute
-    screen checkKey():
-  File "game/script.rpy", line 96, in execute
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "game/script.rpy", line 96, in keywords
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-  File "renpy/python.py", line 1292, in py_eval
-    return py_eval_bytecode(code, globals, locals)
-           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/python.py", line 1285, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 96, in <module>
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-                            ^^^^^^^^^^^                                    
-NameError: name 'auto_moving' is not defined
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\parameter.py", line 455, in apply_arguments
+    return parameters.apply(args or (), kwargs or {}, ignore_errors)
+  File "C:\Users\mikeg\Downloads\renpy\renpy-8.3.4-sdk\renpy\parameter.py", line 307, in apply
+    raise TypeError(msg) # from None
+TypeError: missing a required argument: 'player_obj'
 
-Windows-11-10.0.26100-SP0 AMD64
-Ren'Py 8.4.0.25071206
+Windows-10-10.0.26100 AMD64
+Ren'Py 8.3.4.24120703
 Reflection 1.0
-Sun Jul 20 13:20:45 2025
+Sun Jul 20 18:56:22 2025

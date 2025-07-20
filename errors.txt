@@ -2,9 +2,25 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 416: invalid syntax
-    $ config.keymap['screenshot'].remove('s')
-        ^
+File "game/scripts/screens/inventory_screen.rpy", line 143: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5
+                                 ^
 
-Ren'Py Version: Ren'Py 8.4.0.25071206
-Sat Jul 19 15:02:58 2025
+File "game/scripts/screens/inventory_screen.rpy", line 194: end of line expected.
+    if renpy.loadable(img_path): add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                 ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 219: end of line expected.
+    if item_type == "head": textbutton "Head" action [Function(player_obj.inventory.equip, item_id, "head"), Hide("slot_selection_screen")] style "inventory_button"
+                            ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 277: end of line expected.
+    if not status_dict.get('conditions'): text "- None -" size 12 color "#AAAAAA"
+                                          ^
+
+File "game/scripts/screens/inventory_screen.rpy", line 323: end of line expected.
+    if target_part: text f"(Treating: {target_part.replace('_',' ').title()})" size 16 color "#CCCCCC" xalign 0.5
+                    ^
+
+Ren'Py Version: Ren'Py 8.3.4.24120703
+Sun Jul 20 18:51:24 2025
