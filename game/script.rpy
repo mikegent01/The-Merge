@@ -154,7 +154,7 @@ label start:
         show screen game_screen 
         show screen HUD
         if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
-            show screen tutorial_screen
+            show screen status_screen(player_obj=player)
             $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
         window hide 
         $ renpy.pause(hard=True)

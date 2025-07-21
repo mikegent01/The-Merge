@@ -16,7 +16,7 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/backpack.png"
         hover "images/inventory/inventory_hud/backpack_hover.png"
-        action Show("inventory")
+        action Show("inventory", player_obj=player)
         padding (10, 10, 10, 10)
     imagebutton:
         xalign 0.66
@@ -30,14 +30,14 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/Quest_Log.png"
         hover "images/inventory/inventory_hud/Quest_Log_hover.png"
-        action Show("journal_screen")
+        action Show("journal_screen",player_obj=player)
         padding (10, 10, 10, 10)     
     imagebutton:
         xalign 0.755
         yalign 1.0
         idle "images/inventory/inventory_hud/magna.png"
         hover "images/inventory/inventory_hud/magna_hover.png"
-        action Show("dynamic_text_screen")
+        action Show("dynamic_text_screen",player_obj=player)
         padding (10, 10, 10, 10)                   
         #oomfie
     text "Benjamin [benx], [beny]":
@@ -58,7 +58,7 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/meidc_hud.png"
         hover "images/inventory/inventory_hud/medic_hover.png"
-        action Show("status_screen") #status_screen 
+        action Show("status_screen",player_obj=player) #status_screen 
         padding (10, 10, 10, 10)
 
     # Head Log Icon - Bottom center
@@ -67,7 +67,7 @@ screen HUD():
         yalign 1.0
         idle "images/inventory/inventory_hud/head.png"
         hover "images/inventory/inventory_hud/head_hover.png"
-        action Show("player_stats_screen")
+        action Show("player_stats_screen",player_obj=player)
         padding (10, 10, 10, 10)
 screen read_book_screen(book):
     default current_page = 0
