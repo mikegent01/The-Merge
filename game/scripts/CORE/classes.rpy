@@ -16,9 +16,24 @@ init python:
                 "left_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 73},
                 "right_leg": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 72}
             }
-            self.relationships = {}
+            self.relationships = {
+                "Samuel": {"trust": 60, "friendship": 70, "hostility": 10, "met": True},  
+                "Barns": {"trust": 40, "friendship": 20, "hostility": 10, "met": True}, 
+            }
             self._initialize_stats()
-        # === HEALTH & STATUS METHODS ===
+        def modify_emotion(self, emotion_name, amount, default_bonus=None):
+
+            if default_bonus is None:
+                default_bonus = {}  # Default empty bonus dict
+
+            # Initialize if it doesn't exist
+            if emotion_name not in self.emotions:
+                self.emotions[emotion_name] = {"value": 0, "bonus": default_bonus}
+
+            # Modify and clamp the value
+            current_value = self.emotions[emotion_name]["value"]
+            new_value = max(0, min(100, current_value + amount))  # Clamp to 0-100
+            self.emotions[emotion_name]["value"] = new_value
         def heal(self, part, amount):
             if part in self.health:
                 self.health[part]["health"] = min(self.health[part]["health"] + amount, self.max_health)
@@ -117,51 +132,43 @@ init python:
             self.heal(part, healing_info.get("healing", 0))
             del medkit_contents[item_name]
             renpy.notify(f"Used {item_name.capitalize()} on {self.name}'s {part.replace('_', ' ')}.")            
-        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0):
+        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0, min_chance=5, max_chance=95):
 
             if skill_name not in self.stats:
                 renpy.notify(f"System Error: Skill '{skill_name}' not found for {self.name}!")
-                return False # Automatically fail if the character doesn't have the skill.
+                return {'success': False, 'roll': 0, 'threshold': 0, 'total_chance': 0}
 
-            # 1. Get the base value from the character's stats
             skill_value = self.stats[skill_name].get("current_value", 0)
             
-            # 2. Automatically calculate the bonus from the character's current emotions
             emotion_bonus = self._get_emotion_bonus(skill_name)
             
-            # 3. Calculate the total chance of success
             total_chance = base_chance + skill_value + emotion_bonus + circumstance_bonus
             
-            # Clamp the success chance to prevent impossible (0%) or guaranteed (100%) rolls
-            total_chance = max(5, min(total_chance, 95))
+            total_chance = max(min_chance, min(total_chance, max_chance))
             
-            # 4. Perform the roll
+            threshold = 101 - total_chance 
+            
             roll = renpy.random.randint(1, 100)
             
-            success = (roll <= total_chance)
+            success = (roll >= threshold)
             
-            # 5. Notify the player of the result (great for debugging)
             if success:
-                renpy.notify(f"Success! (Rolled {roll} vs {total_chance})")
+                renpy.notify(f"Success! (Rolled {roll} ≥ {threshold})")
             else:
-                renpy.notify(f"Failure. (Rolled {roll} vs {total_chance})")
+                renpy.notify(f"Failure. (Rolled {roll} < {threshold})")
                 
-            return success
-
+            return {'success': success, 'roll': roll, 'threshold': threshold, 'total_chance': total_chance}
 
         def _get_emotion_bonus(self, skill_name):
-            """A private helper method to calculate the total emotion bonus for a skill."""
             sorted_emotions = sorted(self.emotions.items(), key=lambda x: x[1]["value"], reverse=True)
             if not sorted_emotions:
                 return 0
 
             total_bonus = 0
             
-            # Main bonus from the top emotion
             top_emotion_data = sorted_emotions[0][1]
             total_bonus += top_emotion_data.get("bonus", {}).get(skill_name, 0)
             
-            # Reduced (halved) bonus from the second and third emotions
             for _, data in sorted_emotions[1:3]:
                 reduced_bonuses = {stat: bonus // 2 for stat, bonus in data.get("bonus", {}).items()}
                 total_bonus += reduced_bonuses.get(skill_name, 0)
@@ -210,7 +217,7 @@ init python:
         def __init__(self, owner, capacity=20):
             self.owner = owner
             self.capacity = capacity
-            self.items = []
+            self.items = []  # List of dicts: [{"name": str, "current_durability": int, "broken": bool}, ...]
             self.equipment = {
                 "head": None, "body": None, "left_arm": None, "right_arm": None,
                 "left_hand": None, "right_hand": None, "left_leg": None, "right_leg": None
@@ -224,11 +231,28 @@ init python:
                 {"name": "Water Bottle", "capacity": 500, "current_amount": 0, "contents": []},
             ]
 
+        def calculate_total_weight(self):
+            return sum(items_database.get(item["name"], {}).get("weight", 1) for item in self.items)
+        
+        def get_item_amount(self, liquid_name):
+            for liquid in self.liquids:
+                if liquid["name"] == liquid_name:
+                    return liquid["amount"]
+            return 0
+        
+        def has_stirring_tool(self, tool):
+            return any(item["name"].lower() == tool.lower() for item in self.items)
+
         def get_item_weight(self, item_name):
             return items_database.get(item_name, {}).get("weight", 1)
-
+        
+        @property
+        def max_weight(self):
+            strength_value = self.owner.stats.get("strength", {}).get("current_value", 0)
+            return 50 + (strength_value * 5)  # Example formula; adjust as needed
+        
         def get_total_weight(self):
-            return sum(self.get_item_weight(item) for item in self.items)
+            return sum(self.get_item_weight(item["name"]) for item in self.items)
 
         def add_item(self, item_name):
             if item_name not in items_database:
@@ -237,102 +261,158 @@ init python:
             if len(self.items) >= self.capacity:
                 renpy.notify("Inventory is full.")
                 return False
-            self.items.append(item_name)
-            renpy.notify(f"Added '{item_name}' to inventory.")
+            
+            item_data = items_database[item_name]
+            max_dur = item_data.get("max_durability", -1)  # Default to indestructible
+            current_dur = max_dur if max_dur >= 0 else -1  # Start at max or infinite
+            
+            self.items.append({"name": item_name, "current_durability": current_dur, "broken": False})
+            renpy.notify(f"Added '{item_name}' to inventory (Durability: {current_dur if current_dur >= 0 else 'Infinite'}).")
             return True
 
         def remove_item(self, item_name):
-            if item_name in self.items:
-                self.items.remove(item_name)
-                return True
+            for i, item in enumerate(self.items):
+                if item["name"] == item_name:
+                    del self.items[i]
+                    return True
             return False
 
         def equip(self, item_name, slot):
-            if item_name not in self.items:
-                renpy.notify(f"Cannot equip: {item_name} not in inventory.")
-                return
-            if slot not in self.equipment:
-                renpy.notify(f"System Error: Invalid slot '{slot}'.")
-                return
-            if self.equipment[slot] is not None:
-                self.unequip(slot)
-            self.equipment[slot] = item_name
-            self.items.remove(item_name)
-            renpy.notify(f"Equipped {item_name}.")
+            for item in self.items:
+                if item["name"] == item_name:
+                    if item.get("broken", False):
+                        renpy.notify(f"Cannot equip broken {item_name}.")
+                        return
+                    if slot not in self.equipment:
+                        renpy.notify(f"System Error: Invalid slot '{slot}'.")
+                        return
+                    if self.equipment[slot] is not None:
+                        self.unequip(slot)
+                    self.equipment[slot] = item  # Store the full item dict
+                    self.items.remove(item)
+                    renpy.notify(f"Equipped {item_name}.")
+                    return
+            renpy.notify(f"Cannot equip: {item_name} not in inventory.")
+            return
 
         def unequip(self, slot):
             if slot not in self.equipment or self.equipment[slot] is None:
                 renpy.notify(f"Nothing to unequip from {slot}.")
                 return
-            item_to_unequip = self.equipment[slot]
+            item = self.equipment[slot]
             self.equipment[slot] = None
-            self.items.append(item_to_unequip)
-            renpy.notify(f"Unequipped {item_to_unequip}.")
+            self.items.append(item)
+            # Optional: Decrease durability on unequip (e.g., wear from use)
+            self.decrease_durability(item["name"], amount=1)
+            renpy.notify(f"Unequipped {item['name']}.")
 
         def use_item(self, item_name):
-            if item_name not in self.items:
-                return
-            if item_name == "First aid kit":
-                self.remove_item(item_name)
-                renpy.show_screen("heal_menu")
-            elif item_name == "Tissue":
-                self.remove_item(item_name)
-                self.add_item("Wet Tissue")
-                renpy.notify("You blow your nose.")
-            else:
-                renpy.notify(f"You can't use the {item_name} right now.")
-        def get_item_weight(self, item_name):
-            return items_database.get(item_name, {}).get("weight", 1)
+            for item in self.items:
+                if item["name"] == item_name:
+                    if item.get("broken", False):
+                        renpy.notify(f"Cannot use broken {item_name}.")
+                        return
+                    self.decrease_durability(item_name, amount=1)
+                    if item_name == "First aid kit":
+                        self.remove_item(item_name)
+                        renpy.show_screen("heal_menu")
+                    elif item_name == "Tissue":
+                        self.remove_item(item_name)
+                        self.add_item("Wet Tissue")
+                        renpy.notify("You blow your nose.")
+                    else:
+                        renpy.notify(f"You can't use the {item_name} right now.")
+                    return
+            return
+        def decrease_durability_func(self,item_name,num): #this is really stupid but it works
+            self.decrease_durability(item_name, amount=num)
+            
+
+        def is_broken(self, item_name):
+            for item in self.items:
+                if item["name"] == item_name:
+                    return item.get("broken", False)
+            for slot, equipped_item in self.equipment.items():
+                if equipped_item and equipped_item["name"] == item_name:
+                    return equipped_item.get("broken", False)
+            return False
+
         def has_item(self, item_name):
-            if item_name in self.items:
+            if any(item["name"] == item_name for item in self.items):
                 return True
             for slot, equipped_item in self.equipment.items():
-                if equipped_item == item_name:
+                if equipped_item and equipped_item["name"] == item_name:
                     return True
             return False
-        def add_item(self, item_name):
-            if item_name not in items_database:
-                renpy.notify(f"System Error: Item '{item_name}' does not exist.")
-                return False
-            if len(self.items) >= self.capacity:
-                renpy.notify("Inventory is full.")
-                return False
-            self.items.append(item_name)
-            renpy.notify(f"Added '{item_name}' to inventory.")
-            return True
 
-        def remove_item(self, item_name):
-            if item_name in self.items:
-                self.items.remove(item_name)
-                return True
+        # New: Decrease durability for an item (e.g., on use)
+        def decrease_durability(self, item_name, amount=1):
+            for item in self.items:
+                if item["name"] == item_name:
+                    if item["current_durability"] < 0:  # Indestructible
+                        return True
+                    item["current_durability"] = max(0, item["current_durability"] - amount)
+                    if item["current_durability"] <= 0:
+                        self.handle_breakage(item_name)
+                    elif item["current_durability"] <= 10:  # Low durability warning
+                        renpy.notify(f"Warning: {item_name} durability low ({item['current_durability']}).")
+                    else:
+                        renpy.notify(f"{item_name} durability decreased to {item['current_durability']}.")
+                    return True
+            # Check equipped items too
+            for slot, equipped in self.equipment.items():
+                if equipped and equipped["name"] == item_name:
+                    if equipped["current_durability"] < 0:
+                        return True
+                    equipped["current_durability"] = max(0, equipped["current_durability"] - amount)
+                    if equipped["current_durability"] <= 0:
+                        self.handle_breakage(item_name)  # Could auto-unequip here if desired
+                    elif equipped["current_durability"] <= 10:
+                        renpy.notify(f"Warning: Equipped {item_name} durability low ({equipped['current_durability']}).")
+                    else:
+                        renpy.notify(f"Equipped {item_name} durability decreased to {equipped['current_durability']}.")
+                    return True
+            return False  # Item not found
+
+        # New: Increase/repair durability
+        def increase_durability(self, item_name, amount=1, max_override=None):
+            for item in self.items:
+                if item["name"] == item_name:
+                    max_dur = max_override or items_database[item_name].get("max_durability", -1)
+                    if max_dur < 0 or not items_database[item_name].get("repairable", False):
+                        renpy.notify(f"{item_name} cannot be repaired.")
+                        return False
+                    item["current_durability"] = min(max_dur, item["current_durability"] + amount)
+                    if item.get("broken", False) and item["current_durability"] > 0:
+                        item["broken"] = False
+                        renpy.notify(f"{item_name} repaired and usable again.")
+                    else:
+                        renpy.notify(f"{item_name} durability increased to {item['current_durability']}.")
+                    return True
+            # Check equipped items too
+            for slot, equipped in self.equipment.items():
+                if equipped and equipped["name"] == item_name:
+                    max_dur = max_override or items_database[equipped["name"]].get("max_durability", -1)
+                    if max_dur < 0 or not items_database[equipped["name"]].get("repairable", False):
+                        renpy.notify(f"{equipped['name']} cannot be repaired.")
+                        return False
+                    equipped["current_durability"] = min(max_dur, equipped["current_durability"] + amount)
+                    if equipped.get("broken", False) and equipped["current_durability"] > 0:
+                        equipped["broken"] = False
+                        renpy.notify(f"Equipped {equipped['name']} repaired and usable again.")
+                    else:
+                        renpy.notify(f"Equipped {equipped['name']} durability increased to {equipped['current_durability']}.")
+                    return True
             return False
 
-        def equip(self, item_name, slot):
-            if item_name not in self.items: return
-            if slot not in self.equipment: return
-            if self.equipment[slot] is not None: self.unequip(slot)
-            self.equipment[slot] = item_name
-            self.items.remove(item_name)
-            renpy.notify(f"Equipped {item_name}.")
-
-        def unequip(self, slot):
-            if slot not in self.equipment or self.equipment[slot] is None: return
-            item_to_unequip = self.equipment[slot]
-            self.equipment[slot] = None
-            self.items.append(item_to_unequip)
-            renpy.notify(f"Unequipped {item_to_unequip}.")
-
-        def use_item(self, item_name):
-            if item_name not in self.items: return
-            if item_name == "First aid kit":
-                self.remove_item(item_name)
-                renpy.show_screen("heal_menu")
-            elif item_name == "Tissue":
-                self.remove_item(item_name)
-                self.add_item("Wet Tissue")
-                renpy.notify("You blow your nose.")
-            else:
-                renpy.notify(f"You can't use the {item_name} right now.")
-
-
-         
+        def handle_breakage(self, item_name):
+            renpy.notify(f"{item_name} has broken! (Durability reached 0).")
+            for item in self.items:
+                if item["name"] == item_name:
+                    item["broken"] = True
+                    return
+            for slot, equipped in self.equipment.items():
+                if equipped and equipped["name"] == item_name:
+                    equipped["broken"] = True
+                    self.unequip(slot)
+                    return

@@ -1,31 +1,120 @@
-# This is the full and final class definition file.
-# It contains all necessary data and logic for characters and inventories.
-
 init python:
     import random
-
-    # ==============================================================================
-    # 1. GLOBAL GAME DATA (Databases that don't belong to a single character)
-    # ==============================================================================
-
-    # The master database of all items that can exist in the game.
     items_database = {
-        "MG41": {"type": "weapon", "weight": 10, "description": "A powerful machine gun..."},
-        "Tissue": {"type": "junk", "weight": 2, "description": "A Tissue to wipe away your sorrows.."},
-        "Wet Tissue": {"type": "junk", "weight": 2, "description": "A Wet Tissue...yuck!"},
-        "Laser range finder": {"type": "tool", "weight": 1, "description": "Used to measure the distance..."},
-        "Compass": {"type": "tool", "weight": 1, "description": "A military grade compass..."},
-        "radio": {"type": "tool", "weight": 2, "description": "A military grade radio..."},
-        "Classified Mission Sheet": {"type": "tool", "weight": 2, "description": "A sheet I should not have..."},
-        "First aid kit": {"type": "consumable", "weight": 1, "description": "Used to heal minor injuries."},
-        "Tactical flashlight": {"type": "tool", "weight": 1, "description": "This light can survive explosions..."},
-        "Water Bottle": {"type": "consumable", "weight": 1, "description": "Used to hold water..."},
-        "sissor": {"type": "tool", "weight": 1, "description": "Used to cut things."},
-        "Report 001": {"type": "document", "weight": 300, "description": "A report of something..."},
-        "Pistol": {"type": "weapon", "weight": 2, "description": "A standard issue sidearm..."}
+        "MG41": {
+            "type": "weapon", 
+            "weight": 10, 
+            "description": "A powerful machine gun...",
+            "max_durability": 200,  # High durability for a weapon
+            "repairable": True
+        },
+        "Tissue": {
+            "type": "junk", 
+            "weight": 2, 
+            "description": "A Tissue to wipe away my sorrows..",
+            "max_durability": 3, 
+            "repairable": False 
+        },
+        "Wet Tissue": {
+            "type": "junk", 
+            "weight": 2, 
+            "description": "A Wet Tissue...yuck!",
+            "max_durability": 1,  
+            "repairable": False
+        },
+        "Crumpled Paper": {
+            "type": "junk", 
+            "weight": 1, 
+            "description": "A paper i discarded.",
+            "max_durability": 1,  
+            "repairable": False
+        },        
+        "Pencil": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "Used to write my thoughts down...",
+            "max_durability": 1500,  
+            "repairable": True
+        },
+        "Paper": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "I can write stuff on this...",
+            "max_durability": 10,  
+            "repairable": False
+        },
+        "Laser range finder": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "Used to measure the distance...",
+            "max_durability": 100,  
+            "repairable": True
+        },
+        "Compass": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "A military grade compass...",
+            "max_durability": -1, 
+            "repairable": False
+        },
+        "Radio": {
+            "type": "tool", 
+            "weight": 2, 
+            "description": "A military grade radio...",
+            "max_durability": 150,  
+            "repairable": True
+        },
+        "Classified Mission Sheet": {
+            "type": "note", 
+            "weight": 2, 
+            "description": "A sheet I should not have...",
+            "max_durability": -1,  
+            "repairable": False
+        },
+        "First aid kit": {
+            "type": "consumable", 
+            "weight": 1, 
+            "description": "Used to heal minor injuries.",
+            "max_durability": 5, 
+            "repairable": True 
+        },
+        "Tactical flashlight": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "This light can survive explosions...",
+            "max_durability": 300, 
+            "repairable": True
+        },
+        "Water Bottle": {
+            "type": "consumable", 
+            "weight": 1, 
+            "description": "Used to hold water...",
+            "max_durability": 100, 
+            "repairable": False
+        },
+        "Sissor": {
+            "type": "tool", 
+            "weight": 1, 
+            "description": "Used to cut things.",
+            "max_durability": 80,  
+            "repairable": True
+        },
+        "Report 001": {
+            "type": "document", 
+            "weight": 300, 
+            "description": "A report of something...",
+            "max_durability": -1,  
+            "repairable": False
+        },
+        "Pistol": {
+            "type": "weapon", 
+            "weight": 2, 
+            "description": "A standard issue sidearm...",
+            "max_durability": 150,  
+            "repairable": True
+        }
     }
 
-    # The master database of what medkit items can do.
     medkit_contents = {
         "Bandage": {"conditions": ["bleeding", "cut"], "healing": 10},
         "Phenergan": {"conditions": ["nausea"], "healing": 5},
@@ -36,14 +125,4 @@ init python:
         "Diphenhydramine": {"conditions": ["pain"], "healing": 10},
         "SOFT-T": {"conditions": ["hemorrhage", "fracture", "bleeding"], "healing": 10},
         "Naproxen": {"conditions": ["headache"], "healing": 10}
-    }
-
-    # A global utility function for adding new items to the medkit database.
-    def add_item_to_medkit(item_name, healing_info):
-        medkit_contents[item_name] = healing_info
-        renpy.notify(f"{item_name.capitalize()} has been added to your medkit!")
-
-
-    # ==============================================================================
-    # 2. INVENTORY CLASS (Must be defined BEFORE GameCharacter)
-    # ==============================================================================
+    }    

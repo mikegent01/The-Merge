@@ -1,6 +1,3 @@
-# game/00_core/player_setup.rpy
-
-# These dictionaries hold the starting data for our player.
 default player_initial_stats = {
     "intelligence": {"level": 2, "current_xp": 0, "max_xp": 77},
     "speech": {"level": 3, "current_xp": 0, "max_xp": 131},
@@ -20,9 +17,8 @@ default player_initial_emotions = {
     "Dignity": {"value": 60, "bonus": {"speech": 5, "mental_resilience": 3, "luck": -2}},
     "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6, "pain_tolerance": 5}},
 }
-
-# THIS IS THE LINE THAT FIXES YOUR ERROR
-# It creates the 'player' variable by calling the GameCharacter class constructor.
+default soft_skills = ["intelligence", "speech", "luck", "mental_resilience", "medical", "leadership", "empathy", "creativity", "adaptability", "teamwork"]
+default hard_skills = ["strength", "speed", "pain_tolerance"]
 default player = GameCharacter(
     name="Benjamin",
     starting_stats=player_initial_stats,

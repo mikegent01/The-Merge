@@ -1,42 +1,13 @@
-﻿# --- Start of File ---
-
-# --- System & Debug ---
+﻿
 default test_room = 0
 default preferences.text_cps = 30
-
-
-# game state FT: pirate software
-default game_state = {
-    "major_items": {
-        "projector": {
-                "projector_status": "broken", 
-                "projector_health": 5, # when 0 game over
-                "projector_backplate": False,
-                "films_in_projector": 2,
-                "projector_durability": 100,
-                "screws_in_projector": 7,
-                "duel_screw_attached": False
-            }
-    },
-    "rolls": {
-        "roll_results": {}
-    },
-    "chapter_1": {
-        "projector_room": {
-            "picked_tissue_up": False,
-            "viewed_tutorial": False
-        }
-    }
-}
-
-
-     
-
 label start:
     $ player.apply_room_temperature(72)
     $ roll_result = player.perform_roll(skill_name='medical', base_chance=20, circumstance_bonus=0)    
     $ player.inventory.add_item("Classified Mission Sheet")
-    $ player.inventory.add_item("radio")
+    $ player.inventory.add_item("Radio")
+    $ player.inventory.add_item("Paper")
+    $ player.inventory.add_item("Pencil")
     play music "audio/Music/Boot Camp/boot_camp.mp3" volume 0.5 
     $ missions["active"].append({
         "title": "Repair the projector",
@@ -154,18 +125,10 @@ label start:
         show screen game_screen 
         show screen HUD
         if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
-            show screen status_screen(player_obj=player)
+            show screen tutorial_screen
             $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
         window hide 
         $ renpy.pause(hard=True)
-    label intreactivescreengiveitems01:
-        if not game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
-            $ game_state["chapter_1"]["projector_room"]["picked_tissue_up"] = True
-            $ player.inventory.add_item ("Tissue")
-            jump intreactivesection01
-        if game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
-            jump intreactivesection01
-
 label FrontSeat:
     hide screen HUD
     hide screen tutorial_screen

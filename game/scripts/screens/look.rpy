@@ -73,7 +73,8 @@ screen projector_look_s1():
         vbox:
             spacing 10
             text "I look at the projector screen thinking about the presentation that just played, it is hard to belive that a portal can destroy a whole town like that..."
-            textbutton "Return" action [Hide("projector_look_s1"), Show("checkKey"),Hide("dynamic_text_screen")]
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("projector_look_s1"), Show("checkKey"),Hide("dynamic_text_screen")]
+
 screen seat_look_s1():
     frame:
         xalign 0.5
@@ -84,10 +85,11 @@ screen seat_look_s1():
             spacing 10
             if not game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
                 text "There is a tissue on my seat, it must have fell out of my pocket. I pick up the tissue"
-                textbutton "Return" action [Hide("seat_look_s1"), Show("checkKey"), Hide("dynamic_text_screen"), Jump("intreactivescreengiveitems01")]
+                textbutton "Pick Up" action [Function(player.inventory.add_item, "Tissue"), SetDict(game_state["chapter_1"]["projector_room"], "picked_tissue_up", True), Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("seat_look_s1"), Hide("dynamic_text_screen"), Jump("intreactivesection01")]
             else:
                 text "There is nothing here..."
-                textbutton "Return" action [Hide("seat_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
+                textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("seat_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
+
 screen podium_look_s1():
     frame:
         xalign 0.5
@@ -97,7 +99,8 @@ screen podium_look_s1():
         vbox:
             spacing 10
             text "Looking at the podium ."
-            textbutton "Return" action [Hide("projector_look_s1"), Show("checkKey"),Hide("dynamic_text_screen")]
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("projector_look_s1"), Show("checkKey"),Hide("dynamic_text_screen")]
+
 screen rajman_look_intreactivesection01():
     frame:
         xalign 0.5
@@ -107,9 +110,14 @@ screen rajman_look_intreactivesection01():
         vbox:
             spacing 10
             text "I look at the man the things I notice most about him his is turban, he is wearing an ottoman style turban possibly for religious reasons but i am not sure."
-            if game_state["rolls"]["roll_results"].get('rajman_intel_success', True):
+            $ rajman_roll = game_state["rolls"]["roll_results"].get('rajman_intel_success', {})
+            if rajman_roll.get('success', False):
                 text "I however do notice that he is hiding something, he is looking at his pocket at something"
-            textbutton "Return" action [Hide("rajman_look_intreactivesection01"), Show("checkKey"), Hide("dynamic_text_screen")]
+                text f"Intelligence Roll Passed: {rajman_roll.get('roll', 0)} >= {rajman_roll.get('threshold', 0)}" size 18 color "#00FF00"
+            else:
+                text f"Intelligence Roll Failed: {rajman_roll.get('roll', 0)} < {rajman_roll.get('threshold', 0)}" size 18 color "#FF0000"
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("rajman_look_intreactivesection01"), Show("checkKey"), Hide("dynamic_text_screen")]
+
 screen projector_look_s1():
     frame:
         xalign 0.5
@@ -119,9 +127,13 @@ screen projector_look_s1():
         vbox:
             spacing 10
             text "The Drill Sargent is standing there he is wearing a standard issue uniform and a blue hat with the words MP on it. There appears to be dust on his hat. I don't feel like talking to him as it seems like a bad idea."
-            if game_state["rolls"]["roll_results"].get('projector_success', True):
+            $ projector_roll = game_state["rolls"]["roll_results"].get('projector_success', {})
+            if projector_roll.get('success', False):
                 text "I also notice the drill Sargent has a scar on his left arm, he seems to be covering it up with his uniform deliberately"
-            textbutton "Return" action [Hide("projector_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
+                text f"Intelligence Roll Passed: {projector_roll.get('roll', 0)} >= {projector_roll.get('threshold', 0)}" size 18 color "#00FF00"
+            else:
+                text f"Intelligence Roll Failed: {projector_roll.get('roll', 0)} < {projector_roll.get('threshold', 0)}" size 18 color "#FF0000"
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("projector_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
 
 screen bagman_look_s1():
     frame:
@@ -132,7 +144,7 @@ screen bagman_look_s1():
         vbox:
             spacing 10
             text "There is a man with a bag on his head.... I will call him bagman from now on"
-            textbutton "Return" action [Hide("bagman_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("bagman_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
 
 screen wire_look_s1():
     frame:
@@ -143,4 +155,4 @@ screen wire_look_s1():
         vbox:
             spacing 10
             text "The wire is unplugged, it connects the projector screen to the wall"
-            textbutton "Return" action [Hide("wire_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]
+            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("wire_look_s1"), Show("checkKey"), Hide("dynamic_text_screen")]

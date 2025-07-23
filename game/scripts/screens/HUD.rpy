@@ -1,3 +1,130 @@
+default persistent.journal_entries = []
+
+init python:
+    # Helper function to process the journal entry after input (for saving)
+    def process_journal_entry(content):
+        if not player.inventory.has_item("Pencil") or not player.inventory.has_item("Paper"):
+            renpy.notify("You need a Pencil and Paper to write in your journal.")
+            return
+        if player.inventory.is_broken("Pencil") or player.inventory.is_broken("Paper"):
+            renpy.notify("Your Pencil or Paper is broken and cannot be used.")
+            return
+
+        content = content.strip()
+
+        # Process content: Split into words and enforce 250-word limit
+        words = [word for word in content.split() if word]  # Remove empty "words"
+        word_count = len(words)
+        if word_count == 0:
+            renpy.notify("Entry cancelled: No content provided.")
+            return
+        if word_count > 250:
+            words = words[:250]  # Truncate
+            content = " ".join(words)
+            renpy.notify("Entry truncated to 250 words (page limit).")
+            word_count = 250
+
+        # Derive title from first 3 words (or fewer if not enough)
+        if word_count >= 3:
+            title = " ".join(words[:3])
+        elif word_count > 0:
+            title = " ".join(words)
+        else:
+            title = "Untitled Entry"  # Fallback, though we already checked for 0 words
+
+        # Decrease pencil durability by 1 per word
+        player.inventory.decrease_durability_func("Pencil", word_count)  # Decreases by total words at once
+
+        # Consume one Paper
+        if not player.inventory.remove_item("Paper"):
+            renpy.notify("Error: Could not consume Paper. Entry saved anyway.")
+        
+        # Check if pencil broke during writing
+        if player.inventory.is_broken("Pencil"):
+            renpy.notify("Your Pencil broke while writing! Entry saved, but get a new one.")
+
+        # Save the entry using existing function
+        add_journal_entry(title, content)
+        renpy.notify(f"Journal entry added: '{title}' ({word_count} words).")
+
+    # New function to handle discarding the entry
+    def discard_journal_entry(content):
+        if not player.inventory.has_item("Pencil") or not player.inventory.has_item("Paper"):
+            renpy.notify("You need a Pencil and Paper to discard a note.")
+            return
+        if player.inventory.is_broken("Pencil") or player.inventory.is_broken("Paper"):
+            renpy.notify("Your Pencil or Paper is broken and cannot be used.")
+            return
+
+        content = content.strip()
+
+        # Process content to calculate word count (even for discard)
+        words = [word for word in content.split() if word]
+        word_count = len(words)
+        if word_count == 0:
+            renpy.notify("Nothing to discard: No content provided.")
+            return
+
+        # Decrease pencil durability by 1 per word (same as saving, assuming you wrote it)
+        player.inventory.decrease_durability_func("Pencil", word_count)
+
+        # Consume one Paper
+        if not player.inventory.remove_item("Paper"):
+            renpy.notify("Error: Could not consume Paper. Discarded anyway.")
+
+        # Check if pencil broke
+        if player.inventory.is_broken("Pencil"):
+            renpy.notify("Your Pencil broke while writing! Note discarded anyway.")
+
+        # Add "Crumpled Note" to inventory
+        player.inventory.add_item("Crumpled Paper")
+        renpy.notify("You crumpled the note and added it to your inventory.")
+
+    # New function to discard all existing journal entries
+    def discard_all_journal_entries():
+        num_entries = len(persistent.journal_entries)
+        if num_entries == 0:
+            renpy.notify("No journal entries to discard.")
+            return
+
+        # Add one Crumpled Note per discarded entry
+        for _ in range(num_entries):
+            player.inventory.add_item("Crumpled Paper")
+
+        # Clear the journal entries
+        persistent.journal_entries = []
+
+        renpy.notify(f"Discarded all {num_entries} journal entries. Added {num_entries} Crumpled Notes to your inventory.")
+
+screen add_journal_entry_screen:
+    default entry_content = ""
+
+    modal True
+    zorder 100  # Ensure it's on top
+
+    frame:
+        align (0.5, 0.5)
+        padding (20, 20)
+        background "#000000"  # Solid black background
+        xsize 600
+        ysize 400
+
+        vbox:
+            spacing 10
+            xalign 0.5
+
+            text "Add New Journal Page" color "#ffffff" xalign 0.5 size 30
+
+            text "Content (up to 250 words):" xalign 0.0
+            input value ScreenVariableInputValue("entry_content") length 2000 multiline True xsize 550 ysize 250
+
+            hbox:
+                xalign 0.5
+                spacing 20
+                textbutton "Save Entry" action [Function(process_journal_entry, content=entry_content), Hide("add_journal_entry_screen")]
+                textbutton "Discard" action [Function(discard_journal_entry, content=entry_content), Hide("add_journal_entry_screen")]
+                textbutton "Cancel" action Hide("add_journal_entry_screen")
+
 screen stagecurtians():
     add "images/bg/overlay/floor.png" size (config.screen_width, config.screen_height)
    #add "images/bg/overlay/background.png" size (config.screen_width, config.screen_height)
@@ -30,14 +157,14 @@ screen HUD():
         yalign 0.87
         idle "images/inventory/inventory_hud/Quest_Log.png"
         hover "images/inventory/inventory_hud/Quest_Log_hover.png"
-        action Show("journal_screen",player_obj=player)
+        action Show("journal_screen")
         padding (10, 10, 10, 10)     
     imagebutton:
         xalign 0.755
         yalign 1.0
         idle "images/inventory/inventory_hud/magna.png"
         hover "images/inventory/inventory_hud/magna_hover.png"
-        action Show("dynamic_text_screen",player_obj=player)
+        action Show("dynamic_text_screen")
         padding (10, 10, 10, 10)                   
         #oomfie
     text "Benjamin [benx], [beny]":
@@ -127,7 +254,7 @@ screen tutorial_screen():
         
         vbox:
             spacing 15
-            text "TUTORIAL [last_label]" xalign 0.5 color "#ff9900" size 36
+            text "TUTORIAL" xalign 0.5 color "#ff9900" size 36
             
             null height 10
             
@@ -151,6 +278,7 @@ screen tutorial_screen():
                     text "• Medkit button shows your Health Status"
                     text "• Backpack opens your Inventory"
                     text "• Clipboard reveals your Journal"
+                    text "• Use A and D to move"
                 
                 vbox:
                     xsize 300
@@ -329,9 +457,15 @@ screen journal_screen():
 
                         text "Personal Entries:" size 30 align(0.5, 0) # Title
 
-                        if len(journal_entries) > 0:
+                        # Add New Page Button (integrated here)
+                        textbutton "Add New Page" action Show("add_journal_entry_screen") xalign 0.5
+
+                        # Discard All Pages Button
+                        textbutton "Discard All Pages" action Function(discard_all_journal_entries) xalign 0.5 sensitive (len(persistent.journal_entries) > 0)
+
+                        if len(persistent.journal_entries) > 0:
                             # Iterate through reversed for newest first
-                            for entry in reversed(journal_entries):
+                            for entry in reversed(persistent.journal_entries):
                                 frame:
                                     xfill True
                                     background "#00000044" # Slightly different background maybe?
@@ -385,6 +519,5 @@ screen journal_screen():
                                             yalign 0.5 # Center vertically in the hbox
                                             # The action list stops previous tape on the 'voice' channel, then plays the new one.
                                             textbutton "▶ Play" action [Stop("voice"), Play("voice", tape["audio_file"])]
-
                         else:
                             text "No audio tapes found yet." size 20 align (0.5, 0)

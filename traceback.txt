@@ -1,38 +1,32 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 160, in script
-    $ renpy.pause(hard=True)
-  File "game/script.rpy", line 160, in <module>
-    $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-Exception: renpy.restart_interaction() was called 100 times without processing any input.
+  File "game/screens.rpy", line 265, in execute_default
+    default quick_menu = True
+Exception: store.quick_menu is being given a default a second time.
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "game/script.rpy", line 160, in script
-    $ renpy.pause(hard=True)
+  File "renpy/common/00start.rpy", line 195, in script
+    python:
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/script.rpy", line 160, in <module>
-    $ renpy.pause(hard=True)
-      ~~~~~~~~~~~^^^^^^^^^^^
-  File "renpy/exports/statementexports.py", line 198, in pause
-    rv = renpy.ui.interact(mouse="pause", type="pause", roll_forward=roll_forward, pause=delay, pause_modal=modal)
-         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/ui.py", line 304, in interact
-    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/display/core.py", line 2214, in interact
-    raise Exception("renpy.restart_interaction() was called 100 times without processing any input.")
-Exception: renpy.restart_interaction() was called 100 times without processing any input.
+  File "renpy/common/00start.rpy", line 196, in <module>
+    renpy.execute_default_statement(True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "renpy/exports/statementexports.py", line 375, in execute_default_statement
+    i.execute_default(start)
+    ~~~~~~~~~~~~~~~~~^^^^^^^
+  File "game/screens.rpy", line 265, in execute_default
+    default quick_menu = True
+Exception: store.quick_menu is being given a default a second time.
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.0.25071206
 Reflection 1.0
-Mon Jul 21 19:16:50 2025
+Tue Jul 22 20:12:16 2025

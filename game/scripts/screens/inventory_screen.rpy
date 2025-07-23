@@ -49,7 +49,6 @@ screen inventory(player_obj):
                             _inv_capacity = player_obj.inventory.capacity
                             _grid_cols = 4
                             _grid_rows = (_inv_capacity // _grid_cols) + (1 if _inv_capacity % _grid_cols else 0)
-                        # We no longer have a global weight function, so this is commented out.
                         # You would add a get_total_weight() method to your Inventory class to use this.
                         # text f"Weight: {player_obj.inventory.get_total_weight():.1f} kg" size 16 xalign 0.5 color "#CCCCCC"
                         text f"Slots: {len(_inv_items)} / {_inv_capacity}" size 16 xalign 0.5 color "#CCCCCC"
@@ -66,7 +65,8 @@ screen inventory(player_obj):
 
                                 for i in range(_inv_capacity):
                                     if i < len(_inv_items):
-                                        $ item_id = _inv_items[i]
+                                        $ item_dict = _inv_items[i]  # This is the dict (e.g., {"name": "tissue", "current_durability": 3})
+                                        $ item_id = item_dict["name"]  # Extract the name string
                                         python:
                                             # The items_database is still global
                                             _details = items_database.get(item_id)
@@ -74,12 +74,18 @@ screen inventory(player_obj):
                                             if _details:
                                                 _tooltip_text = _details.get("description", item_id)
                                             _img_path = "images/inventory/" + item_id.replace(" ", "_") + ".png"
+                                            # Durability for tooltip
+                                            _dur = item_dict["current_durability"]
+                                            _max_dur = _details.get("max_durability", -1) if _details else -1
+                                            _dur_text = f" (Dur: {_dur if _dur >= 0 else 'Inf'}{'/' + str(_max_dur) if _max_dur >= 0 else ''})"
+                                            _broken_text = " (Broken)" if item_dict.get("broken", False) else ""
+                                            _tooltip_text += _dur_text + _broken_text
 
                                         if _details:
                                             button:
                                                 style "slot_frame"
                                                 xysize (90, 90)
-                                                action SetVariable("selected_item", item_id)
+                                                action SetVariable("selected_item", item_dict)  # Set to the full dict for details (including durability)
                                                 tooltip _tooltip_text
 
                                                 if renpy.loadable(_img_path):
@@ -105,8 +111,8 @@ screen inventory(player_obj):
                         mousewheel True
 
                         if selected_item:
-                            # Pass the player_obj to the details panel
-                            use item_details_panel(player_obj=player_obj, item_id=selected_item)
+                            # Pass the player_obj and the full item dict
+                            use item_details_panel(player_obj=player_obj, item_dict=selected_item)
                         else:
                             # Pass the player_obj to the equipped panel
                             use equipped_items_panel(player_obj=player_obj)
@@ -118,15 +124,17 @@ screen inventory(player_obj):
                     # NOTE: Crafting/Liquids screens will also need to be passed the player_obj
                     textbutton "Crafting" action Show("crafting_screen", player_obj=player_obj) style "inventory_button"
                     textbutton "Liquids" action Show("combine_liquids_screen", player_obj=player_obj) style "inventory_button"
-                    textbutton "Status" action Show("character_status_screen", player_obj=player_obj) style "inventory_button"
-                    # textbutton "Journal" action Show("journal_screen") style "inventory_button"
                     textbutton "Close" action [SetVariable("selected_item", None), Hide("inventory")] style "inventory_button"
 
-# --- Item Details Panel (Used by inventory) ---
-screen item_details_panel(player_obj, item_id):
+screen item_details_panel(player_obj, item_dict):
+    $ item_id = item_dict["name"]  # Extract name for database lookup
     $ details = items_database.get(item_id)
     $ item_weight = player_obj.inventory.get_item_weight(item_id)
     $ item_desc = details.get("description", "No description.") if details else "No description."
+    $ dur = item_dict["current_durability"]
+    $ max_dur = details.get("max_durability", -1) if details else -1
+    $ dur_text = f"Durability: {dur if dur >= 0 else 'Infinite'}{' / ' + str(max_dur) if max_dur >= 0 else ''}"
+    $ broken_text = " (Broken)" if item_dict.get("broken", False) else ""
 
     if details:
         vbox:
@@ -147,26 +155,55 @@ screen item_details_panel(player_obj, item_id):
             text f"Weight: {item_weight} kg" size 16 color "#CCCCCC" xalign 0.5
             text f"Type: {details.get('type', 'N/A')}" size 16 color "#CCCCCC" xalign 0.5
             text f"Desc: {item_desc}" size 16 color "#DDDDDD" xalign 0.5
+            text dur_text size 16 color "#CCCCCC" xalign 0.5
+            if broken_text:
+                text broken_text size 16 color "#FF0000" xalign 0.5 italic True
 
             null height 10
             hbox:
                 xalign 0.5
                 spacing 10
-                # Pass the player_obj to the slot selection screen
+                # Pass the player_obj to the slot selection screen (use item_id as string)
                 textbutton "Equip" action Show("slot_selection_screen", player_obj=player_obj, item_id=item_id) style "inventory_button"
-                # Call the method on the player's inventory object
+                # Call the method on the player's inventory object (use item_id)
                 textbutton "Use" action [Function(player_obj.inventory.use_item, item_id), SetVariable("selected_item", None), Hide("inventory")] style "inventory_button"
                 textbutton "Discard" action [Function(player_obj.inventory.remove_item, item_id), SetVariable("selected_item", None)] style "inventory_button"
             textbutton "Deselect" action SetVariable("selected_item", None) style "inventory_button"
     else:
         text "Error: Item details not found." xalign 0.5 color "#FF8888"
 
+# --- Reusable Equipment Slot Display ---
+screen equipment_slot_display(player_obj, slot_name, current_item_id):
+    $ item_dict = current_item_id  # Now a dict (from equipment)
+    $ item_id = item_dict["name"] if item_dict else None  # Extract name
+    $ details = items_database.get(item_id) if item_id else None
+    frame:
+        style "slot_frame"
+        xysize (120, 120)
+        tooltip slot_name.replace("_", " ").title()
+        vbox:
+            if details:
+                $ img_path = "images/inventory/" + item_id.replace(" ", "_") + ".png"
+                if renpy.loadable(img_path):
+                    add img_path xalign 0.5 yalign 0.5 zoom 0.7
+                else:
+                    text item_id size 12 xalign 0.5 yalign 0.5
+                hbox:
+                    xalign 0.5
+                    spacing 10
+                    # Call the methods on the player's inventory
+                    textbutton "U" action [Function(player_obj.inventory.use_item, item_id), Hide("inventory")] style "inventory_button" text_size 12 padding (4,4) tooltip "Use"
+                    textbutton "X" action Function(player_obj.inventory.unequip, slot_name) style "inventory_button" text_size 12 padding (4,4) tooltip "Unequip"
+            else:
+                text "Empty" xalign 0.5 yalign 0.5 color "#AAAAAA" size 14 italic True
+
+# --- Equipped Items Panel ---
 screen equipped_items_panel(player_obj):
     vbox:
         spacing 20
         hbox:
             xalign 0.5
-            # Pass the player_obj and get the item from the player's equipment dictionary
+            # Pass the player_obj and get the item dict from the player's equipment dictionary
             use equipment_slot_display(player_obj=player_obj, slot_name="head", current_item_id=player_obj.inventory.equipment['head'])
         hbox:
             xalign 0.5
@@ -179,29 +216,6 @@ screen equipped_items_panel(player_obj):
             spacing 20
             use equipment_slot_display(player_obj=player_obj, slot_name="left_leg", current_item_id=player_obj.inventory.equipment['left_leg'])
             use equipment_slot_display(player_obj=player_obj, slot_name="right_leg", current_item_id=player_obj.inventory.equipment['right_leg'])
-
-# --- Reusable Equipment Slot Display ---
-screen equipment_slot_display(player_obj, slot_name, current_item_id):
-    $ details = items_database.get(current_item_id) if current_item_id else None
-    frame:
-        style "slot_frame"
-        xysize (120, 120)
-        tooltip slot_name.replace("_", " ").title()
-        vbox:
-            if details:
-                $ img_path = "images/inventory/" + current_item_id.replace(" ", "_") + ".png"
-                if renpy.loadable(img_path):
-                    add img_path xalign 0.5 yalign 0.5 zoom 0.7
-                else:
-                    text current_item_id size 12 xalign 0.5 yalign 0.5
-                hbox:
-                    xalign 0.5
-                    spacing 10
-                    # Call the methods on the player's inventory
-                    textbutton "U" action [Function(player_obj.inventory.use_item, current_item_id), Hide("inventory")] style "inventory_button" text_size 12 padding (4,4) tooltip "Use"
-                    textbutton "X" action Function(player_obj.inventory.unequip, slot_name) style "inventory_button" text_size 12 padding (4,4) tooltip "Unequip"
-            else:
-                text "Empty" xalign 0.5 yalign 0.5 color "#AAAAAA" size 14 italic True
 
 # --- Slot Selection Screen ---
 screen slot_selection_screen(player_obj, item_id):
@@ -343,6 +357,5 @@ screen medkit_screen(player_obj, target_part=None):
                                 if target_part:
                                     # Call the method on the player object
                                     textbutton f"Use on {target_part.replace('_',' ').title()}" action [Function(player_obj.use_medkit_item, target_part, item_name), Hide("medkit")] style "inventory_button"
-
             null height 15
             textbutton "Close Medkit" action Hide("medkit") style "inventory_button" xalign 0.5

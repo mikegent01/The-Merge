@@ -2,9 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/scripts/screens/health_status.rpy", line 313: 'end' is not a keyword argument or valid child of the vbox statement.
-    end
-       ^
+File "game/scripts/screens/health_status.rpy", line 256: Indentation mismatch.
+    textbutton "Close" action Hide("medical_summary_sheet") xalign 0.5 style "inventory_button"
 
 Ren'Py Version: Ren'Py 8.4.0.25071206
-Mon Jul 21 19:40:21 2025
+Tue Jul 22 18:43:00 2025

@@ -1,6 +1,7 @@
 
 default collected_tapes = []
 default unlocked_books = []
+default journal_entries = []
 default missions = {"active": [], "completed": []}
 init python:
     def add_mission(title, description, objectives=None):
