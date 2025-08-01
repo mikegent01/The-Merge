@@ -24,3 +24,7 @@ init python:
          if 'noshift_K_s' in bindings: bindings.remove('noshift_K_s')  # Remove noshift variant if present
          if 'alt_K_s' in bindings: bindings.remove('alt_K_s')  # Remove Alt+S if present
 
+
+label gameover:
+    "You have died..."
+    "Why don't you try loading a save..."

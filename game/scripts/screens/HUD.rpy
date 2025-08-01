@@ -150,8 +150,8 @@ screen HUD():
         yalign 1.0
         idle "images/inventory/inventory_hud/speechbubble.png"
         hover "images/inventory/inventory_hud/speechbubble_hover.png"
-        action Show("speak_to_people")
-        padding (10, 10, 10, 10)        
+        action ToggleScreen("speakpeople")
+        padding (10, 10, 10, 10)
     imagebutton:
         xalign 0.755
         yalign 0.87
@@ -164,7 +164,7 @@ screen HUD():
         yalign 1.0
         idle "images/inventory/inventory_hud/magna.png"
         hover "images/inventory/inventory_hud/magna_hover.png"
-        action Show("dynamic_text_screen")
+        action ToggleScreen("dynamic_text_screen")
         padding (10, 10, 10, 10)                   
         #oomfie
     text "Benjamin [benx], [beny]":

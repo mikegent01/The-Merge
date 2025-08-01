@@ -2,6 +2,7 @@
 default test_room = 0
 default preferences.text_cps = 30
 label start:
+    #     $ quick_menu = False uncomment on deployment
     $ player.apply_room_temperature(72)
     $ roll_result = player.perform_roll(skill_name='medical', base_chance=20, circumstance_bonus=0)    
     $ player.inventory.add_item("Classified Mission Sheet")
@@ -1414,19 +1415,5 @@ label outsidewithoutuniform:
     "I leave my gun on my lap and look back up, I see bagman give me a quick glance than look back up at the lieutenant. Everyone looking at the lieutenant"
     "The journey continues..."
     return
-label example_intelligence_check:
-    $ base_chance = 30
-    $ skill_level = stats["intelligence"]["level"]
-    $ skill_name = "intelligence"
-    $ total_bonuses = 5 # Example bonus
 
-    "You attempt a difficult task requiring sharp wits."
-    call screen roll_screen(base_chance, skill_level, skill_name, total_bonuses)
-
-    $ roll_success = _return # The roll_screen will return True for success, False for failure
-    if roll_success:
-        "Your intelligence (and maybe that minigame!) helped you succeed!"
-    else:
-        "Despite your efforts, you couldn't quite figure it out."
-    return
 #EOF

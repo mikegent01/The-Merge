@@ -2,12 +2,13 @@ init python:
 
     class GameCharacter:
         
-        def __init__(self, name, starting_stats, starting_emotions):
+        def __init__(self, name, starting_stats, starting_emotions, starting_proficiencies=None):
             self.name = name
             self.stats = starting_stats
             self.emotions = starting_emotions
             self.sanity = 100
             self.inventory = Inventory(owner=self, capacity=20)
+          
             self.health = {
                 "head": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 74},
                 "body": {"status": "fine", "health": 100, "conditions": [], "temperature": 70, "cleanliness": 70},
@@ -20,7 +21,62 @@ init python:
                 "Samuel": {"trust": 60, "friendship": 70, "hostility": 10, "met": True},  
                 "Barns": {"trust": 40, "friendship": 20, "hostility": 10, "met": True}, 
             }
+            self.proficiencies = starting_proficiencies 
             self._initialize_stats()
+            self._initialize_proficiencies()
+            total_levels = sum(data["level"] for data in self.stats.values())
+        def _initialize_proficiencies(self):
+            for stat_name, profs in self.proficiencies.items():
+                for prof_name, data in profs.items():
+                    level = data.get("level", 1)
+                    data["current_value"] = (level * random.randint(1, 3) )  
+
+        def add_experience_proficiency(self, stat_name, prof_name, amount):
+            if stat_name in self.proficiencies and prof_name in self.proficiencies[stat_name]:
+                prof = self.proficiencies[stat_name][prof_name]
+                prof["current_xp"] += amount
+                if prof["current_xp"] >= prof["max_xp"]:
+                    self.level_up_proficiency(stat_name, prof_name)
+
+        def level_up_proficiency(self, stat_name, prof_name):
+            if stat_name in self.proficiencies and prof_name in self.proficiencies[stat_name]:
+                prof = self.proficiencies[stat_name][prof_name]
+                prof["level"] += 1
+                prof["current_xp"] = 0
+                prof["max_xp"] = round(prof["max_xp"] + random.randint(10, 30))
+                prof["current_value"] += random.randint(1, 6)
+                renpy.notify(f"{self.name}'s {prof_name.capitalize()} (under {stat_name}) increased to level {prof['level']}!")
+
+        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0, min_chance=5, max_chance=95, proficiency_name=None):
+            if skill_name not in self.stats:
+                renpy.notify(f"System Error: Skill '{skill_name}' not found for {self.name}!")
+                return {'success': False, 'roll': 0, 'threshold': 0, 'total_chance': 0}
+
+            skill_value = self.stats[skill_name].get("current_value", 0)
+            
+            proficiency_bonus = 0
+            if proficiency_name and skill_name in self.proficiencies and proficiency_name in self.proficiencies[skill_name]:
+                proficiency_bonus = self.proficiencies[skill_name][proficiency_name].get("current_value", 0)
+            
+            emotion_bonus, _ = self._get_emotion_bonus(skill_name if proficiency_name is None else proficiency_name)  # Use proficiency for emotions if specified
+            
+            total_chance = base_chance + skill_value + proficiency_bonus + emotion_bonus + circumstance_bonus
+            
+            total_chance = max(min_chance, min(total_chance, max_chance))
+            
+            threshold = 101 - total_chance 
+            
+            roll = renpy.random.randint(1, 100)
+            
+            success = (roll >= threshold)
+            
+            if success:
+                renpy.notify(f"Success! (Rolled {roll} ≥ {threshold})")
+            else:
+                renpy.notify(f"Failure. (Rolled {roll} < {threshold})")
+                
+            return {'success': success, 'roll': roll, 'threshold': threshold, 'total_chance': total_chance}
+
         def modify_emotion(self, emotion_name, amount, default_bonus=None):
 
             if default_bonus is None:
@@ -132,48 +188,27 @@ init python:
             self.heal(part, healing_info.get("healing", 0))
             del medkit_contents[item_name]
             renpy.notify(f"Used {item_name.capitalize()} on {self.name}'s {part.replace('_', ' ')}.")            
-        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0, min_chance=5, max_chance=95):
-
-            if skill_name not in self.stats:
-                renpy.notify(f"System Error: Skill '{skill_name}' not found for {self.name}!")
-                return {'success': False, 'roll': 0, 'threshold': 0, 'total_chance': 0}
-
-            skill_value = self.stats[skill_name].get("current_value", 0)
-            
-            emotion_bonus = self._get_emotion_bonus(skill_name)
-            
-            total_chance = base_chance + skill_value + emotion_bonus + circumstance_bonus
-            
-            total_chance = max(min_chance, min(total_chance, max_chance))
-            
-            threshold = 101 - total_chance 
-            
-            roll = renpy.random.randint(1, 100)
-            
-            success = (roll >= threshold)
-            
-            if success:
-                renpy.notify(f"Success! (Rolled {roll} ≥ {threshold})")
-            else:
-                renpy.notify(f"Failure. (Rolled {roll} < {threshold})")
-                
-            return {'success': success, 'roll': roll, 'threshold': threshold, 'total_chance': total_chance}
-
+      
         def _get_emotion_bonus(self, skill_name):
             sorted_emotions = sorted(self.emotions.items(), key=lambda x: x[1]["value"], reverse=True)
             if not sorted_emotions:
-                return 0
+                return 0, []        
 
+            bonuses = []
             total_bonus = 0
+            multipliers = [1.0, 0.8, 0.6, 0.4, 0.2]  # Progressive reduction for top 5
             
-            top_emotion_data = sorted_emotions[0][1]
-            total_bonus += top_emotion_data.get("bonus", {}).get(skill_name, 0)
-            
-            for _, data in sorted_emotions[1:3]:
-                reduced_bonuses = {stat: bonus // 2 for stat, bonus in data.get("bonus", {}).items()}
-                total_bonus += reduced_bonuses.get(skill_name, 0)
+            for i in range(min(5, len(sorted_emotions))):
+                emo, data = sorted_emotions[i]
+                base_bonus = data.get("bonus", {}).get(skill_name, 0)
+                value_scale = data["value"] / 50.0  # Scale: 0 -> 0x, 50 -> 1x, 100 -> 2x
+                scaled_bonus = int(base_bonus * value_scale)
+                effective_bonus = int(scaled_bonus * multipliers[i])
+                if effective_bonus != 0:
+                    bonuses.append((emo, effective_bonus))
+                total_bonus += effective_bonus
                 
-            return total_bonus
+            return total_bonus, bonuses
 
         def _initialize_stats(self):
             for stat_name, data in self.stats.items():
@@ -276,7 +311,7 @@ init python:
                     del self.items[i]
                     return True
             return False
-
+    
         def equip(self, item_name, slot):
             for item in self.items:
                 if item["name"] == item_name:

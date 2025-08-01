@@ -1,6 +1,7 @@
 init python:
     selected_liquids = []
     selected_container = None
+
     def add_liquid(liquid_name, amount):
         for liquid in liquid_inventory:
             if liquid["name"] == liquid_name:
@@ -13,6 +14,29 @@ init python:
                 if liquid["amount"] >= amount: liquid["amount"] -= amount
                 else: renpy.notify("Not enough liquid available.")
                 break
+
+    # Stub functions to prevent errors (define properly in your code)
+    def drain_liquid(container):
+        renpy.notify(f"Drained 10ml from {container['name']}.")  # Placeholder
+
+    def pour_liquid(source, target):
+        renpy.notify(f"Poured from {source['name']} to {target['name'] if target else 'Ground'}.")  # Placeholder
+
+    def reset_stirring():
+        pass  # Placeholder
+
+    def update_stirring_progress():
+        pass  # Placeholder
+
+    def mix_liquids(container, liquids):
+        renpy.notify("Liquids mixed.")  # Placeholder
+
+    def has_stirring_tool(tool):
+        return True  # Placeholder, assume always true for testing
+
+    stirring_tool = None
+    stirring_progress = 0
+    stirring_complete = False
 
 screen combine_liquids_screen(player_obj):
     modal True
@@ -48,7 +72,7 @@ screen combine_liquids_screen(player_obj):
                                       if liquid.get("amount", 0) > 0:
                                           text f"{liquid['name']}: {liquid['amount']} ml" size 16 color "#DDDDDD"
                                           if selected_container:
-                                               textbutton "Add to Bottle" action Function(add_liquid_to_selected, liquid) style "inventory_button" text_size 12 padding (5,2) sensitive (selected_container["current_amount"] < selected_container["capacity"])
+                                               textbutton "Add to Bottle" action Show("input_amount_screen", liquid=liquid) style "inventory_button" text_size 12 padding (5,2) sensitive (selected_container["current_amount"] < selected_container["capacity"])
 
                 vbox:
                     spacing 10
@@ -206,6 +230,8 @@ screen stirring_minigame():
 
 # --- Input Amount Screen ---
 screen input_amount_screen(liquid):
+    default amount_to_add = ""
+
     modal True
     frame:
         xsize 400
@@ -220,19 +246,13 @@ screen input_amount_screen(liquid):
             text "Enter Amount to Add (ml):" size 20 color "#FFFFFF"
 
             # Input field for the amount
-            input:
-                id "amount_input"
-                default ""
-                length 5
-                allow "0123456789"
-                color "#FFFFFF"
-                size 20
+            input value VariableInputValue("amount_to_add") length 5 allow "0123456789" color "#FFFFFF" size 20
 
             hbox:
                 spacing 20
                 textbutton "Add":
                     action [
-                        Function(add_liquid_to_selected, liquid, int(amount_input.value or 0)),
+                        Function(add_liquid_to_selected, liquid, int(amount_to_add) if amount_to_add.isdigit() else 0),
                         Hide("input_amount_screen")
                     ]
                 textbutton "Cancel":
@@ -377,4 +397,3 @@ screen character_status_screen(player_obj):
 
             null height 15
             textbutton "Close Status" action Hide("status") style "inventory_button" xalign 0.5
-   

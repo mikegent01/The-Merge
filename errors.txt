@@ -2,8 +2,8 @@
 errors listed below, and try again.
 
 
-File "game/scripts/screens/health_status.rpy", line 256: Indentation mismatch.
-    textbutton "Close" action Hide("medical_summary_sheet") xalign 0.5 style "inventory_button"
+File "game/scripts/CORE/rolls.rpy", line 55: Indentation mismatch.
+    timer 5.0 action Hide("roll_result")
 
 Ren'Py Version: Ren'Py 8.4.0.25071206
-Tue Jul 22 18:43:00 2025
+Fri Aug  1 00:22:07 2025

@@ -20,7 +20,7 @@ style stat_icon:
 
 # --- Main Inventory Screen ---
 # This screen now takes the player object as an argument
-screen inventory(player_obj):
+screen inventory(player_obj=None):
     modal True
     tag inventory
 
@@ -121,11 +121,139 @@ screen inventory(player_obj):
                 hbox:
                     xalign 0.5
                     spacing 15
-                    # NOTE: Crafting/Liquids screens will also need to be passed the player_obj
                     textbutton "Crafting" action Show("crafting_screen", player_obj=player_obj) style "inventory_button"
                     textbutton "Liquids" action Show("combine_liquids_screen", player_obj=player_obj) style "inventory_button"
                     textbutton "Close" action [SetVariable("selected_item", None), Hide("inventory")] style "inventory_button"
+screen crafting_screen(player_obj):
+    modal True
+    tag crafting
 
+    frame:
+        style "section_frame"
+        xysize (800, 600)
+        xalign 0.5 yalign 0.5
+
+        vbox:
+            spacing 10
+            text "Workshop" size 30 xalign 0.5 color "#FFFFFF"
+
+            hbox:
+                xalign 0.5
+                spacing 20
+                textbutton "Construction" action SetVariable("current_mode", "construction") style "inventory_button" sensitive (current_mode != "construction")
+                textbutton "Destruction" action SetVariable("current_mode", "destruction") style "inventory_button" sensitive (current_mode != "destruction")
+
+            if current_mode == "construction":
+                hbox:
+                    spacing 15
+                    vbox:
+                        text "Available Items" size 20 color "#FFFFFF"
+                        viewport:
+                            ysize 400 xsize 300
+                            scrollbars "vertical" mousewheel True
+                            vbox:
+                                spacing 5
+                                for item in player_obj.inventory.items:
+                                    $ item_id = item["name"]
+                                    if item_id not in selected_items:
+                                        $ details = items_database.get(item_id)
+                                        if details:
+                                            hbox:
+                                                spacing 10
+                                                $ img_path = "images/inventory/" + item_id.replace(" ", "_") + ".png"
+                                                if renpy.loadable(img_path):
+                                                    add img_path zoom 0.3
+                                                else:
+                                                    frame:
+                                                        xysize(20,20)
+
+                                                text item_id size 14 color "#DDDDDD"
+                                                textbutton "Select" action Function(select_item, item_id) style "inventory_button" text_size 14 padding (5,2) sensitive (len(selected_items) < 2)
+
+                    vbox:
+                        spacing 10
+                        text "Selected for Combining" size 20 color "#FFFFFF"
+                        frame:
+                            style "slot_frame"
+                            background "#2E4F2E"
+                            xsize 400 ysize 150
+                            padding (10, 10, 10, 10)
+                            if not selected_items:
+                                text "Select 2 items" xalign 0.5 yalign 0.5 color "#AAAAAA"
+                            else:
+                                grid 2 1:
+                                     for sel_id in selected_items:
+                                         $ sel_details = items_database.get(sel_id)
+                                         if sel_details:
+                                             vbox:
+                                                 $ img_path = "images/inventory/" + sel_id.replace(" ", "_") + ".png"
+                                                 if renpy.loadable(img_path):
+                                                     add img_path zoom 0.4 xalign 0.5
+                                                 else:
+                                                     text sel_id size 12 xalign 0.5
+
+                                                 text sel_id size 12 color "#DDDDDD" xalign 0.5
+                                                 textbutton "Remove" action Function(remove_from_list, selected_items, sel_id) style "inventory_button" text_size 12 padding (5,2)
+
+                        text "Select Holding Item (Required for some recipes):" size 16 color "#FFFFFF"
+                        viewport:
+                             ysize 100 xsize 400
+                             scrollbars "horizontal"
+                             mousewheel True
+                             hbox:
+                                 spacing 8
+                                 textbutton "None" action SetVariable("selected_holding_item", None) style "inventory_button" text_size 12 padding (5,2) sensitive (selected_holding_item is not None)
+
+                                 for hold_item in holding_items:
+                                     textbutton hold_item action SetVariable("selected_holding_item", hold_item) style "inventory_button" text_size 12 padding (5,2) sensitive (selected_holding_item != hold_item)
+
+                        null height 10
+                        textbutton "Combine" action Function(combine_items, player_obj) style "inventory_button" sensitive (len(selected_items) == 2)  # Pass player_obj
+
+            elif current_mode == "destruction":
+                 vbox:
+                     text "Select Item to Deconstruct" size 20 color "#FFFFFF"
+                     viewport:
+                         ysize 400 xsize 700
+                         scrollbars "vertical" mousewheel True
+                         grid 5 5:
+                             spacing 10
+                             for item in player_obj.inventory.items:
+                                 python:
+                                     item_id = item["name"]
+                                     _details = items_database.get(item_id)
+                                     _tooltip_text = "Unknown Item"
+                                     _can_deconstruct = item_id in deconstruction_recipes
+                                     if _details:
+                                         _tooltip_text = _details.get("description", item_id)
+                                         if not _can_deconstruct:
+                                             _tooltip_text = "Cannot deconstruct"
+                                     _img_path = "images/inventory/" + item_id.replace(" ", "_") + ".png"
+
+                                 if _can_deconstruct:
+                                     button:
+                                         style "slot_frame"
+                                         action [Function(deconstruct_item, player_obj, item_id), Hide("crafting")]  # Pass player_obj
+                                         tooltip _tooltip_text
+                                         if renpy.loadable(_img_path):
+                                             add _img_path xalign 0.5 yalign 0.5 zoom 0.7
+                                         else:
+                                             text item_id size 12 xalign 0.5 yalign 0.5
+
+                                 else:
+                                     frame:
+                                         style "slot_frame"
+                                         background "#444444"
+                                         tooltip _tooltip_text
+                                         if _details:
+                                             if renpy.loadable(_img_path):
+                                                 add _img_path xalign 0.5 yalign 0.5 zoom 0.7 alpha 0.5
+                                             else:
+                                                 text item_id size 12 xalign 0.5 yalign 0.5 color "#888888"
+
+
+            null height 20
+            textbutton "Close Workshop" action [SetVariable("selected_items", []), SetVariable("selected_holding_item", None), Hide("crafting")] style "inventory_button" xalign 0.5
 screen item_details_panel(player_obj, item_dict):
     $ item_id = item_dict["name"]  # Extract name for database lookup
     $ details = items_database.get(item_id)
@@ -359,3 +487,8 @@ screen medkit_screen(player_obj, target_part=None):
                                     textbutton f"Use on {target_part.replace('_',' ').title()}" action [Function(player_obj.use_medkit_item, target_part, item_name), Hide("medkit")] style "inventory_button"
             null height 15
             textbutton "Close Medkit" action Hide("medkit") style "inventory_button" xalign 0.5
+init python:
+    def select_item(item):
+        if item not in selected_items and len(selected_items) < 2:
+            selected_items.append(item)    
+    holding_items = ["Glue", "Screwdriver", "Tape"] 

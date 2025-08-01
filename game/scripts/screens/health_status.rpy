@@ -1,3 +1,4 @@
+
 default stat_filter = ""
 default healing_progress = 0.0  
 screen status_screen(player_obj):
@@ -18,32 +19,32 @@ screen status_screen(player_obj):
                 ysize 450
                 add "images/stats_icons/full_body_diagram.png" xalign 0.5 yalign 0.5
 
-                button:  # Left Leg (top left 593 407, bottom right 610 452)
+                button:  
                     xpos 340 ypos 370
                     xsize (630 - 593) ysize (452 - 407)
                     action Show("condition_details", player_obj=player_obj, part="left_leg")
                     tooltip "Click to view Left Leg details"
-                button:  # Right Leg (top left 680 427, bottom right 702 451)
+                button:  
                     xpos 430 ypos 370
                     xsize (630 - 593) ysize (452 - 407)
                     action Show("condition_details", player_obj=player_obj, part="right_leg")
                     tooltip "Click to view Right Leg details"
-                button:  # Body (top left 607 278, bottom right 699 365)
+                button:  
                     xpos 357 ypos 228
                     xsize (710 - 607) ysize (395 - 278)
                     action Show("condition_details", player_obj=player_obj, part="body")
                     tooltip "Click to view Body details"
-                button:  # Right Arm (top right 601 300, bottom left 574 373 → bounding box adjusted)
+                button:  
                     xpos 330 ypos 255
                     xsize (601 - 574) ysize (383 - 300)
                     action Show("condition_details", player_obj=player_obj, part="left_arm")
                     tooltip "Click to view Right Arm details"
-                button:  # Left Arm (top right 693 276, bottom left 723 365 → bounding box adjusted)
+                button:  
                     xpos 453 ypos 240
                     xsize (723 - 693) ysize (365 - 276)
                     action Show("condition_details", player_obj=player_obj, part="right_arm")
                     tooltip "Click to view Left Arm details"
-                button:  # Head (bottom left 609 270, top right 706 182 → bounding box adjusted)
+                button:  
                     xpos 339 ypos 140
                     xsize (736 - 609) ysize (270 - 182)
                     action Show("condition_details", player_obj=player_obj, part="head")
@@ -57,7 +58,7 @@ screen status_screen(player_obj):
             $ average_health, average_cleanliness, average_temperature = player_obj.calculate_averages()
             $ can_view_health = player_obj.is_stat_higher("medical", 100)
             $ can_view_health_small = player_obj.is_stat_higher("medical", 59)
-            $ has_thermometer = player_obj.inventory.has_item("thermometer")
+            $ has_thermometer = "thermometer" in player_obj.inventory.items  
 
             frame:
                 vbox:
@@ -87,7 +88,7 @@ screen medical_summary_sheet(player_obj):
         ysize 700
         xalign 0.5
         yalign 0.5
-        background Solid("#F5F5DC")  # Beige paper-like color placeholder; replace with "images/paper_background.png" when available
+        background Solid("#F5F5DC")  
 
         viewport:
             ysize 900
@@ -97,35 +98,30 @@ screen medical_summary_sheet(player_obj):
                 xalign 0.5
                 yalign 0.5
 
-                # Commented out for testing: Require pencil and paper
                 if not (player_obj.inventory.has_item("Pencil") and player_obj.inventory.has_item("Paper")):
                     text "I need a pencil and paper to write anything down!" size 24 color "#FF0000" xalign 0.5
                     textbutton "Close" action Hide("medical_summary_sheet") xalign 0.5
                 else:
-                    text "Self Medical Report:" size 30 color "#000000" bold True xalign 0.5  # Updated title
+                    text "Self Medical Report:" size 30 color "#000000" bold True xalign 0.5  
 
-                    # Date
                     text f"Date: 20XX/3/{current_chapter + 1}" size 24 color "#000000" xalign 0.5
 
-                    # Name (varied by emotions)
                     python:
                         composure = player_obj.emotions.get("Composure", {}).get("value", 0)
                         confidence = player_obj.emotions.get("Confidence", {}).get("value", 0)
-                        paranoid = player_obj.emotions.get("Paranoid", {}).get("value", 0)  # Assuming "Paranoid" emotion exists; add if needed
+                        paranoid = player_obj.emotions.get("Paranoid", {}).get("value", 0)  
                         name_text = "Benjamin" if confidence > 70 else "Ben…" if confidence < 30 else "Ben"
                         if paranoid > 50:
-                            name_text = "Alec"  # As per request
+                            name_text = "Alec"  
                         elif composure < 30:
                             name_text = "Ben"
                     text f"Name: {name_text}" size 24 color "#000000" xalign 0.5
 
-                    # Get key variables
                     $ medical_level = player_obj.stats.get("medical", {}).get("level", 0)
                     $ authenticity = player_obj.emotions.get("Authenticity", {}).get("value", 0)
                     $ pride = player_obj.emotions.get("Pride", {}).get("value", 0)
                     $ has_thermometer = player_obj.inventory.has_item("thermometer")
 
-                    # Compute all rolls and averages once
                     python:
                         if last_label not in summary_rolls:
                             avg_health, avg_clean, avg_temp = player_obj.calculate_averages()
@@ -142,10 +138,8 @@ screen medical_summary_sheet(player_obj):
                             }
                         all_rolls = summary_rolls[last_label]
 
-                    # Report section
                     text "Report:" size 26 color "#000000" bold True xalign 0.5
 
-                    # Health narrative
                     python:
                         average_health = all_rolls["average_health"]
                         health_roll = all_rolls["health"]
@@ -171,42 +165,44 @@ screen medical_summary_sheet(player_obj):
                         if pride > 70:
                             feeling = "As expected from someone like me, " + feeling
                         if authenticity < 30:
-                            feeling += " ...or maybe not?"  # Less accurate
+                            feeling += " ...or maybe not?"  
                         health_text = f"{base_health} {feeling}"
                         if health_roll["success"]:
                             health_text += f" (Health: {average_health}%)"
                         else:
-                            health_text += " (I think?)"
+                            health_text += " (hopefully?)"
                     text health_text size 20 color "#000000" 
 
-                    # Cleanliness narrative
                     python:
                         average_cleanliness = all_rolls["average_cleanliness"]
                         clean_roll = all_rolls["clean"]
-                        clean_text = f"As for how clean I am, I took a shower {current_chapter + 1} days ago."
+                        if current_chapter:
+                            clean_text = f"As for how clean I am, I took a shower {current_chapter + 1} days ago."
+                        else:
+                            clean_text = f"As for how clean I am, I took a shower {current_chapter + 1} day ago."
                         if confidence > 70:
                             clean_text += " and I will take one tomorrow too after the mission ends."
                         if authenticity > 70:
                             clean_text += " although the mission will probably go on for a few more days…"
-                        clean_text += " If I had to say I am about"
+                        clean_text += " If I had to say something I would say"
                         if authenticity > 70 and clean_roll["success"]:
-                            clean_text += f" {average_cleanliness}% clean."
+                            clean_text += f" I am {average_cleanliness}% clean."
                         else:
                             if average_cleanliness > 80:
                                 clean_feeling = " I am clean"
+                            elif average_cleanliness >= 50:  
+                                clean_feeling = " I feel reasonably clean."                                 
                             elif average_cleanliness < 30:
                                 clean_feeling = " I stink"
                             elif average_cleanliness < 50:
                                 clean_feeling = " I could use a shower"
                             else:
-                                clean_feeling = " This might effect how people talk to me…"
+                                clean_feeling = " This might effect how people talk to me… "
                             clean_text += clean_feeling + "."
-                        # Example additions for other emotions (expand as needed)
                         if pride > 70:
                             clean_text += " Naturally, given my standards."
                     text clean_text size 20 color "#000000" 
 
-                    # Temperature narrative
                     python:
                         average_temperature = all_rolls["average_temperature"]
                         temp_text = "As for the current temperature"
@@ -226,10 +222,8 @@ screen medical_summary_sheet(player_obj):
 
                     null height 20
 
-                    # Body Parts Summary
                     text "Body Report" size 26 color "#000000" bold True xalign 0.5
                     
-                    # Define difficulty order: hardest to easiest as per request
                     $ part_order = ["head", "body", "left_leg", "right_leg", "left_arm", "right_arm"]
 
                     for idx, part in enumerate(part_order):
@@ -237,9 +231,9 @@ screen medical_summary_sheet(player_obj):
                             part_roll = all_rolls["parts"][part]
                             part_health = player_obj.health[part]['health']
                             part_conditions = player_obj.health[part]['conditions']
-                            part_note = f"{part.replace('_', ' ').title()}: if I had to give a percentage id say "
+                            part_note = f"{part.replace('_', ' ').title()}: if I had to say something id say "
                             if part_roll["success"]:
-                                part_note += f"{part_health}% "
+                                part_note += f"it would feel about {part_health}% "
                                 if part_conditions:
                                     part_note += f"Issues: {', '.join([c.capitalize() for c in part_conditions])}. "
                                 else:
@@ -250,18 +244,83 @@ screen medical_summary_sheet(player_obj):
                                 part_note += f"{vague}?"
                                 if part_conditions:
                                     part_note += ", something's off."
-                                part_note += "I think?"
+                                part_note += " probably"
                             if pride > 70 and part_health > 70:
                                 part_note += "(As if this would stop me!)"
                             elif confidence < 30:
                                 part_note += "...I think?"
                             if paranoid > 50:
-                                part_note = part_note.replace("I ", "We ")  # As per request
+                                part_note = part_note.replace("I ", "We ")  
 
                         text part_note size 18 color "#000000" 
 
                     null height 20
                     textbutton "Close" action Hide("medical_summary_sheet") xalign 0.5 style "inventory_button"
+screen proficiency_details(player_obj, stat_name):
+    modal True
+    frame:
+        xsize 800
+        ysize 700
+        xalign 0.5
+        yalign 0.5
+        background "#111111"
+
+        vbox:
+            spacing 20
+            text f"{stat_name.replace('_', ' ').capitalize()} Proficiencies" size 40 xalign 0.5 color "#FFFFFF" bold True
+
+            viewport:
+                draggable True
+                mousewheel True
+                xsize 750
+                ysize 500
+                vbox:
+                    spacing 15
+                    if stat_name not in player_obj.proficiencies or not player_obj.proficiencies[stat_name]:
+                        text "No proficiencies for this stat yet." size 24 color "#CCCCCC" xalign 0.5
+                    else:
+                        for prof_name, prof_data in player_obj.proficiencies[stat_name].items():
+                            frame:
+                                background "#222222"
+                                padding (15, 10)
+                                hbox:
+                                    vbox:
+                                        spacing 10
+                                        text prof_name.replace("_", " ").capitalize() size 30 color "#00CCFF" bold True
+                                        text f"Level: {prof_data['level']}" size 20 color "#CCCCCC"
+                                        bar value prof_data["level"] range prof_data['max_xp'] xmaximum 500 ymaximum 20 bar_invert (prof_data["level"] < 5)
+                                        text f"Value: {prof_data['current_value']}" size 20 color "#CCCCCC"
+                                        bar value prof_data["current_value"] range prof_data["max_xp"] xmaximum 500 ymaximum 20
+                                        text f"XP: {prof_data['current_xp']} / {prof_data['max_xp']}" size 20 color "#CCCCCC"
+                                        bar value prof_data["current_xp"] range prof_data["max_xp"] xmaximum 500 ymaximum 20
+
+                                        # --- Emotion Bonuses Section ---
+                                        $ emotion_bonuses = []
+                                        $ total_emotion_bonus = 0
+                                        # Loop through all emotions and collect bonuses for this proficiency/stat
+                                        for emo_name, emo_data in player_obj.emotions.items():
+                                            if "bonus" in emo_data and prof_name in emo_data["bonus"]:
+                                                $ bonus = emo_data["bonus"][prof_name]
+                                                $ total_emotion_bonus += bonus
+                                                $ emotion_bonuses.append((emo_name, bonus))
+                                        if emotion_bonuses:
+                                            text "Emotion Bonuses:" size 18 color "#FFFFFF"
+                                            for emo_name, bonus in emotion_bonuses:
+                                                text f"{emo_name.capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 16 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
+                                        else:
+                                            text "Emotion Bonuses: None" size 16 color "#AAAAAA" italic True
+
+                                        # --- Roll Effect Section ---
+                                        $ total_effect = prof_data['current_value'] + total_emotion_bonus
+                                        text f"Roll Effect: {'+' if total_effect > 0 else ''}{total_effect} to {prof_name.replace('_',' ').capitalize()} rolls" size 18 color (("#00FF00" if total_effect > 0 else "#FF0000" if total_effect < 0 else "#CCCCCC"))
+
+                                    if renpy.loadable(f"images/proficiency_icons/{prof_name}.png"):
+                                        add f"images/proficiency_icons/{prof_name}.png" size (50, 50)
+                                    else:
+                                        add f"images/stats_icons/{stat_name}.png" size (50, 50)  # Fallback to stat icon
+
+            textbutton "Back" action Hide("proficiency_details") xalign 0.5 style "inventory_button"
+
 screen player_stats_screen(player_obj):
     modal True
     frame:
@@ -276,15 +335,16 @@ screen player_stats_screen(player_obj):
 
         vbox:
             spacing 20
-            text "Player Stats" size 40 xalign 0.5 color "#FFFFFF" bold True
+            text f"{player_obj.name} Stats" size 40 xalign 0.5 color "#FFFFFF" bold True
 
             hbox:
                 spacing 20
                 xalign 0.5
-                textbutton "Mental" action SetVariable("selected_category", "soft") style "category_button"
-                textbutton "Physical" action SetVariable("selected_category", "hard") style "category_button"
+                if player_obj.name == "Benjamin":
+                    textbutton "Stats" action SetVariable("selected_category", "stats") style "category_button"
                 textbutton "Emotions" action SetVariable("selected_category", "emotions") style "category_button"
-                textbutton "Relationships" action SetVariable("selected_category", "relationships") style "category_button"
+                if player_obj.name == "Benjamin":
+                    textbutton "Relationships" action SetVariable("selected_category", "relationships") style "category_button"
                 textbutton "Close" action Hide("player_stats_screen") style "category_button" 
 
             viewport:
@@ -294,75 +354,290 @@ screen player_stats_screen(player_obj):
                 ysize 600
                 vbox:
                     spacing 20
-                    if selected_category in ["soft", "hard"]:
-                        for stat_name, stat_data in player_obj.stats.items():
-                            if (selected_category == "soft" and stat_name in soft_skills) or (selected_category == "hard" and stat_name in hard_skills):
-                                frame:
-                                    background "#222222"
-                                    padding (15, 10)
-                                    hbox:
+
+                    if selected_category == "stats":
+                        text "All Stats" size 30 color "#FFFFFF" xalign 0.5 bold True
+                        grid 2 len(set(soft_skills + hard_skills)):  # 3 columns, rows based on number of stats
+                            xalign 0.5
+                            spacing 20
+                            for stat_name in sorted(set(soft_skills + hard_skills)):
+                                if stat_name in player_obj.stats:
+                                    $ stat_data = player_obj.stats[stat_name]
+                                    frame:
+                                        background (("#003366" if stat_name in soft_skills else "#f58004"))
+                                        padding (5, 5)
+                                        xsize 450
                                         vbox:
-                                            spacing 10
-                                            text stat_name.replace("_", " ").capitalize() size 30 color "#00CCFF" bold True
-                                            text f"Level: {stat_data['level']}" size 20 color "#CCCCCC" tooltip "Higher level unlocks better abilities."
-                                            bar value stat_data["level"] range stat_data['max_xp'] xmaximum 600 ymaximum 25 bar_invert (stat_data["level"] < 5)
-                                            text f"Skill: {stat_data['current_value']}" size 20 color "#CCCCCC"
-                                            bar value stat_data["current_value"] range stat_data["max_xp"] xmaximum 600 ymaximum 25
-                                            text f"XP: {stat_data['current_xp']} / {stat_data['max_xp']}" size 20 color "#CCCCCC"
-                                            bar value stat_data["current_xp"] range stat_data["max_xp"] xmaximum 600 ymaximum 25
+                                            spacing 5
+                                            hbox:
+                                                add f"images/stats_icons/{stat_name}.png" size (30, 30)
+                                                text stat_name.replace("_", " ").capitalize() size 20 color "#FFFFFF" bold True
+                                            text f"Level: {stat_data['level']}" size 16 color "#CCCCCC"
+                                            bar value stat_data["level"] range stat_data['max_xp'] xmaximum 200 ymaximum 10 bar_invert (stat_data["level"] < 5)
+                                            text f"Bonus: {stat_data.get('current_value', 0)}" size 16 color "#CCCCCC"
+                                            bar value stat_data.get("current_value", 0) range stat_data['max_xp'] xmaximum 200 ymaximum 10
+                                            text f"XP: {stat_data['current_xp']} / {stat_data['max_xp']}" size 16 color "#CCCCCC"
+                                            bar value stat_data['current_xp'] range stat_data['max_xp'] xmaximum 200 ymaximum 10
                                             if stat_data["current_xp"] >= stat_data["max_xp"]:
-                                                textbutton "Level Up!" action Function(player_obj.level_up, stat_name) style "level_up_button"
-                                            text "Effects:" size 20 color "#FFFFFF" bold True
-                                            text f"+{stat_data['current_value']} base bonus to {stat_name.capitalize().replace('_', ' ')} rolls" size 18 color "#CCCCCC" tooltip "This stat adds directly to your success chance in related skill checks."
-                                            text "Emotion Influences:" size 18 color "#FFFFFF"
-                                            $ influencing_emotions = [emo for emo, data in player_obj.emotions.items() if stat_name in data.get("bonus", {})]
-                                            $ total_emotion_bonus = 0
-                                            if influencing_emotions:
-                                                for emo in influencing_emotions:
-                                                    $ bonus_val = player_obj.emotions[emo]["bonus"].get(stat_name, 0)
-                                                    $ total_emotion_bonus += bonus_val
-                                                    text f"{emo.capitalize()}: {'+' if bonus_val > 0 else ''}{bonus_val} bonus" size 16 color (("#00FF00" if bonus_val > 0 else "#FF0000"))
+                                                textbutton "Level Up!" action Function(player_obj.level_up, stat_name) style "level_up_button" xsize 200
+                                            text "Effects:" size 16 color "#FFFFFF" bold True
+                                            text f"+{stat_data.get('current_value', 0)} base bonus to {stat_name.capitalize().replace('_', ' ')} rolls" size 14 color "#CCCCCC" tooltip "This stat adds directly to your success chance in related skill checks."
+                                            text "Emotion Influences:" size 14 color "#FFFFFF"
+                                            $ total_emotion_bonus, emotion_bonuses = player_obj._get_emotion_bonus(stat_name)
+                                            $ filtered_bonuses = [(emo, bonus) for emo, bonus in emotion_bonuses if player_obj.emotions[emo]["value"] >= 10]
+                                            if filtered_bonuses:
+                                                for emo, bonus_val in filtered_bonuses:
+                                                    text f"{emo.capitalize()}: {'+' if bonus_val > 0 else ''}{bonus_val} bonus" size 12 color (("#00FF00" if bonus_val > 0 else "#FF0000"))
                                             else:
-                                                text "No direct emotion bonuses." size 16 color "#AAAAAA" italic True
-                                            $ total_bonus = stat_data['current_value'] + total_emotion_bonus
-                                            text f"Effect after bonus: {'+' if total_bonus > 0 else ''}{total_bonus}" size 18 color (("#00FF00" if total_bonus > 0 else "#FF0000" if total_bonus < 0 else "#CCCCCC")) 
-                                        add f"images/stats_icons/{stat_name}.png" size (50, 50)
+                                                text "No direct emotion bonuses." size 12 color "#AAAAAA" italic True
+                                            $ total_bonus = stat_data.get('current_value', 0) + total_emotion_bonus
+                                            text f"Effect after bonus: {'+' if total_bonus > 0 else ''}{total_bonus}" size 14 color (("#00FF00" if total_bonus > 0 else "#FF0000" if total_bonus < 0 else "#CCCCCC")) 
+                                            null height 5
+                                            textbutton "View Proficiencies" action Show("proficiency_details", player_obj=player_obj, stat_name=stat_name) xalign 0.5 style "inventory_button" tooltip f"View details and proficiencies for {stat_name.capitalize()}"
 
                     elif selected_category == "emotions":
+                        text "Emotions" size 30 color "#FFFFFF" xalign 0.5 bold True
+                        null height 10
                         $ all_emotions = sorted(player_obj.emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-                        $ top_emotions = all_emotions[:3]
-                        $ other_emotions = all_emotions[3:]
-                        text "Top Emotions:" size 30 color "#FFFFFF"
-                        for emo, val in top_emotions:
-                            text f"{emo.capitalize()}: {val['value']}" size 24 color (("#00FF00" if val['value'] > 70 else "#FFFF00" if val['value'] > 40 else "#FF0000")) tooltip "Higher values indicate stronger emotion influence."
-                            bar value val['value'] range 100 xmaximum 400 ymaximum 15
-                        text "Other Emotions:" size 30 color "#FFFFFF"
-                        for emo, val in other_emotions:
-                            text f"{emo.capitalize()}: {val['value']}" size 24 color (("#00FF00" if val['value'] > 70 else "#FFFF00" if val['value'] > 40 else "#FF0000")) tooltip "Higher values indicate stronger emotion influence."
-                            bar value val['value'] range 100 xmaximum 400 ymaximum 15
+                        $ top_5_emotions = all_emotions[:5]  # Top 5 by value, regardless of threshold
+                        $ other_emotions = all_emotions[5:]  # All remaining emotions
+                        
+                        if not top_5_emotions and not other_emotions:
+                            text "No emotions data available." size 24 color "#AAAAAA" xalign 0.5 italic True
+                        else:
+                            text "Top 5 Emotions and Their Effects:" size 26 color "#FFFFFF" xalign 0.5
+                            grid 2 len(top_5_emotions):  # Display in 2 columns
+                                xalign 0.5
+                                spacing 20
+                                for emo, data in top_5_emotions:
+                                    frame:
+                                        background "#222222"
+                                        padding (10, 10)
+                                        xsize 450
+                                        vbox:
+                                            spacing 5
+                                            text f"{emo.capitalize()}: {data['value']}" size 22 color (("#00FF00" if data['value'] > 70 else "#FFFF00" if data['value'] > 40 else "#FF0000"))
+                                            bar value data['value'] range 100 xmaximum 400 ymaximum 15
+                                            if "bonus" in data and data["bonus"]:
+                                                text "Stat Bonuses:" size 16 color "#CCCCCC"
+                                                for stat, bonus in data["bonus"].items():
+                                                    text f"{stat.replace('_',' ').capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 16 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
+                                            else:
+                                                text "No stat bonuses." size 16 color "#AAAAAA" italic True
+
+                         #   null height 20  # Spacer between top 5 and other emotions
+                            
+                            text "Other Emotions:" size 26 color "#FFFFFF" xalign 0.5
+                            
+                            if not other_emotions:
+                                text "No other emotions active." size 24 color "#AAAAAA" xalign 0.5 italic True
+                            else:
+                                grid 2 len(other_emotions):  # Display in 2 columns, similar to top 5
+                                    xalign 0.5
+                                    spacing 20
+                                    for emo, data in other_emotions:
+                                        frame:
+                                            background "#222222"
+                                            padding (10, 10)
+                                            xsize 450
+                                            vbox:
+                                                spacing 5
+                                                text f"{emo.capitalize()}: {data['value']}" size 22 color (("#00FF00" if data['value'] > 70 else "#FFFF00" if data['value'] > 40 else "#FF0000"))
+                                                bar value data['value'] range 100 xmaximum 400 ymaximum 15
+                                                if "bonus" in data and data["bonus"]:
+                                                    text "Stat Bonuses:" size 16 color "#CCCCCC"
+                                                    for stat, bonus in data["bonus"].items():
+                                                        text f"{stat.replace('_',' ').capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 16 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
+                                                else:
+                                                    text "No stat bonuses." size 16 color "#AAAAAA" italic True
+                                # Fill empty slots if needed for even grid
+                                for i in range((2 - (len(other_emotions) % 2)) % 2):
+                                    null
 
                     elif selected_category == "relationships":
                         if not player_obj.relationships:
                             text "No relationships established yet." size 24 color "#CCCCCC" xalign 0.5
                         else:
-                            for person, rel_data in player_obj.relationships.items():
-                                if rel_data.get("met"):
-                                    $ relationship_description = player_obj.get_relationship_description(person)
-                                    frame:
-                                        background "#222222"
-                                        padding (15, 10)
-                                        vbox:
-                                            text person.capitalize() size 30 color "#00CCFF" bold True
-                                            text relationship_description size 20 color "#CCCCCC"
-                                            text "Trust:" size 20 color "#FFFFFF"
-                                            bar value rel_data.get("trust", 0) range 100 xmaximum 400 ymaximum 20
-                                            text "Friendship:" size 20 color "#FFFFFF"
-                                            bar value rel_data.get("friendship", 0) range 100 xmaximum 400 ymaximum 20
-                                            text "Hostility:" size 20 color "#FFFFFF"
-                                            bar value rel_data.get("hostility", 0) range 100 xmaximum 400 ymaximum 20 bar_invert True  # Inverted to show high hostility as "worse"
-                                            $ bond_strength = (rel_data.get("trust", 0) + rel_data.get("friendship", 0)) / 2
-                                            text "Bond Strength:" size 20 color "#FFFFFF"
-                                            bar value bond_strength range 100 xmaximum 400 ymaximum 20
+                            text "Relationship Alignment Chart" size 30 color "#FFFFFF" bold True xalign 0.5
+                            fixed:
+                                xsize 950
+                                ysize 500
+                                xalign 0.5
+
+                                add "images/stats_icons/alignment_triangle.png" xalign 0.5 yalign 0.6
+
+                                frame:
+                                    background "#00000000"  
+                                    xsize 950
+                                    ysize 150
+                                    xalign 0.5
+                                    ypos 0
+                                    vbox:
+                                        spacing 5
+                                        hbox:
+                                            spacing 10
+                                            xalign 0.5
+                                            text "Allies" color "#00FF00" size 24 bold True xsize 100
+                                            python:
+                                                allies_list = []
+                                                for p, r in player_obj.relationships.items():
+                                                    if r.get("met"):
+                                                        trust = r.get("trust", 0)
+                                                        friendship = r.get("friendship", 0)
+                                                        hostility = r.get("hostility", 0)
+                                                        ally_raw = trust + friendship
+                                                        enemy_raw = hostility * 2
+                                                        neutral_raw = max(0, 200 - (ally_raw + enemy_raw) * 0.5)
+                                                        total_raw = ally_raw + enemy_raw + neutral_raw
+                                                        ally_w = ally_raw / total_raw if total_raw > 0 else 0
+                                                        if ally_w > 0.5:
+                                                            allies_list.append(p)
+                                            if allies_list:
+                                                for person in allies_list:
+                                                    button:
+                                                        if renpy.loadable(f"images/relationship_icons/{person.lower()}.png"):
+                                                            add f"images/relationship_icons/{person.lower()}.png" size (40, 40)
+                                                        else:
+                                                            text person.capitalize() size 18 color "#FFFFFF"
+                                                        action Show("relationship_details", player_obj=player_obj, person=person)
+                                                        tooltip player_obj.get_relationship_description(person)
+                                            else:
+                                                text "None" size 18 color "#AAAAAA" italic True
+                                        
+                                        hbox:
+                                            spacing 10
+                                            xalign 0.5
+                                            text "Neutrals" color "#FFFF00" size 24 bold True xsize 100
+                                            python:
+                                                neutrals_list = []
+                                                for p, r in player_obj.relationships.items():
+                                                    if r.get("met"):
+                                                        trust = r.get("trust", 0)
+                                                        friendship = r.get("friendship", 0)
+                                                        hostility = r.get("hostility", 0)
+                                                        ally_raw = trust + friendship
+                                                        enemy_raw = hostility * 2
+                                                        neutral_raw = max(0, 200 - (ally_raw + enemy_raw) * 0.5)
+                                                        total_raw = ally_raw + enemy_raw + neutral_raw
+                                                        neutral_w = neutral_raw / total_raw if total_raw > 0 else 0
+                                                        if neutral_w > 0.5:
+                                                            neutrals_list.append(p)
+                                            if neutrals_list:
+                                                for person in neutrals_list:
+                                                    button:
+                                                        if renpy.loadable(f"images/relationship_icons/{person.lower()}.png"):
+                                                            add f"images/relationship_icons/{person.lower()}.png" size (40, 40)
+                                                        else:
+                                                            text person.capitalize() size 18 color "#FFFFFF"
+                                                        action Show("relationship_details", player_obj=player_obj, person=person)
+                                                        tooltip player_obj.get_relationship_description(person)
+                                            else:
+                                                text "None" size 18 color "#AAAAAA" italic True
+                                        
+                                        hbox:
+                                            spacing 10
+                                            xalign 0.5
+                                            text "Enemies" color "#FF0000" size 24 bold True xsize 100
+                                            python:
+                                                enemies_list = []
+                                                for p, r in player_obj.relationships.items():
+                                                    if r.get("met"):
+                                                        trust = r.get("trust", 0)
+                                                        friendship = r.get("friendship", 0)
+                                                        hostility = r.get("hostility", 0)
+                                                        ally_raw = trust + friendship
+                                                        enemy_raw = hostility * 2
+                                                        neutral_raw = max(0, 200 - (ally_raw + enemy_raw) * 0.5)
+                                                        total_raw = ally_raw + enemy_raw + neutral_raw
+                                                        enemy_w = enemy_raw / total_raw if total_raw > 0 else 0
+                                                        if enemy_w > 0.5:
+                                                            enemies_list.append(p)
+                                            if enemies_list:
+                                                for person in enemies_list:
+                                                    button:
+                                                        if renpy.loadable(f"images/relationship_icons/{person.lower()}.png"):
+                                                            add f"images/relationship_icons/{person.lower()}.png" size (40, 40)
+                                                        else:
+                                                            text person.capitalize() size 18 color "#FFFFFF"
+                                                        action Show("relationship_details", player_obj=player_obj, person=person)
+                                                        tooltip player_obj.get_relationship_description(person)
+                                            else:
+                                                text "None" size 18 color "#AAAAAA" italic True
+
+                                text "Ally" xalign 0.5 ypos 60 color "#00FF00" size 28 bold True  
+                                text "Enemy" xalign 0.05 yalign 0.95 color "#FF0000" size 28 bold True
+                                text "Neutral" xalign 0.95 yalign 0.95 color "#FFFF00" size 28 bold True
+
+                                for person, rel_data in player_obj.relationships.items():
+                                    if rel_data.get("met"):
+                                        $ trust = rel_data.get("trust", 0)
+                                        $ friendship = rel_data.get("friendship", 0)
+                                        $ hostility = rel_data.get("hostility", 0)
+
+                                        $ ally_raw = trust + friendship
+                                        $ enemy_raw = hostility * 2  
+                                        $ neutral_raw = max(0, 200 - (ally_raw + enemy_raw) * 0.5)  
+
+                                        $ total_raw = ally_raw + enemy_raw + neutral_raw
+                                        $ ally_w = ally_raw / total_raw if total_raw > 0 else 1.0 / 3
+                                        $ enemy_w = enemy_raw / total_raw if total_raw > 0 else 1.0 / 3
+                                        $ neutral_w = neutral_raw / total_raw if total_raw > 0 else 1.0 / 3
+
+                                        $ sum_w = ally_w + enemy_w + neutral_w
+                                        if sum_w > 0:
+                                            $ ally_w /= sum_w
+                                            $ enemy_w /= sum_w
+                                            $ neutral_w /= sum_w
+
+                                        $ pos_x = ally_w * 0.5 + enemy_w * 0.0 + neutral_w * 1.0
+                                        $ pos_y = (ally_w * 0.0 + enemy_w * 1.0 + neutral_w * 1.0) * 0.7 + 0.3
+
+                                        button:
+                                            xalign pos_x
+                                            yalign pos_y
+                                            if renpy.loadable(f"images/relationship_icons/{person.lower()}.png"):
+                                                add f"images/relationship_icons/{person.lower()}.png" size (40, 40)
+                                            else:
+                                                text person.capitalize() size 20 color "#FFFFFF" hover_color "#00CCFF"
+                                            action Show("relationship_details", player_obj=player_obj, person=person)
+                                            tooltip player_obj.get_relationship_description(person)
+
+            textbutton "Back to Menu" action Return() xalign 0.5 yalign 0.95 style "inventory_button"  # Added back button
+screen relationship_details(player_obj, person):
+    modal True
+    frame:
+        xsize 500
+        ysize 600
+        xalign 0.5
+        yalign 0.5
+        background "#222222"
+        padding (20, 20)
+
+        vbox:
+            spacing 15
+            text f"{person.capitalize()} Relationship Details" size 30 xalign 0.5 color "#00CCFF" bold True
+
+            $ rel_data = player_obj.relationships.get(person, {})
+            $ trust = rel_data.get("trust", 0)
+            $ friendship = rel_data.get("friendship", 0)
+            $ hostility = rel_data.get("hostility", 0)
+            $ bond_strength = (trust + friendship) / 2
+
+            text "Description:" size 24 color "#FFFFFF"
+            text player_obj.get_relationship_description(person) size 20 color "#CCCCCC" xalign 0.5
+
+            text "Trust:" size 20 color "#FFFFFF"
+            bar value trust range 100 xmaximum 400 ymaximum 20
+            text "Friendship:" size 20 color "#FFFFFF"
+            bar value friendship range 100 xmaximum 400 ymaximum 20
+            text "Hostility:" size 20 color "#FFFFFF"
+            bar value hostility range 100 xmaximum 400 ymaximum 20 bar_invert True  # Inverted to show high as "worse"
+            text "Bond Strength:" size 20 color "#FFFFFF"
+            bar value bond_strength range 100 xmaximum 400 ymaximum 20
+
+            # Optional: Add more details here, e.g., recent events or notes if available in your class
+            null height 20
+            textbutton "Close" action Hide("relationship_details") xalign 0.5 style "inventory_button"
 screen heal_menu(player_obj):
     modal True
     frame:

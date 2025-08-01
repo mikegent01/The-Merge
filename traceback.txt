@@ -1,9 +1,22 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/screens.rpy", line 265, in execute_default
-    default quick_menu = True
-Exception: store.quick_menu is being given a default a second time.
+  File "game/scripts/CORE/player.rpy", line 56, in execute_default
+    default barns = GameCharacter(
+  File "game/scripts/CORE/player.rpy", line 56, in <module>
+    default barns = GameCharacter(
+                    ~~~~~~~~~~~~~^
+        name="Barns",
+        ^^^^^^^^^^^^^
+    ...<2 lines>...
+        starting_proficiencies=player_initial_proficiencies
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "game/scripts/CORE/classes.rpy", line 13, in __init__
+    self.reset_energy()
+    ^^^^^^^^^^^^^^^^^  
+AttributeError: 'GameCharacter' object has no attribute 'reset_energy'
 
 -- Full Traceback ------------------------------------------------------------
 
@@ -22,11 +35,27 @@ Traceback (most recent call last):
   File "renpy/exports/statementexports.py", line 375, in execute_default_statement
     i.execute_default(start)
     ~~~~~~~~~~~~~~~~~^^^^^^^
-  File "game/screens.rpy", line 265, in execute_default
-    default quick_menu = True
-Exception: store.quick_menu is being given a default a second time.
+  File "game/scripts/CORE/player.rpy", line 56, in execute_default
+    default barns = GameCharacter(
+  File "renpy/python.py", line 1285, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "game/scripts/CORE/player.rpy", line 56, in <module>
+    default barns = GameCharacter(
+                    ~~~~~~~~~~~~~^
+        name="Barns",
+        ^^^^^^^^^^^^^
+    ...<2 lines>...
+        starting_proficiencies=player_initial_proficiencies
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "game/scripts/CORE/classes.rpy", line 13, in __init__
+    self.reset_energy()
+    ^^^^^^^^^^^^^^^^^  
+AttributeError: 'GameCharacter' object has no attribute 'reset_energy'
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.0.25071206
 Reflection 1.0
-Tue Jul 22 20:12:16 2025
+Fri Aug  1 00:34:10 2025
