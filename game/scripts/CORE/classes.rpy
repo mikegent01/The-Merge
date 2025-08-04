@@ -1,5 +1,5 @@
 init python:
-
+    roll_queue = []  
     class GameCharacter:
         
         def __init__(self, name, starting_stats, starting_emotions, starting_proficiencies=None):
@@ -47,7 +47,24 @@ init python:
                 prof["current_value"] += random.randint(1, 6)
                 renpy.notify(f"{self.name}'s {prof_name.capitalize()} (under {stat_name}) increased to level {prof['level']}!")
 
-        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0, min_chance=5, max_chance=95, proficiency_name=None):
+        def perform_roll(self, skill_name, base_chance=30, circumstance_bonus=0, min_chance=5, max_chance=95, proficiency_name=None, show_display=True):
+            global roll_queue  # Declare global to modify the global roll_queue
+
+            # If proficiency_name is not provided, check if the skill_name is actually a proficiency
+            if proficiency_name is None:
+                found_proficiency = False
+                for stat, profs in self.proficiencies.items():
+                    if skill_name in profs:
+                        proficiency_name = skill_name
+                        skill_name = stat  # Set skill_name to the parent stat
+                        found_proficiency = True
+                        break
+                if found_proficiency:
+                    renpy.notify(f"Detected '{proficiency_name}' as proficiency under '{skill_name}'.")
+                elif skill_name not in self.stats:
+                    renpy.notify(f"System Error: Skill or proficiency '{skill_name}' not found for {self.name}!")
+                    return {'success': False, 'roll': 0, 'threshold': 0, 'total_chance': 0}
+
             if skill_name not in self.stats:
                 renpy.notify(f"System Error: Skill '{skill_name}' not found for {self.name}!")
                 return {'success': False, 'roll': 0, 'threshold': 0, 'total_chance': 0}
@@ -55,10 +72,13 @@ init python:
             skill_value = self.stats[skill_name].get("current_value", 0)
             
             proficiency_bonus = 0
-            if proficiency_name and skill_name in self.proficiencies and proficiency_name in self.proficiencies[skill_name]:
-                proficiency_bonus = self.proficiencies[skill_name][proficiency_name].get("current_value", 0)
+            if proficiency_name:
+                if skill_name in self.proficiencies and proficiency_name in self.proficiencies[skill_name]:
+                    proficiency_bonus = self.proficiencies[skill_name][proficiency_name].get("current_value", 0)
+                else:
+                    renpy.notify(f"Warning: Proficiency '{proficiency_name}' not found under skill '{skill_name}' for {self.name}. Using base skill only.")
             
-            emotion_bonus, _ = self._get_emotion_bonus(skill_name if proficiency_name is None else proficiency_name)  # Use proficiency for emotions if specified
+            emotion_bonus, emotion_bonuses_list = self._get_emotion_bonus(skill_name if proficiency_name is None else proficiency_name)  # Use proficiency for emotions if specified
             
             total_chance = base_chance + skill_value + proficiency_bonus + emotion_bonus + circumstance_bonus
             
@@ -70,13 +90,37 @@ init python:
             
             success = (roll >= threshold)
             
-            if success:
-                renpy.notify(f"Success! (Rolled {roll} ≥ {threshold})")
-            else:
-                renpy.notify(f"Failure. (Rolled {roll} < {threshold})")
+            # Add XP based on success/failure
+            xp_amount = 10 if success else 5
+            self.add_experience(skill_name, xp_amount)
+            if proficiency_name and skill_name in self.proficiencies and proficiency_name in self.proficiencies[skill_name]:
+                self.add_experience_proficiency(skill_name, proficiency_name, xp_amount)
+            
+            # Notify via existing method, including proficiency if provided
+            notify_message = f"{skill_name.capitalize()} Roll: {'Success' if success else 'Failure'}! (Rolled {roll} {'≥' if success else '<'} {threshold})"
+            if proficiency_name:
+                notify_message += f" - Proficiency: {proficiency_name.capitalize()}"
+            renpy.notify(notify_message)
                 
+            # Queue the roll data
+            roll_data = {
+                "skill": skill_name,
+                "proficiency": proficiency_name,
+                "roll": roll,
+                "threshold": threshold,
+                "total_chance": total_chance,
+                "success": success,
+                "emotion_bonuses": emotion_bonuses_list
+            }
+            roll_queue.append(roll_data)
+            if len(roll_queue) > 15:  
+                roll_queue.pop(0)
+            
+            # Show the history screen (full queue with scrollbar)
+            if show_display:
+                renpy.show_screen("roll_history_screen")
+            
             return {'success': success, 'roll': roll, 'threshold': threshold, 'total_chance': total_chance}
-
         def modify_emotion(self, emotion_name, amount, default_bonus=None):
 
             if default_bonus is None:
@@ -348,7 +392,9 @@ init python:
                         renpy.notify(f"Cannot use broken {item_name}.")
                         return
                     self.decrease_durability(item_name, amount=1)
-                    if item_name == "First aid kit":
+                    if item_name == "Classified Mission Sheet":
+                        renpy.show_screen("scp_memo")
+                    elif item_name == "First aid kit":
                         self.remove_item(item_name)
                         renpy.show_screen("heal_menu")
                     elif item_name == "Tissue":

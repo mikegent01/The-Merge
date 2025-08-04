@@ -16,7 +16,7 @@ default player_initial_emotions = {
     "Confidence": {"value": 15, "bonus": {"speech": -3, "intelligence": -4, "mental_resilience": 4, "lie": -2}},
     "Dignity": {"value": 60, "bonus": {"speech": 5, "mental_resilience": 3, "luck": -2, "political": 3}},
     "Pride": {"value": 10, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6, "pain_tolerance": 5, "kick_power": 3}},
-    "Curiosity": {"value": 15, "bonus": {"intelligence": -5, "strength": 5, "mental_resilience": 6, "pain_tolerance": 5, "kick_power": 3}},
+    "Curiosity": {"value": 0, "bonus": {"intelligence": 3, "history": 2 }},
 
 }
 default player_initial_proficiencies = {

@@ -4,7 +4,6 @@ default preferences.text_cps = 30
 label start:
     #     $ quick_menu = False uncomment on deployment
     $ player.apply_room_temperature(72)
-    $ roll_result = player.perform_roll(skill_name='medical', base_chance=20, circumstance_bonus=0)    
     $ player.inventory.add_item("Classified Mission Sheet")
     $ player.inventory.add_item("Radio")
     $ player.inventory.add_item("Paper")
@@ -113,13 +112,7 @@ label start:
     DRI "good you are dismissed."
 
     "As I turn around I notice two people sitting in there seats, prehaps I should talk to one of them and ask them for help."
-    if 'projector_success' not in game_state["rolls"]["roll_results"]:
-        $ roll_result = player.perform_roll(skill_name='medical', base_chance=20)
-        $ game_state["rolls"]["roll_results"]['projector_success'] = roll_result       
-    
-    if 'rajman_intel_success' not in game_state["rolls"]["roll_results"]:
-        $ roll_result = player.perform_roll(skill_name='intelligence', base_chance=40)
-        $ game_state["rolls"]["roll_results"]['rajman_intel_success'] = roll_result
+
     label intreactivesection01:
         scene empty_stage_animation with None
         show screen checkKey  

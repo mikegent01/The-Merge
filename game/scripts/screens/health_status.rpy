@@ -399,60 +399,40 @@ screen player_stats_screen(player_obj):
                         text "Emotions" size 30 color "#FFFFFF" xalign 0.5 bold True
                         null height 10
                         $ all_emotions = sorted(player_obj.emotions.items(), key=lambda x: x[1]["value"], reverse=True)
-                        $ top_5_emotions = all_emotions[:5]  # Top 5 by value, regardless of threshold
-                        $ other_emotions = all_emotions[5:]  # All remaining emotions
+                        $ total_value = sum(data["value"] for _, data in all_emotions) or 1  # Avoid division by zero
+                        $ emotion_colors = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF", "#FFA500", "#800080", "#008000", "#FFC0CB"]  # List of colors for bars
                         
-                        if not top_5_emotions and not other_emotions:
+                        if not all_emotions:
                             text "No emotions data available." size 24 color "#AAAAAA" xalign 0.5 italic True
                         else:
-                            text "Top 5 Emotions and Their Effects:" size 26 color "#FFFFFF" xalign 0.5
-                            grid 2 len(top_5_emotions):  # Display in 2 columns
-                                xalign 0.5
-                                spacing 20
-                                for emo, data in top_5_emotions:
-                                    frame:
-                                        background "#222222"
-                                        padding (10, 10)
-                                        xsize 450
-                                        vbox:
-                                            spacing 5
-                                            text f"{emo.capitalize()}: {data['value']}" size 22 color (("#00FF00" if data['value'] > 70 else "#FFFF00" if data['value'] > 40 else "#FF0000"))
-                                            bar value data['value'] range 100 xmaximum 400 ymaximum 15
-                                            if "bonus" in data and data["bonus"]:
-                                                text "Stat Bonuses:" size 16 color "#CCCCCC"
-                                                for stat, bonus in data["bonus"].items():
-                                                    text f"{stat.replace('_',' ').capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 16 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
-                                            else:
-                                                text "No stat bonuses." size 16 color "#AAAAAA" italic True
-
-                         #   null height 20  # Spacer between top 5 and other emotions
-                            
-                            text "Other Emotions:" size 26 color "#FFFFFF" xalign 0.5
-                            
-                            if not other_emotions:
-                                text "No other emotions active." size 24 color "#AAAAAA" xalign 0.5 italic True
-                            else:
-                                grid 2 len(other_emotions):  # Display in 2 columns, similar to top 5
-                                    xalign 0.5
-                                    spacing 20
-                                    for emo, data in other_emotions:
-                                        frame:
-                                            background "#222222"
-                                            padding (10, 10)
-                                            xsize 450
-                                            vbox:
-                                                spacing 5
-                                                text f"{emo.capitalize()}: {data['value']}" size 22 color (("#00FF00" if data['value'] > 70 else "#FFFF00" if data['value'] > 40 else "#FF0000"))
-                                                bar value data['value'] range 100 xmaximum 400 ymaximum 15
-                                                if "bonus" in data and data["bonus"]:
-                                                    text "Stat Bonuses:" size 16 color "#CCCCCC"
-                                                    for stat, bonus in data["bonus"].items():
-                                                        text f"{stat.replace('_',' ').capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 16 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
-                                                else:
-                                                    text "No stat bonuses." size 16 color "#AAAAAA" italic True
-                                # Fill empty slots if needed for even grid
-                                for i in range((2 - (len(other_emotions) % 2)) % 2):
-                                    null
+                            viewport:
+                                xsize 900 ysize 500
+                                mousewheel True
+                                draggable True
+                                vbox:
+                                    spacing 15
+                                    text "Emotion Breakdown" size 26 color "#FFFFFF" xalign 0.5
+                                    for idx, (emo, data) in enumerate(all_emotions):
+                                        if data["value"] > 0:
+                                            $ color = emotion_colors[idx % len(emotion_colors)]
+                                            frame:
+                                                background "#222222"
+                                                padding (10, 10)
+                                                xfill True
+                                                vbox:
+                                                    spacing 5
+                                                    hbox:
+                                                        spacing 10
+                                                        text f"{emo.capitalize()}: {data['value']} ({(data['value'] / total_value * 100):.1f}%)" size 20 color "#FFFFFF"
+                                                    bar value data['value'] range 100 xmaximum 800 ymaximum 20 left_bar color right_bar "#333333"
+                                                    
+                                                    # Bonuses list
+                                                    if "bonus" in data and data["bonus"]:
+                                                        text "Stat Bonuses:" size 16 color "#CCCCCC"
+                                                        for stat, bonus in data["bonus"].items():
+                                                            text f"{stat.replace('_',' ').capitalize()}: {'+' if bonus > 0 else ''}{bonus}" size 14 color (("#00FF00" if bonus > 0 else "#FF0000" if bonus < 0 else "#CCCCCC"))
+                                                    else:
+                                                        text "No stat bonuses." size 14 color "#AAAAAA" italic True
 
                     elif selected_category == "relationships":
                         if not player_obj.relationships:
@@ -602,7 +582,7 @@ screen player_stats_screen(player_obj):
                                             action Show("relationship_details", player_obj=player_obj, person=person)
                                             tooltip player_obj.get_relationship_description(person)
 
-            textbutton "Back to Menu" action Return() xalign 0.5 yalign 0.95 style "inventory_button"  # Added back button
+            textbutton "Back to Menu" action Return() xalign 0.5 yalign 0.95 style "inventory_button" 
 screen relationship_details(player_obj, person):
     modal True
     frame:

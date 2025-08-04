@@ -1,61 +1,100 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/scripts/CORE/player.rpy", line 56, in execute_default
-    default barns = GameCharacter(
-  File "game/scripts/CORE/player.rpy", line 56, in <module>
-    default barns = GameCharacter(
-                    ~~~~~~~~~~~~~^
-        name="Barns",
-        ^^^^^^^^^^^^^
-    ...<2 lines>...
-        starting_proficiencies=player_initial_proficiencies
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "game/scripts/CORE/classes.rpy", line 13, in __init__
-    self.reset_energy()
-    ^^^^^^^^^^^^^^^^^  
-AttributeError: 'GameCharacter' object has no attribute 'reset_energy'
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory(player_obj=None):
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory(player_obj=None):
+  File "game/scripts/screens/inventory_screen.rpy", line 27, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 33, in execute
+    hbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 37, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 38, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 43, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 46, in execute
+    python:
+  File "game/scripts/screens/inventory_screen.rpy", line 48, in <module>
+    _inv_items = player_obj.inventory.items
+                 ^^^^^^^^^^^^^^^^^^^^      
+AttributeError: 'NoneType' object has no attribute 'inventory'
 
 -- Full Traceback ------------------------------------------------------------
 
 Traceback (most recent call last):
-  File "renpy/common/00start.rpy", line 195, in script
-    python:
+  File "renpy/common/_layout/screen_load_save.rpym", line 35, in script
+    $ ui.interact()
   File "renpy/ast.py", line 1187, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "renpy/python.py", line 1260, in py_exec_bytecode
     exec(bytecode, globals, locals)
     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "renpy/common/00start.rpy", line 196, in <module>
-    renpy.execute_default_statement(True)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "renpy/exports/statementexports.py", line 375, in execute_default_statement
-    i.execute_default(start)
-    ~~~~~~~~~~~~~~~~~^^^^^^^
-  File "game/scripts/CORE/player.rpy", line 56, in execute_default
-    default barns = GameCharacter(
-  File "renpy/python.py", line 1285, in py_eval_bytecode
-    return eval(bytecode, globals, locals)
-           ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "game/scripts/CORE/player.rpy", line 56, in <module>
-    default barns = GameCharacter(
-                    ~~~~~~~~~~~~~^
-        name="Barns",
-        ^^^^^^^^^^^^^
-    ...<2 lines>...
-        starting_proficiencies=player_initial_proficiencies
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "game/scripts/CORE/classes.rpy", line 13, in __init__
-    self.reset_energy()
-    ^^^^^^^^^^^^^^^^^  
-AttributeError: 'GameCharacter' object has no attribute 'reset_energy'
+  File "renpy/common/_layout/screen_load_save.rpym", line 35, in <module>
+    $ ui.interact()
+      ~~~~~~~~~~~^^
+  File "renpy/ui.py", line 304, in interact
+    rv = renpy.game.interface.interact(roll_forward=roll_forward, **kwargs)
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/core.py", line 2216, in interact
+    repeat, rv = self.interact_core(
+                 ~~~~~~~~~~~~~~~~~~^
+        preloads=preloads,
+        ^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )  # type: ignore
+    ^                
+  File "renpy/display/core.py", line 2754, in interact_core
+    root_widget.visit_all(lambda d: d.per_interact())
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "renpy/display/displayable.py", line 432, in visit_all
+    d.visit_all(callback, seen)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "renpy/display/displayable.py", line 432, in visit_all
+    d.visit_all(callback, seen)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "renpy/display/displayable.py", line 432, in visit_all
+    d.visit_all(callback, seen)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "renpy/display/screen.py", line 503, in visit_all
+    callback(self)
+    ~~~~~~~~^^^^^^
+  File "renpy/display/core.py", line 2754, in <lambda>
+    root_widget.visit_all(lambda d: d.per_interact())
+                                    ~~~~~~~~~~~~~~^^ 
+  File "renpy/display/screen.py", line 514, in per_interact
+    self.update()
+    ~~~~~~~~~~~^^
+  File "renpy/display/screen.py", line 715, in update
+    self.screen.function(**self.scope)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory(player_obj=None):
+  File "game/scripts/screens/inventory_screen.rpy", line 23, in execute
+    screen inventory(player_obj=None):
+  File "game/scripts/screens/inventory_screen.rpy", line 27, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 33, in execute
+    hbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 37, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 38, in execute
+    frame:
+  File "game/scripts/screens/inventory_screen.rpy", line 43, in execute
+    vbox:
+  File "game/scripts/screens/inventory_screen.rpy", line 46, in execute
+    python:
+  File "game/scripts/screens/inventory_screen.rpy", line 48, in <module>
+    _inv_items = player_obj.inventory.items
+                 ^^^^^^^^^^^^^^^^^^^^      
+AttributeError: 'NoneType' object has no attribute 'inventory'
 
 Windows-11-10.0.26100-SP0 AMD64
 Ren'Py 8.4.0.25071206
 Reflection 1.0
-Fri Aug  1 00:34:10 2025
+Sun Aug  3 23:09:24 2025

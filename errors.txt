@@ -2,8 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/CORE/rolls.rpy", line 55: Indentation mismatch.
-    timer 5.0 action Hide("roll_result")
+File "game/scripts/CORE/classes.rpy", line 395: invalid syntax
+    elif item_name == "Classified Mission Sheet":
+        ^^^^
 
 Ren'Py Version: Ren'Py 8.4.0.25071206
-Fri Aug  1 00:22:07 2025
+Sun Aug  3 15:22:13 2025

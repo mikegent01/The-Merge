@@ -71,7 +71,7 @@ screen projector_look_s2():
         vbox:
             spacing 10
             text "I look at the projector screen thinking about the presentation that just played, it is hard to belive that a portal can destroy a whole town..."
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("projector_look_s2"), Show("checkKey")]
+            textbutton "Return" action [Hide("projector_look_s2"), Show("checkKey")]
 
 screen seat_look_s1():
     frame:
@@ -83,10 +83,10 @@ screen seat_look_s1():
             spacing 10
             if not game_state["chapter_1"]["projector_room"]["picked_tissue_up"]:
                 text "There is a tissue on my seat, it must have fell out of my pocket. I pick up the tissue"
-                textbutton "Pick Up" action [Function(player.inventory.add_item, "Tissue"), SetDict(game_state["chapter_1"]["projector_room"], "picked_tissue_up", True), Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("seat_look_s1"), Jump("intreactivesection01")]
+                textbutton "Pick Up" action [Function(player.inventory.add_item, "Tissue"), SetDict(game_state["chapter_1"]["projector_room"], "picked_tissue_up", True), Hide("seat_look_s1"), Jump("intreactivesection01")]
             else:
                 text "There is nothing here..."
-                textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("seat_look_s1"), Show("checkKey")]
+                textbutton "Return" action [Hide("seat_look_s1"), Show("checkKey")]
 
 screen podium_look_s1():
     frame:
@@ -97,9 +97,14 @@ screen podium_look_s1():
         vbox:
             spacing 10
             text "Looking at the podium, I think of something in that position."
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("podium_look_s1"), Show("checkKey")]
+            textbutton "Return" action [Hide("podium_look_s1"), Show("checkKey")]
 
 screen rajman_look_intreactivesection01():
+    python:
+        if 'rajman_intel_success' not in game_state["rolls"]["roll_results"]:
+            roll_result = player.perform_roll(skill_name='perception', base_chance=40)
+            game_state["rolls"]["roll_results"]['rajman_intel_success'] = roll_result
+
     frame:
         xalign 0.5
         yalign 0.5
@@ -114,9 +119,14 @@ screen rajman_look_intreactivesection01():
                 text f"Intelligence Roll Passed: {rajman_roll.get('roll', 0)} >= {rajman_roll.get('threshold', 0)}" size 18 color "#00FF00"
             else:
                 text f"Intelligence Roll Failed: {rajman_roll.get('roll', 0)} < {rajman_roll.get('threshold', 0)}" size 18 color "#FF0000"
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("rajman_look_intreactivesection01"), Show("checkKey")]
+            textbutton "Return" action [Hide("rajman_look_intreactivesection01"), Show("checkKey")]
 
 screen projector_look_s1():
+    python:
+        if 'projector_success' not in game_state["rolls"]["roll_results"]:
+            roll_result = player.perform_roll(skill_name='perception', base_chance=20)
+            game_state["rolls"]["roll_results"]['projector_success'] = roll_result
+
     frame:
         xalign 0.5
         yalign 0.5
@@ -131,7 +141,7 @@ screen projector_look_s1():
                 text f"Intelligence Roll Passed: {projector_roll.get('roll', 0)} >= {projector_roll.get('threshold', 0)}" size 18 color "#00FF00"
             else:
                 text f"Intelligence Roll Failed: {projector_roll.get('roll', 0)} < {projector_roll.get('threshold', 0)}" size 18 color "#FF0000"
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("projector_look_s1"), Show("checkKey")]
+            textbutton "Return" action [Hide("projector_look_s1"), Show("checkKey")]
 
 screen bagman_look_s1():
     frame:
@@ -142,7 +152,7 @@ screen bagman_look_s1():
         vbox:
             spacing 10
             text "There is a man with a bag on his head.... I will call him bagman from now on"
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("bagman_look_s1"), Show("checkKey")]
+            textbutton "Return" action [Hide("bagman_look_s1"), Show("checkKey")]
 
 screen wire_look_s1():
     frame:
@@ -153,4 +163,90 @@ screen wire_look_s1():
         vbox:
             spacing 10
             text "The wire is unplugged, it connects the projector screen to the wall"
-            textbutton "Return" action [Function(player.modify_emotion, "Authority", 1), Function(player.modify_emotion, "Curiosity", 1), Hide("wire_look_s1"), Show("checkKey")]
+            textbutton "Return" action [Hide("wire_look_s1"), Show("checkKey")]
+screen roll_history_screen():
+    frame:
+        xalign 0.5 yalign 0.3  # Moved up to avoid bottom HUD overlap
+        xsize 800 ysize 500  # Reduced height slightly to minimize overlap
+        padding (20, 20)
+        background "#333333cc"  # Semi-transparent dark background for better visibility and color
+        
+        vbox:
+            spacing 10
+            
+            text "Roll History" size 24 xalign 0.5 color "#FFFFFF"  # White title for contrast
+            
+            viewport id "roll_viewport":
+                ysize 350  # Fixed height for scrollable area (scroll with mousewheel or drag)
+                mousewheel True
+                draggable True
+                
+                vbox:
+                    spacing 5
+                    if len(roll_queue) == 0:
+                        text "No rolls yet." color "#888888"
+                    else:
+                        for idx, roll_data in enumerate(roll_queue):
+                            frame:
+                                background "#222222"  # Dark gray background for each roll entry
+                                padding (10, 10)
+                                xfill True
+                                
+                                vbox:
+                                    text f"Roll #{idx + 1}: {roll_data['skill'].capitalize()}" bold True color "#FFFF00"  # Yellow for roll title
+                                    if roll_data['proficiency']:
+                                        text f"Proficiency: {roll_data['proficiency'].capitalize()}" color "#CCCCCC"  # Light gray
+                                    text f"Roll: {roll_data['roll']} (Threshold: {roll_data['threshold']}, Chance: {roll_data['total_chance']}%)" color "#FFFFFF"  # White for details
+                                    if roll_data['success']:
+                                        text "Success!" color "#00FF00" bold True  # Green for success, bold
+                                    else:
+                                        text "Failure." color "#FF0000" bold True  # Red for failure, bold
+                                    if roll_data['emotion_bonuses']:
+                                        text "Emotion Bonuses:" color "#00FFFF"  # Cyan header
+                                        for emo, bonus in roll_data['emotion_bonuses']:
+                                            text f"- {emo.capitalize()}: +{bonus}" color "#FFFFFF"  # White for bonuses
+            
+            textbutton "Close" action Hide("roll_history_screen") xalign 0.5 text_color "#FFFFFF" text_hover_color "#FFFF00"  # Colored button at bottom
+screen roll_history_screen():
+    frame:
+        xalign 0.5 yalign 0.3  # Moved up to avoid bottom HUD overlap
+        xsize 800 ysize 500  # Reduced height slightly to minimize overlap
+        padding (20, 20)
+        background "#333333cc"  # Semi-transparent dark background for better visibility and color
+        
+        vbox:
+            spacing 10
+            
+            text "Roll History" size 24 xalign 0.5 color "#FFFFFF"  # White title for contrast
+            
+            viewport id "roll_viewport":
+                ysize 350  # Fixed height for scrollable area (scroll with mousewheel or drag)
+                mousewheel True
+                draggable True
+                
+                vbox:
+                    spacing 5
+                    if len(roll_queue) == 0:
+                        text "No rolls yet." color "#888888"
+                    else:
+                        for idx, roll_data in enumerate(roll_queue):
+                            frame:
+                                background "#222222"  # Dark gray background for each roll entry
+                                padding (10, 10)
+                                xfill True
+                                
+                                vbox:
+                                    text f"Roll #{idx + 1}: {roll_data['skill'].capitalize()}" bold True color "#FFFF00"  # Yellow for roll title
+                                    if roll_data['proficiency']:
+                                        text f"Proficiency: {roll_data['proficiency'].capitalize()}" color "#CCCCCC"  # Light gray
+                                    text f"Roll: {roll_data['roll']} (Threshold: {roll_data['threshold']}, Chance: {roll_data['total_chance']}%)" color "#FFFFFF"  # White for details
+                                    if roll_data['success']:
+                                        text "Success!" color "#00FF00" bold True  # Green for success, bold
+                                    else:
+                                        text "Failure." color "#FF0000" bold True  # Red for failure, bold
+                                    if roll_data['emotion_bonuses']:
+                                        text "Emotion Bonuses:" color "#00FFFF"  # Cyan header
+                                        for emo, bonus in roll_data['emotion_bonuses']:
+                                            text f"- {emo.capitalize()}: +{bonus}" color "#FFFFFF"  # White for bonuses
+            
+            textbutton "Close" action Hide("roll_history_screen") xalign 0.5 text_color "#FFFFFF" text_hover_color "#FFFF00"  # Colored button at bottom
