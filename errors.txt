@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/CORE/classes.rpy", line 395: invalid syntax
-    elif item_name == "Classified Mission Sheet":
-        ^^^^
+File "game/scripts/image/backgrounds.rpy", line 106: image statement expects a non-empty block.
+    image chair:
+                ^
 
 Ren'Py Version: Ren'Py 8.4.0.25071206
-Sun Aug  3 15:22:13 2025
+Mon Aug 11 00:16:04 2025

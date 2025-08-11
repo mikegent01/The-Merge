@@ -118,6 +118,7 @@ label start:
         show screen checkKey  
         show screen game_screen 
         show screen HUD
+        show screen vatican_newspaper 
         if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
             show screen tutorial_screen
             $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
