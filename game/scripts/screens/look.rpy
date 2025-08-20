@@ -1,3 +1,4 @@
+default nenvershowrolls = False
 screen dynamic_text_screen():
     if last_label == "intreactivesection01" or test_room == 0:
         $ projectorx = 650
@@ -116,9 +117,8 @@ screen rajman_look_intreactivesection01():
             $ rajman_roll = game_state["rolls"]["roll_results"].get('rajman_intel_success', {})
             if rajman_roll.get('success', False):
                 text "I however do notice that he is hiding something, he is looking at his pocket at something smoking"
-                text f"Intelligence Roll Passed: {rajman_roll.get('roll', 0)} >= {rajman_roll.get('threshold', 0)}" size 18 color "#00FF00"
             else:
-                text f"Intelligence Roll Failed: {rajman_roll.get('roll', 0)} < {rajman_roll.get('threshold', 0)}" size 18 color "#FF0000"
+                text f"" size 18 color "#FF0000"
             textbutton "Return" action [Hide("rajman_look_intreactivesection01"), Show("checkKey")]
 
 screen projector_look_s1():
@@ -138,9 +138,8 @@ screen projector_look_s1():
             $ projector_roll = game_state["rolls"]["roll_results"].get('projector_success', {})
             if projector_roll.get('success', False):
                 text "I also notice the drill Sargent has a scar on his left arm, he seems to be covering it up with his uniform deliberately"
-                text f"Intelligence Roll Passed: {projector_roll.get('roll', 0)} >= {projector_roll.get('threshold', 0)}" size 18 color "#00FF00"
             else:
-                text f"Intelligence Roll Failed: {projector_roll.get('roll', 0)} < {projector_roll.get('threshold', 0)}" size 18 color "#FF0000"
+                text f"" size 18 color "#FF0000"
             textbutton "Return" action [Hide("projector_look_s1"), Show("checkKey")]
 
 screen bagman_look_s1():
@@ -164,89 +163,3 @@ screen wire_look_s1():
             spacing 10
             text "The wire is unplugged, it connects the projector screen to the wall"
             textbutton "Return" action [Hide("wire_look_s1"), Show("checkKey")]
-screen roll_history_screen():
-    frame:
-        xalign 0.5 yalign 0.3  # Moved up to avoid bottom HUD overlap
-        xsize 800 ysize 500  # Reduced height slightly to minimize overlap
-        padding (20, 20)
-        background "#333333cc"  # Semi-transparent dark background for better visibility and color
-        
-        vbox:
-            spacing 10
-            
-            text "Roll History" size 24 xalign 0.5 color "#FFFFFF"  # White title for contrast
-            
-            viewport id "roll_viewport":
-                ysize 350  # Fixed height for scrollable area (scroll with mousewheel or drag)
-                mousewheel True
-                draggable True
-                
-                vbox:
-                    spacing 5
-                    if len(roll_queue) == 0:
-                        text "No rolls yet." color "#888888"
-                    else:
-                        for idx, roll_data in enumerate(roll_queue):
-                            frame:
-                                background "#222222"  # Dark gray background for each roll entry
-                                padding (10, 10)
-                                xfill True
-                                
-                                vbox:
-                                    text f"Roll #{idx + 1}: {roll_data['skill'].capitalize()}" bold True color "#FFFF00"  # Yellow for roll title
-                                    if roll_data['proficiency']:
-                                        text f"Proficiency: {roll_data['proficiency'].capitalize()}" color "#CCCCCC"  # Light gray
-                                    text f"Roll: {roll_data['roll']} (Threshold: {roll_data['threshold']}, Chance: {roll_data['total_chance']}%)" color "#FFFFFF"  # White for details
-                                    if roll_data['success']:
-                                        text "Success!" color "#00FF00" bold True  # Green for success, bold
-                                    else:
-                                        text "Failure." color "#FF0000" bold True  # Red for failure, bold
-                                    if roll_data['emotion_bonuses']:
-                                        text "Emotion Bonuses:" color "#00FFFF"  # Cyan header
-                                        for emo, bonus in roll_data['emotion_bonuses']:
-                                            text f"- {emo.capitalize()}: +{bonus}" color "#FFFFFF"  # White for bonuses
-            
-            textbutton "Close" action Hide("roll_history_screen") xalign 0.5 text_color "#FFFFFF" text_hover_color "#FFFF00"  # Colored button at bottom
-screen roll_history_screen():
-    frame:
-        xalign 0.5 yalign 0.3  # Moved up to avoid bottom HUD overlap
-        xsize 800 ysize 500  # Reduced height slightly to minimize overlap
-        padding (20, 20)
-        background "#333333cc"  # Semi-transparent dark background for better visibility and color
-        
-        vbox:
-            spacing 10
-            
-            text "Roll History" size 24 xalign 0.5 color "#FFFFFF"  # White title for contrast
-            
-            viewport id "roll_viewport":
-                ysize 350  # Fixed height for scrollable area (scroll with mousewheel or drag)
-                mousewheel True
-                draggable True
-                
-                vbox:
-                    spacing 5
-                    if len(roll_queue) == 0:
-                        text "No rolls yet." color "#888888"
-                    else:
-                        for idx, roll_data in enumerate(roll_queue):
-                            frame:
-                                background "#222222"  # Dark gray background for each roll entry
-                                padding (10, 10)
-                                xfill True
-                                
-                                vbox:
-                                    text f"Roll #{idx + 1}: {roll_data['skill'].capitalize()}" bold True color "#FFFF00"  # Yellow for roll title
-                                    if roll_data['proficiency']:
-                                        text f"Proficiency: {roll_data['proficiency'].capitalize()}" color "#CCCCCC"  # Light gray
-                                    text f"Roll: {roll_data['roll']} (Threshold: {roll_data['threshold']}, Chance: {roll_data['total_chance']}%)" color "#FFFFFF"  # White for details
-                                    if roll_data['success']:
-                                        text "Success!" color "#00FF00" bold True  # Green for success, bold
-                                    else:
-                                        text "Failure." color "#FF0000" bold True  # Red for failure, bold
-                                    if roll_data['emotion_bonuses']:
-                                        text "Emotion Bonuses:" color "#00FFFF"  # Cyan header
-                                        for emo, bonus in roll_data['emotion_bonuses']:
-                                            text f"- {emo.capitalize()}: +{bonus}" color "#FFFFFF"  # White for bonuses
-            
-            textbutton "Close" action Hide("roll_history_screen") xalign 0.5 text_color "#FFFFFF" text_hover_color "#FFFF00"  # Colored button at bottom

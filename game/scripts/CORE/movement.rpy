@@ -15,19 +15,61 @@ default auto_moving = False
 default jump_velocity = 0
 default gravity = 2
 default jump_strength = -15
+default movement_enabled = False
 screen checkKey():
-    key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
-    key "keyup_K_d" action If(not auto_moving, [SetVariable("moving_right", False), SetVariable("walk_frame", 4)])        
-    key "keyup_K_a" action If(not auto_moving, [SetVariable("moving_left", False), SetVariable("walk_frame", 4)])
-    key "K_a" action If(not auto_moving, SetVariable("moving_left", True))        
-    key "K_SPACE" action If(not auto_moving and beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)])   
+    if movement_enabled:
+        key "K_d" action If(not auto_moving, SetVariable("moving_right", True))
+        key "keyup_K_d" action If(not auto_moving, [SetVariable("moving_right", False), SetVariable("walk_frame", 4)])        
+        key "keyup_K_a" action If(not auto_moving, [SetVariable("moving_left", False), SetVariable("walk_frame", 4)])
+        key "K_a" action If(not auto_moving, SetVariable("moving_left", True))        
+        key "K_SPACE" action If(not auto_moving and beny >= minbeny, [SetVariable("jumping", True), SetVariable("jump_velocity", jump_strength)])   
 screen game_screen():
 
-    image "smolbenwalk":  
-        xpos benx
-        ypos beny
-        xzoom ( -1.0 if facing_left else 1.0 )
-    
+    if not movement_enabled:
+        # Mouse-based facing direction when movement is disabled
+        $ mx, my = renpy.get_mouse_pos()
+        $ dx = mx - benx
+        $ dy = my - beny
+
+        # Default sprite
+        $ sprite = "images/char/Benjerman/walk/smolbenmiddle.png"
+
+        if abs(dx) <= 5 and abs(dy) <= 5:
+            # Mouse is basically on top of character → idle
+            $ sprite = "images/char/Benjerman/walk/smolbenmiddle.png"
+        else:
+            $ import math
+            $ angle = math.degrees(math.atan2(dy, dx))  # -180 to 180
+
+            # Define angle ranges for each sprite (45° slices)
+            if -22.5 <= angle < 22.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenright.png"
+            elif 22.5 <= angle < 67.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenbottomright.png"
+            elif 67.5 <= angle < 112.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenbottom.png"
+            elif 112.5 <= angle < 157.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenbottomleft.png"
+            elif angle >= 157.5 or angle < -157.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenleft.png"
+            elif -157.5 <= angle < -112.5:
+                $ sprite = "images/char/Benjerman/walk/smolbenupperleft.png"
+            elif -112.5 <= angle < -67.5:
+                $ sprite = "images/char/Benjerman/walk/smallbenup.png"
+            elif -67.5 <= angle < -22.5:
+                $ sprite = "images/char/Benjerman/walk/smolbenupperright.png"
+
+        image sprite:
+            xpos benx
+            ypos beny
+
+    else:
+        # Normal walking animation when enabled
+        image "smolbenwalk":
+            xpos benx
+            ypos beny
+            xzoom ( -1.0 if facing_left else 1.0 )
+
     timer 0.05 repeat True action Function(update_game)
 init python:
     def update_game():

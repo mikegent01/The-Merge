@@ -18,35 +18,45 @@ screen status_screen(player_obj):
                 xsize 800
                 ysize 450
                 add "images/stats_icons/full_body_diagram.png" xalign 0.5 yalign 0.5
-
                 button:  
                     xpos 340 ypos 370
                     xsize (630 - 593) ysize (452 - 407)
+                    background Frame(Solid("#ff02023c"), 1, 1)  # semi-transparent black outline
                     action Show("condition_details", player_obj=player_obj, part="left_leg")
                     tooltip "Click to view Left Leg details"
+
                 button:  
                     xpos 430 ypos 370
                     xsize (630 - 593) ysize (452 - 407)
+                    background Frame(Solid("#ff02023c"), 1, 1)
                     action Show("condition_details", player_obj=player_obj, part="right_leg")
                     tooltip "Click to view Right Leg details"
+
                 button:  
                     xpos 357 ypos 228
                     xsize (710 - 607) ysize (395 - 278)
+                    background Frame(Solid("#ff02023c"), 1, 1)
                     action Show("condition_details", player_obj=player_obj, part="body")
                     tooltip "Click to view Body details"
+
                 button:  
                     xpos 330 ypos 255
                     xsize (601 - 574) ysize (383 - 300)
+                    background Frame(Solid("#ff02023c"), 1, 1)
                     action Show("condition_details", player_obj=player_obj, part="left_arm")
                     tooltip "Click to view Right Arm details"
+
                 button:  
                     xpos 453 ypos 240
                     xsize (723 - 693) ysize (365 - 276)
+                    background Frame(Solid("#ff02023c"), 1, 1)
                     action Show("condition_details", player_obj=player_obj, part="right_arm")
                     tooltip "Click to view Left Arm details"
+
                 button:  
                     xpos 339 ypos 140
                     xsize (736 - 609) ysize (270 - 182)
+                    background Frame(Solid("#ff02023c"), 1, 1)
                     action Show("condition_details", player_obj=player_obj, part="head")
                     tooltip "Click to view Head details"
 

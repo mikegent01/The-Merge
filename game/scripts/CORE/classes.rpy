@@ -117,7 +117,7 @@ init python:
                 roll_queue.pop(0)
             
             # Show the history screen (full queue with scrollbar)
-            if show_display:
+            if show_display and nenvershowrolls:
                 renpy.show_screen("roll_history_screen")
             
             return {'success': success, 'roll': roll, 'threshold': threshold, 'total_chance': total_chance}
