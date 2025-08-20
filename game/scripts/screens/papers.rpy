@@ -479,10 +479,10 @@ style page_footer:
     color "#777"
     xalign 0.5
 
-# The newspaper screen with scrollbar (reformatted for better layout and to fix bugs)
+# The newspaper screen with scrollbar (remade from scratch with same body text)
 screen vatican_newspaper():
     window:
-        background "#fdfaf6"  # Off-white background
+        background "#fdfaf600"  # Off-white background
 
     frame:
         align (0.5, 0.5)
@@ -501,9 +501,9 @@ screen vatican_newspaper():
                 hbox:
                     xfill True
                     spacing 20
-                    text "VOL. CLXXXV, NO. 42" style "date_issue" xalign 0.0
-                    text "WEDNESDAY, MAY 26" style "date_issue" xalign 0.5
-                    text "PRICE: $1.50" style "date_issue" xalign 1.0
+                    text "VOL. CLXXXV, NO. 003" style "date_issue" xalign 0.0
+                    text "WEDNESDAY, AUGUST 10" style "date_issue" xalign 0.5
+                    text "PRICE: $2.50" style "date_issue" xalign 1.0
 
                 null height 5  # Space
                 frame:  # Border bottom simulation
@@ -573,12 +573,11 @@ screen vatican_newspaper():
                         frame:
                             xfill True
                             ysize 1
-                            background Solid("#eee")
+                           # background Solid("#eee")
                         null height 10
-                        text "The Vatican Chronicle • Serving the Faithful Since 1838 • All Rights Reserved © 2023" style "page_footer"
+                        text "The Vatican Chronicle • Serving the Faithful Since 1838 • All Rights Reserved © 20XX" style "page_footer"
 
                 vbar value YScrollValue("vp")  # The scrollbar
 
     # Optional: Close button and key
-    key "dismiss" action Hide("vatican_newspaper")
     textbutton "Close" action Hide("vatican_newspaper") align (0.98, 0.02)

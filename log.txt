@@ -1,34 +1,33 @@
-2025-08-11 04:27:22 UTC
+2025-08-20 03:37:00 UTC
 Windows-11-10.0.26100-SP0
 Ren'Py 8.4.0.25071206
 
-Early init took 40 ms
-Loading error handling took 54 ms
-Loading script took 1581 ms
-Loading save slot metadata took 115 ms
+Early init took 39 ms
+Loading error handling took 31 ms
+Loading script took 385 ms
+Loading save slot metadata took 134 ms
 Loading persistent took 0 ms
-Running init code took 166 ms
-Loading analysis data took 10 ms
-Analyze and compile ATL took 4 ms
-Reloading save slot metadata took 97 ms
-Backing up script files to 'C:\\Users\\mikeg\\AppData\\Roaming/RenPy/backups\\Projection':
-Dump and make backups took 24 ms
-Cleaning cache took 1 ms
+Running init code took 61 ms
+Loading analysis data took 110 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 104 ms
+Dump and make backups took 23 ms
+Cleaning cache took 0 ms
 Making clean stores took 0 ms
-Initial gc took 35 ms
+Initial gc took 23 ms
 DPI scale factor: 1.000000
 nvdrs: Loaded, about to disable thread optimizations.
 nvdrs: Disabled thread optimizations.
-Creating interface object took 214 ms
+Creating interface object took 166 ms
 Init translation took 0 ms
 Cleaning stores took 0 ms
-Load screen analysis took 7 ms
-Analyze screens took 13 ms
-Save screen analysis took 14 ms
-Save pyanalysis took 6 ms
-Save bytecode took 19 ms
+Load screen analysis took 32 ms
+Analyze screens took 1 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
 Running _start took 0 ms
-Interface start took 261 ms
+Interface start took 267 ms
 
 Initializing gl2 renderer:
 primary display bounds: (0, 0, 1920, 1080)
@@ -41,15 +40,5 @@ Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 25
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096
 INFO:renpy_warp_service:service thread started. periodically scanning ports for warp server
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
-Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
-Maximum texture size: 4096x4096
 Screen sizes: virtual=(1280, 755) physical=(1920, 1009) drawable=(1920, 1009)
 Maximum texture size: 4096x4096

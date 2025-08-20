@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/scripts/image/backgrounds.rpy", line 106: image statement expects a non-empty block.
-    image chair:
-                ^
+File "game/scripts/screens/papers.rpy", line 484: window expects a non-empty block.
+    window:
+           ^
 
 Ren'Py Version: Ren'Py 8.4.0.25071206
-Mon Aug 11 00:16:04 2025
+Mon Aug 11 00:59:34 2025

@@ -1,4 +1,3 @@
-
 #Background
 image ani1_background:
     Animation(
@@ -191,3 +190,18 @@ image projector_hum_animation:
         "images/bg/Starting_Room/5/projector_on18.png", 0.5,
         "images/bg/Starting_Room/5/projector_on12.png", 0.5  
     )
+
+image stage1unplug_animation:
+    Animation(
+        "images/bg/Starting_Room/8/stage1unplug1.png", 0.5,
+        "images/bg/Starting_Room/8/stage1unplug2.png", 0.5,
+        "images/bg/Starting_Room/8/stage1unplug3.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug4.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug5.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug6.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug7.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug8.png", 0.1,
+        "images/bg/Starting_Room/8/stage1unplug9.png", 0.5,
+        "images/bg/Starting_Room/8/stage1unplug10.png", 99999.0
+    )
+    xysize (config.screen_width, config.screen_height)

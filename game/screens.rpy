@@ -313,12 +313,12 @@ screen navigation():
 
             textbutton _("Main Menu") action MainMenu()
 
-        textbutton _("Journal") action ShowMenu("journal")
+  #      textbutton _("Journal") action ShowMenu("journal")
 
-        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+       # if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Inventory") action ShowMenu("inventory")
+          #  textbutton _("Inventory") action ShowMenu("inventory")
 
         if renpy.variant("pc"):
 

@@ -12,7 +12,7 @@ image light_turning_on_effect:
     xysize (config.screen_width, config.screen_height)
     linear 0.05 alpha 0.6 
     pause 0.1
-    linear 0.2 alpha 0.0
+    linear 0.15 alpha 0.0
 init python:
     # Add a custom layer for dimming effects if it doesn't exist
     if 'dimming_layer' not in config.layers:

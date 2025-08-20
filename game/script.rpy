@@ -85,6 +85,7 @@ label start:
     "That is all You are hereby dismissed."
     hide dim_overlay onlayer dimming_layer 
     show light_turning_on_effect 
+    scene stage1unplug_animation 
 
     "As the lights turn on and the room so does the sound, people start talking amongst themselves"
     "some personal start leaving the room."
@@ -118,9 +119,8 @@ label start:
         show screen checkKey  
         show screen game_screen 
         show screen HUD
-        show screen vatican_newspaper 
         if not game_state["chapter_1"]["projector_room"]["viewed_tutorial"]:
-            show screen tutorial_screen
+           # show screen vatican_newspaper
             $ game_state["chapter_1"]["projector_room"]["viewed_tutorial"] = True
         window hide 
         $ renpy.pause(hard=True)
