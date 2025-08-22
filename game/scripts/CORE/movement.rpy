@@ -28,20 +28,17 @@ screen game_screen():
     if not movement_enabled:
         # Mouse-based facing direction when movement is disabled
         $ mx, my = renpy.get_mouse_pos()
-        $ dx = mx - benx
-        $ dy = my - beny
+        $ dx = mx - benx - 70
+        $ dy = my - beny - 70
 
-        # Default sprite
         $ sprite = "images/char/Benjerman/walk/smolbenmiddle.png"
 
         if abs(dx) <= 5 and abs(dy) <= 5:
-            # Mouse is basically on top of character → idle
             $ sprite = "images/char/Benjerman/walk/smolbenmiddle.png"
         else:
             $ import math
-            $ angle = math.degrees(math.atan2(dy, dx))  # -180 to 180
+            $ angle = math.degrees(math.atan2(dy, dx))  
 
-            # Define angle ranges for each sprite (45° slices)
             if -22.5 <= angle < 22.5:
                 $ sprite = "images/char/Benjerman/walk/smallbenright.png"
             elif 22.5 <= angle < 67.5:
@@ -64,7 +61,6 @@ screen game_screen():
             ypos beny
 
     else:
-        # Normal walking animation when enabled
         image "smolbenwalk":
             xpos benx
             ypos beny
@@ -136,9 +132,10 @@ init python:
            beny = max(min(beny, maxbeny), 0)
            benx = max(min(benx, maxbenx), minbenx)
     def move_to_pos(tx, ty):
-        global auto_moving, target_x, target_y, jumping, moving_left, moving_right, jump_velocity
+        global auto_moving, movement_enabled, target_x, target_y, jumping, moving_left, moving_right, jump_velocity
         target_x = tx
         target_y = ty
+        movement_enabled = True
         auto_moving = True
         jumping = False
         jump_velocity = 0
